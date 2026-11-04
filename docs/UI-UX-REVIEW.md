@@ -75,4 +75,4 @@ Physical mobile cameras, every assistive technology, every theme/page-builder co
 
 At 375px in English, a new guest hold moved focus to the buyer name field and scrolled the checkout heading into view. Releasing that hold immediately removed the countdown, lease actions and buyer form, and showed the release confirmation. No order or payment was created by this browser check. Small administrative data tables retain readable columns with horizontal scrolling inside their focusable regions, without widening the page.
 
-The installed local font is unmodified Vazirmatn v33.003; the copyright and SIL OFL 1.1 text are bundled in `assets/fonts/OFL.txt`. The public plugin version remains 1.0.0 and the changelog remains empty.
+The installed local font is unmodified Vazirmatn v33.003; the copyright and SIL OFL 1.1 text are bundled in `assets/fonts/OFL.txt`. At the time of this review, the public plugin version was 1.0.0 and the changelog was empty. The current release is 2.0.0.

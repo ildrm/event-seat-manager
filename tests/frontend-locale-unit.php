@@ -11,7 +11,7 @@ require_once __DIR__ . '/../src/Frontend/Blocks.php';
 
 define('PESM_URL', 'https://example.test/wp-content/plugins/event-seat-manager/');
 define('PESM_DIR', dirname(__DIR__) . '/');
-define('PESM_VERSION', '1.0.0');
+define('PESM_VERSION', '2.0.0');
 $GLOBALS['test_locale'] = 'en_US';
 $GLOBALS['scripts'] = [];
 $GLOBALS['styles'] = [];

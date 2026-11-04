@@ -1,0 +1,1004 @@
+{
+  "passed": true,
+  "before": {
+    "phase": "before",
+    "passed": true,
+    "schema": 18,
+    "plugin": {
+      "version": "1.0.0",
+      "main_sha256": "5eba3fba99c389dbd5c6066a2d7e5e78da16c625e369d16f23ffc0be6fc452e5",
+      "migrator_sha256": "bba5f3704faf8316fa6dbf95c5c079412f648afd60c71678f2f023498cc86f2c",
+      "installed_copy": true
+    },
+    "woocommerce_version": "11.2.1",
+    "hpos_enabled": false,
+    "fixture": {
+      "center_id": 7,
+      "hall_id": 4,
+      "event_id": 7,
+      "session_ids": [
+        19,
+        20
+      ],
+      "order_ids": [
+        35,
+        36
+      ]
+    },
+    "canonical_rows": {
+      "centers": {
+        "count": 7,
+        "sha256": "c4afbd3b583d50ca0e73de8494968dc2c2521669dba0c297ccc04c9377db45c8"
+      },
+      "center_users": {
+        "count": 9,
+        "sha256": "8fdd514faf0fe0bdca95e51ae7ec92627c88c47b0eb6d9a7569526c7cbacacbb"
+      },
+      "halls": {
+        "count": 4,
+        "sha256": "c6c45cedf0a735d05ed67805c3a0dbdcc7df524bcdf000b05eb007d76a29c0b3"
+      },
+      "layout_versions": {
+        "count": 4,
+        "sha256": "2463209e603bb0ea8ee7a35c0b8b7794e08147d93a419fd47fca6ad11acfbb3f"
+      },
+      "seats": {
+        "count": 2704,
+        "sha256": "e076af57618d0833ac32ce0058c23fe214c768aeda9ed2d9959e8d8e9beed8c9"
+      },
+      "layout_objects": {
+        "count": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "events": {
+        "count": 7,
+        "sha256": "33b349d816ab681da862e28e4a271bd7250d257bbece450df2ec774a4c8f274f"
+      },
+      "sessions": {
+        "count": 20,
+        "sha256": "9da88f28e5ae150f56ec0606f4c8cdb78b872b9891cfd717a70ba04424e44c10"
+      },
+      "session_seats": {
+        "count": 8108,
+        "sha256": "d58d74939f5c5e1b9a2e4b162d0e7616c062bf0b4c3a41deb7e544d47a67aaf7"
+      },
+      "session_capacity": {
+        "count": 9,
+        "sha256": "a028f91ceebe8d97a344879e92932258161926d9ca5984602926bfa76a89dc10"
+      },
+      "holds": {
+        "count": 26,
+        "sha256": "bd78d867dca2f9b385eba2313b2ed4af46e11e68bdf961c1235c5f8a31363bf3"
+      },
+      "hold_items": {
+        "count": 32,
+        "sha256": "470cd1d0077182ba3252cb2e73dfeb482dd197dc472104cd22fa0d8020892bcf"
+      },
+      "hold_mutations": {
+        "count": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "order_links": {
+        "count": 17,
+        "sha256": "ac62d1d44b07b3bb536c9e65ae8ad4f92f38be321657b776f148e3b3e03a1ba9"
+      },
+      "tickets": {
+        "count": 23,
+        "sha256": "59ddfa173cfe58ff0d8074597a561f2b1ae5f096ce6db860f9eabe6c04f9d3bc"
+      },
+      "checkins": {
+        "count": 3,
+        "sha256": "221c4c50a913d6527e6bbd3d3a8edb0af0ef47701315c983d77e79ee576bdceb"
+      },
+      "capacity_holds": {
+        "count": 6,
+        "sha256": "2a4e5d29735319ffa67f5f16b61cd65a2ae5fbac2b16021bac3be65e7b0eee21"
+      },
+      "capacity_order_links": {
+        "count": 6,
+        "sha256": "57c5c5440b62054ec9bf83b91f256602ecf23efb2d8b55721289f53da6835174"
+      },
+      "capacity_tickets": {
+        "count": 15,
+        "sha256": "16539d447bbca289af1d7b81e43d363556664e093a09923fb9a474c7067b71ff"
+      },
+      "capacity_checkins": {
+        "count": 3,
+        "sha256": "2ae8a7c68a2173584903fb9283c2a584758b44579ebf71af2c9a99e5a17aee8c"
+      },
+      "ticket_attendee_changes": {
+        "count": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "ticket_seat_transfers": {
+        "count": 3,
+        "sha256": "e03bde343e78e6bbc25812aeb59646dd2fb3be66edd6bb13f12674ca782d221e"
+      },
+      "ticket_owners": {
+        "count": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "ticket_ownership_transfers": {
+        "count": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "ticket_bundles": {
+        "count": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "ticket_bundle_items": {
+        "count": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "discount_rules": {
+        "count": 3,
+        "sha256": "f5c91edaaec8b3f80d8e642f7ae0b33416e33ede502a56469c00a6639843f3cb"
+      },
+      "discount_claims": {
+        "count": 3,
+        "sha256": "70d1d429c444325f1214b6afc4ddd55b99a437c518a7b4214d1d6fab9b59ed09"
+      }
+    },
+    "orders": [
+      {
+        "id": 11,
+        "sha256": "73ddee4731f81f0c444b40373db3b323370b99593be1ef6f75ca29ce586ee1ed",
+        "financial_sha256": "d37a438689d75d7e33e6a9a7311ce5d25f8335a7dc122edf04cb3f339dec561d",
+        "currency": "USD",
+        "total": "0.00",
+        "status": "completed",
+        "item_count": 2
+      },
+      {
+        "id": 12,
+        "sha256": "d18279644d9fd873b6b9248b1bf26dc12948c27d8a45f2cd7152d7ff5dba8ee9",
+        "financial_sha256": "8d082abed0d606ad8f51d757759b2dafd0150aa404eaaaba49ee932bbcd6ad44",
+        "currency": "USD",
+        "total": "20.00",
+        "status": "refunded",
+        "item_count": 2
+      },
+      {
+        "id": 14,
+        "sha256": "423c4493b2f03cc6d06ea2527cf04d8eb4ed09e080a50afe828c9b549fd063a9",
+        "financial_sha256": "86cfdde13e6ec563d6be6800609f19d83a64f33d026724b119c251c52db1f7b1",
+        "currency": "USD",
+        "total": "10.00",
+        "status": "processing",
+        "item_count": 1
+      },
+      {
+        "id": 15,
+        "sha256": "e8e8acdfdadd2a3602a3df3949da02c64a80bf6c4f0487bfa12f66e9ab89d653",
+        "financial_sha256": "07571339b5505f5061f49393f8738bdae86e135f7ce5367d0891f31405ee99b7",
+        "currency": "USD",
+        "total": "0.00",
+        "status": "completed",
+        "item_count": 1
+      },
+      {
+        "id": 16,
+        "sha256": "b0768c818d98350a11c56be9f85829b4113337b7456a7e3866ce61a7a52f542e",
+        "financial_sha256": "7e2719732cc227a5e1620191bfb486fc4e74082c6d2a3bf2ed7057f09e518bff",
+        "currency": "USD",
+        "total": "0.00",
+        "status": "completed",
+        "item_count": 2
+      },
+      {
+        "id": 17,
+        "sha256": "97fccd28fc9ba5eb399a185de4589dc73664e460b026eb0842cb2c733893cc36",
+        "financial_sha256": "adf52303e5eaedcabd398f73c3e3a2051f6e48c2ac018ad03b58a122e9ce9d64",
+        "currency": "USD",
+        "total": "0.00",
+        "status": "completed",
+        "item_count": 1
+      },
+      {
+        "id": 18,
+        "sha256": "5a106cfcb2258be5cf0f9490ba77c2e060d710c093c853641d16ff2fc477da7d",
+        "financial_sha256": "7048c8c55d96a8d74ae56fd187a604f62b917d84fa2c1a25ffd79359202ee1a2",
+        "currency": "USD",
+        "total": "10.00",
+        "status": "processing",
+        "item_count": 1
+      },
+      {
+        "id": 19,
+        "sha256": "e1b30b163a71d5999392f573ac46111b4c153604aa716f10f08b1d27ef99e991",
+        "financial_sha256": "aa1a3bd67763d679b54ce297ee8c686230232c743a81f0fba869062752b48d91",
+        "currency": "USD",
+        "total": "0.00",
+        "status": "completed",
+        "item_count": 2
+      },
+      {
+        "id": 20,
+        "sha256": "bba954360ca31398e0730db01c2189502550038a695ea6d86b8175af5f8fa473",
+        "financial_sha256": "656b1425fbdc53116e8500e0ccbd3395512551376b8211d8d5d8c2401e2aadf9",
+        "currency": "USD",
+        "total": "20.00",
+        "status": "refunded",
+        "item_count": 2
+      },
+      {
+        "id": 22,
+        "sha256": "e1ead8d00d3d180fe84409d04b1e90a674db3c62c4926b74f51c1771736c5c83",
+        "financial_sha256": "d1ee07540fed6e95513736e0b5c70ccd8a94fd70dd581ba097c89250bb71d886",
+        "currency": "USD",
+        "total": "10.00",
+        "status": "processing",
+        "item_count": 1
+      },
+      {
+        "id": 23,
+        "sha256": "143562204e3d2d14eb8960520614a1a9cd6a5cff7775232117ba7fb5b3250d87",
+        "financial_sha256": "131d8e3bc3c09f2eeea770b956ce339a92e92ca9d289b6d025d84b4cdc7b0075",
+        "currency": "USD",
+        "total": "0.00",
+        "status": "completed",
+        "item_count": 1
+      },
+      {
+        "id": 24,
+        "sha256": "623d4e29dae270016bb97873e9ffc7a4b5426a9f19ccab38b767bba90a6e5ec2",
+        "financial_sha256": "71c05ff47a46407e0d4560986052eed470a49d1c74901f89064f73c605b0aaa2",
+        "currency": "USD",
+        "total": "0.00",
+        "status": "completed",
+        "item_count": 2
+      },
+      {
+        "id": 25,
+        "sha256": "553fa623f596ecde99065826f7fc23e4467bace99569b0e13b8d88283b5ed418",
+        "financial_sha256": "adf52303e5eaedcabd398f73c3e3a2051f6e48c2ac018ad03b58a122e9ce9d64",
+        "currency": "USD",
+        "total": "0.00",
+        "status": "completed",
+        "item_count": 1
+      },
+      {
+        "id": 26,
+        "sha256": "7f2b950e1d8f1db68445990d9164c9291d1419d5f1ff26fad92b14c56480afc2",
+        "financial_sha256": "7048c8c55d96a8d74ae56fd187a604f62b917d84fa2c1a25ffd79359202ee1a2",
+        "currency": "USD",
+        "total": "10.00",
+        "status": "processing",
+        "item_count": 1
+      },
+      {
+        "id": 27,
+        "sha256": "2cfbf70448b5da886021cb6bab1c2c9fd36944a2bf1e55ae34b2f3a2b4fca1a7",
+        "financial_sha256": "d58244f3a1419eccf796c56cfdd6506fa1625d0b827f3eea2358bee0168a2605",
+        "currency": "USD",
+        "total": "0.00",
+        "status": "completed",
+        "item_count": 2
+      },
+      {
+        "id": 28,
+        "sha256": "e97ace4a761bc26eb0fb4352d62ed417f84a018a1db9c2b0c8c25372de9b4691",
+        "financial_sha256": "08fffc6f9dc9e49bf3db5015feb4b6b34d7195102914c3acf104955748e407cf",
+        "currency": "USD",
+        "total": "20.00",
+        "status": "refunded",
+        "item_count": 2
+      },
+      {
+        "id": 30,
+        "sha256": "0cf998dbb9354192a129492fe962564b0ef4b7b104d4c930f052261c4612f840",
+        "financial_sha256": "10fc84772cfaa3ad010bd447475afe4f4bc571b29bcb572b757eb0cd0e5996e0",
+        "currency": "USD",
+        "total": "10.00",
+        "status": "processing",
+        "item_count": 1
+      },
+      {
+        "id": 31,
+        "sha256": "b9c51060014a50f6448aab51cf4ec7d46b4aca77d95870d85a37570f3692f3d3",
+        "financial_sha256": "d6541e1c88acf1b1a16a9ed2fbc88f1af79c998827805698e252c63b46c3120c",
+        "currency": "USD",
+        "total": "0.00",
+        "status": "completed",
+        "item_count": 1
+      },
+      {
+        "id": 32,
+        "sha256": "6e31dda9f8e122cbfada2cb9b5f7ea07444eca71eb74c2a141c4cb5363528aa3",
+        "financial_sha256": "39d872c2983ad7d415e835de01de6f8845242c4459e08fd708a94c51c30a9442",
+        "currency": "USD",
+        "total": "0.00",
+        "status": "completed",
+        "item_count": 2
+      },
+      {
+        "id": 33,
+        "sha256": "51c008313046134cee8d31339ef1a8ede42b823ddb011c71c7a611cd50c0c49c",
+        "financial_sha256": "adf52303e5eaedcabd398f73c3e3a2051f6e48c2ac018ad03b58a122e9ce9d64",
+        "currency": "USD",
+        "total": "0.00",
+        "status": "completed",
+        "item_count": 1
+      },
+      {
+        "id": 34,
+        "sha256": "dc061e52daf87c20ce73922226e7d5a433352b06ac7448159396bc0c0e40452d",
+        "financial_sha256": "7048c8c55d96a8d74ae56fd187a604f62b917d84fa2c1a25ffd79359202ee1a2",
+        "currency": "USD",
+        "total": "10.00",
+        "status": "processing",
+        "item_count": 1
+      },
+      {
+        "id": 35,
+        "sha256": "f28a02641a2ca06077d3557b7cce9965b15d2d60af1c9913c26757412a45b0b2",
+        "financial_sha256": "06f5ea26165ca04bbb9d80ac7b6d15d734705b14598c2c021b3c0cc13621e407",
+        "currency": "USD",
+        "total": "0.00",
+        "status": "completed",
+        "item_count": 1
+      },
+      {
+        "id": 36,
+        "sha256": "dc32e9353490fbef2e83685de4a26a7706b04002a16d5f8127d5434e12219fe2",
+        "financial_sha256": "066fec6f1a7fd2b8dff6ea33e8374bf0970d951138ea9f5ed8b86aabcc1c58b8",
+        "currency": "USD",
+        "total": "123.45",
+        "status": "processing",
+        "item_count": 1
+      }
+    ],
+    "baseline_sha256": "98178ca43f46f7d103e912957abda4d75e480b28c27f546bd4e753cd2bd6bc58",
+    "checks": 33,
+    "scenarios": [
+      "plugin code is loaded from an installed copy inside wp-content/plugins",
+      "baseline is recorded at schema 18",
+      "v2 table absent before upgrade: venue_layouts",
+      "v2 table absent before upgrade: venue_sections",
+      "v2 table absent before upgrade: venue_places",
+      "v2 table absent before upgrade: venue_groups",
+      "v2 table absent before upgrade: venue_tiles",
+      "v2 table absent before upgrade: venue_objects",
+      "v2 table absent before upgrade: venue_commands",
+      "v2 table absent before upgrade: venue_jobs",
+      "v2 table absent before upgrade: venue_import_chunks",
+      "v2 table absent before upgrade: allocation_sessions",
+      "v2 table absent before upgrade: allocation_sections",
+      "v2 table absent before upgrade: allocation_holds",
+      "v2 table absent before upgrade: allocation_lines",
+      "v2 table absent before upgrade: allocation_orders",
+      "v2 table absent before upgrade: allocation_tickets",
+      "v2 table absent before upgrade: allocation_checkins",
+      "v2 table absent before upgrade: allocation_requests",
+      "baseline has not already been recorded",
+      "free schema18 fixture has an issued legacy ticket",
+      "paid schema18 fixture issues through verified local Woo callback",
+      "paid schema18 fixture has an issued legacy ticket",
+      "nonempty baseline canonical rows: centers",
+      "nonempty baseline canonical rows: halls",
+      "nonempty baseline canonical rows: sessions",
+      "nonempty baseline canonical rows: layout_versions",
+      "nonempty baseline canonical rows: seats",
+      "nonempty baseline canonical rows: session_seats",
+      "nonempty baseline canonical rows: holds",
+      "nonempty baseline canonical rows: order_links",
+      "nonempty baseline canonical rows: tickets",
+      "canonical baseline persists in this disposable site"
+    ]
+  },
+  "after": {
+    "phase": "after",
+    "passed": true,
+    "schema": 19,
+    "plugin": {
+      "version": "1.0.0",
+      "main_sha256": "acf4d7f7166eb3ec7ff3e9c35566be25c61107fff06d13c98ad0fabee4fb2142",
+      "migrator_sha256": "05d75b6e28ce247c60e97b8b43a1358da1fe4e0748de8edbd7f20fd468ccf408",
+      "installed_copy": true
+    },
+    "woocommerce_version": "11.2.1",
+    "hpos_enabled": false,
+    "canonical_rows": {
+      "centers": {
+        "before": 7,
+        "after": 7,
+        "preserved_sha256": "c4afbd3b583d50ca0e73de8494968dc2c2521669dba0c297ccc04c9377db45c8",
+        "added_rows": 0
+      },
+      "center_users": {
+        "before": 9,
+        "after": 9,
+        "preserved_sha256": "8fdd514faf0fe0bdca95e51ae7ec92627c88c47b0eb6d9a7569526c7cbacacbb",
+        "added_rows": 0
+      },
+      "halls": {
+        "before": 4,
+        "after": 4,
+        "preserved_sha256": "c6c45cedf0a735d05ed67805c3a0dbdcc7df524bcdf000b05eb007d76a29c0b3",
+        "added_rows": 0
+      },
+      "layout_versions": {
+        "before": 4,
+        "after": 4,
+        "preserved_sha256": "2463209e603bb0ea8ee7a35c0b8b7794e08147d93a419fd47fca6ad11acfbb3f",
+        "added_rows": 0
+      },
+      "seats": {
+        "before": 2704,
+        "after": 2704,
+        "preserved_sha256": "e076af57618d0833ac32ce0058c23fe214c768aeda9ed2d9959e8d8e9beed8c9",
+        "added_rows": 0
+      },
+      "layout_objects": {
+        "before": 0,
+        "after": 0,
+        "preserved_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "added_rows": 0
+      },
+      "events": {
+        "before": 7,
+        "after": 7,
+        "preserved_sha256": "33b349d816ab681da862e28e4a271bd7250d257bbece450df2ec774a4c8f274f",
+        "added_rows": 0
+      },
+      "sessions": {
+        "before": 20,
+        "after": 20,
+        "preserved_sha256": "9da88f28e5ae150f56ec0606f4c8cdb78b872b9891cfd717a70ba04424e44c10",
+        "added_rows": 0
+      },
+      "session_seats": {
+        "before": 8108,
+        "after": 8108,
+        "preserved_sha256": "d58d74939f5c5e1b9a2e4b162d0e7616c062bf0b4c3a41deb7e544d47a67aaf7",
+        "added_rows": 0
+      },
+      "session_capacity": {
+        "before": 9,
+        "after": 9,
+        "preserved_sha256": "a028f91ceebe8d97a344879e92932258161926d9ca5984602926bfa76a89dc10",
+        "added_rows": 0
+      },
+      "holds": {
+        "before": 26,
+        "after": 26,
+        "preserved_sha256": "bd78d867dca2f9b385eba2313b2ed4af46e11e68bdf961c1235c5f8a31363bf3",
+        "added_rows": 0
+      },
+      "hold_items": {
+        "before": 32,
+        "after": 32,
+        "preserved_sha256": "470cd1d0077182ba3252cb2e73dfeb482dd197dc472104cd22fa0d8020892bcf",
+        "added_rows": 0
+      },
+      "hold_mutations": {
+        "before": 0,
+        "after": 0,
+        "preserved_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "added_rows": 0
+      },
+      "order_links": {
+        "before": 17,
+        "after": 17,
+        "preserved_sha256": "ac62d1d44b07b3bb536c9e65ae8ad4f92f38be321657b776f148e3b3e03a1ba9",
+        "added_rows": 0
+      },
+      "tickets": {
+        "before": 23,
+        "after": 23,
+        "preserved_sha256": "59ddfa173cfe58ff0d8074597a561f2b1ae5f096ce6db860f9eabe6c04f9d3bc",
+        "added_rows": 0
+      },
+      "checkins": {
+        "before": 3,
+        "after": 3,
+        "preserved_sha256": "221c4c50a913d6527e6bbd3d3a8edb0af0ef47701315c983d77e79ee576bdceb",
+        "added_rows": 0
+      },
+      "capacity_holds": {
+        "before": 6,
+        "after": 6,
+        "preserved_sha256": "2a4e5d29735319ffa67f5f16b61cd65a2ae5fbac2b16021bac3be65e7b0eee21",
+        "added_rows": 0
+      },
+      "capacity_order_links": {
+        "before": 6,
+        "after": 6,
+        "preserved_sha256": "57c5c5440b62054ec9bf83b91f256602ecf23efb2d8b55721289f53da6835174",
+        "added_rows": 0
+      },
+      "capacity_tickets": {
+        "before": 15,
+        "after": 15,
+        "preserved_sha256": "16539d447bbca289af1d7b81e43d363556664e093a09923fb9a474c7067b71ff",
+        "added_rows": 0
+      },
+      "capacity_checkins": {
+        "before": 3,
+        "after": 3,
+        "preserved_sha256": "2ae8a7c68a2173584903fb9283c2a584758b44579ebf71af2c9a99e5a17aee8c",
+        "added_rows": 0
+      },
+      "ticket_attendee_changes": {
+        "before": 0,
+        "after": 0,
+        "preserved_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "added_rows": 0
+      },
+      "ticket_seat_transfers": {
+        "before": 3,
+        "after": 3,
+        "preserved_sha256": "e03bde343e78e6bbc25812aeb59646dd2fb3be66edd6bb13f12674ca782d221e",
+        "added_rows": 0
+      },
+      "ticket_owners": {
+        "before": 0,
+        "after": 0,
+        "preserved_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "added_rows": 0
+      },
+      "ticket_ownership_transfers": {
+        "before": 0,
+        "after": 0,
+        "preserved_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "added_rows": 0
+      },
+      "ticket_bundles": {
+        "before": 0,
+        "after": 0,
+        "preserved_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "added_rows": 0
+      },
+      "ticket_bundle_items": {
+        "before": 0,
+        "after": 0,
+        "preserved_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "added_rows": 0
+      },
+      "discount_rules": {
+        "before": 3,
+        "after": 3,
+        "preserved_sha256": "f5c91edaaec8b3f80d8e642f7ae0b33416e33ede502a56469c00a6639843f3cb",
+        "added_rows": 0
+      },
+      "discount_claims": {
+        "before": 3,
+        "after": 3,
+        "preserved_sha256": "70d1d429c444325f1214b6afc4ddd55b99a437c518a7b4214d1d6fab9b59ed09",
+        "added_rows": 0
+      }
+    },
+    "orders": [
+      {
+        "id": 11,
+        "sha256": "73ddee4731f81f0c444b40373db3b323370b99593be1ef6f75ca29ce586ee1ed",
+        "financial_sha256": "d37a438689d75d7e33e6a9a7311ce5d25f8335a7dc122edf04cb3f339dec561d",
+        "currency": "USD",
+        "total": "0.00",
+        "status": "completed",
+        "item_count": 2
+      },
+      {
+        "id": 12,
+        "sha256": "d18279644d9fd873b6b9248b1bf26dc12948c27d8a45f2cd7152d7ff5dba8ee9",
+        "financial_sha256": "8d082abed0d606ad8f51d757759b2dafd0150aa404eaaaba49ee932bbcd6ad44",
+        "currency": "USD",
+        "total": "20.00",
+        "status": "refunded",
+        "item_count": 2
+      },
+      {
+        "id": 14,
+        "sha256": "423c4493b2f03cc6d06ea2527cf04d8eb4ed09e080a50afe828c9b549fd063a9",
+        "financial_sha256": "86cfdde13e6ec563d6be6800609f19d83a64f33d026724b119c251c52db1f7b1",
+        "currency": "USD",
+        "total": "10.00",
+        "status": "processing",
+        "item_count": 1
+      },
+      {
+        "id": 15,
+        "sha256": "e8e8acdfdadd2a3602a3df3949da02c64a80bf6c4f0487bfa12f66e9ab89d653",
+        "financial_sha256": "07571339b5505f5061f49393f8738bdae86e135f7ce5367d0891f31405ee99b7",
+        "currency": "USD",
+        "total": "0.00",
+        "status": "completed",
+        "item_count": 1
+      },
+      {
+        "id": 16,
+        "sha256": "b0768c818d98350a11c56be9f85829b4113337b7456a7e3866ce61a7a52f542e",
+        "financial_sha256": "7e2719732cc227a5e1620191bfb486fc4e74082c6d2a3bf2ed7057f09e518bff",
+        "currency": "USD",
+        "total": "0.00",
+        "status": "completed",
+        "item_count": 2
+      },
+      {
+        "id": 17,
+        "sha256": "97fccd28fc9ba5eb399a185de4589dc73664e460b026eb0842cb2c733893cc36",
+        "financial_sha256": "adf52303e5eaedcabd398f73c3e3a2051f6e48c2ac018ad03b58a122e9ce9d64",
+        "currency": "USD",
+        "total": "0.00",
+        "status": "completed",
+        "item_count": 1
+      },
+      {
+        "id": 18,
+        "sha256": "5a106cfcb2258be5cf0f9490ba77c2e060d710c093c853641d16ff2fc477da7d",
+        "financial_sha256": "7048c8c55d96a8d74ae56fd187a604f62b917d84fa2c1a25ffd79359202ee1a2",
+        "currency": "USD",
+        "total": "10.00",
+        "status": "processing",
+        "item_count": 1
+      },
+      {
+        "id": 19,
+        "sha256": "e1b30b163a71d5999392f573ac46111b4c153604aa716f10f08b1d27ef99e991",
+        "financial_sha256": "aa1a3bd67763d679b54ce297ee8c686230232c743a81f0fba869062752b48d91",
+        "currency": "USD",
+        "total": "0.00",
+        "status": "completed",
+        "item_count": 2
+      },
+      {
+        "id": 20,
+        "sha256": "bba954360ca31398e0730db01c2189502550038a695ea6d86b8175af5f8fa473",
+        "financial_sha256": "656b1425fbdc53116e8500e0ccbd3395512551376b8211d8d5d8c2401e2aadf9",
+        "currency": "USD",
+        "total": "20.00",
+        "status": "refunded",
+        "item_count": 2
+      },
+      {
+        "id": 22,
+        "sha256": "e1ead8d00d3d180fe84409d04b1e90a674db3c62c4926b74f51c1771736c5c83",
+        "financial_sha256": "d1ee07540fed6e95513736e0b5c70ccd8a94fd70dd581ba097c89250bb71d886",
+        "currency": "USD",
+        "total": "10.00",
+        "status": "processing",
+        "item_count": 1
+      },
+      {
+        "id": 23,
+        "sha256": "143562204e3d2d14eb8960520614a1a9cd6a5cff7775232117ba7fb5b3250d87",
+        "financial_sha256": "131d8e3bc3c09f2eeea770b956ce339a92e92ca9d289b6d025d84b4cdc7b0075",
+        "currency": "USD",
+        "total": "0.00",
+        "status": "completed",
+        "item_count": 1
+      },
+      {
+        "id": 24,
+        "sha256": "623d4e29dae270016bb97873e9ffc7a4b5426a9f19ccab38b767bba90a6e5ec2",
+        "financial_sha256": "71c05ff47a46407e0d4560986052eed470a49d1c74901f89064f73c605b0aaa2",
+        "currency": "USD",
+        "total": "0.00",
+        "status": "completed",
+        "item_count": 2
+      },
+      {
+        "id": 25,
+        "sha256": "553fa623f596ecde99065826f7fc23e4467bace99569b0e13b8d88283b5ed418",
+        "financial_sha256": "adf52303e5eaedcabd398f73c3e3a2051f6e48c2ac018ad03b58a122e9ce9d64",
+        "currency": "USD",
+        "total": "0.00",
+        "status": "completed",
+        "item_count": 1
+      },
+      {
+        "id": 26,
+        "sha256": "7f2b950e1d8f1db68445990d9164c9291d1419d5f1ff26fad92b14c56480afc2",
+        "financial_sha256": "7048c8c55d96a8d74ae56fd187a604f62b917d84fa2c1a25ffd79359202ee1a2",
+        "currency": "USD",
+        "total": "10.00",
+        "status": "processing",
+        "item_count": 1
+      },
+      {
+        "id": 27,
+        "sha256": "2cfbf70448b5da886021cb6bab1c2c9fd36944a2bf1e55ae34b2f3a2b4fca1a7",
+        "financial_sha256": "d58244f3a1419eccf796c56cfdd6506fa1625d0b827f3eea2358bee0168a2605",
+        "currency": "USD",
+        "total": "0.00",
+        "status": "completed",
+        "item_count": 2
+      },
+      {
+        "id": 28,
+        "sha256": "e97ace4a761bc26eb0fb4352d62ed417f84a018a1db9c2b0c8c25372de9b4691",
+        "financial_sha256": "08fffc6f9dc9e49bf3db5015feb4b6b34d7195102914c3acf104955748e407cf",
+        "currency": "USD",
+        "total": "20.00",
+        "status": "refunded",
+        "item_count": 2
+      },
+      {
+        "id": 30,
+        "sha256": "0cf998dbb9354192a129492fe962564b0ef4b7b104d4c930f052261c4612f840",
+        "financial_sha256": "10fc84772cfaa3ad010bd447475afe4f4bc571b29bcb572b757eb0cd0e5996e0",
+        "currency": "USD",
+        "total": "10.00",
+        "status": "processing",
+        "item_count": 1
+      },
+      {
+        "id": 31,
+        "sha256": "b9c51060014a50f6448aab51cf4ec7d46b4aca77d95870d85a37570f3692f3d3",
+        "financial_sha256": "d6541e1c88acf1b1a16a9ed2fbc88f1af79c998827805698e252c63b46c3120c",
+        "currency": "USD",
+        "total": "0.00",
+        "status": "completed",
+        "item_count": 1
+      },
+      {
+        "id": 32,
+        "sha256": "6e31dda9f8e122cbfada2cb9b5f7ea07444eca71eb74c2a141c4cb5363528aa3",
+        "financial_sha256": "39d872c2983ad7d415e835de01de6f8845242c4459e08fd708a94c51c30a9442",
+        "currency": "USD",
+        "total": "0.00",
+        "status": "completed",
+        "item_count": 2
+      },
+      {
+        "id": 33,
+        "sha256": "51c008313046134cee8d31339ef1a8ede42b823ddb011c71c7a611cd50c0c49c",
+        "financial_sha256": "adf52303e5eaedcabd398f73c3e3a2051f6e48c2ac018ad03b58a122e9ce9d64",
+        "currency": "USD",
+        "total": "0.00",
+        "status": "completed",
+        "item_count": 1
+      },
+      {
+        "id": 34,
+        "sha256": "dc061e52daf87c20ce73922226e7d5a433352b06ac7448159396bc0c0e40452d",
+        "financial_sha256": "7048c8c55d96a8d74ae56fd187a604f62b917d84fa2c1a25ffd79359202ee1a2",
+        "currency": "USD",
+        "total": "10.00",
+        "status": "processing",
+        "item_count": 1
+      },
+      {
+        "id": 35,
+        "sha256": "f28a02641a2ca06077d3557b7cce9965b15d2d60af1c9913c26757412a45b0b2",
+        "financial_sha256": "06f5ea26165ca04bbb9d80ac7b6d15d734705b14598c2c021b3c0cc13621e407",
+        "currency": "USD",
+        "total": "0.00",
+        "status": "completed",
+        "item_count": 1
+      },
+      {
+        "id": 36,
+        "sha256": "dc32e9353490fbef2e83685de4a26a7706b04002a16d5f8127d5434e12219fe2",
+        "financial_sha256": "066fec6f1a7fd2b8dff6ea33e8374bf0970d951138ea9f5ed8b86aabcc1c58b8",
+        "currency": "USD",
+        "total": "123.45",
+        "status": "processing",
+        "item_count": 1
+      }
+    ],
+    "new_tables": {
+      "venue_layouts": {
+        "engine": "InnoDB",
+        "unique_index": "PRIMARY"
+      },
+      "venue_sections": {
+        "engine": "InnoDB",
+        "unique_index": "layout_section"
+      },
+      "venue_places": {
+        "engine": "InnoDB",
+        "unique_index": "PRIMARY"
+      },
+      "venue_groups": {
+        "engine": "InnoDB",
+        "unique_index": "layout_group"
+      },
+      "venue_tiles": {
+        "engine": "InnoDB",
+        "unique_index": "layout_tile"
+      },
+      "venue_objects": {
+        "engine": "InnoDB",
+        "unique_index": "layout_object"
+      },
+      "venue_commands": {
+        "engine": "InnoDB",
+        "unique_index": "layout_request"
+      },
+      "venue_jobs": {
+        "engine": "InnoDB",
+        "unique_index": "PRIMARY"
+      },
+      "venue_import_chunks": {
+        "engine": "InnoDB",
+        "unique_index": "PRIMARY"
+      },
+      "allocation_sessions": {
+        "engine": "InnoDB",
+        "unique_index": "PRIMARY"
+      },
+      "allocation_sections": {
+        "engine": "InnoDB",
+        "unique_index": "PRIMARY"
+      },
+      "allocation_holds": {
+        "engine": "InnoDB",
+        "unique_index": "request_hash"
+      },
+      "allocation_lines": {
+        "engine": "InnoDB",
+        "unique_index": "hold_line"
+      },
+      "allocation_orders": {
+        "engine": "InnoDB",
+        "unique_index": "order_id"
+      },
+      "allocation_tickets": {
+        "engine": "InnoDB",
+        "unique_index": "line_seat"
+      },
+      "allocation_checkins": {
+        "engine": "InnoDB",
+        "unique_index": "ticket_id"
+      },
+      "allocation_requests": {
+        "engine": "InnoDB",
+        "unique_index": "request_hash"
+      }
+    },
+    "legacy_layout_count": 4,
+    "baseline_sha256": "98178ca43f46f7d103e912957abda4d75e480b28c27f546bd4e753cd2bd6bc58",
+    "smoke": {
+      "center_id": 8,
+      "hall_id": 5,
+      "layout_id": 6,
+      "event_id": 8,
+      "session_id": 21,
+      "order_id": 37,
+      "capacity": 8,
+      "admitted": 4
+    },
+    "checks": 131,
+    "scenarios": [
+      "plugin code is loaded from an installed copy inside wp-content/plugins",
+      "schema18 baseline is available in the same site",
+      "installed package migrated schema18 to schema19",
+      "migration reports no schema error",
+      "installed migrator differs from the schema18 source",
+      "allocated classes load from the installed package",
+      "historical table remains present: centers",
+      "all original columns and row hashes preserved: centers",
+      "historical table remains present: center_users",
+      "all original columns and row hashes preserved: center_users",
+      "historical table remains present: halls",
+      "all original columns and row hashes preserved: halls",
+      "historical table remains present: layout_versions",
+      "all original columns and row hashes preserved: layout_versions",
+      "historical table remains present: seats",
+      "all original columns and row hashes preserved: seats",
+      "historical table remains present: layout_objects",
+      "all original columns and row hashes preserved: layout_objects",
+      "historical table remains present: events",
+      "all original columns and row hashes preserved: events",
+      "historical table remains present: sessions",
+      "all original columns and row hashes preserved: sessions",
+      "historical table remains present: session_seats",
+      "all original columns and row hashes preserved: session_seats",
+      "historical table remains present: session_capacity",
+      "all original columns and row hashes preserved: session_capacity",
+      "historical table remains present: holds",
+      "all original columns and row hashes preserved: holds",
+      "historical table remains present: hold_items",
+      "all original columns and row hashes preserved: hold_items",
+      "historical table remains present: hold_mutations",
+      "all original columns and row hashes preserved: hold_mutations",
+      "historical table remains present: order_links",
+      "all original columns and row hashes preserved: order_links",
+      "historical table remains present: tickets",
+      "all original columns and row hashes preserved: tickets",
+      "historical table remains present: checkins",
+      "all original columns and row hashes preserved: checkins",
+      "historical table remains present: capacity_holds",
+      "all original columns and row hashes preserved: capacity_holds",
+      "historical table remains present: capacity_order_links",
+      "all original columns and row hashes preserved: capacity_order_links",
+      "historical table remains present: capacity_tickets",
+      "all original columns and row hashes preserved: capacity_tickets",
+      "historical table remains present: capacity_checkins",
+      "all original columns and row hashes preserved: capacity_checkins",
+      "historical table remains present: ticket_attendee_changes",
+      "all original columns and row hashes preserved: ticket_attendee_changes",
+      "historical table remains present: ticket_seat_transfers",
+      "all original columns and row hashes preserved: ticket_seat_transfers",
+      "historical table remains present: ticket_owners",
+      "all original columns and row hashes preserved: ticket_owners",
+      "historical table remains present: ticket_ownership_transfers",
+      "all original columns and row hashes preserved: ticket_ownership_transfers",
+      "historical table remains present: ticket_bundles",
+      "all original columns and row hashes preserved: ticket_bundles",
+      "historical table remains present: ticket_bundle_items",
+      "all original columns and row hashes preserved: ticket_bundle_items",
+      "historical table remains present: discount_rules",
+      "all original columns and row hashes preserved: discount_rules",
+      "historical table remains present: discount_claims",
+      "all original columns and row hashes preserved: discount_claims",
+      "Woo order, line identities and immutable financial metadata preserved: 11",
+      "Woo order, line identities and immutable financial metadata preserved: 12",
+      "Woo order, line identities and immutable financial metadata preserved: 14",
+      "Woo order, line identities and immutable financial metadata preserved: 15",
+      "Woo order, line identities and immutable financial metadata preserved: 16",
+      "Woo order, line identities and immutable financial metadata preserved: 17",
+      "Woo order, line identities and immutable financial metadata preserved: 18",
+      "Woo order, line identities and immutable financial metadata preserved: 19",
+      "Woo order, line identities and immutable financial metadata preserved: 20",
+      "Woo order, line identities and immutable financial metadata preserved: 22",
+      "Woo order, line identities and immutable financial metadata preserved: 23",
+      "Woo order, line identities and immutable financial metadata preserved: 24",
+      "Woo order, line identities and immutable financial metadata preserved: 25",
+      "Woo order, line identities and immutable financial metadata preserved: 26",
+      "Woo order, line identities and immutable financial metadata preserved: 27",
+      "Woo order, line identities and immutable financial metadata preserved: 28",
+      "Woo order, line identities and immutable financial metadata preserved: 30",
+      "Woo order, line identities and immutable financial metadata preserved: 31",
+      "Woo order, line identities and immutable financial metadata preserved: 32",
+      "Woo order, line identities and immutable financial metadata preserved: 33",
+      "Woo order, line identities and immutable financial metadata preserved: 34",
+      "Woo order, line identities and immutable financial metadata preserved: 35",
+      "Woo order, line identities and immutable financial metadata preserved: 36",
+      "new table installed: venue_layouts",
+      "new table uses InnoDB and expected unique key: venue_layouts",
+      "new table installed: venue_sections",
+      "new table uses InnoDB and expected unique key: venue_sections",
+      "new table installed: venue_places",
+      "new table uses InnoDB and expected unique key: venue_places",
+      "new table installed: venue_groups",
+      "new table uses InnoDB and expected unique key: venue_groups",
+      "new table installed: venue_tiles",
+      "new table uses InnoDB and expected unique key: venue_tiles",
+      "new table installed: venue_objects",
+      "new table uses InnoDB and expected unique key: venue_objects",
+      "new table installed: venue_commands",
+      "new table uses InnoDB and expected unique key: venue_commands",
+      "new table installed: venue_jobs",
+      "new table uses InnoDB and expected unique key: venue_jobs",
+      "new table installed: venue_import_chunks",
+      "new table uses InnoDB and expected unique key: venue_import_chunks",
+      "new table installed: allocation_sessions",
+      "new table uses InnoDB and expected unique key: allocation_sessions",
+      "new table installed: allocation_sections",
+      "new table uses InnoDB and expected unique key: allocation_sections",
+      "new table installed: allocation_holds",
+      "new table uses InnoDB and expected unique key: allocation_holds",
+      "new table installed: allocation_lines",
+      "new table uses InnoDB and expected unique key: allocation_lines",
+      "new table installed: allocation_orders",
+      "new table uses InnoDB and expected unique key: allocation_orders",
+      "new table installed: allocation_tickets",
+      "new table uses InnoDB and expected unique key: allocation_tickets",
+      "new table installed: allocation_checkins",
+      "new table uses InnoDB and expected unique key: allocation_checkins",
+      "new table installed: allocation_requests",
+      "new table uses InnoDB and expected unique key: allocation_requests",
+      "layout_versions.format defaults to pesm.layout.v1",
+      "historical layout remains v1: 1",
+      "historical layout remains v1: 2",
+      "historical layout remains v1: 3",
+      "historical layout remains v1: 4",
+      "new legacy hall insert uses the v1 database default",
+      "installed package generates and publishes exact eight-place v2 geometry",
+      "installed package provisions shared seat-backed allocated inventory",
+      "smoke group has four explicit member places",
+      "installed package creates a real free Woo order with one exclusive group credential",
+      "packaged together-entry scan and idempotent retry admit exactly four",
+      "test-only smoke leaves operational acceptance unchanged"
+    ]
+  },
+  "installed_candidate_archive_sha256": "ae0f815cdfa5c731c76838feb8d485454f04ae40843fbf31cc74bb7a995b4e87",
+  "runtime_fingerprint": {
+    "method": "SHA256 over sorted relative runtime paths and per-file SHA256 hashes",
+    "sha256": "f2f3484c3094a4f7831a0d4db1ffbe48b87a9a85a190756f530971e8af07aa40",
+    "files": 152,
+    "installed_candidate_matches_release_runtime": true
+  }
+}

@@ -17,12 +17,14 @@ final class Shortcodes
         add_shortcode('pesm_event', [self::class, 'event']);
         add_shortcode('pesm_seat_map', [self::class, 'map']);
         add_shortcode('pesm_capacity', [self::class, 'capacity']);
-        add_shortcode('pesm_my_tickets', [self::class, 'tickets']);
-        add_shortcode('pesm_invoices', [self::class, 'tickets']);
+        add_shortcode('pesm_my_tickets', [self::class, 'allTickets']);
+        add_shortcode('pesm_invoices', [self::class, 'allTickets']);
         add_shortcode('pesm_gate_scanner', [self::class, 'gate']);
         add_shortcode('pesm_manager_dashboard', [self::class, 'manager']);
-        add_shortcode('pesm_customer_panel', [self::class, 'tickets']);
+        add_shortcode('pesm_customer_panel', [self::class, 'allTickets']);
         add_shortcode('pesm_transfer_ticket', [self::class, 'ownershipTransfer']);
+        add_shortcode('pesm_venue_tickets', static fn(): string => \PESM\Support\VenueUi::render('tickets'));
+        add_shortcode('pesm_venue_gate', static fn(): string => current_user_can('pesm_scan_tickets') ? \PESM\Support\VenueUi::render('gate') : '');
     }
 
     public static function events(array|string $attributes = []): string
@@ -135,6 +137,7 @@ final class Shortcodes
         $p = $wpdb->prefix . 'pesm_';
         $mode = $wpdb->get_var($wpdb->prepare("SELECT s.mode FROM {$p}sessions s JOIN {$p}events e ON e.id=s.event_id WHERE s.id=%d AND s.status='published' AND e.status='published'", $sessionId));
         if ($mode === 'general') { return self::capacity(['session' => $sessionId]); }
+        if ($mode === 'allocated') { return \PESM\Support\VenueUi::render('booking', ['sessionId' => $sessionId]); }
         if ($mode !== 'seated') { return '<p dir="' . I18n::direction() . '">' . self::t('جلسه منتشرشده یافت نشد.') . '</p>'; }
         self::enqueueTickets();
         wp_enqueue_script('pesm-attendees', PESM_URL . 'assets/js/attendees.js', ['pesm-i18n'], Ui::assetVersion('assets/js/attendees.js'), true);
@@ -203,6 +206,11 @@ final class Shortcodes
             . '<form class="pesm-recovery-verify" hidden><input name="order_id" type="hidden"><label>' . self::t('کد ۸ رقمی') . '<input name="code" inputmode="numeric" pattern="[0-9]{8}" maxlength="8" required autocomplete="one-time-code" dir="ltr"></label>'
             . '<button type="submit" class="pesm-button-primary">' . self::t('تأیید و نمایش بلیت‌ها') . '</button></form><p class="pesm-recovery-message pesm-status" role="status" aria-live="polite"></p></div></details></div>'
             . '<div class="pesm-invoice-results"></div><div class="pesm-ticket-results"></div></section>';
+    }
+
+    public static function allTickets(): string
+    {
+        return self::tickets() . \PESM\Support\VenueUi::render('tickets');
     }
 
     /** Consent from the current bearer holder and a recipient verification code. */
@@ -314,6 +322,14 @@ final class Shortcodes
         if (!is_user_logged_in() || !current_user_can('pesm_scan_tickets')) {
             return '<section class="pesm-ui" dir="' . I18n::direction() . '">' . self::emptyState('ticket', 'برای کنترل ورود، حساب اپراتور مجاز لازم است.', 'با حساب اپراتور مرکز وارد شوید و دوباره این صفحه را باز کنید.') . '</section>';
         }
+        return \PESM\Support\VenueUi::render('gate');
+    }
+
+    /** Retained legacy markup for integrations that explicitly use the original scanner. */
+    public static function legacyGate(): string
+    {
+        if (!is_user_logged_in() || !current_user_can('pesm_scan_tickets')) { return self::gate(); }
+        Ui::enqueue();
         wp_enqueue_style('pesm-map', PESM_URL . 'assets/css/map.css', ['pesm-ui'], Ui::assetVersion('assets/css/map.css'));
         wp_enqueue_script('pesm-gate', PESM_URL . 'assets/js/gate.js', ['pesm-i18n'], Ui::assetVersion('assets/js/gate.js'), true);
         wp_add_inline_script('pesm-gate', 'window.PESM_GATE_CONFIG = ' . wp_json_encode(['apiRoot' => esc_url_raw(rest_url('pesm/v1/')), 'nonce' => wp_create_nonce('wp_rest')]) . ';', 'before');

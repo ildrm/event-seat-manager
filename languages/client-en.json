@@ -368,7 +368,7 @@
   "ثبت سفارش از سبد": "Place order from cart",
   "برای بلیت‌های رزروشده از دکمه «ثبت سفارش از سبد» در پنل صندلی‌های سبد استفاده کنید؛ پرداخت معمول ووکامرس برای این آیتم‌ها فعال نیست.": "Use Place order from cart in the cart seat panel. Standard WooCommerce checkout is unavailable for these items.",
   "مدیریت رویداد و صندلی": "Event and seat management",
-  "نسخهٔ 1.0.0؛ پیش از فعال‌سازی فروش واقعی، گزارش پذیرش انتشار را بررسی کنید.": "Version 1.0.0. Review the release acceptance report before enabling live sales.",
+  "نسخهٔ 2.0.0؛ پیش از فعال‌سازی فروش واقعی، گزارش پذیرش انتشار را بررسی کنید.": "Version 2.0.0. Review the release acceptance report before enabling live sales.",
   "۳. ایجاد رویداد": "3. Create event",
   "۴. ایجاد جلسه": "4. Create session",
   "فعال": "Active",

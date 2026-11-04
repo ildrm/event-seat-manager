@@ -1,4 +1,4 @@
-# English, Persian and calendar behavior — 1.0.0
+# English, Persian and calendar behavior — 2.0.0
 
 `PESM\Support\I18n` follows `determine_locale()` in WordPress, including the administrator's profile language. Persian uses RTL and Jalali dates; English uses LTR and Gregorian dates. Both display business times in `Asia/Tehran`. Stored dates and expiry rules remain UTC.
 

@@ -35,6 +35,7 @@ add_filter('pre_wp_mail', static fn(): bool => true);
 add_filter('pre_http_request', static fn(): WP_Error => new WP_Error('integration_network_disabled', 'No remote requests during integration tests.'), 99);
 global $wpdb;
 $p = $wpdb->prefix . 'pesm_';
+$expectedTableCount = 38 + count(\PESM\Database\VenueSchema::tables()) + count(\PESM\Database\AllocationSchema::tables());
 $_SERVER['REMOTE_ADDR'] = '127.0.0.' . random_int(2, 250);
 $mode = $args[0] ?? 'all';
 $state = get_option('pesm_integration_fixture', []);
@@ -61,8 +62,8 @@ if ($mode === 'prepare-upgrade-race') {
         }
     }
     $wpdb->query("DROP TABLE {$p}ticket_bundle_items, {$p}ticket_bundles");
-    update_option('pesm_schema_version', 17, false);
-    echo "{\"downgraded_schema_marker\":17}\n";
+    update_option('pesm_schema_version', \PESM\Database\Migrator::VERSION - 1, false);
+    echo wp_json_encode(['downgraded_schema_marker' => \PESM\Database\Migrator::VERSION - 1]) . "\n";
     return;
 }
 
@@ -96,7 +97,7 @@ if (str_starts_with($mode, 'worker-')) {
             echo wp_json_encode(['ok' => true, 'checked_in' => $result['checked_in']]) . "\n";
         } elseif ($mode === 'worker-upgrade') {
             \PESM\Database\Migrator::run();
-            echo wp_json_encode(['ok' => (int) get_option('pesm_schema_version') === 18 && !get_option('pesm_schema_error')]) . "\n";
+            echo wp_json_encode(['ok' => (int) get_option('pesm_schema_version') === \PESM\Database\Migrator::VERSION && !get_option('pesm_schema_error')]) . "\n";
         } else { throw new RuntimeException('Unknown worker mode.'); }
     } catch (HoldException $error) {
         echo wp_json_encode(['ok' => false, 'error' => $error->errorCode]) . "\n";
@@ -131,9 +132,9 @@ if ($mode === 'network-activation') {
 }
 
 if ($mode === 'verify-upgrade') {
-    $assert((int) get_option('pesm_schema_version') === 18 && !get_option('pesm_schema_error'), 'Concurrent upgrade reaches schema18 without error');
+    $assert((int) get_option('pesm_schema_version') === \PESM\Database\Migrator::VERSION && !get_option('pesm_schema_error'), 'Concurrent upgrade reaches the current schema without error');
     $names = $wpdb->get_col($wpdb->prepare('SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME LIKE %s', $wpdb->esc_like($p) . '%'));
-    $assert(count($names) === 37, 'Concurrent upgrade recreates both new bundle tables');
+    $assert(count($names) === $expectedTableCount, 'Concurrent upgrade recreates every required plugin table');
     $database = (string) $wpdb->get_var('SELECT DATABASE()');
     $lock = 'esm_migrate_' . substr(hash('sha256', $database . '|' . $wpdb->prefix), 0, 48);
     $assert((int) $wpdb->get_var($wpdb->prepare('SELECT IS_FREE_LOCK(%s)', $lock)) === 1, 'Migration advisory lock is released after all workers');
@@ -206,7 +207,7 @@ $started = microtime(true);
 $assert((int) get_option('pesm_schema_version') === \PESM\Database\Migrator::VERSION, 'Schema version matches migrator');
 $assert(!get_option('pesm_schema_error'), 'Migration has no recorded error');
 $tables = $wpdb->get_results($wpdb->prepare('SELECT TABLE_NAME,ENGINE FROM information_schema.TABLES WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME LIKE %s', $wpdb->esc_like($p) . '%'));
-$assert(count($tables) === 37, 'All 37 plugin tables created');
+$assert(count($tables) === $expectedTableCount, 'All ' . $expectedTableCount . ' plugin tables created');
 $assert(count(array_filter($tables, static fn(object $table): bool => strtoupper($table->ENGINE) !== 'INNODB')) === 0, 'All plugin tables use InnoDB');
 
 update_option('woocommerce_currency', 'USD');
@@ -363,9 +364,9 @@ $holds->acquire($free, [$seatIds[4]], bin2hex(random_bytes(24)));
 $assert(true, 'Expired inventory can be acquired without cron');
 
 $beforeCount = (int) $wpdb->get_var("SELECT COUNT(*) FROM {$p}tickets");
-update_option('pesm_schema_version', 17);
+update_option('pesm_schema_version', \PESM\Database\Migrator::VERSION - 1);
 \PESM\Database\Migrator::run();
-$assert((int) get_option('pesm_schema_version') === 18 && !get_option('pesm_schema_error'), 'Upgrade from prior schema completes');
+$assert((int) get_option('pesm_schema_version') === \PESM\Database\Migrator::VERSION && !get_option('pesm_schema_error'), 'Upgrade from prior schema completes');
 $assert((int) $wpdb->get_var("SELECT COUNT(*) FROM {$p}tickets") === $beforeCount, 'Schema upgrade preserves tickets');
 
 wp_set_current_user(0);

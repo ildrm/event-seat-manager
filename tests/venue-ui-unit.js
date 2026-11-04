@@ -1,0 +1,67 @@
+const assert=require('node:assert/strict');
+const path=require('node:path');
+const{pathToFileURL}=require('node:url');
+
+(async()=>{
+  const{GeometryCache,RequestQueue,SelectionController,restURL,normalizeSeat,normalizeGroup,nearest,boundsOf,utcMillis,money,friendlyError,ApiClient,ticketNumberForLookup,bookingFormState,resolveMapLocation,previewScopeKey}=await import(pathToFileURL(path.join(__dirname,'../assets/src/venue-core.mjs')));
+  const tile=length=>({seats:Array.from({length},(_,id)=>({id}))});
+  const cache=new GeometryCache();cache.set('a',tile(2000));cache.set('b',tile(2000));cache.get('a');cache.set('c',tile(2000));
+  assert.equal(cache.count,4000);assert.equal(cache.get('b'),undefined);assert.ok(cache.get('a'));
+  cache.set('a',tile(100));assert.equal(cache.count,2100);assert.throws(()=>cache.set('oversized',tile(2001)));cache.clear();assert.equal(cache.count,0);
+  const queue=new RequestQueue();let running=0,maximum=0;const resolvers=[];
+  const tasks=Array.from({length:13},(_,index)=>queue.run(()=>{running++;maximum=Math.max(maximum,running);return new Promise(resolve=>resolvers.push(()=>{running--;resolve(index);}));}));
+  while(queue.active||queue.pending.length){await new Promise(resolve=>setImmediate(resolve));resolvers.splice(0).forEach(resolve=>resolve());}
+  assert.deepEqual(await Promise.all(tasks),Array.from({length:13},(_,i)=>i));assert.equal(maximum,4);
+  const selection=new SelectionController();let updates=0;selection.subscribe(()=>updates++);
+  const member={type:'seat',id:12,code:'A-12',group_code:'TABLE-1'};selection.toggle(member);selection.toggle({type:'table',id:'TABLE-1',code:'TABLE-1',capacity:8});
+  assert.equal(selection.selected.size,1);assert.equal(selection.payload()[0].type,'group');assert.equal(selection.has(member),true);assert.equal(selection.toggle(member),false);
+  selection.setBusy(true);assert.equal(selection.toggle({type:'seat',id:88}),false);selection.clear();assert.equal(selection.selected.size,1);
+  selection.setBusy(false);selection.clear();assert.equal(selection.selected.size,0);
+  for(let id=1;id<=20;id++)selection.toggle({type:'seat',id});assert.throws(()=>selection.toggle({type:'seat',id:21}));assert.ok(updates>20);
+  const signature=selection.signature();selection.selected=new Map([...selection.selected].reverse());assert.equal(selection.signature(),signature);
+  const admin=new SelectionController(2000);for(let id=1;id<=500;id++)admin.toggle({type:'seat',id});assert.equal(admin.selected.size,500);
+  const bounded=new SelectionController(20,20);bounded.toggle({type:'seat',id:1,group_code:'G-1'});assert.throws(()=>bounded.toggle({type:'table',id:'G-1',capacity:21}));assert.equal(bounded.selected.size,1);assert.equal(bounded.selected.has('seat:1'),true);
+  const pretty=restURL('sessions/7/units?cursor=a%2Bb','https://example.test/blog/wp-json/pesm/v2/');assert.equal(pretty.pathname,'/blog/wp-json/pesm/v2/sessions/7/units');assert.equal(pretty.searchParams.get('cursor'),'a+b');
+  const plain=restURL('sessions/7/holds','https://example.test/?rest_route=%2Fpesm%2Fv2%2F&lang=fa');assert.equal(plain.searchParams.get('rest_route'),'/pesm/v2/sessions/7/holds');assert.equal(plain.searchParams.get('lang'),'fa');assert.throws(()=>restURL('https://elsewhere.test','https://example.test'));
+  const a=normalizeSeat({seat_id:'9',seat_code:'S1-A9',pos_x:400,pos_y:600});assert.equal(a.id,9);assert.equal(a.x,400);assert.equal(a.code,'S1-A9');
+  const group=normalizeGroup({group_code:'B-1',group_type:'box',capacity:12});assert.equal(group.type,'box');assert.equal(group.id,'B-1');
+  const publicBox=normalizeGroup({type:'group',unit_type:'box',id:'B-2',code:'B-2',capacity:8});assert.equal(publicBox.type,'box');assert.equal(publicBox.id,'B-2');
+  assert.equal(normalizeGroup({type:'group',unit_type:'table',code:'T-2'}).type,'table');
+  let locatorCalls=0;
+  const resolved=await resolveMapLocation({type:'box',id:'B-2',code:'B-2',section_code:'S1'},async code=>{locatorCalls++;assert.equal(code,'B-2');return{item:{section_code:'S1',tile_code:'S1-003'}};});
+  assert.deepEqual(resolved,{section_code:'S1',tile_code:'S1-003'});assert.equal(locatorCalls,1,'groups missing a locator resolve their real tile instead of the first tile');
+  assert.deepEqual(await resolveMapLocation({...publicBox,section_code:'S1',tile_code:'S1-003'},async()=>{throw Error('unnecessary lookup');}),resolved);
+  const lines=[{group_code:'TABLE-1',seat_ids:[11,12]},{group_code:'BOX-2',seat_ids:[21]}];
+  const cartDefaults={ticket_modes:{'TABLE-1':'individual','BOX-2':'group'},attendees:{11:{first_name:'Saved',last_name:'Name'},12:{first_name:'دریا',last_name:'کاظمی'},21:{first_name:'Robin',last_name:'Lin'}}};
+  const initialForm=bookingFormState(lines,{},cartDefaults);assert.equal(initialForm.ticket_modes['BOX-2'],'group');assert.equal(initialForm.attendees['12'].first_name,'دریا');
+  initialForm.ticket_modes['TABLE-1']='group';initialForm.ticket_modes['BOX-2']='individual';initialForm.attendees['11']={first_name:'Mina',last_name:'Rahimi'};initialForm.attendees['12']={first_name:'',last_name:''};
+  for(const action of ['renew','refresh','bfcache']){
+    const rebuilt=bookingFormState(structuredClone(lines),initialForm,cartDefaults);
+    assert.equal(rebuilt.ticket_modes['TABLE-1'],'group',`${action} keeps buyer-choice group QR`);assert.equal(rebuilt.ticket_modes['BOX-2'],'individual',`${action} keeps the other group choice`);
+    assert.deepEqual(rebuilt.attendees['11'],{first_name:'Mina',last_name:'Rahimi'},`${action} keeps edited guest names by seat ID`);
+    assert.deepEqual(rebuilt.attendees['12'],{first_name:'',last_name:''},`${action} does not restore cart names the buyer cleared`);
+  }
+  const replacement=bookingFormState([{group_code:'TABLE-1',seat_ids:[11,31]}],initialForm,cartDefaults);
+  assert.equal(replacement.ticket_modes['TABLE-1'],'group');assert.deepEqual(replacement.attendees['11'],initialForm.attendees['11']);assert.deepEqual(replacement.attendees['31'],{first_name:'',last_name:''});assert.equal(replacement.attendees['21'],undefined,'replacement does not assign another guest to a new place');
+  assert.equal(cartDefaults.attendees['11'].first_name,'Saved','server defaults are not mutated by editing');
+  const overview3d={scope:'9:overview:',sections:[{code:'S1',level:0},{code:'S2',level:1}],seats:[]};
+  const first3d={scope:'9:S1-001:',sections:[],seats:[{id:11,available:true},{id:12,available:false}],selected:[]};
+  const moved3d={...first3d,scope:'9:S2-001:',seats:[{id:21,x:1000000,y:1000000}]};
+  assert.notEqual(previewScopeKey(overview3d),previewScopeKey(first3d),'opening section detail refits the camera');assert.notEqual(previewScopeKey(first3d),previewScopeKey(moved3d),'a distant section refits the camera');
+  assert.equal(previewScopeKey(first3d),previewScopeKey({...first3d,selected:['seat:11'],seats:[{id:12,available:true},{id:11,available:false}]}),'selection, availability and order changes preserve the camera');
+  assert.notEqual(previewScopeKey(first3d),previewScopeKey({...first3d,seats:[{id:13},{id:14}]}),'changed canonical place identities refit even if scope metadata is absent or unchanged');
+  assert.notEqual(previewScopeKey(overview3d),previewScopeKey({...overview3d,sections:[{code:'S2',level:1}]}),'filtered overview sections refit the camera');
+  const current={id:1,x:0,y:0},right={id:2,x:550,y:20},diagonal={id:3,x:30,y:1000};assert.equal(nearest([current,right,diagonal],current,'ArrowRight').id,2);assert.equal(nearest([current,right,diagonal],current,'ArrowUp'),null);
+  assert.equal(nearest([current,right],current,'ArrowRight',()=>false),null);
+  const bounds=boundsOf([{x:-1000,y:300,width:100,height:100},{x:400,y:-600,width:100,height:100}],0);assert.equal(bounds.x,-1000);assert.equal(bounds.y,-600);assert.equal(bounds.width,1500);
+  assert.equal(utcMillis('2026-11-04 12:30:00'),Date.parse('2026-11-04T12:30:00Z'));assert.equal(utcMillis('2026-11-04T12:30:00Z'),Date.parse('2026-11-04T12:30:00Z'));
+  assert.equal(money(12345,2,'USD','en'),'123.45 USD');
+  assert.match(friendlyError('seat_unavailable','fa','seat_unavailable'),/جایگاه/);assert.doesNotMatch(friendlyError('unknown_error_code','fa','unknown_error_code'),/unknown_error/);
+  assert.equal(friendlyError('unknown_error_code','en','unknown_error_code'),'The request could not be completed. Refresh and try again.');
+  let sent;global.fetch=async(url,options)=>{sent={url,options};return{ok:false,status:409,json:async()=>({code:'seat_unavailable',message:'seat_unavailable'})};};
+  const client=new ApiClient({rest:'https://example.test/wp-json/pesm/v2/',locale:'fa',nonce:'WP-CSRF',cartNonce:'WC-CSRF'});
+  await assert.rejects(client.request('sessions/7/holds',{token:'PRIVATE-HOLD',method:'POST',body:{units:[]}}),/جایگاه/);
+  assert.equal(sent.options.headers['X-PESM-Hold-Token'],'PRIVATE-HOLD');assert.equal(sent.options.headers['X-PESM-Cart-Nonce'],'WC-CSRF');assert.equal(sent.options.headers['X-WP-Nonce'],'WP-CSRF');assert.doesNotMatch(sent.url.href,/PRIVATE|CSRF/);
+  assert.equal(ticketNumberForLookup(`A.G.${'a'.repeat(32)}.${'b'.repeat(64)}`),`A-G-${'A'.repeat(32)}`);assert.equal(ticketNumberForLookup(`${'a'.repeat(32)}.${'b'.repeat(64)}`),null);assert.equal(ticketNumberForLookup('P-ABC-123'),'P-ABC-123');
+  console.log('PASS: bounded geometry, four-request queue, shared selection, group locators, renewal/refresh/BFCache form persistence, 3D scope fitting, physical navigation and private REST transport.');
+})().catch(error=>{console.error(error);process.exitCode=1;});

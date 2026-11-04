@@ -7,6 +7,8 @@ namespace PESM\Domain\Hall;
 use InvalidArgumentException;
 use JsonException;
 
+require_once __DIR__ . '/SeatCode.php';
+
 /** A versioned, data-only format. Never accepts SQL, HTML or serialized PHP. */
 final class LayoutDocument
 {
@@ -52,9 +54,10 @@ final class LayoutDocument
             $code = $seat['code'];
             $row = $seat['row_label'];
             $zone = $seat['zone'];
-            if (!is_string($code) || !preg_match('/^[A-Z0-9][A-Z0-9._-]{0,59}$/D', $code) ||
+            if (!SeatCode::valid($code) ||
                 !is_string($row) || !preg_match('/^[A-Za-z0-9_-]{1,20}$/D', $row) ||
-                !is_string($zone) || trim($zone) === '' || strlen($zone) > 180 ||
+                !is_string($zone) || trim($zone) === '' || strlen($zone) > 240 ||
+                preg_match('/\A.{1,60}\z/usD', $zone) !== 1 ||
                 preg_match('/[\x00-\x1F\x7F]/', $zone) ||
                 !self::integer($seat['number'], 1, 10000) ||
                 !self::integer($seat['x'], -1000000, 1000000) ||

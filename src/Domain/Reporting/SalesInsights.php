@@ -52,13 +52,17 @@ final class SalesInsights
             $params[] = $sessionId;
         }
         // Both ticket tables represent the same metric. Never count holds or pending orders.
-        foreach (['tickets', 'capacity_tickets'] as $table) {
+        $ticketTables = ['tickets', 'capacity_tickets'];
+        if ((int) get_option('pesm_schema_version', 0) >= 19) { $ticketTables[] = 'allocation_tickets'; }
+        foreach ($ticketTables as $table) {
+            $activeLine = $table === 'allocation_tickets' ? "AND (t.status='checked_in' OR EXISTS (SELECT 1 FROM {$p}allocation_lines al WHERE al.id=t.line_id AND al.status='issued'))" : '';
             $sql = "SELECT DATE(t.created_at) AS issued_day, COUNT(*) AS total
                     FROM {$p}{$table} t
                     JOIN {$p}sessions s ON s.id=t.session_id
                     JOIN {$p}events e ON e.id=s.event_id
                     WHERE {$conditions} AND t.created_at >= %s AND t.created_at < %s
                       AND t.status IN ('active','checked_in')
+                      {$activeLine}
                     GROUP BY DATE(t.created_at) ORDER BY issued_day";
             $rows = $wpdb->get_results($wpdb->prepare($sql, ...array_merge($params, [$from, $until])), ARRAY_A);
             if (!is_array($rows)) {
@@ -71,8 +75,10 @@ final class SalesInsights
                 }
             }
         }
+        $ticketSource = (int) get_option('pesm_schema_version', 0) >= 19
+            ? "(SELECT session_id,seat_id,status FROM {$p}tickets UNION ALL SELECT a.session_id,a.seat_id,a.status FROM {$p}allocation_tickets a JOIN {$p}allocation_lines al ON al.id=a.line_id WHERE al.status='issued' OR a.status='checked_in')" : "{$p}tickets";
         $sql = "SELECT seat.zone_label AS zone,seat.row_label AS row_label,COUNT(*) AS total
-                FROM {$p}tickets t
+                FROM {$ticketSource} t
                 JOIN {$p}seats seat ON seat.id=t.seat_id
                 JOIN {$p}sessions s ON s.id=t.session_id AND s.layout_id=seat.layout_id
                 JOIN {$p}events e ON e.id=s.event_id

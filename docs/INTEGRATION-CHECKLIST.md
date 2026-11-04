@@ -1,4 +1,4 @@
-# Acceptance checklist — 1.0.0
+# Acceptance checklist — 2.0.0
 
 Executed items are bounded by [recorded integration versions](INTEGRATION-RESULTS.md). An item is not a certificate for every deployment or every original requirement.
 

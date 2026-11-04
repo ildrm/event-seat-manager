@@ -28,7 +28,7 @@
     const status = root.querySelector('.pesm-cart-message');
     const form = root.querySelector('.pesm-cart-complete');
     let busy = false;
-    let map = [], own = [], selected = new Set(), availability = new Map();
+    let objects = [], map = [], own = [], selected = new Set(), availability = new Map();
     let currentRequest = null;
     let zoom = 1;
     const message = (s) => { status.textContent = s; };
@@ -48,8 +48,8 @@
       viewport.tabIndex = 0;
       viewport.setAttribute('aria-label', window.PESM_I18N.text("نقشه سالن برای تغییر جایگاه در سبد خرید"));
       const stage = document.createElement('div'); stage.className = 'pesm-cart-stage';
-      const width = Math.max(450, ...map.map(s => Number(s.pos_x) + 50));
-      const height = Math.max(200, ...map.map(s => Number(s.pos_y) + 50));
+      const width = Math.max(450, ...map.map(s => Number(s.pos_x) + 50), ...objects.map(o => Number(o.x) + Number(o.width)));
+      const height = Math.max(200, ...map.map(s => Number(s.pos_y) + 50), ...objects.map(o => Number(o.y) + Number(o.height)));
       const scaleStage = () => {
         stage.style.width = `${Math.ceil(width * zoom)}px`;
         stage.style.height = `${Math.ceil(height * zoom)}px`;
@@ -78,6 +78,15 @@
         viewport.scrollTop = Math.max(0, Number(match.pos_y) * zoom - viewport.clientHeight / 2);
         [...canvas.children].find(b => Number(b.dataset.seatId) === Number(match.id))?.focus({preventScroll: true});
       });
+      objects.forEach(o => {
+        const object = document.createElement('div'); object.className = 'pesm-cart-object';
+        object.style.left = `${Number(o.x)}px`; object.style.top = `${Number(o.y)}px`;
+        object.style.width = `${Number(o.width)}px`; object.style.height = `${Number(o.height)}px`;
+        if (o.type === 'round_table') object.style.borderRadius = '50%';
+        object.textContent = String(o.label || ''); object.setAttribute('role', 'img');
+        object.setAttribute('aria-label', String(o.label || o.type)); canvas.append(object);
+      });
+      let firstEnabled = true;
       for (const seat of map) {
         const id = Number(seat.id);
         const mine = own.includes(id);
@@ -90,11 +99,15 @@
         b.textContent = labelFor(seat); b.title = (window.PESM_I18N.text("صندلی ") + String(labelFor(seat)) + window.PESM_I18N.text("؛ ") + String(mine ? window.PESM_I18N.text("رزرو شما") : window.PESM_I18N.status(state)));
         b.setAttribute('aria-pressed', String(selected.has(id)));
         b.disabled = !accessible;
+        b.tabIndex = accessible && firstEnabled ? 0 : -1;
+        if (accessible) firstEnabled = false;
+        b.setAttribute('aria-label', `${seat.zone_label || ''}, ${labelFor(seat)}, ${window.PESM_I18N.status(state)}`);
+        b.addEventListener('focus', () => { for (const item of canvas.querySelectorAll('.pesm-cart-seat')) item.tabIndex = item === b ? 0 : -1; });
         b.addEventListener('click', () => {
           if (busy) return;
           if (selected.has(id)) selected.delete(id); else if (selected.size < 20) selected.add(id);
           currentRequest = null;
-          for (const c of canvas.children) {
+          for (const c of canvas.querySelectorAll('.pesm-cart-seat')) {
             const checked = selected.has(Number(c.dataset.seatId));
             c.classList.toggle('pesm-cart-selected', checked);
             c.setAttribute('aria-pressed', String(checked));
@@ -103,6 +116,20 @@
         });
         canvas.append(b);
       }
+      canvas.addEventListener('keydown', event => {
+        const vector = {ArrowLeft: [-1,0], ArrowRight: [1,0], ArrowUp: [0,-1], ArrowDown: [0,1]}[event.key];
+        const current = map.find(s => Number(s.id) === Number(event.target.dataset.seatId));
+        if (!vector || !current) return;
+        event.preventDefault();
+        const next = map.filter(s => {
+          const sid = Number(s.id), dx = Number(s.pos_x)-Number(current.pos_x), dy = Number(s.pos_y)-Number(current.pos_y);
+          return (own.includes(sid) || availability.get(sid) === 'available') && dx*vector[0]+dy*vector[1]>0;
+        }).map(s => {
+          const dx=Number(s.pos_x)-Number(current.pos_x),dy=Number(s.pos_y)-Number(current.pos_y);
+          return {id:Number(s.id),score:Math.abs(dx*vector[0]+dy*vector[1])+4*Math.abs(dx*vector[1]-dy*vector[0])};
+        }).sort((a,b)=>a.score-b.score)[0];
+        if (next) canvas.querySelector(`[data-seat-id="${next.id}"]`)?.focus();
+      });
       stage.append(canvas); viewport.append(stage); panel.append(toolbar, viewport);
       setZoom(Math.min(1.2, Math.max(.35, (viewport.clientWidth - 24) / width)));
       update();
@@ -115,6 +142,7 @@
       if (Number(mine.session_id) !== sessionId) throw Error(window.PESM_I18N.text("جلسه سبد با رزرو برابر نیست."));
       own = sorted(mine.seat_ids.map(Number)); selected = new Set(own);
       map = Array.isArray(layout.seats) ? layout.seats : [];
+      objects = Array.isArray(layout.objects) ? layout.objects : [];
       availability = new Map((states.availability || []).map(s => [Number(s.seat_id), String(s.status)]));
       panel.hidden = false; paint();
       message(window.PESM_I18N.text("صندلی‌های آبی رزرو فعلی شما هستند؛ تغییرات پس از ثبت سمت سرور اعمال می‌شوند."));

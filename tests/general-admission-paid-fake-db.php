@@ -23,7 +23,7 @@ function get_option(string $key, mixed $default = false): mixed {
     return $key === 'pesm_schema_version' ? 10 : ($key === 'pesm_enable_paid_general_preview' ? $GLOBALS['paid_preview'] : $default);
 }
 function wc_tax_enabled(): bool { return $GLOBALS['tax_enabled']; }
-function wc_get_price_decimals(): int { return 2; }
+function wc_get_price_decimals(): int { return $GLOBALS['shop_decimals'] ?? 2; }
 
 function wp_salt(string $name): string { return 'test-only-unusable-private-secret'; }
 function wc_get_order(int $id): object|false { return $id === 99 ? new StubOrder() : false; }
@@ -35,9 +35,11 @@ final class StubOrder {
         '_pesm_mode'=>'general', '_pesm_is_ticket_order'=>'yes', '_pesm_capacity_hold_id'=>12,
         '_pesm_attendees_v1'=>($GLOBALS['attendee_snapshot'] ?? null),
         '_pesm_session_id'=>7, '_pesm_unit_price_minor'=>($GLOBALS['snapshot_unit'] ?? 100), '_pesm_total_minor'=>($GLOBALS['snapshot_total'] ?? 300),
+        '_pesm_currency'=>($GLOBALS['snapshot_currency'] ?? 'USD'), '_pesm_price_decimals'=>($GLOBALS['snapshot_decimals'] ?? 2),
     ][$key] ?? null; }
     public function get_status(): string { return 'processing'; }
     public function get_total(): string { return $GLOBALS['order_total'] ?? '3.00'; }
+    public function get_currency(): string { return $GLOBALS['order_currency'] ?? 'USD'; }
     public function get_billing_first_name(): string { return 'نرگس'; }
     public function get_billing_last_name(): string { return 'نمونه'; }
 }
@@ -163,6 +165,14 @@ $GLOBALS['order_total'] = '3.00';
 $GLOBALS['snapshot_total'] = 400;
 expected(fn()=>$service->confirmPaid(99), 'price_mismatch');
 $GLOBALS['snapshot_total'] = 300;
+$GLOBALS['order_currency']='EUR';
+expected(fn()=>$service->confirmPaid(99),'price_mismatch');
+ok($wpdb->tickets===[],'Currency mismatch never issues paid GA');
+$GLOBALS['order_currency']='USD';$GLOBALS['snapshot_currency']='';
+expected(fn()=>$service->confirmPaid(99),'price_mismatch');
+$GLOBALS['snapshot_currency']='USD';$GLOBALS['snapshot_decimals']='';
+expected(fn()=>$service->confirmPaid(99),'price_mismatch');
+$GLOBALS['snapshot_decimals']=2;$GLOBALS['shop_decimals']=0;
 $wpdb->failTicketIndex = 2;
 expected(fn()=>$service->confirmPaid(99), 'ticket_write_failed');
 ok($wpdb->tickets === [] && $wpdb->inventory['pending_units'] === 3, 'Partial ticket insert rolled back');

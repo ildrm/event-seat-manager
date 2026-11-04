@@ -1,9 +1,9 @@
-# Current implementation decisions — 1.0.0
+# Current implementation decisions — 2.0.0
 
 | Area | Decision | Practical limit |
 |---|---|---|
 | Rename | change plugin folder, main file and text domain; preserve PESM internal identity | old copy must be deactivated before activation |
-| Versioning | product 1.0.0, schema18 | database version is not a release label |
+| Versioning | product 2.0.0, schema19 | database version is not a release label |
 | Localization | WordPress locale, English/Persian catalogs, static literals only | user-entered content is not translated |
 | Time | UTC storage and server expiry; Tehran display, Jalali in Persian | management forms state their time zone explicitly |
 | Inventory | SQL row locks, guarded counters and unique keys | deadlock/crash recovery needs broader load acceptance |

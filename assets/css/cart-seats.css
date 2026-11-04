@@ -12,3 +12,5 @@
 .pesm-cart-complete .pesm-coupon-details{margin-block:20px;padding:12px 16px;background:var(--pesm-canvas);border-radius:10px}.pesm-coupon-details summary{cursor:pointer;min-block-size:44px;font-size:13px;font-weight:600}.pesm-coupon-details label{display:grid;gap:8px;margin-block:10px}
 .pesm-cart-order-result{padding:20px;margin-block:20px;border:1px solid #95cbbf;border-radius:12px;background:var(--pesm-success-soft);overflow-wrap:anywhere}
 @media(max-width:767px){.pesm-ui.pesm-cart-editor{padding:20px 14px;margin-block:16px}.pesm-cart-editor .pesm-cart-entry{padding:20px 16px}.pesm-cart-toolbar{gap:6px}.pesm-ui .pesm-cart-toolbar input{flex:1;inline-size:120px}.pesm-cart-viewport{min-block-size:320px}}
+
+.pesm-cart-object{position:absolute;display:flex;align-items:center;justify-content:center;box-sizing:border-box;border:1px solid #9aa9bd;background:#e9eef6;color:#36475e;pointer-events:none;font-size:12px;text-align:center;border-radius:5px;overflow:hidden}

@@ -1,0 +1,102 @@
+{
+  "passed": true,
+  "meaning": "Diagnostic low-volume profiling only; does not replace the failed 1000-client latency acceptance.",
+  "hardware": {
+    "memory_bytes": 8589934592,
+    "logical_cpus": 8,
+    "physical_cpus": 8,
+    "model": "Mac14,3"
+  },
+  "direct_services": {
+    "scope": "Thirty sequential warm service calls in one WordPress/WooCommerce CLI process; excludes HTTP queue and repeated bootstrap.",
+    "samples": 30,
+    "quote": {
+      "p50_ms": 0.17,
+      "p95_ms": 0.237,
+      "queries_per_call": 9
+    },
+    "availability_2000": {
+      "p50_ms": 4.382,
+      "p95_ms": 6.264,
+      "queries_per_call": 10
+    },
+    "hold": {
+      "p50_ms": 0.544,
+      "p95_ms": 1.83,
+      "queries_per_call": 18
+    },
+    "ip_rate_counter": {
+      "p50_ms": 0.09,
+      "p95_ms": 0.272,
+      "queries_per_call": 2
+    },
+    "database_variables": {
+      "innodb_buffer_pool_size": 134217728,
+      "innodb_flush_log_at_trx_commit": 1,
+      "sync_binlog": 0,
+      "max_connections": 300,
+      "innodb_autoinc_lock_mode": 1
+    },
+    "peak_php_memory_mib": 127.81
+  },
+  "http_baseline": {
+    "scope": "Sequential warm HTTP requests, excluding deliberate load bursts; local WordPress/WooCommerce bootstrap included.",
+    "environment": {
+      "replicas": 2,
+      "php_workers_per_replica": 4,
+      "proxy_upstream_slots": 8,
+      "opcache_mib_per_replica": 128
+    },
+    "profiles": {
+      "wordpress_preset_metadata": {
+        "requests": 20,
+        "successful": 20,
+        "status_counts": {
+          "200": 20
+        },
+        "error_codes": {},
+        "p50_ms": 35.17,
+        "p95_ms": 595.47,
+        "p99_ms": 965.58,
+        "max_response_bytes": 33258
+      },
+      "availability_2000": {
+        "requests": 20,
+        "successful": 20,
+        "status_counts": {
+          "200": 20
+        },
+        "error_codes": {},
+        "p50_ms": 39.08,
+        "p95_ms": 45.08,
+        "p99_ms": 121.91,
+        "max_response_bytes": 156144
+      },
+      "quote": {
+        "requests": 20,
+        "successful": 20,
+        "status_counts": {
+          "200": 20
+        },
+        "error_codes": {},
+        "p50_ms": 32.67,
+        "p95_ms": 43.75,
+        "p99_ms": 46.63,
+        "max_response_bytes": 315
+      },
+      "hold": {
+        "requests": 20,
+        "successful": 20,
+        "status_counts": {
+          "201": 20
+        },
+        "error_codes": {},
+        "p50_ms": 34.92,
+        "p95_ms": 39.83,
+        "p99_ms": 41.88,
+        "max_response_bytes": 620
+      }
+    }
+  },
+  "conclusion": "Warm service SQL work is milliseconds; sequential HTTP costs about 35-45ms. The simultaneous burst is dominated by the one-host PHP bootstrap and worker queue envelope. Production latency acceptance remains unproven."
+}

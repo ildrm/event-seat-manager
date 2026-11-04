@@ -2,7 +2,7 @@
 /**
  * Plugin Name: event-seat-manager
  * Description: Bilingual event, hall, seat reservation, WooCommerce ticketing and online admission management.
- * Version: 1.0.0
+ * Version: 2.0.0
  * Author: Shahin Ilderemi
  * Author URI:  https://ildrm.com
  * Requires PHP: 8.1
@@ -31,7 +31,7 @@ if (defined('PESM_FILE')) {
     return;
 }
 
-define('PESM_VERSION', '1.0.0');
+define('PESM_VERSION', '2.0.0');
 define('PESM_FILE', __FILE__);
 define('PESM_DIR', plugin_dir_path(__FILE__));
 define('PESM_URL', plugin_dir_url(__FILE__));
@@ -87,6 +87,7 @@ add_action('plugins_loaded', static function (): void {
     add_action('pesm_hourly_maintenance', [\PESM\Domain\Guest\GuestAccessService::class, 'cleanup']);
     add_action('pesm_hourly_maintenance', [\PESM\Domain\Booking\HoldMaintenance::class, 'cleanup']);
     add_action('pesm_hourly_maintenance', [\PESM\Domain\Booking\CapacityMaintenance::class, 'cleanup']);
+    add_action('pesm_hourly_maintenance', [\PESM\Domain\Allocation\ReservationService::class, 'cleanup']);
     add_action('pesm_hourly_maintenance', [\PESM\Domain\Notification\NotificationQueue::class, 'cleanup']);
     add_action('pesm_process_notifications', [\PESM\Domain\Notification\NotificationQueue::class, 'process']);
     if ((int) get_option('pesm_schema_version', 0) < \PESM\Database\Migrator::VERSION) {
@@ -118,8 +119,12 @@ add_action('plugins_loaded', static function (): void {
     if (class_exists('WooCommerce')) {
         \PESM\Integrations\WooCommerceBridge::register();
         \PESM\Integrations\CartSeatManager::register();
+        \PESM\Domain\Allocation\CartService::register();
     }
     add_action('rest_api_init', [\PESM\Http\RestController::class, 'register']);
+    add_action('rest_api_init', [\PESM\Http\VenueRestController::class, 'register']);
+    add_action('init', [\PESM\Domain\Venue\JobService::class, 'register'], 3);
+    \PESM\Domain\Venue\Acceptance::register();
     add_action('init', [\PESM\Frontend\Shortcodes::class, 'register']);
     add_action('init', [\PESM\Frontend\Blocks::class, 'register']);
     add_action('admin_post_pesm_session_calendar', [\PESM\Domain\Calendar\CalendarFeed::class, 'download']);
@@ -128,6 +133,7 @@ add_action('plugins_loaded', static function (): void {
     add_action('admin_post_pesm_attendance_xlsx', [\PESM\Domain\Reporting\AttendanceReport::class, 'downloadXlsx']);
     if (is_admin()) {
         \PESM\Admin\Pages::register();
+        \PESM\Admin\VenueDesigner::register();
     }
 });
 

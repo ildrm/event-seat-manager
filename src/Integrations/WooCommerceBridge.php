@@ -37,6 +37,18 @@ final class WooCommerceBridge
     {
         $order = wc_get_order($orderId);
         if (!$order || $order->get_meta('_pesm_is_ticket_order') !== 'yes') { return; }
+        if ($order->get_meta('_pesm_mode') === 'allocated') {
+            try {
+                $result = \PESM\Domain\Allocation\CheckoutService::confirmOrder($orderId, false);
+                if ($result === 'review_required') { $order->add_order_note('PESM: allocated payment requires supervised reconciliation.'); $order->save(); }
+            } catch (Throwable $e) {
+                try { \PESM\Domain\Allocation\Reconciliation::markReview($orderId); }
+                catch (Throwable $ignored) { error_log('PESM allocated review marker requires reconciliation for order ' . $orderId); }
+                $order->add_order_note('PESM: allocated ticket issuance requires supervised reconciliation.'); $order->save();
+                error_log('PESM allocated issuance failed for order ' . $orderId . ': ' . get_class($e));
+            }
+            return;
+        }
         if ($order->get_meta('_pesm_mode') === 'general') {
             try {
                 $status = (new FreeAdmissionService())->confirmPaid($orderId);
@@ -73,6 +85,11 @@ final class WooCommerceBridge
     {
         $order = wc_get_order($orderId);
         if ($order && $order->get_meta('_pesm_is_ticket_order') === 'yes') {
+            if ($order->get_meta('_pesm_mode') === 'allocated') {
+                try { \PESM\Domain\Allocation\CheckoutService::revokeOrder($orderId); }
+                catch (Throwable $e) { $order->add_order_note('PESM: allocated cancellation requires supervised reconciliation.'); $order->save(); }
+                return;
+            }
             $status = $order->get_meta('_pesm_mode') === 'general'
                 ? (new FreeAdmissionService())->revokeOrder($orderId)
                 : (new TicketService())->revokeOrder($orderId);

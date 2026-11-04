@@ -8,7 +8,7 @@ spl_autoload_register(static function (string $class): void {
         if (is_file($path)) { require_once $path; }
     }
 });
-define('PESM_VERSION', '1.0.0');
+define('PESM_VERSION', '2.0.0');
 define('PESM_URL', 'https://example.test/plugins/event-seat-manager/');
 $GLOBALS['test_locale'] = 'fa_IR';
 $GLOBALS['test_manager'] = true;

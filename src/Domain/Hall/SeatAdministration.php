@@ -9,16 +9,24 @@ use PESM\Support\Audit;
 use RuntimeException;
 use Throwable;
 
+require_once __DIR__ . '/SeatCode.php';
+
 /** Limited preview controls: no ticket, checkout or paid-seat overrides. */
 final class SeatAdministration
 {
     public static function changeBlocked(int $sessionId, string $seatCode, bool $blocked, int $actorUserId): void
     {
         global $wpdb;
-        if ($sessionId < 1 || !preg_match('/^[A-Z]{1,2}-[1-9][0-9]{0,2}$/D', $seatCode)) {
+        if ($sessionId < 1 || !SeatCode::valid($seatCode)) {
             throw new RuntimeException(\PESM\Support\I18n::text('کد صندلی یا جلسه معتبر نیست.'));
         }
         $p = $wpdb->prefix . 'pesm_';
+        $mode = $wpdb->get_var($wpdb->prepare("SELECT mode FROM {$p}sessions WHERE id=%d", $sessionId));
+        if ($mode === 'allocated') {
+            $seatId = (int) $wpdb->get_var($wpdb->prepare("SELECT p.seat_id FROM {$p}venue_places p JOIN {$p}seats seat ON seat.id=p.seat_id JOIN {$p}sessions s ON s.layout_id=p.layout_id WHERE s.id=%d AND seat.seat_code=%s", $sessionId, $seatCode));
+            \PESM\Domain\Allocation\SessionService::block($sessionId, $seatId, $blocked, $actorUserId);
+            return;
+        }
         if ($wpdb->query('START TRANSACTION') === false) {
             throw new RuntimeException(\PESM\Support\I18n::text('ارتباط پایگاه داده برقرار نشد.'));
         }

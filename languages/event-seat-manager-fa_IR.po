@@ -1,8 +1,8 @@
 # Event Seat Manager bundled translations. GPL-2.0-or-later.
 msgid ""
-msgstr "Project-Id-Version: event-seat-manager 1.0.0\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2026-11-04 00:00+0000\nPO-Revision-Date: 2026-11-04 00:00+0000\nLanguage: fa_IR\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=(n != 1);\nX-Domain: event-seat-manager\n"
+msgstr "Project-Id-Version: event-seat-manager 2.0.0\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2026-11-04 00:00+0000\nPO-Revision-Date: 2026-11-04 00:00+0000\nLanguage: fa_IR\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=(n != 1);\nX-Domain: event-seat-manager\n"
 
-#: src/Admin/Pages.php:746
+#: src/Admin/Pages.php:751
 msgid " (فقط تعداد، بدون شماره یا ایمیل). برای پردازش، WP-Cron باید اجرا شود."
 msgstr " (فقط تعداد، بدون شماره یا ایمیل). برای پردازش، WP-Cron باید اجرا شود."
 
@@ -14,7 +14,7 @@ msgstr " (نگهداری موقت)"
 msgid " - نقشه قابل چاپ"
 msgstr " - نقشه قابل چاپ"
 
-#: src/Admin/Pages.php:231
+#: src/Admin/Pages.php:236
 msgid " hidden aria-label=\"ویرایشگر چیدمان صندلی\">"
 msgstr " hidden aria-label=\"ویرایشگر چیدمان صندلی\">"
 
@@ -33,11 +33,15 @@ msgstr " | قیمت هر نفر: "
 msgid " | نگهداری موقت: "
 msgstr " | نگهداری موقت: "
 
-#: src/Admin/Pages.php:374
+#: src/Admin/Pages.php:379
 msgid " ابتدا درخواست را ثبت کنید تا ورود بلیت قفل شود؛ سپس دقیقاً همان آیتم را در سفارش ووکامرس استرداد کنید و دکمه تطبیق را بزنید. برای استرداد مالیات‌دار یا مبلغ نامنطبق از مسیر بررسی دستی استفاده کنید."
 msgstr " ابتدا درخواست را ثبت کنید تا ورود بلیت قفل شود؛ سپس دقیقاً همان آیتم را در سفارش ووکامرس استرداد کنید و دکمه تطبیق را بزنید. برای استرداد مالیات‌دار یا مبلغ نامنطبق از مسیر بررسی دستی استفاده کنید."
 
-#: src/Admin/Pages.php:500
+#: src/Support/VenuePrint.php:90
+msgid " از "
+msgstr " از "
+
+#: src/Admin/Pages.php:505
 msgid " الزام صندلی‌های مجاور"
 msgstr " الزام صندلی‌های مجاور"
 
@@ -64,11 +68,19 @@ msgstr " ثانیه. اعتبار نهایی با سرور است."
 msgid " ثبت نام هر شرکت‌کننده به‌صورت مستقل از خریدار"
 msgstr " ثبت نام هر شرکت‌کننده به‌صورت مستقل از خریدار"
 
+#: src/Support/VenuePrint.php:123
+msgid " جایگاه"
+msgstr " جایگاه"
+
 #: assets/js/capacity.js
 msgid " جایگاه موقتاً نگهداری شده؛ حدود "
 msgstr " جایگاه موقتاً نگهداری شده؛ حدود "
 
-#: src/Admin/Pages.php:501
+#: src/Support/VenuePrint.php:89
+msgid " جایگاه نمایش داده شده"
+msgstr " جایگاه نمایش داده شده"
+
+#: src/Admin/Pages.php:506
 msgid " جلوگیری از ایجاد صندلی خالیِ تک"
 msgstr " جلوگیری از ایجاد صندلی خالیِ تک"
 
@@ -107,19 +119,19 @@ msgstr " صندلی. با ویرایش، پیش‌نویس به‌طور خود�
 msgid " صندلی: "
 msgstr " صندلی: "
 
-#: src/Admin/Pages.php:833
+#: src/Admin/Pages.php:838
 msgid " علت لغو "
 msgstr " علت لغو "
 
-#: src/Admin/Pages.php:743
+#: src/Admin/Pages.php:748
 msgid " فعال‌سازی صف اعلان (صرفاً Staging)"
 msgstr " فعال‌سازی صف اعلان (صرفاً Staging)"
 
-#: src/Admin/Pages.php:309
+#: src/Admin/Pages.php:314
 msgid " قیمت 0: رویداد رایگان؛ قیمت مثلاً 150000: مبلغ بر حسب واحد جزء ارز فروشگاه"
 msgstr " قیمت 0: رویداد رایگان؛ قیمت مثلاً 150000: مبلغ بر حسب واحد جزء ارز فروشگاه"
 
-#: src/Domain/Hall/LayoutDocument.php:111 src/Domain/Hall/LayoutDocument.php:62
+#: src/Domain/Hall/LayoutDocument.php:114 src/Domain/Hall/LayoutDocument.php:65
 msgid " نامعتبر است."
 msgstr " نامعتبر است."
 
@@ -155,15 +167,15 @@ msgstr " — کلید بازیابی را نزد خود نگه دارید."
 msgid "\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" aria-label=\"نمای کلی چیدمان سالن\">"
 msgstr "\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" aria-label=\"نمای کلی چیدمان سالن\">"
 
-#: src/Admin/Pages.php:518
+#: src/Admin/Pages.php:523
 msgid "\">جلسه "
 msgstr "\">جلسه "
 
-#: src/Admin/Pages.php:211
+#: src/Admin/Pages.php:216
 msgid "\">چاپ "
 msgstr "\">چاپ "
 
-#: src/Admin/Pages.php:222
+#: src/Admin/Pages.php:227
 msgid "(نسخه پیش‌فرض فعلی)"
 msgstr "(نسخه پیش‌فرض فعلی)"
 
@@ -186,11 +198,11 @@ msgstr "افزونه به دلیل آماده نبودن پایگاه داده �
 msgid "Event Seat Manager: 5 minutes"
 msgstr "مدیریت رویداد و صندلی: هر پنج دقیقه"
 
-#: src/Frontend/Shortcodes.php:321
+#: src/Frontend/Shortcodes.php:337
 msgid "QR بلیت را اسکن کنید یا شماره بلیت را برای ثبت ورود وارد کنید."
 msgstr "QR بلیت را اسکن کنید یا شماره بلیت را برای ثبت ورود وارد کنید."
 
-#: src/Admin/Pages.php:337
+#: src/Admin/Pages.php:342
 msgid "QR قبلی باطل می‌شود. شناسه سفارش ووکامرس و مبلغ آن تغییر نمی‌کنند."
 msgstr "QR قبلی باطل می‌شود. شناسه سفارش ووکامرس و مبلغ آن تغییر نمی‌کنند."
 
@@ -246,22 +258,22 @@ msgstr "؛ آمار بلیت‌های معتبر موجود است و به‌م�
 msgid "آخرین به‌روزرسانی: "
 msgstr "آخرین به‌روزرسانی: "
 
-#: assets/js/i18n.js assets/js/map.js assets/js/seat-status-admin.js src/Admin/Pages.php:549 src/Domain/Reporting/AttendanceReport.php:95 src/Domain/Reporting/XlsxExporter.php:18 src/Frontend/Shortcodes.php:153 src/Support/I18n.php:40
+#: assets/js/i18n.js assets/js/map.js assets/js/seat-status-admin.js src/Admin/Pages.php:554 src/Domain/Reporting/AttendanceReport.php:106 src/Domain/Reporting/XlsxExporter.php:18 src/Frontend/Shortcodes.php:156 src/Support/I18n.php:40
 msgid "آزاد"
 msgstr "آزاد"
 
 msgid "آزاد: سبز · انتخاب شما: آبی · نگهداری دیگران: نارنجی · مسدود/فروخته: خاکستری"
 msgstr "آزاد: سبز · انتخاب شما: آبی · نگهداری دیگران: نارنجی · مسدود/فروخته: خاکستری"
 
-#: src/Frontend/Shortcodes.php:165
+#: src/Frontend/Shortcodes.php:168
 msgid "آزادسازی رزرو"
 msgstr "آزادسازی رزرو"
 
-#: src/Domain/Booking/HoldService.php:278
+#: src/Domain/Booking/HoldService.php:284
 msgid "آزادسازی صندلی انجام نشد."
 msgstr "آزادسازی صندلی انجام نشد."
 
-#: src/Admin/Pages.php:328
+#: src/Admin/Pages.php:333
 msgid "آزادسازی صندلی مسدود"
 msgstr "آزادسازی صندلی مسدود"
 
@@ -272,7 +284,7 @@ msgstr "آزادسازی صندلی کامل نشد."
 msgid "آزادسازی صندلی‌های نگهداری‌شده"
 msgstr "آزادسازی صندلی‌های نگهداری‌شده"
 
-#: src/Frontend/Shortcodes.php:121
+#: src/Frontend/Shortcodes.php:123
 msgid "آزادسازی ظرفیت"
 msgstr "آزادسازی ظرفیت"
 
@@ -288,27 +300,35 @@ msgstr "آغاز تراکنش ذخیره ممکن نشد."
 msgid "آغاز تراکنش ممکن نشد."
 msgstr "آغاز تراکنش ممکن نشد."
 
-#: src/Domain/Hall/HallService.php:173
+#: src/Domain/Hall/HallService.php:184
 msgid "آغاز تراکنش پایگاه داده ممکن نشد."
 msgstr "آغاز تراکنش پایگاه داده ممکن نشد."
 
-#: src/Admin/Pages.php:1225
+#: src/Domain/Allocation/Messages.php:37
+msgid "آماده‌سازی جایگاه‌ها هنوز کامل نشده است."
+msgstr "آماده‌سازی جایگاه‌ها هنوز کامل نشده است."
+
+#: src/Admin/Pages.php:1230
 msgid "آماده‌سازی نقشه چاپی ممکن نشد."
 msgstr "آماده‌سازی نقشه چاپی ممکن نشد."
 
-#: src/Admin/Pages.php:548
+#: src/Admin/Pages.php:553
 msgid "آمار این جدول صرفاً وضعیت موجودی صندلی است و درآمد مالی را نشان نمی‌دهد."
 msgstr "آمار این جدول صرفاً وضعیت موجودی صندلی است و درآمد مالی را نشان نمی‌دهد."
 
-#: src/Frontend/Shortcodes.php:299
+#: src/Frontend/Shortcodes.php:307
 msgid "آمار هر ۶۰ ثانیه تازه‌سازی می‌شود."
 msgstr "آمار هر ۶۰ ثانیه تازه‌سازی می‌شود."
+
+#: src/Domain/Venue/PresetCatalog.php:31
+msgid "آمفی‌تئاتر"
+msgstr "آمفی‌تئاتر"
 
 #: src/Integrations/CartSeatManager.php:212
 msgid "آیتم سبد نامعتبر است."
 msgstr "آیتم سبد نامعتبر است."
 
-#: src/Admin/Pages.php:1108
+#: src/Admin/Pages.php:1113
 msgid "ابتدا اشکال پایگاه داده را برطرف کنید."
 msgstr "ابتدا اشکال پایگاه داده را برطرف کنید."
 
@@ -336,6 +356,14 @@ msgstr "ابتدا صندلی‌ها را نگهداری و انتخاب را ث
 msgid "ابتدا ظرفیت یا صندلی‌های خود را نگهداری کنید."
 msgstr "ابتدا ظرفیت یا صندلی‌های خود را نگهداری کنید."
 
+#: src/Admin/VenueDesigner.php:53
+msgid "ابتدا مرکز و سالن بسازید."
+msgstr "ابتدا مرکز و سالن بسازید."
+
+#: src/Domain/Allocation/Messages.php:41
+msgid "ابتدا چیدمان سالن را منتشر کنید."
+msgstr "ابتدا چیدمان سالن را منتشر کنید."
+
 #: src/Domain/Ticket/RefundReviewService.php:167
 msgid "ابطال بلیت ثبت نشد."
 msgstr "ابطال بلیت ثبت نشد."
@@ -344,11 +372,15 @@ msgstr "ابطال بلیت ثبت نشد."
 msgid "ابعاد نقشه نامعتبر است."
 msgstr "ابعاد نقشه نامعتبر است."
 
+#: src/Domain/Venue/PresetCatalog.php:39
+msgid "اتاق هیئت‌مدیره"
+msgstr "اتاق هیئت‌مدیره"
+
 #: src/Domain/Hall/HallService.php:73
 msgid "اتصال نسخه نقشه به سالن انجام نشد."
 msgstr "اتصال نسخه نقشه به سالن انجام نشد."
 
-#: src/Domain/Booking/HoldService.php:263
+#: src/Domain/Booking/HoldService.php:269
 msgid "اجازه آزادسازی این صندلی‌ها وجود ندارد."
 msgstr "اجازه آزادسازی این صندلی‌ها وجود ندارد."
 
@@ -356,7 +388,11 @@ msgstr "اجازه آزادسازی این صندلی‌ها وجود ندارد
 msgid "اجازه استفاده از این رزرو وجود ندارد."
 msgstr "اجازه استفاده از این رزرو وجود ندارد."
 
-#: src/Domain/Reconciliation/ReconciliationService.php:196
+#: src/Domain/Allocation/Messages.php:32
+msgid "اجازه انجام این عملیات را ندارید."
+msgstr "اجازه انجام این عملیات را ندارید."
+
+#: src/Domain/Reconciliation/ReconciliationService.php:216
 msgid "اجازه بررسی مالی این مرکز را ندارید."
 msgstr "اجازه بررسی مالی این مرکز را ندارید."
 
@@ -364,11 +400,11 @@ msgstr "اجازه بررسی مالی این مرکز را ندارید."
 msgid "اجازه تعریف تخفیف ندارید."
 msgstr "اجازه تعریف تخفیف ندارید."
 
-#: src/Domain/Reconciliation/ReconciliationService.php:171
+#: src/Domain/Reconciliation/ReconciliationService.php:191
 msgid "اجازه رسیدگی به سفارش این مرکز را ندارید."
 msgstr "اجازه رسیدگی به سفارش این مرکز را ندارید."
 
-#: src/Domain/Reconciliation/ReconciliationService.php:138
+#: src/Domain/Reconciliation/ReconciliationService.php:158
 msgid "اجازه رسیدگی به سفارش مرکز را ندارید."
 msgstr "اجازه رسیدگی به سفارش مرکز را ندارید."
 
@@ -376,7 +412,7 @@ msgstr "اجازه رسیدگی به سفارش مرکز را ندارید."
 msgid "اجازه لغو بلیت را ندارید."
 msgstr "اجازه لغو بلیت را ندارید."
 
-#: src/Domain/Ticket/TicketService.php:226
+#: src/Domain/Ticket/TicketService.php:210
 msgid "اجازه مشاهده بلیت‌ها وجود ندارد."
 msgstr "اجازه مشاهده بلیت‌ها وجود ندارد."
 
@@ -388,7 +424,7 @@ msgstr "اجازه مشاهده تاریخچه بلیت وجود ندارد."
 msgid "اجازه مشاهده سفارش‌های این مرکز را ندارید."
 msgstr "اجازه مشاهده سفارش‌های این مرکز را ندارید."
 
-#: src/Domain/Event/EventChangeService.php:190
+#: src/Domain/Event/EventChangeService.php:197
 msgid "اجازه مشاهده پرونده‌های مالی را ندارید."
 msgstr "اجازه مشاهده پرونده‌های مالی را ندارید."
 
@@ -396,15 +432,15 @@ msgstr "اجازه مشاهده پرونده‌های مالی را ندارید
 msgid "اجازه مشاهده گزارش این مرکز را ندارید."
 msgstr "اجازه مشاهده گزارش این مرکز را ندارید."
 
-#: src/Admin/Pages.php:412
+#: src/Admin/Pages.php:417
 msgid "اختصاص مدیر به مرکز"
 msgstr "اختصاص مدیر به مرکز"
 
-#: src/Admin/Pages.php:417
+#: src/Admin/Pages.php:422
 msgid "اختصاص مرکز جایگزین Capability نیست؛ کاربر باید نقش و مجوز کاری متناسب داشته باشد."
 msgstr "اختصاص مرکز جایگزین Capability نیست؛ کاربر باید نقش و مجوز کاری متناسب داشته باشد."
 
-#: src/Frontend/Shortcodes.php:166
+#: src/Frontend/Shortcodes.php:169
 msgid "ادامه از سبد خرید"
 msgstr "ادامه از سبد خرید"
 
@@ -424,7 +460,7 @@ msgstr "ادامه به پرداخت ووکامرس"
 msgid "ارتباط با سامانه برقرار نشد."
 msgstr "ارتباط با سامانه برقرار نشد."
 
-#: src/Domain/Booking/HoldService.php:335
+#: src/Domain/Booking/HoldService.php:341
 msgid "ارتباط با پایگاه داده برقرار نشد."
 msgstr "ارتباط با پایگاه داده برقرار نشد."
 
@@ -432,11 +468,11 @@ msgstr "ارتباط با پایگاه داده برقرار نشد."
 msgid "ارتباط ذخیره قطع شد."
 msgstr "ارتباط ذخیره قطع شد."
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:256
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:270
 msgid "ارتباط رزرو و سفارش معتبر نیست."
 msgstr "ارتباط رزرو و سفارش معتبر نیست."
 
-#: src/Domain/Gate/CheckinService.php:93 src/Domain/Hall/SeatAdministration.php:23
+#: src/Domain/Gate/CheckinService.php:93 src/Domain/Hall/SeatAdministration.php:31
 msgid "ارتباط پایگاه داده برقرار نشد."
 msgstr "ارتباط پایگاه داده برقرار نشد."
 
@@ -444,11 +480,11 @@ msgstr "ارتباط پایگاه داده برقرار نشد."
 msgid "ارتباط پایگاه داده برقرار نیست."
 msgstr "ارتباط پایگاه داده برقرار نیست."
 
-#: src/Http/RestController.php:779
+#: src/Http/RestController.php:783
 msgid "ارتباط پایگاه داده در دسترس نیست."
 msgstr "ارتباط پایگاه داده در دسترس نیست."
 
-#: src/Admin/Pages.php:247
+#: src/Admin/Pages.php:252 src/Support/VenuePrint.php:123
 msgid "ارتفاع "
 msgstr "ارتفاع "
 
@@ -456,7 +492,7 @@ msgstr "ارتفاع "
 msgid "ارتقای پایگاه داده ضروری است."
 msgstr "ارتقای پایگاه داده ضروری است."
 
-#: src/Admin/Pages.php:739
+#: src/Admin/Pages.php:744
 msgid "ارسال پیامک فقط در حالت فعال، با اعتبارنامه‌های wp-config.php و شناسه پترن تاییدشده انجام می‌شود. وضعیت اعتبارنامه: "
 msgstr "ارسال پیامک فقط در حالت فعال، با اعتبارنامه‌های wp-config.php و شناسه پترن تاییدشده انجام می‌شود. وضعیت اعتبارنامه: "
 
@@ -464,13 +500,17 @@ msgstr "ارسال پیامک فقط در حالت فعال، با اعتبار�
 msgid "ارسال کد تأیید انجام نشد."
 msgstr "ارسال کد تأیید انجام نشد."
 
-#: src/Frontend/Shortcodes.php:226
+#: src/Frontend/Shortcodes.php:234
 msgid "ارسال کد تأیید به گیرنده"
 msgstr "ارسال کد تأیید به گیرنده"
 
-#: src/Admin/Pages.php:373
+#: src/Admin/Pages.php:378
 msgid "استرداد بلیت پولی — تطبیق دستی با ووکامرس"
 msgstr "استرداد بلیت پولی — تطبیق دستی با ووکامرس"
+
+#: src/Domain/Allocation/Messages.php:69
+msgid "استرداد به این میز یا جایگاه تعلق ندارد."
+msgstr "استرداد به این میز یا جایگاه تعلق ندارد."
 
 #: src/Domain/Ticket/RefundReviewService.php:163
 msgid "استرداد دقیق این ردیف در ووکامرس ثبت نشده است."
@@ -483,7 +523,7 @@ msgstr "استرداد مالیات‌دار فعلاً به بررسی دستی
 msgid "اسکن با دوربین (مرورگر سازگار)"
 msgstr "اسکن با دوربین (مرورگر سازگار)"
 
-#: src/Frontend/Shortcodes.php:322
+#: src/Frontend/Shortcodes.php:338
 msgid "اسکن بلیت"
 msgstr "اسکن بلیت"
 
@@ -499,15 +539,15 @@ msgstr "اسکنر کنترل ورود"
 msgid "اشیای غیرصندلی: "
 msgstr "اشیای غیرصندلی: "
 
-#: src/Admin/Pages.php:270
+#: src/Admin/Pages.php:275
 msgid "اصلاح مشخصات شرکت‌کننده بلیت صادرشده"
 msgstr "اصلاح مشخصات شرکت‌کننده بلیت صادرشده"
 
-#: src/Admin/Pages.php:512
+#: src/Admin/Pages.php:517
 msgid "اطلاعات بدون نام یا شماره خریدار، از وضعیت موجودی جلسه دریافت می‌شود. هر ۳۰ ثانیه تازه‌سازی می‌گردد."
 msgstr "اطلاعات بدون نام یا شماره خریدار، از وضعیت موجودی جلسه دریافت می‌شود. هر ۳۰ ثانیه تازه‌سازی می‌گردد."
 
-#: src/Frontend/Shortcodes.php:220
+#: src/Frontend/Shortcodes.php:228
 msgid "اطلاعات بلیت و گیرنده جدید را وارد کنید."
 msgstr "اطلاعات بلیت و گیرنده جدید را وارد کنید."
 
@@ -515,7 +555,7 @@ msgstr "اطلاعات بلیت و گیرنده جدید را وارد کنید.
 msgid "اطلاعات تقویم جلسه معتبر نیست."
 msgstr "اطلاعات تقویم جلسه معتبر نیست."
 
-#: src/Admin/Pages.php:843 src/Frontend/Shortcodes.php:80
+#: src/Admin/Pages.php:848 src/Frontend/Shortcodes.php:82
 msgid "اطلاعات تماس"
 msgstr "اطلاعات تماس"
 
@@ -523,15 +563,15 @@ msgstr "اطلاعات تماس"
 msgid "اطلاعات جایگاه‌ها ناقص است."
 msgstr "اطلاعات جایگاه‌ها ناقص است."
 
-#: src/Domain/Ticket/TicketService.php:42
+#: src/Domain/Ticket/TicketService.php:44
 msgid "اطلاعات رزرو سفارش ناقص است."
 msgstr "اطلاعات رزرو سفارش ناقص است."
 
-#: src/Domain/Ticket/TicketService.php:66
+#: src/Domain/Ticket/TicketService.php:68
 msgid "اطلاعات سفارش و رزرو یکسان نیست."
 msgstr "اطلاعات سفارش و رزرو یکسان نیست."
 
-#: src/Domain/Ticket/TicketService.php:250
+#: src/Domain/Ticket/TicketService.php:234
 msgid "اطلاعات سفارش یافت نشد."
 msgstr "اطلاعات سفارش یافت نشد."
 
@@ -539,15 +579,15 @@ msgstr "اطلاعات سفارش یافت نشد."
 msgid "اطلاعات شرکت‌کنندگان با تعداد و شناسه بلیت‌ها مطابقت ندارد."
 msgstr "اطلاعات شرکت‌کنندگان با تعداد و شناسه بلیت‌ها مطابقت ندارد."
 
-#: src/Domain/Hall/LayoutDocument.php:111
+#: src/Domain/Hall/LayoutDocument.php:114
 msgid "اطلاعات شیء شماره "
 msgstr "اطلاعات شیء شماره "
 
-#: src/Domain/Hall/LayoutDocument.php:62
+#: src/Domain/Hall/LayoutDocument.php:65
 msgid "اطلاعات صندلی شماره "
 msgstr "اطلاعات صندلی شماره "
 
-#: src/Admin/Pages.php:661
+#: src/Admin/Pages.php:666
 msgid "اطلاعات واردشده نامعتبر است."
 msgstr "اطلاعات واردشده نامعتبر است."
 
@@ -555,7 +595,7 @@ msgstr "اطلاعات واردشده نامعتبر است."
 msgid "اطلاعات گیرنده نامعتبر است."
 msgstr "اطلاعات گیرنده نامعتبر است."
 
-#: src/Frontend/Shortcodes.php:322
+#: src/Frontend/Shortcodes.php:338
 msgid "اعتبار بلیت به‌صورت برخط بررسی می‌شود."
 msgstr "اعتبار بلیت به‌صورت برخط بررسی می‌شود."
 
@@ -563,30 +603,34 @@ msgstr "اعتبار بلیت به‌صورت برخط بررسی می‌شود.
 msgid "اعتبار درخواست سبد خرید نامعتبر است."
 msgstr "اعتبار درخواست سبد خرید نامعتبر است."
 
-#: src/Admin/Pages.php:738
+#: src/Domain/Allocation/Messages.php:34
+msgid "اعتبار صفحه پایان یافته است؛ صفحه را تازه کنید."
+msgstr "اعتبار صفحه پایان یافته است؛ صفحه را تازه کنید."
+
+#: src/Admin/Pages.php:743
 msgid "اعلان بلیت (آزمایشی)"
 msgstr "اعلان بلیت (آزمایشی)"
 
-#: src/Admin/Pages.php:329
+#: src/Admin/Pages.php:334
 msgid "اعمال تغییر"
 msgstr "اعمال تغییر"
 
-#: src/Admin/Pages.php:264
+#: src/Admin/Pages.php:269
 msgid "اعمال ویژگی‌ها"
 msgstr "اعمال ویژگی‌ها"
 
-#: src/Frontend/Shortcodes.php:99
+#: src/Frontend/Shortcodes.php:101
 msgid "افزودن به تقویم"
 msgstr "افزودن به تقویم"
 
 msgid "افزودن جلسه به تقویم (.ics)"
 msgstr "افزودن جلسه به تقویم (.ics)"
 
-#: src/Admin/Pages.php:416
+#: src/Admin/Pages.php:421
 msgid "افزودن دسترسی مرکز"
 msgstr "افزودن دسترسی مرکز"
 
-#: src/Admin/Pages.php:255
+#: src/Admin/Pages.php:260
 msgid "افزودن ردیف صندلی"
 msgstr "افزودن ردیف صندلی"
 
@@ -594,11 +638,11 @@ msgstr "افزودن ردیف صندلی"
 msgid "افزودن رزرو به سبد انجام نشد."
 msgstr "افزودن رزرو به سبد انجام نشد."
 
-#: src/Admin/Pages.php:248
+#: src/Admin/Pages.php:253
 msgid "افزودن شیء"
 msgstr "افزودن شیء"
 
-#: src/Admin/Pages.php:236
+#: src/Admin/Pages.php:241
 msgid "افزودن صندلی"
 msgstr "افزودن صندلی"
 
@@ -622,7 +666,7 @@ msgstr "الگو فقط یک نسخه پیش‌نویس می‌سازد؛ نقش
 msgid "امکان آغاز تراکنش نیست."
 msgstr "امکان آغاز تراکنش نیست."
 
-#: src/Domain/Event/EventChangeService.php:62 src/Domain/GeneralAdmission/FreeAdmissionService.php:43
+#: src/Domain/Event/EventChangeService.php:62 src/Domain/GeneralAdmission/FreeAdmissionService.php:45
 msgid "امکان آغاز تراکنش وجود ندارد."
 msgstr "امکان آغاز تراکنش وجود ندارد."
 
@@ -630,7 +674,7 @@ msgstr "امکان آغاز تراکنش وجود ندارد."
 msgid "امکان ایجاد سالن نیست."
 msgstr "امکان ایجاد سالن نیست."
 
-#: src/Admin/Pages.php:809
+#: src/Admin/Pages.php:814
 msgid "امکان تولید گزارش وجود ندارد."
 msgstr "امکان تولید گزارش وجود ندارد."
 
@@ -646,54 +690,58 @@ msgstr "امکان شروع تراکنش وجود ندارد."
 msgid "امکان ویرایش رویداد لغوشده وجود ندارد."
 msgstr "امکان ویرایش رویداد لغوشده وجود ندارد."
 
-#: src/Frontend/Shortcodes.php:146
+#: src/Frontend/Shortcodes.php:149
 msgid "انتخاب جایگاه"
 msgstr "انتخاب جایگاه"
 
-#: src/Admin/Pages.php:513
+#: src/Domain/Allocation/Messages.php:19
+msgid "انتخاب جایگاه معتبر نیست."
+msgstr "انتخاب جایگاه معتبر نیست."
+
+#: src/Admin/Pages.php:518
 msgid "انتخاب جلسه صندلی‌دار "
 msgstr "انتخاب جلسه صندلی‌دار "
 
-#: src/Frontend/Shortcodes.php:84
+#: src/Frontend/Shortcodes.php:86
 msgid "انتخاب جلسه و رزرو بلیت"
 msgstr "انتخاب جلسه و رزرو بلیت"
 
-#: src/Frontend/Shortcodes.php:153 src/Frontend/Shortcodes.php:160
+#: src/Frontend/Shortcodes.php:156 src/Frontend/Shortcodes.php:163
 msgid "انتخاب شما"
 msgstr "انتخاب شما"
 
 msgid "انتخاب صندلی"
 msgstr "انتخاب صندلی"
 
-#: src/Frontend/Shortcodes.php:163
+#: src/Frontend/Shortcodes.php:166
 msgid "انتخاب صندلی به‌تنهایی رزرو نیست؛ برای نگهداری جایگاه، دکمه رزرو را بزنید."
 msgstr "انتخاب صندلی به‌تنهایی رزرو نیست؛ برای نگهداری جایگاه، دکمه رزرو را بزنید."
 
-#: src/Admin/Pages.php:233
+#: src/Admin/Pages.php:238
 msgid "انتخاب چند صندلی: Ctrl یا Shift + کلیک. برای جابه‌جایی، صندلی انتخابی را بکشید. تغییرات به‌صورت خودکار در پیش‌نویس جداگانه ذخیره می‌شوند؛ انتشار از جدول نسخه‌ها انجام می‌شود. در صورت تعارض فایل JSON را برای حفظ کار دریافت کنید."
 msgstr "انتخاب چند صندلی: Ctrl یا Shift + کلیک. برای جابه‌جایی، صندلی انتخابی را بکشید. تغییرات به‌صورت خودکار در پیش‌نویس جداگانه ذخیره می‌شوند؛ انتشار از جدول نسخه‌ها انجام می‌شود. در صورت تعارض فایل JSON را برای حفظ کار دریافت کنید."
 
-#: src/Admin/Pages.php:513
+#: src/Admin/Pages.php:518
 msgid "انتخاب کنید"
 msgstr "انتخاب کنید"
 
-#: src/Admin/Pages.php:470
+#: src/Admin/Pages.php:475
 msgid "انتشار"
 msgstr "انتشار"
 
-#: src/Admin/Pages.php:219
+#: src/Admin/Pages.php:224
 msgid "انتشار برای جلسات آینده"
 msgstr "انتشار برای جلسات آینده"
 
-#: src/Domain/Hall/LayoutVersionService.php:119
+#: src/Domain/Hall/LayoutVersionService.php:121
 msgid "انتشار نسخه جدید کامل نشد."
 msgstr "انتشار نسخه جدید کامل نشد."
 
-#: src/Admin/Pages.php:824
+#: src/Admin/Pages.php:829
 msgid "انتشار/ادامه"
 msgstr "انتشار/ادامه"
 
-#: src/Admin/Pages.php:549
+#: src/Admin/Pages.php:554
 msgid "انتظار پرداخت"
 msgstr "انتظار پرداخت"
 
@@ -701,7 +749,7 @@ msgstr "انتظار پرداخت"
 msgid "انتقال انجام شد. QR قبلی باطل است؛ توکن جدید فقط برای مالک تازه معتبر خواهد بود."
 msgstr "انتقال انجام شد. QR قبلی باطل است؛ توکن جدید فقط برای مالک تازه معتبر خواهد بود."
 
-#: src/Frontend/Shortcodes.php:219
+#: src/Frontend/Shortcodes.php:227
 msgid "انتقال با درخواست مالک فعلی و تأیید ایمیل گیرنده انجام می‌شود."
 msgstr "انتقال با درخواست مالک فعلی و تأیید ایمیل گیرنده انجام می‌شود."
 
@@ -712,11 +760,11 @@ msgstr "انتقال بلیت نیازمند بررسی است."
 msgid "انتقال رزرو به سبد خرید ووکامرس"
 msgstr "انتقال رزرو به سبد خرید ووکامرس"
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:118
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:130
 msgid "انتقال رزرو به مرحله صدور بلیت انجام نشد."
 msgstr "انتقال رزرو به مرحله صدور بلیت انجام نشد."
 
-#: src/Admin/Pages.php:335
+#: src/Admin/Pages.php:340
 msgid "انتقال صندلی بلیت صادرشده (بدون تغییر قیمت)"
 msgstr "انتقال صندلی بلیت صادرشده (بدون تغییر قیمت)"
 
@@ -724,15 +772,19 @@ msgstr "انتقال صندلی بلیت صادرشده (بدون تغییر ق�
 msgid "انتقال صندلی به بررسی نیاز دارد."
 msgstr "انتقال صندلی به بررسی نیاز دارد."
 
+#: src/Domain/Allocation/Messages.php:64
+msgid "انتقال فقط با ظرفیت و قیمت یکسان امکان‌پذیر است."
+msgstr "انتقال فقط با ظرفیت و قیمت یکسان امکان‌پذیر است."
+
 #: src/Domain/Ticket/OwnershipTransferService.php:148
 msgid "انتقال قبلاً مصرف یا باطل شده است."
 msgstr "انتقال قبلاً مصرف یا باطل شده است."
 
-#: src/Frontend/Shortcodes.php:219
+#: src/Frontend/Shortcodes.php:227
 msgid "انتقال مالکیت بلیت"
 msgstr "انتقال مالکیت بلیت"
 
-#: src/Frontend/Shortcodes.php:213
+#: src/Frontend/Shortcodes.php:221
 msgid "انتقال مالکیت بلیت در این سایت فعال نیست."
 msgstr "انتقال مالکیت بلیت در این سایت فعال نیست."
 
@@ -752,7 +804,7 @@ msgstr "انتقال و مشاهده بلیت فقط با HTTPS ممکن است.
 msgid "انجام عملیات ممکن نشد."
 msgstr "انجام عملیات ممکن نشد."
 
-#: src/Admin/Pages.php:235
+#: src/Admin/Pages.php:240
 msgid "انجام مجدد"
 msgstr "انجام مجدد"
 
@@ -768,7 +820,7 @@ msgstr "اپراتور فروش"
 msgid "اپراتور ورودی"
 msgstr "اپراتور ورودی"
 
-#: src/Frontend/Shortcodes.php:328
+#: src/Frontend/Shortcodes.php:344
 msgid "اگر اسکن دوربین در دسترس نبود، از شماره بلیت استفاده کنید."
 msgstr "اگر اسکن دوربین در دسترس نبود، از شماره بلیت استفاده کنید."
 
@@ -779,19 +831,19 @@ msgstr "اگر شماره سفارش و ایمیل مطابقت داشته با�
 msgid "اگر هنگام خرید ایمیل ثبت کرده‌اید، با کد ۸ رقمی ارسال‌شده به همان ایمیل می‌توانید دسترسی موقت بگیرید."
 msgstr "اگر هنگام خرید ایمیل ثبت کرده‌اید، با کد ۸ رقمی ارسال‌شده به همان ایمیل می‌توانید دسترسی موقت بگیرید."
 
-#: src/Admin/Pages.php:294
+#: src/Admin/Pages.php:299
 msgid "ایجاد جلسه"
 msgstr "ایجاد جلسه"
 
-#: src/Admin/Pages.php:313
+#: src/Admin/Pages.php:318
 msgid "ایجاد جلسه و موجودی"
 msgstr "ایجاد جلسه و موجودی"
 
-#: src/Admin/Pages.php:283
+#: src/Admin/Pages.php:288
 msgid "ایجاد رویداد"
 msgstr "ایجاد رویداد"
 
-#: src/Admin/Pages.php:288
+#: src/Admin/Pages.php:293
 msgid "ایجاد رویداد پیش‌نویس"
 msgstr "ایجاد رویداد پیش‌نویس"
 
@@ -803,15 +855,15 @@ msgstr "ایجاد سالن (نمونه ۹۰۰ صندلی)"
 msgid "ایجاد صندلی خالی تک مجاز نیست"
 msgstr "ایجاد صندلی خالی تک مجاز نیست"
 
-#: src/Domain/Hall/HallService.php:147
+#: src/Domain/Hall/HallService.php:154
 msgid "ایجاد موجودی ظرفیت آزاد ناموفق بود."
 msgstr "ایجاد موجودی ظرفیت آزاد ناموفق بود."
 
-#: src/Domain/Hall/DraftSaveService.php:78
+#: src/Domain/Hall/DraftSaveService.php:92
 msgid "ایجاد پیش‌نویس ممکن نشد."
 msgstr "ایجاد پیش‌نویس ممکن نشد."
 
-#: src/Admin/Pages.php:355
+#: src/Admin/Pages.php:360
 msgid "ایجاد گروه‌بندی بلیت‌های موجود"
 msgstr "ایجاد گروه‌بندی بلیت‌های موجود"
 
@@ -828,22 +880,22 @@ msgstr "ایمیل (برای سفارش پولی اجباری) "
 msgid "ایمیل بازیابی بلیت (اختیاری) "
 msgstr "ایمیل بازیابی بلیت (اختیاری) "
 
-#: src/Frontend/Shortcodes.php:201
+#: src/Frontend/Shortcodes.php:204
 msgid "ایمیل ثبت‌شده در سفارش"
 msgstr "ایمیل ثبت‌شده در سفارش"
 
 msgid "ایمیل ثبت‌شده در سفارش "
 msgstr "ایمیل ثبت‌شده در سفارش "
 
-#: src/Frontend/Shortcodes.php:357
+#: src/Frontend/Shortcodes.php:373
 msgid "ایمیل دریافت و بازیابی بلیت"
 msgstr "ایمیل دریافت و بازیابی بلیت"
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:38
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:40
 msgid "ایمیل واردشده معتبر نیست."
 msgstr "ایمیل واردشده معتبر نیست."
 
-#: src/Frontend/Shortcodes.php:225
+#: src/Frontend/Shortcodes.php:233
 msgid "ایمیل گیرنده"
 msgstr "ایمیل گیرنده"
 
@@ -870,11 +922,11 @@ msgstr "این بلیت به مرکز مجاز شما تعلق ندارد."
 msgid "این بلیت در محدوده مرکز شما نیست."
 msgstr "این بلیت در محدوده مرکز شما نیست."
 
-#: src/Domain/Gate/CheckinService.php:125 src/Domain/GeneralAdmission/AdmissionGateService.php:100
+#: src/Domain/Allocation/Messages.php:58 src/Domain/Gate/CheckinService.php:125 src/Domain/GeneralAdmission/AdmissionGateService.php:100
 msgid "این بلیت فعال نیست."
 msgstr "این بلیت فعال نیست."
 
-#: src/Admin/Pages.php:438
+#: src/Admin/Pages.php:443
 msgid "این جدول فقط تشکیل پرونده را نشان می‌دهد. ارسال اعلان، استرداد وجه یا تسویه بانکی به‌صورت خودکار انجام نشده است."
 msgstr "این جدول فقط تشکیل پرونده را نشان می‌دهد. ارسال اعلان، استرداد وجه یا تسویه بانکی به‌صورت خودکار انجام نشده است."
 
@@ -882,7 +934,7 @@ msgstr "این جدول فقط تشکیل پرونده را نشان می‌ده
 msgid "این جلسه از نوع ظرفیت آزاد نیست."
 msgstr "این جلسه از نوع ظرفیت آزاد نیست."
 
-#: src/Http/RestController.php:705
+#: src/Http/RestController.php:706
 msgid "این جلسه انتخاب صندلی ندارد."
 msgstr "این جلسه انتخاب صندلی ندارد."
 
@@ -894,27 +946,43 @@ msgstr "این جلسه در مرکز شما نقشه صندلی ندارد."
 msgid "این جلسه یا رویداد لغو شده است."
 msgstr "این جلسه یا رویداد لغو شده است."
 
+#: src/Domain/Allocation/Messages.php:31
+msgid "این درخواست قبلاً برای انتخاب دیگری ثبت شده است."
+msgstr "این درخواست قبلاً برای انتخاب دیگری ثبت شده است."
+
 #: src/Domain/Booking/CapacityService.php:106
 msgid "این رزرو قابل آزادسازی نیست."
 msgstr "این رزرو قابل آزادسازی نیست."
+
+#: src/Domain/Allocation/Messages.php:65
+msgid "این رزرو گروهی قابل تغییر نیست."
+msgstr "این رزرو گروهی قابل تغییر نیست."
 
 #: src/Domain/Event/EventChangePolicy.php:50
 msgid "این رویداد یا جلسه قابل لغو مجدد نیست."
 msgstr "این رویداد یا جلسه قابل لغو مجدد نیست."
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:69
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:71
 msgid "این سفارش به بررسی نیاز دارد."
 msgstr "این سفارش به بررسی نیاز دارد."
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:228
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:242
 msgid "این سفارش رایگان نیست."
 msgstr "این سفارش رایگان نیست."
+
+#: src/Domain/Allocation/Messages.php:51
+msgid "این سفارش لغو شده یا ناموفق است."
+msgstr "این سفارش لغو شده یا ناموفق است."
+
+#: src/Support/VenuePrint.php:98
+msgid "این سند فقط چیدمان فیزیکی را نشان می‌دهد، نه موجودی لحظه‌ای، پرداخت یا وضعیت بلیت. مختصات و ارتفاع‌ها بر حسب میلی‌متر هستند."
+msgstr "این سند فقط چیدمان فیزیکی را نشان می‌دهد، نه موجودی لحظه‌ای، پرداخت یا وضعیت بلیت. مختصات و ارتفاع‌ها بر حسب میلی‌متر هستند."
 
 #: src/Domain/Ticket/AttendeeChangeService.php:72
 msgid "این شناسه درخواست برای تغییر دیگری استفاده شده است."
 msgstr "این شناسه درخواست برای تغییر دیگری استفاده شده است."
 
-#: src/Domain/Booking/HoldService.php:164
+#: src/Domain/Booking/HoldService.php:170
 msgid "این شناسه درخواست قبلاً برای تغییر دیگری مصرف شده است."
 msgstr "این شناسه درخواست قبلاً برای تغییر دیگری مصرف شده است."
 
@@ -922,7 +990,7 @@ msgstr "این شناسه درخواست قبلاً برای تغییر دیگر
 msgid "این شناسه درخواست قبلاً برای گیرنده دیگری استفاده شده است."
 msgstr "این شناسه درخواست قبلاً برای گیرنده دیگری استفاده شده است."
 
-#: src/Admin/Pages.php:374
+#: src/Admin/Pages.php:379
 msgid "این عملیات پول منتقل نمی‌کند."
 msgstr "این عملیات پول منتقل نمی‌کند."
 
@@ -933,6 +1001,10 @@ msgstr "این مبلغ تخمینی است؛ موجودی کوپن و قیمت 
 #: src/Integrations/CartSeatManager.php:102
 msgid "این محصول فقط از مسیر انتخاب صندلی سامانه قابل افزودن است."
 msgstr "این محصول فقط از مسیر انتخاب صندلی سامانه قابل افزودن است."
+
+#: src/Domain/Allocation/Messages.php:15
+msgid "این محصول فقط از مسیر رزرو جایگاه قابل افزودن است."
+msgstr "این محصول فقط از مسیر رزرو جایگاه قابل افزودن است."
 
 #: assets/js/map.js
 msgid "این مرورگر از تولید شناسه امن پشتیبانی نمی‌کند."
@@ -946,7 +1018,11 @@ msgstr "این مرورگر تولید شناسه امن ندارد."
 msgid "این مرکز در محدوده دسترسی شما نیست."
 msgstr "این مرکز در محدوده دسترسی شما نیست."
 
-#: src/Domain/Hall/DraftSaveService.php:88
+#: src/Domain/Allocation/Messages.php:23
+msgid "این میز یا جایگاه باید به‌صورت کامل رزرو شود."
+msgstr "این میز یا جایگاه باید به‌صورت کامل رزرو شود."
+
+#: src/Domain/Hall/DraftSaveService.php:102
 msgid "این نقشه به جلسه متصل است و قابل تغییر نیست."
 msgstr "این نقشه به جلسه متصل است و قابل تغییر نیست."
 
@@ -958,9 +1034,13 @@ msgstr "این نقشه تنها چیدمان فیزیکی سالن را نشا�
 msgid "این نوع جلسه از کوپن پشتیبانی نمی‌کند."
 msgstr "این نوع جلسه از کوپن پشتیبانی نمی‌کند."
 
-#: src/Http/RestController.php:793
+#: src/Http/RestController.php:798
 msgid "این پیشنهاد موجودی را نگه نمی‌دارد؛ ثبت قطعی به درخواست رزرو نیاز دارد."
 msgstr "این پیشنهاد موجودی را نگه نمی‌دارد؛ ثبت قطعی به درخواست رزرو نیاز دارد."
+
+#: src/Support/VenuePrint.php:92
+msgid "این چاپ حداکثر ۱۰۰۰ جایگاه را در بر می‌گیرد. نمای طبقه، موقعیت بخش را حفظ می‌کند؛ برای بقیه از خروجی چیدمان یا چاپ بخش دیگر استفاده کنید."
+msgstr "این چاپ حداکثر ۱۰۰۰ جایگاه را در بر می‌گیرد. نمای طبقه، موقعیت بخش را حفظ می‌کند؛ برای بقیه از خروجی چیدمان یا چاپ بخش دیگر استفاده کنید."
 
 #: src/Domain/GeneralAdmission/AdmissionGateService.php:83
 msgid "این کد QR قابل اعتبارسنجی نیست."
@@ -978,23 +1058,31 @@ msgstr "این کلید درخواست قبلاً برای بلیت‌های د�
 msgid "این کلید قبلاً برای درخواست متفاوتی استفاده شده است."
 msgstr "این کلید قبلاً برای درخواست متفاوتی استفاده شده است."
 
-#: src/Frontend/Shortcodes.php:199
+#: src/Support/VenuePrint.php:156
+msgid "ایکس / وای / ارتفاع (میلی‌متر)"
+msgstr "ایکس / وای / ارتفاع (میلی‌متر)"
+
+#: src/Frontend/Shortcodes.php:202
 msgid "با ایمیل ثبت‌شده هنگام خرید، کد بازیابی دریافت کنید. نیازی به ثبت‌نام نیست."
 msgstr "با ایمیل ثبت‌شده هنگام خرید، کد بازیابی دریافت کنید. نیازی به ثبت‌نام نیست."
 
-#: src/Frontend/Shortcodes.php:315
+#: src/Frontend/Shortcodes.php:323
 msgid "با حساب اپراتور مرکز وارد شوید و دوباره این صفحه را باز کنید."
 msgstr "با حساب اپراتور مرکز وارد شوید و دوباره این صفحه را باز کنید."
 
-#: src/Frontend/Shortcodes.php:245
+#: src/Domain/Venue/PresetCatalog.php:22
+msgid "بادبزنی"
+msgstr "بادبزنی"
+
+#: src/Frontend/Shortcodes.php:253
 msgid "بازه (روز) "
 msgstr "بازه (روز) "
 
-#: src/Frontend/Shortcodes.php:244
+#: src/Frontend/Shortcodes.php:252
 msgid "بازه زمانی فقط روند صدور بلیت را محدود می‌کند؛ درصد ظرفیت و رتبه جایگاه‌ها وضعیت فعلی هستند. داده‌ها درآمد یا فروش مالی قطعی نیستند. تا ۲۰۰ جلسه اخیر نمایش داده می‌شود."
 msgstr "بازه زمانی فقط روند صدور بلیت را محدود می‌کند؛ درصد ظرفیت و رتبه جایگاه‌ها وضعیت فعلی هستند. داده‌ها درآمد یا فروش مالی قطعی نیستند. تا ۲۰۰ جلسه اخیر نمایش داده می‌شود."
 
-#: src/Domain/Hall/HallService.php:131
+#: src/Domain/Hall/HallService.php:138
 msgid "بازه فروش و تاریخ اجرا نامعتبر است."
 msgstr "بازه فروش و تاریخ اجرا نامعتبر است."
 
@@ -1002,7 +1090,7 @@ msgstr "بازه فروش و تاریخ اجرا نامعتبر است."
 msgid "بازه گزارش یا جلسه نامعتبر است."
 msgstr "بازه گزارش یا جلسه نامعتبر است."
 
-#: src/Admin/Pages.php:235
+#: src/Admin/Pages.php:240
 msgid "بازگشت"
 msgstr "بازگشت"
 
@@ -1014,11 +1102,27 @@ msgstr "بازیابی انجام نشد."
 msgid "بازیابی در دسترس نیست."
 msgstr "بازیابی در دسترس نیست."
 
-#: src/Domain/Hall/LayoutPresets.php:76 src/Domain/Hall/LayoutPrintRenderer.php:91
+#: src/Domain/Hall/LayoutPresets.php:76 src/Domain/Hall/LayoutPrintRenderer.php:91 src/Support/VenuePrint.php:155
 msgid "بخش "
 msgstr "بخش "
 
-#: src/Admin/Pages.php:647
+#: src/Support/VenuePrint.php:156
+msgid "بخش / ردیف"
+msgstr "بخش / ردیف"
+
+#: src/Domain/Allocation/Messages.php:73
+msgid "بخش انتخاب‌شده سالن معتبر نیست."
+msgstr "بخش انتخاب‌شده سالن معتبر نیست."
+
+#: src/Domain/Allocation/Messages.php:26
+msgid "بخشی از انتخاب شما دیگر آزاد نیست؛ جایگاه دیگری انتخاب کنید."
+msgstr "بخشی از انتخاب شما دیگر آزاد نیست؛ جایگاه دیگری انتخاب کنید."
+
+#: src/Domain/Allocation/Messages.php:62
+msgid "بخشی از این گروه قبلاً وارد شده است."
+msgstr "بخشی از این گروه قبلاً وارد شده است."
+
+#: src/Admin/Pages.php:652
 msgid "بخش‌های مدیریت رویداد"
 msgstr "بخش‌های مدیریت رویداد"
 
@@ -1026,19 +1130,19 @@ msgstr "بخش‌های مدیریت رویداد"
 msgid "بدون درگاه"
 msgstr "بدون درگاه"
 
-#: src/Admin/Pages.php:300
+#: src/Admin/Pages.php:305
 msgid "بدون سالن (فقط فروش آزاد)"
 msgstr "بدون سالن (فقط فروش آزاد)"
 
-#: src/Admin/Pages.php:273 src/Frontend/Shortcodes.php:221
+#: src/Admin/Pages.php:278 src/Frontend/Shortcodes.php:229
 msgid "بدون صندلی"
 msgstr "بدون صندلی"
 
-#: src/Frontend/Shortcodes.php:124 src/Frontend/Shortcodes.php:168
+#: src/Frontend/Shortcodes.php:126 src/Frontend/Shortcodes.php:171
 msgid "بدون نیاز به ساخت حساب کاربری، اطلاعات دریافت بلیت را تکمیل کنید."
 msgstr "بدون نیاز به ساخت حساب کاربری، اطلاعات دریافت بلیت را تکمیل کنید."
 
-#: src/Domain/Event/LifecycleService.php:34
+#: src/Domain/Event/LifecycleService.php:39
 msgid "برای انتشار جلسه، ابتدا رویداد آن را منتشر کنید."
 msgstr "برای انتشار جلسه، ابتدا رویداد آن را منتشر کنید."
 
@@ -1062,9 +1166,13 @@ msgstr "برای این رزرو کد تخفیف دیگری استفاده شد�
 msgid "برای بلیت‌های رزروشده از دکمه «ثبت سفارش از سبد» در پنل صندلی‌های سبد استفاده کنید؛ پرداخت معمول ووکامرس برای این آیتم‌ها فعال نیست."
 msgstr "برای بلیت‌های رزروشده از دکمه «ثبت سفارش از سبد» در پنل صندلی‌های سبد استفاده کنید؛ پرداخت معمول ووکامرس برای این آیتم‌ها فعال نیست."
 
-#: src/Domain/Event/EventChangeService.php:110
+#: src/Domain/Event/EventChangeService.php:114
 msgid "برای تغییر تاریخ، ابتدا رزروهای فعال و ورودهای ثبت‌شده را بررسی کنید."
 msgstr "برای تغییر تاریخ، ابتدا رزروهای فعال و ورودهای ثبت‌شده را بررسی کنید."
+
+#: src/Domain/Allocation/Messages.php:14
+msgid "برای تکمیل رزرو، از فرم اختصاصی جایگاه‌های سبد خرید استفاده کنید."
+msgstr "برای تکمیل رزرو، از فرم اختصاصی جایگاه‌های سبد خرید استفاده کنید."
 
 #: src/Domain/Event/EventChangeService.php:46
 msgid "برای ثبت تغییرات رویداد، پایگاه داده را ارتقا دهید."
@@ -1074,11 +1182,11 @@ msgstr "برای ثبت تغییرات رویداد، پایگاه داده را
 msgid "برای ثبت درخواست امن، مرورگر HTTPS لازم است."
 msgstr "برای ثبت درخواست امن، مرورگر HTTPS لازم است."
 
-#: src/Frontend/Shortcodes.php:157
+#: src/Frontend/Shortcodes.php:160
 msgid "برای جابه‌جایی در نقشه پیمایش کنید. انتخاب با کلید فاصله و حرکت با کلیدهای جهت نیز ممکن است."
 msgstr "برای جابه‌جایی در نقشه پیمایش کنید. انتخاب با کلید فاصله و حرکت با کلیدهای جهت نیز ممکن است."
 
-#: src/Domain/Hall/HallService.php:120
+#: src/Domain/Hall/HallService.php:123
 msgid "برای جلسه شماره‌دار، ظرفیت از نقشه محاسبه می‌شود."
 msgstr "برای جلسه شماره‌دار، ظرفیت از نقشه محاسبه می‌شود."
 
@@ -1086,15 +1194,19 @@ msgstr "برای جلسه شماره‌دار، ظرفیت از نقشه محا�
 msgid "برای خرید پولی با مالیات فعال، اتصال مالیاتی هنوز تأیید نشده است."
 msgstr "برای خرید پولی با مالیات فعال، اتصال مالیاتی هنوز تأیید نشده است."
 
-#: src/Admin/Pages.php:685
+#: src/Domain/Allocation/Messages.php:74
+msgid "برای دیدن جایگاه‌ها، نقشه را بیشتر بزرگ کنید."
+msgstr "برای دیدن جایگاه‌ها، نقشه را بیشتر بزرگ کنید."
+
+#: src/Admin/Pages.php:690
 msgid "برای رویداد خود جلسه، زمان فروش و نوع پذیرش تعریف کنید."
 msgstr "برای رویداد خود جلسه، زمان فروش و نوع پذیرش تعریف کنید."
 
-#: src/Frontend/Shortcodes.php:357
+#: src/Frontend/Shortcodes.php:373
 msgid "برای سفارش پولی اجباری است."
 msgstr "برای سفارش پولی اجباری است."
 
-#: src/Admin/Pages.php:679
+#: src/Admin/Pages.php:684
 msgid "برای شروع، یک مرکز ایجاد کنید یا از مدیر کل بخواهید دسترسی مرکز را به شما بدهد."
 msgstr "برای شروع، یک مرکز ایجاد کنید یا از مدیر کل بخواهید دسترسی مرکز را به شما بدهد."
 
@@ -1102,24 +1214,32 @@ msgstr "برای شروع، یک مرکز ایجاد کنید یا از مدیر
 msgid "برای صدور سفارش باید ووکامرس فعال باشد."
 msgstr "برای صدور سفارش باید ووکامرس فعال باشد."
 
-#: src/Admin/Pages.php:306
+#: src/Admin/Pages.php:311
 msgid "برای فروش آزاد، ظرفیت ۱ تا ۱۰۰٬۰۰۰ و برای فروش شماره‌دار مقدار صفر تعیین کنید. فروش آزاد فعلاً فقط رزرو آزمایشی دارد."
 msgstr "برای فروش آزاد، ظرفیت ۱ تا ۱۰۰٬۰۰۰ و برای فروش شماره‌دار مقدار صفر تعیین کنید. فروش آزاد فعلاً فقط رزرو آزمایشی دارد."
+
+#: src/Support/VenuePrint.php:95
+msgid "برای محدود نگه داشتن حجم چاپ، بخشی از عناصر یا محدوده گروه‌ها نمایش داده نشده‌اند."
+msgstr "برای محدود نگه داشتن حجم چاپ، بخشی از عناصر یا محدوده گروه‌ها نمایش داده نشده‌اند."
 
 msgid "برای مشاهده امن بلیت‌ها، شماره سفارش و کلید دسترسی دریافت‌شده هنگام ثبت سفارش را وارد کنید."
 msgstr "برای مشاهده امن بلیت‌ها، شماره سفارش و کلید دسترسی دریافت‌شده هنگام ثبت سفارش را وارد کنید."
 
-#: src/Domain/Ticket/TicketService.php:282
+#: src/Domain/Ticket/TicketService.php:266
 msgid "برای مشاهده صورتحساب ووکامرس لازم است."
 msgstr "برای مشاهده صورتحساب ووکامرس لازم است."
 
-#: src/Frontend/Shortcodes.php:91
+#: src/Frontend/Shortcodes.php:93
 msgid "برای مشاهده ظرفیت و انتخاب جایگاه، جلسه را باز کنید."
 msgstr "برای مشاهده ظرفیت و انتخاب جایگاه، جلسه را باز کنید."
 
-#: src/Frontend/Shortcodes.php:266
+#: src/Frontend/Shortcodes.php:274
 msgid "برای مشاهده گزارش‌ها ورود مدیر مجاز ضروری است."
 msgstr "برای مشاهده گزارش‌ها ورود مدیر مجاز ضروری است."
+
+#: src/Support/VenueUi.php:26
+msgid "برای نقشه تعاملی، جاوااسکریپت را فعال کنید."
+msgstr "برای نقشه تعاملی، جاوااسکریپت را فعال کنید."
 
 #: src/Domain/Ticket/BundlePolicy.php:59
 msgid "برای هر جلسه فقط یک بلیت مجاز است."
@@ -1133,7 +1253,7 @@ msgstr "برای ویرایش ابتدا شیء را انتخاب کنید."
 msgid "برای پیگیری سفارش پولی، ایمیل لازم است."
 msgstr "برای پیگیری سفارش پولی، ایمیل لازم است."
 
-#: src/Frontend/Shortcodes.php:315
+#: src/Frontend/Shortcodes.php:323
 msgid "برای کنترل ورود، حساب اپراتور مجاز لازم است."
 msgstr "برای کنترل ورود، حساب اپراتور مجاز لازم است."
 
@@ -1141,15 +1261,15 @@ msgstr "برای کنترل ورود، حساب اپراتور مجاز لازم
 msgid "بررسی انقضای رزروهای ظرفیت ممکن نشد."
 msgstr "بررسی انقضای رزروهای ظرفیت ممکن نشد."
 
-#: src/Frontend/Shortcodes.php:329
+#: src/Frontend/Shortcodes.php:345
 msgid "بررسی با شماره بلیت"
 msgstr "بررسی با شماره بلیت"
 
-#: src/Frontend/Shortcodes.php:331
+#: src/Frontend/Shortcodes.php:347
 msgid "بررسی بلیت"
 msgstr "بررسی بلیت"
 
-#: src/Frontend/Shortcodes.php:359
+#: src/Frontend/Shortcodes.php:375
 msgid "بررسی تخفیف"
 msgstr "بررسی تخفیف"
 
@@ -1157,7 +1277,7 @@ msgstr "بررسی تخفیف"
 msgid "بررسی تخفیف ممکن نشد."
 msgstr "بررسی تخفیف ممکن نشد."
 
-#: src/Admin/Pages.php:696
+#: src/Admin/Pages.php:701
 msgid "بررسی ظرفیت و حضور"
 msgstr "بررسی ظرفیت و حضور"
 
@@ -1169,15 +1289,15 @@ msgstr "بررسی قوانین صندلی ممکن نیست."
 msgid "بررسی نهایی چیدمان ممکن نشد."
 msgstr "بررسی نهایی چیدمان ممکن نشد."
 
-#: src/Admin/Pages.php:241
+#: src/Admin/Pages.php:246
 msgid "برچسب/متن"
 msgstr "برچسب/متن"
 
-#: src/Admin/Pages.php:843 src/Frontend/Shortcodes.php:80
+#: src/Admin/Pages.php:848 src/Frontend/Shortcodes.php:82
 msgid "برگزارکننده"
 msgstr "برگزارکننده"
 
-#: src/Admin/Pages.php:235 src/Frontend/Shortcodes.php:149
+#: src/Admin/Pages.php:240 src/Frontend/Shortcodes.php:152
 msgid "بزرگ‌نمایی"
 msgstr "بزرگ‌نمایی"
 
@@ -1197,7 +1317,7 @@ msgstr "بسته از بلیت‌های موجود ایجاد شد؛ هر جلس
 msgid "بسته باید شامل ۲ تا ۸ بلیت از جلسه‌های متفاوت باشد."
 msgstr "بسته باید شامل ۲ تا ۸ بلیت از جلسه‌های متفاوت باشد."
 
-#: src/Admin/Pages.php:348
+#: src/Admin/Pages.php:353
 msgid "بسته چندجلسه‌ای بلیت‌های موجود (آزمایشی)"
 msgstr "بسته چندجلسه‌ای بلیت‌های موجود (آزمایشی)"
 
@@ -1213,7 +1333,11 @@ msgstr "بسته‌های چندجلسه‌ای فقط در محیط آزمای�
 msgid "بعد از انتقال، صندلی‌های یک سفارش دیگر مجاور نیستند."
 msgstr "بعد از انتقال، صندلی‌های یک سفارش دیگر مجاور نیستند."
 
-#: src/Admin/Pages.php:399
+#: src/Domain/Venue/PresetCatalog.php:32
+msgid "بلک‌باکس ال‌شکل"
+msgstr "بلک‌باکس ال‌شکل"
+
+#: src/Admin/Pages.php:404
 msgid "بلیت"
 msgstr "بلیت"
 
@@ -1245,7 +1369,7 @@ msgstr "بلیت تغییر کرده یا پیدا نشد."
 msgid "بلیت دارای پرونده استرداد را نمی‌توان گروه‌بندی کرد."
 msgstr "بلیت دارای پرونده استرداد را نمی‌توان گروه‌بندی کرد."
 
-#: src/Domain/Gate/CheckinService.php:40
+#: src/Domain/Allocation/Messages.php:57 src/Domain/Gate/CheckinService.php:40
 msgid "بلیت در محدوده دسترسی شما پیدا نشد."
 msgstr "بلیت در محدوده دسترسی شما پیدا نشد."
 
@@ -1261,7 +1385,7 @@ msgstr "بلیت در محدوده مجاز پیدا نشد."
 msgid "بلیت در محدوده مجاز یافت نشد."
 msgstr "بلیت در محدوده مجاز یافت نشد."
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:191
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:205
 msgid "بلیت رایگان ظرفیت آزاد صادر شد."
 msgstr "بلیت رایگان ظرفیت آزاد صادر شد."
 
@@ -1269,7 +1393,7 @@ msgstr "بلیت رایگان ظرفیت آزاد صادر شد."
 msgid "بلیت رایگان لغو شد و صندلی، بدون عملیات مالی، آزاد شد."
 msgstr "بلیت رایگان لغو شد و صندلی، بدون عملیات مالی، آزاد شد."
 
-#: src/Domain/Checkout/CheckoutService.php:322 src/Domain/GeneralAdmission/FreeAdmissionService.php:368 src/Integrations/CartSeatManager.php:507
+#: src/Domain/Allocation/CheckoutService.php:218 src/Domain/Checkout/CheckoutService.php:331 src/Domain/GeneralAdmission/FreeAdmissionService.php:374 src/Integrations/CartSeatManager.php:507
 msgid "بلیت رویداد (محصول فنی)"
 msgstr "بلیت رویداد (محصول فنی)"
 
@@ -1285,11 +1409,11 @@ msgstr "بلیت شماره "
 msgid "بلیت صادرشده‌ای برای این سفارش پیدا نشد."
 msgstr "بلیت صادرشده‌ای برای این سفارش پیدا نشد."
 
-#: src/Domain/Reporting/AttendanceReport.php:95 src/Domain/Reporting/XlsxExporter.php:19
+#: src/Domain/Reporting/AttendanceReport.php:106 src/Domain/Reporting/XlsxExporter.php:19
 msgid "بلیت فعال"
 msgstr "بلیت فعال"
 
-#: src/Frontend/Shortcodes.php:255
+#: src/Frontend/Shortcodes.php:263
 msgid "بلیت فعال صادرشده"
 msgstr "بلیت فعال صادرشده"
 
@@ -1301,7 +1425,7 @@ msgstr "بلیت فعال قابل مشاهده است. توکن را محرما
 msgid "بلیت قابل اعتبارسنجی نیست."
 msgstr "بلیت قابل اعتبارسنجی نیست."
 
-#: src/Frontend/Shortcodes.php:257
+#: src/Frontend/Shortcodes.php:265
 msgid "بلیت معتبر"
 msgstr "بلیت معتبر"
 
@@ -1313,7 +1437,7 @@ msgstr "بلیت نامعتبر، استفاده‌شده یا مربوط به �
 msgid "بلیت هم‌زمان تغییر کرده است."
 msgstr "بلیت هم‌زمان تغییر کرده است."
 
-#: src/Admin/Pages.php:630
+#: src/Admin/Pages.php:635
 msgid "بلیت و استرداد"
 msgstr "بلیت و استرداد"
 
@@ -1333,11 +1457,11 @@ msgstr "بلیت یافت نشد."
 msgid "بلیت‌ها باید متعلق به یک رویداد و شرکت‌کننده باشند."
 msgstr "بلیت‌ها باید متعلق به یک رویداد و شرکت‌کننده باشند."
 
-#: src/Frontend/Shortcodes.php:192
+#: src/Frontend/Shortcodes.php:195
 msgid "بلیت‌ها و جزئیات سفارش خود را با دسترسی امن مشاهده کنید."
 msgstr "بلیت‌ها و جزئیات سفارش خود را با دسترسی امن مشاهده کنید."
 
-#: src/Admin/Pages.php:363
+#: src/Admin/Pages.php:368
 msgid "بلیت‌های دیگر همان سفارش تغییری نمی‌کنند."
 msgstr "بلیت‌های دیگر همان سفارش تغییری نمی‌کنند."
 
@@ -1349,11 +1473,11 @@ msgstr "بلیت‌های سفارش "
 msgid "بلیت‌های شما آماده هستند."
 msgstr "بلیت‌های شما آماده هستند."
 
-#: src/Frontend/Shortcodes.php:192 src/Integrations/Elementor/Widget.php:55
+#: src/Frontend/Shortcodes.php:195 src/Integrations/Elementor/Widget.php:55
 msgid "بلیت‌های من"
 msgstr "بلیت‌های من"
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:391
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:397
 msgid "بلیت‌های موجود این سفارش رایگان بازیابی شدند."
 msgstr "بلیت‌های موجود این سفارش رایگان بازیابی شدند."
 
@@ -1365,7 +1489,7 @@ msgstr "به‌روزرسانی انجام نشد. دسترسی یا اتصال 
 msgid "بین ۱ تا ۲۰ صندلی انتخاب کنید."
 msgstr "بین ۱ تا ۲۰ صندلی انتخاب کنید."
 
-#: src/Frontend/Shortcodes.php:229
+#: src/Frontend/Shortcodes.php:237
 msgid "تأیید انتقال"
 msgstr "تأیید انتقال"
 
@@ -1381,17 +1505,21 @@ msgstr "تأیید شد. دسترسی موقت حداکثر ۲۴ ساعت اعت
 msgid "تأیید صدور بلیت"
 msgstr "تأیید صدور بلیت"
 
-#: src/Frontend/Shortcodes.php:204
+#: src/Frontend/Shortcodes.php:207
 msgid "تأیید و نمایش بلیت‌ها"
 msgstr "تأیید و نمایش بلیت‌ها"
 
-#: src/Frontend/Shortcodes.php:325
+#: src/Frontend/Shortcodes.php:341
 msgid "تأیید ورود"
 msgstr "تأیید ورود"
 
 #: src/Domain/Hall/LayoutPresets.php:13
 msgid "تئاتر"
 msgstr "تئاتر"
+
+#: src/Domain/Venue/PresetCatalog.php:28
+msgid "تئاتر مدور"
+msgstr "تئاتر مدور"
 
 #: assets/js/tickets.js
 msgid "تاریخ ثبت"
@@ -1401,27 +1529,27 @@ msgstr "تاریخ ثبت"
 msgid "تاریخ میلادی پشتیبانی نمی‌شود."
 msgstr "تاریخ میلادی پشتیبانی نمی‌شود."
 
-#: src/Admin/Pages.php:307
+#: src/Admin/Pages.php:312
 msgid "تاریخ‌ها بر اساس ساعت تهران وارد شوند."
 msgstr "تاریخ‌ها بر اساس ساعت تهران وارد شوند."
 
-#: src/Admin/Pages.php:520 src/Frontend/Shortcodes.php:122 src/Frontend/Shortcodes.php:297
+#: src/Admin/Pages.php:525 src/Frontend/Shortcodes.php:124 src/Frontend/Shortcodes.php:305
 msgid "تازه‌سازی"
 msgstr "تازه‌سازی"
 
-#: src/Frontend/Shortcodes.php:252
+#: src/Frontend/Shortcodes.php:260
 msgid "تازه‌سازی آمار"
 msgstr "تازه‌سازی آمار"
 
-#: src/Frontend/Shortcodes.php:151
+#: src/Frontend/Shortcodes.php:154
 msgid "تازه‌سازی موجودی"
 msgstr "تازه‌سازی موجودی"
 
-#: src/Domain/Ticket/TicketService.php:140
+#: src/Domain/Ticket/TicketService.php:124
 msgid "تثبیت جایگاه انجام نشد."
 msgstr "تثبیت جایگاه انجام نشد."
 
-#: src/Frontend/Shortcodes.php:79
+#: src/Frontend/Shortcodes.php:81
 msgid "تجربه بعدی شما"
 msgstr "تجربه بعدی شما"
 
@@ -1437,15 +1565,15 @@ msgstr "تخصیص بلیت و سفارش نیازمند بررسی است."
 msgid "تخفیف"
 msgstr "تخفیف"
 
-#: src/Domain/Hall/LayoutVersionService.php:101 src/Domain/Hall/LayoutVersionService.php:59
+#: src/Domain/Hall/LayoutVersionService.php:102 src/Domain/Hall/LayoutVersionService.php:60
 msgid "تراکنش آغاز نشد."
 msgstr "تراکنش آغاز نشد."
 
-#: src/Domain/Hall/LayoutVersionService.php:122
+#: src/Domain/Hall/LayoutVersionService.php:124
 msgid "تراکنش انتشار تکمیل نشد."
 msgstr "تراکنش انتشار تکمیل نشد."
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:308
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:314
 msgid "تراکنش تأیید نشد."
 msgstr "تراکنش تأیید نشد."
 
@@ -1453,7 +1581,7 @@ msgstr "تراکنش تأیید نشد."
 msgid "تراکنش ثبت نشد."
 msgstr "تراکنش ثبت نشد."
 
-#: src/Domain/Hall/DraftSaveService.php:55
+#: src/Domain/Hall/DraftSaveService.php:54 src/Domain/Hall/DraftSaveService.php:66
 msgid "تراکنش ذخیره تکمیل نشد."
 msgstr "تراکنش ذخیره تکمیل نشد."
 
@@ -1461,11 +1589,11 @@ msgstr "تراکنش ذخیره تکمیل نشد."
 msgid "تراکنش شروع نشد."
 msgstr "تراکنش شروع نشد."
 
-#: src/Domain/Ticket/TicketService.php:149
+#: src/Domain/Ticket/TicketService.php:133
 msgid "تراکنش صدور بلیت ثبت نشد."
 msgstr "تراکنش صدور بلیت ثبت نشد."
 
-#: src/Domain/Hall/HallService.php:181
+#: src/Domain/Hall/HallService.php:192
 msgid "تراکنش قابل ثبت نیست."
 msgstr "تراکنش قابل ثبت نیست."
 
@@ -1477,7 +1605,7 @@ msgstr "تراکنش لغو تکمیل نشد."
 msgid "تراکنش موجودی ثبت نشد."
 msgstr "تراکنش موجودی ثبت نشد."
 
-#: src/Domain/Event/EventChangeService.php:152 src/Domain/Event/EventChangeService.php:79 src/Domain/GeneralAdmission/FreeAdmissionService.php:268
+#: src/Domain/Event/EventChangeService.php:156 src/Domain/Event/EventChangeService.php:79 src/Domain/GeneralAdmission/FreeAdmissionService.php:274
 msgid "تراکنش نهایی نشد."
 msgstr "تراکنش نهایی نشد."
 
@@ -1493,7 +1621,7 @@ msgstr "ترتیب بر اساس مختصات افقی (چپ به راست) اس
 msgid "تطبیق استرداد به بررسی نیاز دارد."
 msgstr "تطبیق استرداد به بررسی نیاز دارد."
 
-#: src/Admin/Pages.php:383
+#: src/Admin/Pages.php:388
 msgid "تطبیق با استرداد ثبت‌شده ووکامرس"
 msgstr "تطبیق با استرداد ثبت‌شده ووکامرس"
 
@@ -1516,7 +1644,7 @@ msgstr "تعداد باید بین ۱ تا ۲۰ باشد."
 msgid "تعداد باید عدد صحیح بین ۱ تا ۲۰ باشد."
 msgstr "تعداد باید عدد صحیح بین ۱ تا ۲۰ باشد."
 
-#: src/Frontend/Shortcodes.php:119
+#: src/Frontend/Shortcodes.php:121
 msgid "تعداد بلیت"
 msgstr "تعداد بلیت"
 
@@ -1536,27 +1664,31 @@ msgstr "تعداد بلیت‌های بسته معتبر نیست."
 msgid "تعداد تلاش برای بازیابی بیش از حد مجاز است."
 msgstr "تعداد تلاش برای بازیابی بیش از حد مجاز است."
 
-#: src/Http/RestController.php:417
+#: src/Domain/Allocation/Messages.php:21
+msgid "تعداد جایگاه‌های انتخابی از سقف مجاز بیشتر است."
+msgstr "تعداد جایگاه‌های انتخابی از سقف مجاز بیشتر است."
+
+#: src/Http/RestController.php:418
 msgid "تعداد درخواست بررسی کد تخفیف زیاد است."
 msgstr "تعداد درخواست بررسی کد تخفیف زیاد است."
 
-#: src/Domain/Guest/GuestAccessService.php:23 src/Http/RestController.php:393 src/Http/RestController.php:405 src/Http/RestController.php:441 src/Http/RestController.php:458 src/Http/RestController.php:509 src/Http/RestController.php:521 src/Http/RestController.php:534 src/Http/RestController.php:546 src/Http/RestController.php:568 src/Http/RestController.php:581 src/Http/RestController.php:600 src/Http/RestController.php:612 src/Http/RestController.php:624 src/Integrations/CartSeatManager.php:471 src/Integrations/CartSeatManager.php:482 src/Integrations/CartSeatManager.php:492
+#: src/Domain/Guest/GuestAccessService.php:23 src/Http/RestController.php:394 src/Http/RestController.php:406 src/Http/RestController.php:442 src/Http/RestController.php:459 src/Http/RestController.php:510 src/Http/RestController.php:522 src/Http/RestController.php:535 src/Http/RestController.php:547 src/Http/RestController.php:569 src/Http/RestController.php:582 src/Http/RestController.php:601 src/Http/RestController.php:613 src/Http/RestController.php:625 src/Integrations/CartSeatManager.php:471 src/Integrations/CartSeatManager.php:482 src/Integrations/CartSeatManager.php:492
 msgid "تعداد درخواست بیش از حد مجاز است."
 msgstr "تعداد درخواست بیش از حد مجاز است."
 
-#: src/Http/RestController.php:767
+#: src/Http/RestController.php:771
 msgid "تعداد درخواست‌ها بیش از حد مجاز است."
 msgstr "تعداد درخواست‌ها بیش از حد مجاز است."
 
-#: src/Domain/Event/EventChangeService.php:118
+#: src/Domain/Event/EventChangeService.php:122
 msgid "تعداد سفارش‌ها زیاد است؛ ابتدا پردازش دسته‌ای و اعلان‌ها را راه‌اندازی کنید."
 msgstr "تعداد سفارش‌ها زیاد است؛ ابتدا پردازش دسته‌ای و اعلان‌ها را راه‌اندازی کنید."
 
-#: src/Frontend/Shortcodes.php:158
+#: src/Frontend/Shortcodes.php:161
 msgid "تعداد صندلی"
 msgstr "تعداد صندلی"
 
-#: src/Domain/Hall/LayoutDocument.php:35
+#: src/Domain/Hall/LayoutDocument.php:37
 msgid "تعداد صندلی باید بین ۱ و ۱۰۰۰۰ باشد."
 msgstr "تعداد صندلی باید بین ۱ و ۱۰۰۰۰ باشد."
 
@@ -1564,14 +1696,14 @@ msgstr "تعداد صندلی باید بین ۱ و ۱۰۰۰۰ باشد."
 msgid "تعداد صندلی درخواستی معتبر نیست."
 msgstr "تعداد صندلی درخواستی معتبر نیست."
 
-#: src/Admin/Pages.php:254
+#: src/Admin/Pages.php:259
 msgid "تعداد صندلی ردیف "
 msgstr "تعداد صندلی ردیف "
 
 msgid "تعداد صندلی پیشنهادی"
 msgstr "تعداد صندلی پیشنهادی"
 
-#: src/Domain/Hall/LayoutVersionService.php:115
+#: src/Domain/Hall/LayoutVersionService.php:117
 msgid "تعداد صندلی‌های نسخه با مقدار ثبت‌شده مطابقت ندارد."
 msgstr "تعداد صندلی‌های نسخه با مقدار ثبت‌شده مطابقت ندارد."
 
@@ -1579,18 +1711,22 @@ msgstr "تعداد صندلی‌های نسخه با مقدار ثبت‌شده 
 msgid "تعداد ظرفیت رزرو معتبر نیست."
 msgstr "تعداد ظرفیت رزرو معتبر نیست."
 
+#: src/Domain/Allocation/Messages.php:61
+msgid "تعداد مهمانان از ظرفیت باقی‌مانده بیشتر است یا معتبر نیست."
+msgstr "تعداد مهمانان از ظرفیت باقی‌مانده بیشتر است یا معتبر نیست."
+
 msgid "تعداد پیشنهادی "
 msgstr "تعداد پیشنهادی "
 
-#: src/Admin/Pages.php:439
+#: src/Admin/Pages.php:444
 msgid "تغییر"
 msgstr "تغییر"
 
-#: src/Domain/Event/EventChangeService.php:158
+#: src/Domain/Event/EventChangeService.php:162
 msgid "تغییر رویداد ذخیره نشد و نیازمند بررسی است."
 msgstr "تغییر رویداد ذخیره نشد و نیازمند بررسی است."
 
-#: src/Admin/Pages.php:480
+#: src/Admin/Pages.php:485
 msgid "تغییر زمان جلسه (بدون لغو بلیت)"
 msgstr "تغییر زمان جلسه (بدون لغو بلیت)"
 
@@ -1609,19 +1745,19 @@ msgstr "تغییر صندلی‌ها در سرور ثبت شد. جمع سبد ب
 msgid "تغییر مشخصات شرکت‌کننده ناموفق بود."
 msgstr "تغییر مشخصات شرکت‌کننده ناموفق بود."
 
-#: src/Domain/Event/EventChangeService.php:196
+#: src/Domain/Event/EventChangeService.php:203
 msgid "تغییر موردنظر یافت نشد."
 msgstr "تغییر موردنظر یافت نشد."
 
-#: src/Admin/Pages.php:421
+#: src/Admin/Pages.php:426
 msgid "تغییر وضعیت"
 msgstr "تغییر وضعیت"
 
-#: src/Domain/Event/LifecycleService.php:39
+#: src/Domain/Event/LifecycleService.php:44
 msgid "تغییر وضعیت در این مرحله مجاز نیست."
 msgstr "تغییر وضعیت در این مرحله مجاز نیست."
 
-#: src/Domain/Hall/SeatAdministration.php:56
+#: src/Domain/Hall/SeatAdministration.php:64
 msgid "تغییر وضعیت صندلی ثبت نشد."
 msgstr "تغییر وضعیت صندلی ثبت نشد."
 
@@ -1629,7 +1765,7 @@ msgstr "تغییر وضعیت صندلی ثبت نشد."
 msgid "تغییرات ذخیره‌نشده؛ در انتظار ذخیره خودکار…"
 msgstr "تغییرات ذخیره‌نشده؛ در انتظار ذخیره خودکار…"
 
-#: src/Admin/Pages.php:437
+#: src/Admin/Pages.php:442
 msgid "تغییرات رویداد و پرونده‌های مالی نیازمند رسیدگی"
 msgstr "تغییرات رویداد و پرونده‌های مالی نیازمند رسیدگی"
 
@@ -1641,18 +1777,18 @@ msgstr "تغییرات شرکت‌کننده ثبت نشد."
 msgid "تمام بلیت‌های انتخاب‌شده یافت نشدند."
 msgstr "تمام بلیت‌های انتخاب‌شده یافت نشدند."
 
-#: src/Domain/Booking/HoldService.php:228
+#: src/Domain/Booking/HoldService.php:234
 msgid "تمدید رزرو ثبت نشد."
 msgstr "تمدید رزرو ثبت نشد."
 
-#: src/Domain/Booking/HoldService.php:220
+#: src/Domain/Booking/HoldService.php:226
 msgid "تمدید صندلی انجام نشد."
 msgstr "تمدید صندلی انجام نشد."
 
 msgid "تمدید مهلت (حداکثر ۲ بار)"
 msgstr "تمدید مهلت (حداکثر ۲ بار)"
 
-#: src/Frontend/Shortcodes.php:165
+#: src/Frontend/Shortcodes.php:168
 msgid "تمدید مهلت رزرو"
 msgstr "تمدید مهلت رزرو"
 
@@ -1660,13 +1796,17 @@ msgstr "تمدید مهلت رزرو"
 msgid "تنظیم قوانین صندلی انجام نشد."
 msgstr "تنظیم قوانین صندلی انجام نشد."
 
-#: src/Admin/Pages.php:735
+#: src/Admin/Pages.php:740
 msgid "تنظیم نشده"
 msgstr "تنظیم نشده"
 
-#: src/Admin/Pages.php:634
+#: src/Admin/Pages.php:639
 msgid "تنظیمات"
 msgstr "تنظیمات"
+
+#: src/Domain/Allocation/Messages.php:39
+msgid "تنظیمات این جلسه قابل تغییر نیست."
+msgstr "تنظیمات این جلسه قابل تغییر نیست."
 
 #: assets/js/layout-editor.js
 msgid "تنظیمات ذخیره خودکار در دسترس نیست؛ JSON را دانلود کنید."
@@ -1676,15 +1816,19 @@ msgstr "تنظیمات ذخیره خودکار در دسترس نیست؛ JSON �
 msgid "تنظیمات سامانه رویداد"
 msgstr "تنظیمات سامانه رویداد"
 
+#: src/Domain/Allocation/Messages.php:40
+msgid "تنظیمات قیمت یا ورود معتبر نیست."
+msgstr "تنظیمات قیمت یا ورود معتبر نیست."
+
 #: src/Domain/Pricing/DiscountPolicy.php:56
 msgid "تنظیمات مبلغ تخفیف معتبر نیست."
 msgstr "تنظیمات مبلغ تخفیف معتبر نیست."
 
-#: src/Admin/Pages.php:336
+#: src/Admin/Pages.php:341
 msgid "تنها بلیت فعالِ استفاده‌نشده، پیش از شروع جلسه و با مقصد آزاد قابل انتقال است. "
 msgstr "تنها بلیت فعالِ استفاده‌نشده، پیش از شروع جلسه و با مقصد آزاد قابل انتقال است. "
 
-#: src/Domain/Hall/LayoutVersionService.php:111
+#: src/Domain/Hall/LayoutVersionService.php:112
 msgid "تنها نسخه پیش‌نویسِ متعلق به همین سالن قابل انتشار است."
 msgstr "تنها نسخه پیش‌نویسِ متعلق به همین سالن قابل انتشار است."
 
@@ -1692,11 +1836,11 @@ msgstr "تنها نسخه پیش‌نویسِ متعلق به همین سالن 
 msgid "توزیع تخفیف معتبر نیست."
 msgstr "توزیع تخفیف معتبر نیست."
 
-#: src/Admin/Pages.php:824
+#: src/Admin/Pages.php:829
 msgid "توقف"
 msgstr "توقف"
 
-#: src/Frontend/Shortcodes.php:327
+#: src/Frontend/Shortcodes.php:343
 msgid "توقف دوربین"
 msgstr "توقف دوربین"
 
@@ -1704,11 +1848,11 @@ msgstr "توقف دوربین"
 msgid "تولید تقویم ممکن نیست."
 msgstr "تولید تقویم ممکن نیست."
 
-#: src/Domain/Reporting/AttendanceReport.php:139
+#: src/Domain/Reporting/AttendanceReport.php:150
 msgid "تولید گزارش Excel ممکن نشد؛ ماژول Phar و فضای موقت سرور را بررسی کنید."
 msgstr "تولید گزارش Excel ممکن نشد؛ ماژول Phar و فضای موقت سرور را بررسی کنید."
 
-#: src/Frontend/Shortcodes.php:324
+#: src/Frontend/Shortcodes.php:340
 msgid "توکن QR"
 msgstr "توکن QR"
 
@@ -1719,11 +1863,11 @@ msgstr "توکن QR "
 msgid "توکن دسترسی معتبر نیست."
 msgstr "توکن دسترسی معتبر نیست."
 
-#: src/Domain/Ticket/TicketService.php:244
+#: src/Domain/Ticket/TicketService.php:228
 msgid "توکن دسترسی معتبر یا فعال نیست."
 msgstr "توکن دسترسی معتبر یا فعال نیست."
 
-#: src/Frontend/Shortcodes.php:230
+#: src/Frontend/Shortcodes.php:238
 msgid "توکن مالک جدید"
 msgstr "توکن مالک جدید"
 
@@ -1739,7 +1883,7 @@ msgstr "توکن مشاهده بلیت شما: %s\nبرای محافظت از ب
 msgid "تکمیل سفارش این بلیت‌ها فقط از مسیر اختصاصی افزونه در محیط آزمایشی مجاز است."
 msgstr "تکمیل سفارش این بلیت‌ها فقط از مسیر اختصاصی افزونه در محیط آزمایشی مجاز است."
 
-#: src/Domain/Checkout/CheckoutService.php:283
+#: src/Domain/Checkout/CheckoutService.php:292
 msgid "تکمیل سفارش ناموفق بود؛ برای بررسی وضعیت پرداخت یا رزرو با پشتیبانی تماس بگیرید."
 msgstr "تکمیل سفارش ناموفق بود؛ برای بررسی وضعیت پرداخت یا رزرو با پشتیبانی تماس بگیرید."
 
@@ -1747,11 +1891,11 @@ msgstr "تکمیل سفارش ناموفق بود؛ برای بررسی وضعی
 msgid "تکمیل‌شده"
 msgstr "تکمیل‌شده"
 
-#: src/Domain/Booking/HoldService.php:283
+#: src/Domain/Booking/HoldService.php:289
 msgid "ثبت آزادسازی انجام نشد."
 msgstr "ثبت آزادسازی انجام نشد."
 
-#: src/Admin/Pages.php:277
+#: src/Admin/Pages.php:282
 msgid "ثبت اصلاح مشخصات بلیت"
 msgstr "ثبت اصلاح مشخصات بلیت"
 
@@ -1763,6 +1907,10 @@ msgstr "ثبت انتقال نهایی موفق نبود."
 msgid "ثبت انتقال نهایی نشد."
 msgstr "ثبت انتقال نهایی نشد."
 
+#: src/Domain/Allocation/Messages.php:55
+msgid "ثبت این سفارش با تنظیمات مالیات فعلی امکان‌پذیر نیست."
+msgstr "ثبت این سفارش با تنظیمات مالیات فعلی امکان‌پذیر نیست."
+
 #: src/Domain/Ticket/BundleService.php:127
 msgid "ثبت بسته به بررسی نیاز دارد."
 msgstr "ثبت بسته به بررسی نیاز دارد."
@@ -1771,7 +1919,7 @@ msgstr "ثبت بسته به بررسی نیاز دارد."
 msgid "ثبت بسته ممکن نشد."
 msgstr "ثبت بسته ممکن نشد."
 
-#: src/Domain/Ticket/TicketService.php:145
+#: src/Domain/Ticket/TicketService.php:129
 msgid "ثبت تأیید بلیت کامل نشد."
 msgstr "ثبت تأیید بلیت کامل نشد."
 
@@ -1779,34 +1927,38 @@ msgstr "ثبت تأیید بلیت کامل نشد."
 msgid "ثبت تأیید گیرنده ناموفق بود."
 msgstr "ثبت تأیید گیرنده ناموفق بود."
 
-#: src/Domain/Event/EventChangeService.php:136
+#: src/Domain/Event/EventChangeService.php:140
 msgid "ثبت تاریخ جدید ممکن نشد."
 msgstr "ثبت تاریخ جدید ممکن نشد."
 
-#: src/Domain/Booking/HoldService.php:344
+#: src/Domain/Booking/HoldService.php:350
 msgid "ثبت تراکنش انجام نشد."
 msgstr "ثبت تراکنش انجام نشد."
 
-#: src/Domain/Checkout/CheckoutService.php:191
+#: src/Domain/Checkout/CheckoutService.php:200
 msgid "ثبت تراکنش ممکن نشد."
 msgstr "ثبت تراکنش ممکن نشد."
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:120 src/Domain/GeneralAdmission/FreeAdmissionService.php:60 src/Domain/GeneralAdmission/FreeAdmissionService.php:64 src/Domain/Ticket/OwnershipTransferService.php:312 src/Domain/Ticket/RefundReviewService.php:296
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:132 src/Domain/GeneralAdmission/FreeAdmissionService.php:62 src/Domain/GeneralAdmission/FreeAdmissionService.php:66 src/Domain/Ticket/OwnershipTransferService.php:312 src/Domain/Ticket/RefundReviewService.php:296
 msgid "ثبت تراکنش ناموفق بود."
 msgstr "ثبت تراکنش ناموفق بود."
 
-#: src/Admin/Pages.php:489
+#: src/Domain/Allocation/Messages.php:44
+msgid "ثبت تغییر انجام نشد؛ دوباره تلاش کنید."
+msgstr "ثبت تغییر انجام نشد؛ دوباره تلاش کنید."
+
+#: src/Admin/Pages.php:494
 msgid "ثبت تغییر تاریخ و تشکیل پرونده‌های پیگیری"
 msgstr "ثبت تغییر تاریخ و تشکیل پرونده‌های پیگیری"
 
-#: src/Frontend/Shortcodes.php:164 src/Integrations/CartSeatManager.php:410
+#: src/Frontend/Shortcodes.php:167 src/Integrations/CartSeatManager.php:410
 msgid "ثبت تغییر صندلی‌ها"
 msgstr "ثبت تغییر صندلی‌ها"
 
 msgid "ثبت تغییر صندلی‌های رزرو"
 msgstr "ثبت تغییر صندلی‌های رزرو"
 
-#: src/Domain/Event/LifecycleService.php:46 src/Domain/Hall/SeatAdministration.php:60
+#: src/Domain/Event/LifecycleService.php:51 src/Domain/Hall/SeatAdministration.php:68
 msgid "ثبت تغییر وضعیت ناموفق بود."
 msgstr "ثبت تغییر وضعیت ناموفق بود."
 
@@ -1818,7 +1970,7 @@ msgstr "ثبت تغییرات رویداد ممکن نشد."
 msgid "ثبت تلاش تأیید ناموفق بود."
 msgstr "ثبت تلاش تأیید ناموفق بود."
 
-#: src/Domain/Hall/HallService.php:140
+#: src/Domain/Hall/HallService.php:147
 msgid "ثبت جلسه انجام نشد."
 msgstr "ثبت جلسه انجام نشد."
 
@@ -1834,22 +1986,26 @@ msgstr "ثبت درخواست استرداد نیازمند بررسی است."
 msgid "ثبت درخواست انتقال ناموفق بود."
 msgstr "ثبت درخواست انتقال ناموفق بود."
 
-#: src/Domain/Booking/HoldService.php:235
+#: src/Domain/Booking/HoldService.php:241
 msgid "ثبت درخواست تکرارپذیر انجام نشد."
 msgstr "ثبت درخواست تکرارپذیر انجام نشد."
 
-#: src/Admin/Pages.php:379
+#: src/Admin/Pages.php:384
 msgid "ثبت درخواست و توقف ورود"
 msgstr "ثبت درخواست و توقف ورود"
 
 msgid "ثبت دستی ورود با شماره بلیت"
 msgstr "ثبت دستی ورود با شماره بلیت"
 
+#: src/Domain/Allocation/Messages.php:12
+msgid "ثبت رزرو انجام نشد؛ دوباره تلاش کنید."
+msgstr "ثبت رزرو انجام نشد؛ دوباره تلاش کنید."
+
 #: src/Domain/Hall/HallService.php:101
 msgid "ثبت رویداد انجام نشد."
 msgstr "ثبت رویداد انجام نشد."
 
-#: src/Domain/Event/EventChangeService.php:144
+#: src/Domain/Event/EventChangeService.php:148
 msgid "ثبت سابقه تغییر ممکن نشد."
 msgstr "ثبت سابقه تغییر ممکن نشد."
 
@@ -1861,19 +2017,19 @@ msgstr "ثبت سفارش از سبد"
 msgid "ثبت سفارش انجام شد؛ کلید بازیابی را در محل امن نگهداری کنید."
 msgstr "ثبت سفارش انجام شد؛ کلید بازیابی را در محل امن نگهداری کنید."
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:124
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:136
 msgid "ثبت سفارش ظرفیت آزاد ناموفق بود."
 msgstr "ثبت سفارش ظرفیت آزاد ناموفق بود."
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:75
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:77
 msgid "ثبت سفارش قبلی هنوز نیازمند بررسی است."
 msgstr "ثبت سفارش قبلی هنوز نیازمند بررسی است."
 
-#: src/Frontend/Shortcodes.php:361
+#: src/Frontend/Shortcodes.php:377
 msgid "ثبت سفارش و ادامه"
 msgstr "ثبت سفارش و ادامه"
 
-#: src/Domain/Event/EventChangeService.php:149
+#: src/Domain/Event/EventChangeService.php:153
 msgid "ثبت سفارش‌های نیازمند پیگیری ممکن نشد."
 msgstr "ثبت سفارش‌های نیازمند پیگیری ممکن نشد."
 
@@ -1881,19 +2037,19 @@ msgstr "ثبت سفارش‌های نیازمند پیگیری ممکن نشد."
 msgid "ثبت سهمیه تخفیف ممکن نشد."
 msgstr "ثبت سهمیه تخفیف ممکن نشد."
 
-#: src/Domain/Booking/HoldService.php:89
+#: src/Domain/Booking/HoldService.php:92
 msgid "ثبت صندلی انتخابی انجام نشد."
 msgstr "ثبت صندلی انتخابی انجام نشد."
 
-#: src/Domain/Checkout/CheckoutService.php:182
+#: src/Domain/Checkout/CheckoutService.php:191
 msgid "ثبت مرحله سفارش ممکن نشد."
 msgstr "ثبت مرحله سفارش ممکن نشد."
 
-#: src/Domain/Checkout/CheckoutService.php:195
+#: src/Domain/Checkout/CheckoutService.php:204
 msgid "ثبت مرحله سفارش ناموفق بود."
 msgstr "ثبت مرحله سفارش ناموفق بود."
 
-#: src/Domain/Checkout/CheckoutService.php:188
+#: src/Domain/Checkout/CheckoutService.php:197
 msgid "ثبت مرحله پرداخت صندلی ناموفق بود."
 msgstr "ثبت مرحله پرداخت صندلی ناموفق بود."
 
@@ -1905,7 +2061,7 @@ msgstr "ثبت مرکز"
 msgid "ثبت مرکز انجام نشد."
 msgstr "ثبت مرکز انجام نشد."
 
-#: src/Domain/Hall/LayoutVersionService.php:71
+#: src/Domain/Hall/LayoutVersionService.php:72
 msgid "ثبت نسخه جدید ممکن نشد."
 msgstr "ثبت نسخه جدید ممکن نشد."
 
@@ -1921,23 +2077,23 @@ msgstr "ثبت نشده"
 msgid "ثبت نهایی بسته انجام نشد."
 msgstr "ثبت نهایی بسته انجام نشد."
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:305
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:311
 msgid "ثبت نهایی موجودی ناموفق بود."
 msgstr "ثبت نهایی موجودی ناموفق بود."
 
-#: src/Domain/Hall/LayoutVersionService.php:88
+#: src/Domain/Hall/LayoutVersionService.php:89
 msgid "ثبت نهایی نسخه ناموفق بود."
 msgstr "ثبت نهایی نسخه ناموفق بود."
 
-#: src/Domain/Hall/DraftSaveService.php:119
+#: src/Domain/Hall/DraftSaveService.php:137 src/Domain/Hall/DraftSaveService.php:140
 msgid "ثبت نهایی پیش‌نویس ناموفق بود."
 msgstr "ثبت نهایی پیش‌نویس ناموفق بود."
 
-#: src/Domain/Booking/HoldService.php:84
+#: src/Domain/Booking/HoldService.php:87
 msgid "ثبت نگهداری موقت انجام نشد."
 msgstr "ثبت نگهداری موقت انجام نشد."
 
-#: src/Frontend/Shortcodes.php:332
+#: src/Frontend/Shortcodes.php:348
 msgid "ثبت ورود"
 msgstr "ثبت ورود"
 
@@ -1949,11 +2105,11 @@ msgstr "ثبت ورود انجام نشد."
 msgid "ثبت ورود ناموفق بود."
 msgstr "ثبت ورود ناموفق بود."
 
-#: src/Domain/Booking/HoldService.php:96
+#: src/Domain/Booking/HoldService.php:99
 msgid "ثبت وضعیت صندلی انجام نشد."
 msgstr "ثبت وضعیت صندلی انجام نشد."
 
-#: src/Domain/Hall/LayoutVersionService.php:83
+#: src/Domain/Hall/LayoutVersionService.php:84
 msgid "ثبت گروه صندلی‌ها ناقص ماند."
 msgstr "ثبت گروه صندلی‌ها ناقص ماند."
 
@@ -1965,7 +2121,7 @@ msgstr "ثبت گروهی صندلی‌ها کامل نشد."
 msgid "ثبت گزارش تغییرات ممکن نشد."
 msgstr "ثبت گزارش تغییرات ممکن نشد."
 
-#: src/Admin/Pages.php:342
+#: src/Admin/Pages.php:347
 msgid "جابه‌جایی امن صندلی"
 msgstr "جابه‌جایی امن صندلی"
 
@@ -1977,23 +2133,39 @@ msgstr "جابه‌جایی یک صندلی آزاد تک باقی می‌گذا
 msgid "جایگاه"
 msgstr "جایگاه"
 
-#: src/Frontend/Shortcodes.php:145
+#: src/Domain/Allocation/Messages.php:17
+msgid "جایگاه اختصاصی"
+msgstr "جایگاه اختصاصی"
+
+#: src/Domain/Allocation/Messages.php:27
+msgid "جایگاه انتخابی در این جلسه وجود ندارد."
+msgstr "جایگاه انتخابی در این جلسه وجود ندارد."
+
+#: src/Frontend/Shortcodes.php:148
 msgid "جایگاه خود را انتخاب کنید"
 msgstr "جایگاه خود را انتخاب کنید"
+
+#: src/Support/VenuePrint.php:245
+msgid "جایگاه دسترس‌پذیر"
+msgstr "جایگاه دسترس‌پذیر"
 
 #: src/Integrations/CartSeatManager.php:404
 msgid "جایگاه را بررسی یا ویرایش کنید؛ سپس سفارش هر جلسه را از همین بخش ثبت کنید."
 msgstr "جایگاه را بررسی یا ویرایش کنید؛ سپس سفارش هر جلسه را از همین بخش ثبت کنید."
 
-#: src/Domain/Booking/HoldService.php:214
+#: src/Domain/Venue/PresetCatalog.php:24
+msgid "جایگاه‌های دونفره"
+msgstr "جایگاه‌های دونفره"
+
+#: src/Domain/Booking/HoldService.php:220
 msgid "جایگزینی صندلی ثبت نشد."
 msgstr "جایگزینی صندلی ثبت نشد."
 
-#: src/Admin/Pages.php:242
+#: src/Admin/Pages.php:247
 msgid "جداکننده"
 msgstr "جداکننده"
 
-#: src/Frontend/Shortcodes.php:255
+#: src/Frontend/Shortcodes.php:263
 msgid "جدول روزانه برای دسترس‌پذیری"
 msgstr "جدول روزانه برای دسترس‌پذیری"
 
@@ -2001,11 +2173,19 @@ msgstr "جدول روزانه برای دسترس‌پذیری"
 msgid "جدول‌های تخفیف هنوز آماده نیستند."
 msgstr "جدول‌های تخفیف هنوز آماده نیستند."
 
+#: src/Support/VenuePrint.php:89
+msgid "جزئیات بخشی از نقشه: "
+msgstr "جزئیات بخشی از نقشه: "
+
+#: src/Support/VenuePrint.php:135
+msgid "جزئیات جایگاه‌ها"
+msgstr "جزئیات جایگاه‌ها"
+
 #: assets/js/blocks-editor.js src/Frontend/Blocks.php:15 src/Integrations/Elementor/Widget.php:49
 msgid "جزئیات رویداد"
 msgstr "جزئیات رویداد"
 
-#: src/Frontend/Shortcodes.php:151
+#: src/Frontend/Shortcodes.php:154
 msgid "جست‌وجو"
 msgstr "جست‌وجو"
 
@@ -2016,15 +2196,15 @@ msgstr "جست‌وجوی صندلی"
 msgid "جست‌وجوی صندلی "
 msgstr "جست‌وجوی صندلی "
 
-#: src/Admin/Pages.php:470
+#: src/Admin/Pages.php:475
 msgid "جلسات"
 msgstr "جلسات"
 
-#: src/Admin/Pages.php:549 src/Admin/Pages.php:581 src/Domain/Reporting/AttendanceReport.php:95 src/Domain/Reporting/XlsxExporter.php:18 src/Frontend/Shortcodes.php:300 src/Frontend/Shortcodes.php:96 src/Integrations/CartSeatManager.php:408
+#: src/Admin/Pages.php:554 src/Admin/Pages.php:586 src/Domain/Reporting/AttendanceReport.php:106 src/Domain/Reporting/XlsxExporter.php:18 src/Frontend/Shortcodes.php:308 src/Frontend/Shortcodes.php:98 src/Integrations/CartSeatManager.php:408
 msgid "جلسه"
 msgstr "جلسه"
 
-#: src/Admin/Pages.php:322 src/Admin/Pages.php:482 src/Admin/Pages.php:498 src/Admin/Pages.php:537 src/Frontend/Shortcodes.php:247
+#: src/Admin/Pages.php:327 src/Admin/Pages.php:487 src/Admin/Pages.php:503 src/Admin/Pages.php:542 src/Frontend/Shortcodes.php:255
 msgid "جلسه "
 msgstr "جلسه "
 
@@ -2059,31 +2239,35 @@ msgstr "جلسه ظرفیت آزاد یافت نشد."
 msgid "جلسه عمومی پیدا نشد."
 msgstr "جلسه عمومی پیدا نشد."
 
-#: src/Frontend/Shortcodes.php:91
+#: src/Frontend/Shortcodes.php:93
 msgid "جلسه مناسب خود را انتخاب کنید"
 msgstr "جلسه مناسب خود را انتخاب کنید"
 
-#: src/Http/RestController.php:771
+#: src/Http/RestController.php:775
 msgid "جلسه منتشرشده وجود ندارد."
 msgstr "جلسه منتشرشده وجود ندارد."
 
-#: src/Frontend/Shortcodes.php:138
+#: src/Frontend/Shortcodes.php:141
 msgid "جلسه منتشرشده یافت نشد."
 msgstr "جلسه منتشرشده یافت نشد."
 
-#: src/Http/RestController.php:699 src/Http/RestController.php:746
+#: src/Http/RestController.php:700 src/Http/RestController.php:747
 msgid "جلسه منتشرشده‌ای با این شناسه وجود ندارد."
 msgstr "جلسه منتشرشده‌ای با این شناسه وجود ندارد."
+
+#: src/Domain/Allocation/Messages.php:36
+msgid "جلسه مورد نظر پیدا نشد."
+msgstr "جلسه مورد نظر پیدا نشد."
 
 #: src/Domain/Booking/HoldService.php:41
 msgid "جلسه موردنظر وجود ندارد."
 msgstr "جلسه موردنظر وجود ندارد."
 
-#: src/Domain/Booking/HoldService.php:255
+#: src/Domain/Booking/HoldService.php:261
 msgid "جلسه وجود ندارد."
 msgstr "جلسه وجود ندارد."
 
-#: src/Domain/Booking/HoldService.php:129 src/Domain/Event/EventChangeService.php:90 src/Domain/Hall/SeatAdministration.php:30
+#: src/Domain/Booking/HoldService.php:132 src/Domain/Event/EventChangeService.php:90 src/Domain/Hall/SeatAdministration.php:38
 msgid "جلسه پیدا نشد."
 msgstr "جلسه پیدا نشد."
 
@@ -2091,7 +2275,7 @@ msgstr "جلسه پیدا نشد."
 msgid "جلسه یا رویداد لغو شده است."
 msgstr "جلسه یا رویداد لغو شده است."
 
-#: src/Domain/Checkout/CheckoutService.php:65 src/Domain/GeneralAdmission/FreeAdmissionService.php:243 src/Domain/GeneralAdmission/FreeAdmissionService.php:50 src/Domain/Ticket/OwnershipTransferService.php:296
+#: src/Domain/Checkout/CheckoutService.php:65 src/Domain/GeneralAdmission/FreeAdmissionService.php:257 src/Domain/GeneralAdmission/FreeAdmissionService.php:52 src/Domain/Ticket/OwnershipTransferService.php:296
 msgid "جلسه یافت نشد."
 msgstr "جلسه یافت نشد."
 
@@ -2099,11 +2283,11 @@ msgstr "جلسه یافت نشد."
 msgid "جلسه‌ای در مرکز مجاز یافت نشد."
 msgstr "جلسه‌ای در مرکز مجاز یافت نشد."
 
-#: src/Frontend/Shortcodes.php:256
+#: src/Frontend/Shortcodes.php:264
 msgid "جلسه‌ها"
 msgstr "جلسه‌ها"
 
-#: src/Admin/Pages.php:672
+#: src/Admin/Pages.php:677
 msgid "جلسه‌های اخیر"
 msgstr "جلسه‌های اخیر"
 
@@ -2123,7 +2307,7 @@ msgstr "حجم JSON از ۲ مگابایت بیشتر شده است."
 msgid "حجم فایل بیش از حد مجاز است."
 msgstr "حجم فایل بیش از حد مجاز است."
 
-#: src/Domain/Hall/LayoutDocument.php:23
+#: src/Domain/Hall/LayoutDocument.php:25
 msgid "حجم فایل چیدمان نامعتبر است (حداکثر ۲ مگابایت)."
 msgstr "حجم فایل چیدمان نامعتبر است (حداکثر ۲ مگابایت)."
 
@@ -2135,6 +2319,10 @@ msgstr "حجم گزارش از سقف مجاز فراتر رفته است."
 msgid "حداقل مبلغ خرید برای این تخفیف رعایت نشده است."
 msgstr "حداقل مبلغ خرید برای این تخفیف رعایت نشده است."
 
+#: src/Admin/VenueDesigner.php:48
+msgid "حداکثر جایگاه برای هر شماره در یک رویداد"
+msgstr "حداکثر جایگاه برای هر شماره در یک رویداد"
+
 #: assets/js/layout-editor.js
 msgid "حداکثر ۱۰۰۰۰ صندلی مجاز است."
 msgstr "حداکثر ۱۰۰۰۰ صندلی مجاز است."
@@ -2143,19 +2331,19 @@ msgstr "حداکثر ۱۰۰۰۰ صندلی مجاز است."
 msgid "حداکثر ۲۰ صندلی در هر سفارش قابل نگهداری است."
 msgstr "حداکثر ۲۰ صندلی در هر سفارش قابل نگهداری است."
 
-#: src/Admin/Pages.php:236
+#: src/Admin/Pages.php:241
 msgid "حذف انتخابی"
 msgstr "حذف انتخابی"
 
-#: src/Domain/Hall/DraftSaveService.php:102
+#: src/Domain/Hall/DraftSaveService.php:116
 msgid "حذف داده پیش‌نویس قبلی ناموفق بود."
 msgstr "حذف داده پیش‌نویس قبلی ناموفق بود."
 
-#: src/Admin/Pages.php:250
+#: src/Admin/Pages.php:255
 msgid "حذف شیء انتخابی"
 msgstr "حذف شیء انتخابی"
 
-#: src/Domain/Booking/HoldService.php:206
+#: src/Domain/Booking/HoldService.php:212
 msgid "حذف صندلی از نگهداری ثبت نشد."
 msgstr "حذف صندلی از نگهداری ثبت نشد."
 
@@ -2163,23 +2351,23 @@ msgstr "حذف صندلی از نگهداری ثبت نشد."
 msgid "حذف همه صندلی‌ها مجاز نیست."
 msgstr "حذف همه صندلی‌ها مجاز نیست."
 
-#: src/Admin/Pages.php:241
+#: src/Admin/Pages.php:246
 msgid "خروج اضطراری"
 msgstr "خروج اضطراری"
 
-#: src/Admin/Pages.php:804
+#: src/Admin/Pages.php:809
 msgid "خروجی CSV ممکن نیست."
 msgstr "خروجی CSV ممکن نیست."
 
-#: src/Admin/Pages.php:204
+#: src/Admin/Pages.php:209
 msgid "خروجی JSON"
 msgstr "خروجی JSON"
 
-#: src/Admin/Pages.php:1277
+#: src/Admin/Pages.php:1282
 msgid "خروجی چیدمان امکان‌پذیر نیست."
 msgstr "خروجی چیدمان امکان‌پذیر نیست."
 
-#: src/Admin/Pages.php:350
+#: src/Admin/Pages.php:355
 msgid "خرید بسته، QR مشترک و استرداد بسته‌ای هنوز فعال نیستند."
 msgstr "خرید بسته، QR مشترک و استرداد بسته‌ای هنوز فعال نیستند."
 
@@ -2203,7 +2391,7 @@ msgstr "خطای ساخت پایگاه داده: "
 msgid "خطای کنترل ورود رخ داد."
 msgstr "خطای کنترل ورود رخ داد."
 
-#: src/Frontend/Shortcodes.php:160
+#: src/Frontend/Shortcodes.php:163
 msgid "خلاصه رزرو"
 msgstr "خلاصه رزرو"
 
@@ -2215,11 +2403,11 @@ msgstr "خواندن اشیای سالن ناموفق بود."
 msgid "خواندن جلسات ممکن نیست."
 msgstr "خواندن جلسات ممکن نیست."
 
-#: src/Domain/Reconciliation/ReconciliationService.php:74
+#: src/Domain/Reconciliation/ReconciliationService.php:88
 msgid "خواندن مغایرت ظرفیت آزاد ممکن نشد."
 msgstr "خواندن مغایرت ظرفیت آزاد ممکن نشد."
 
-#: src/Domain/Reconciliation/ReconciliationService.php:43
+#: src/Domain/Reconciliation/ReconciliationService.php:52
 msgid "خواندن گزارش مغایرت امکان‌پذیر نیست."
 msgstr "خواندن گزارش مغایرت امکان‌پذیر نیست."
 
@@ -2227,7 +2415,7 @@ msgstr "خواندن گزارش مغایرت امکان‌پذیر نیست."
 msgid "داشبورد مدیر مرکز"
 msgstr "داشبورد مدیر مرکز"
 
-#: src/Admin/Pages.php:241
+#: src/Admin/Pages.php:246
 msgid "در"
 msgstr "در"
 
@@ -2247,11 +2435,11 @@ msgstr "در انتظار استرداد ووکامرس"
 msgid "در انتظار بررسی"
 msgstr "در انتظار بررسی"
 
-#: assets/js/i18n.js assets/js/map.js assets/js/seat-status-admin.js src/Domain/Reporting/AttendanceReport.php:95 src/Domain/Reporting/XlsxExporter.php:19 src/Support/I18n.php:39
+#: assets/js/i18n.js assets/js/map.js assets/js/seat-status-admin.js src/Domain/Reporting/AttendanceReport.php:106 src/Domain/Reporting/XlsxExporter.php:19 src/Support/I18n.php:39
 msgid "در انتظار پرداخت"
 msgstr "در انتظار پرداخت"
 
-#: src/Frontend/Shortcodes.php:116
+#: src/Frontend/Shortcodes.php:118
 msgid "در این جلسه صندلی مشخصی تخصیص داده نمی‌شود؛ تعداد بلیت خود را انتخاب کنید."
 msgstr "در این جلسه صندلی مشخصی تخصیص داده نمی‌شود؛ تعداد بلیت خود را انتخاب کنید."
 
@@ -2298,11 +2486,11 @@ msgstr "در حال دریافت داده‌های صدور بلیت…"
 msgid "در حال دریافت داده‌های نقشه…"
 msgstr "در حال دریافت داده‌های نقشه…"
 
-#: src/Frontend/Shortcodes.php:117
+#: src/Frontend/Shortcodes.php:119
 msgid "در حال دریافت ظرفیت..."
 msgstr "در حال دریافت ظرفیت..."
 
-#: src/Frontend/Shortcodes.php:161
+#: src/Frontend/Shortcodes.php:164
 msgid "در حال دریافت قیمت..."
 msgstr "در حال دریافت قیمت..."
 
@@ -2325,11 +2513,11 @@ msgstr "در حال ذخیره نسخه پیش‌نویس روی سرور…"
 msgid "در حال پردازش"
 msgstr "در حال پردازش"
 
-#: src/Domain/Booking/HoldService.php:357
+#: src/Domain/Booking/HoldService.php:363
 msgid "در پردازش رزرو موقت خطای پایگاه داده رخ داد."
 msgstr "در پردازش رزرو موقت خطای پایگاه داده رخ داد."
 
-#: src/Frontend/Shortcodes.php:88
+#: src/Frontend/Shortcodes.php:90
 msgid "درباره رویداد"
 msgstr "درباره رویداد"
 
@@ -2364,19 +2552,19 @@ msgstr "درخواست سبد خرید انجام نشد."
 msgid "درخواست کد"
 msgstr "درخواست کد"
 
-#: src/Http/RestController.php:807 src/Http/RestController.php:819 src/Http/RestController.php:847
+#: src/Http/RestController.php:812 src/Http/RestController.php:824 src/Http/RestController.php:852
 msgid "درخواست‌ها بیش از حد مجاز است."
 msgstr "درخواست‌ها بیش از حد مجاز است."
 
-#: src/Http/RestController.php:831 src/Http/RestController.php:867
+#: src/Http/RestController.php:836 src/Http/RestController.php:872
 msgid "درخواست‌ها بیش از حد مجاز است؛ بعداً تلاش کنید."
 msgstr "درخواست‌ها بیش از حد مجاز است؛ بعداً تلاش کنید."
 
-#: src/Http/RestController.php:470 src/Http/RestController.php:485 src/Http/RestController.php:497
+#: src/Http/RestController.php:471 src/Http/RestController.php:486 src/Http/RestController.php:498
 msgid "درخواست‌های زیادی ثبت شده است."
 msgstr "درخواست‌های زیادی ثبت شده است."
 
-#: src/Frontend/Shortcodes.php:256
+#: src/Frontend/Shortcodes.php:264
 msgid "درصد اشغال"
 msgstr "درصد اشغال"
 
@@ -2384,27 +2572,27 @@ msgstr "درصد اشغال"
 msgid "درصد تکمیل ظرفیت"
 msgstr "درصد تکمیل ظرفیت"
 
-#: src/Frontend/Shortcodes.php:289
+#: src/Frontend/Shortcodes.php:297
 msgid "دریافت CSV"
 msgstr "دریافت CSV"
 
-#: src/Admin/Pages.php:559
+#: src/Admin/Pages.php:564
 msgid "دریافت CSV آمار ظرفیت مراکز مجاز"
 msgstr "دریافت CSV آمار ظرفیت مراکز مجاز"
 
-#: src/Frontend/Shortcodes.php:290
+#: src/Frontend/Shortcodes.php:298
 msgid "دریافت Excel (XLSX)"
 msgstr "دریافت Excel (XLSX)"
 
-#: src/Admin/Pages.php:236
+#: src/Admin/Pages.php:241
 msgid "دریافت JSON ویرایش‌شده"
 msgstr "دریافت JSON ویرایش‌شده"
 
-#: src/Domain/Reporting/SalesInsights.php:84
+#: src/Domain/Reporting/SalesInsights.php:90
 msgid "دریافت آمار ردیف‌ها ممکن نشد."
 msgstr "دریافت آمار ردیف‌ها ممکن نشد."
 
-#: src/Http/RestController.php:722
+#: src/Http/RestController.php:723
 msgid "دریافت اشیای سالن ممکن نشد."
 msgstr "دریافت اشیای سالن ممکن نشد."
 
@@ -2412,11 +2600,11 @@ msgstr "دریافت اشیای سالن ممکن نشد."
 msgid "دریافت اطلاعات بسته ممکن نیست."
 msgstr "دریافت اطلاعات بسته ممکن نیست."
 
-#: src/Frontend/Shortcodes.php:146 src/Frontend/Shortcodes.php:193
+#: src/Frontend/Shortcodes.php:149 src/Frontend/Shortcodes.php:196
 msgid "دریافت بلیت"
 msgstr "دریافت بلیت"
 
-#: src/Domain/Ticket/TicketService.php:269
+#: src/Domain/Ticket/TicketService.php:253
 msgid "دریافت بلیت‌ها ممکن نشد."
 msgstr "دریافت بلیت‌ها ممکن نشد."
 
@@ -2424,15 +2612,15 @@ msgstr "دریافت بلیت‌ها ممکن نشد."
 msgid "دریافت تاریخچه انتقال ممکن نیست."
 msgstr "دریافت تاریخچه انتقال ممکن نیست."
 
-#: src/Http/RestController.php:668
+#: src/Http/RestController.php:669
 msgid "دریافت جلسات ممکن نشد."
 msgstr "دریافت جلسات ممکن نشد."
 
-#: src/Domain/Reporting/SalesInsights.php:65
+#: src/Domain/Reporting/SalesInsights.php:69
 msgid "دریافت روند بلیت ممکن نشد."
 msgstr "دریافت روند بلیت ممکن نشد."
 
-#: src/Http/RestController.php:639
+#: src/Http/RestController.php:640
 msgid "دریافت فهرست رویدادها ممکن نشد."
 msgstr "دریافت فهرست رویدادها ممکن نشد."
 
@@ -2440,7 +2628,7 @@ msgstr "دریافت فهرست رویدادها ممکن نشد."
 msgid "دریافت مجاز نبود یا نسخه پیدا نشد."
 msgstr "دریافت مجاز نبود یا نسخه پیدا نشد."
 
-#: src/Http/RestController.php:787
+#: src/Http/RestController.php:792
 msgid "دریافت نقشه امکان‌پذیر نیست."
 msgstr "دریافت نقشه امکان‌پذیر نیست."
 
@@ -2448,7 +2636,7 @@ msgstr "دریافت نقشه امکان‌پذیر نیست."
 msgid "دریافت نقشه مدیریتی ممکن نشد."
 msgstr "دریافت نقشه مدیریتی ممکن نشد."
 
-#: src/Frontend/Shortcodes.php:202
+#: src/Frontend/Shortcodes.php:205
 msgid "دریافت کد بازیابی"
 msgstr "دریافت کد بازیابی"
 
@@ -2484,7 +2672,7 @@ msgstr "دسترسی به جلسه مجاز نیست."
 msgid "دسترسی به دوربین ممکن نیست."
 msgstr "دسترسی به دوربین ممکن نیست."
 
-#: src/Domain/Booking/HoldService.php:137
+#: src/Domain/Booking/HoldService.php:143
 msgid "دسترسی به رزرو مجاز نیست."
 msgstr "دسترسی به رزرو مجاز نیست."
 
@@ -2492,7 +2680,7 @@ msgstr "دسترسی به رزرو مجاز نیست."
 msgid "دسترسی به سالن مجاز نیست."
 msgstr "دسترسی به سالن مجاز نیست."
 
-#: src/Domain/Hall/LayoutVersionService.php:105
+#: src/Domain/Hall/LayoutVersionService.php:106
 msgid "دسترسی به سالن وجود ندارد."
 msgstr "دسترسی به سالن وجود ندارد."
 
@@ -2500,13 +2688,33 @@ msgstr "دسترسی به سالن وجود ندارد."
 msgid "دسترسی به مرکز این بلیت مجاز نیست."
 msgstr "دسترسی به مرکز این بلیت مجاز نیست."
 
-#: src/Admin/Pages.php:1015 src/Admin/Pages.php:107 src/Admin/Pages.php:1104 src/Admin/Pages.php:1205 src/Admin/Pages.php:1261 src/Admin/Pages.php:751
+#: src/Domain/Allocation/Messages.php:33
+msgid "دسترسی رزرو معتبر نیست."
+msgstr "دسترسی رزرو معتبر نیست."
+
+#: src/Admin/Pages.php:1020 src/Admin/Pages.php:107 src/Admin/Pages.php:1109 src/Admin/Pages.php:1210 src/Admin/Pages.php:1266 src/Admin/Pages.php:756
 msgid "دسترسی غیرمجاز."
 msgstr "دسترسی غیرمجاز."
+
+#: src/Support/VenuePrint.php:162
+msgid "دسترس‌پذیر"
+msgstr "دسترس‌پذیر"
+
+#: src/Support/VenuePrint.php:156
+msgid "دسته / گروه"
+msgstr "دسته / گروه"
 
 #: src/Domain/Ticket/RefundPolicy.php:56
 msgid "دقت پولی سفارش قابل پشتیبانی نیست."
 msgstr "دقت پولی سفارش قابل پشتیبانی نیست."
+
+#: src/Domain/Venue/PresetCatalog.php:65
+msgid "دو طبقه"
+msgstr "دو طبقه"
+
+#: src/Admin/VenueDesigner.php:49
+msgid "ذخیره"
+msgstr "ذخیره"
 
 #: src/Domain/Hall/LayoutObjectStorage.php:26
 msgid "ذخیره اشیای نقشه ناموفق بود."
@@ -2520,11 +2728,11 @@ msgstr "ذخیره انتقال بلیت انجام نشد."
 msgid "ذخیره انجام نشد."
 msgstr "ذخیره انجام نشد."
 
-#: src/Admin/Pages.php:236
+#: src/Admin/Pages.php:241
 msgid "ذخیره اکنون"
 msgstr "ذخیره اکنون"
 
-#: src/Domain/Hall/DraftSaveService.php:99
+#: src/Domain/Hall/DraftSaveService.php:113
 msgid "ذخیره با ویرایش هم‌زمان تداخل پیدا کرد."
 msgstr "ذخیره با ویرایش هم‌زمان تداخل پیدا کرد."
 
@@ -2532,11 +2740,11 @@ msgstr "ذخیره با ویرایش هم‌زمان تداخل پیدا کرد.
 msgid "ذخیره تراکنش ناموفق بود."
 msgstr "ذخیره تراکنش ناموفق بود."
 
-#: src/Admin/Pages.php:457
+#: src/Admin/Pages.php:462
 msgid "ذخیره تغییرات"
 msgstr "ذخیره تغییرات"
 
-#: src/Admin/Pages.php:745
+#: src/Admin/Pages.php:750
 msgid "ذخیره تنظیمات اعلان"
 msgstr "ذخیره تنظیمات اعلان"
 
@@ -2544,7 +2752,7 @@ msgstr "ذخیره تنظیمات اعلان"
 msgid "ذخیره رزرو ظرفیت انجام نشد."
 msgstr "ذخیره رزرو ظرفیت انجام نشد."
 
-#: src/Domain/Hall/DraftSaveService.php:114
+#: src/Domain/Hall/DraftSaveService.php:128
 msgid "ذخیره صندلی‌ها کامل نشد."
 msgstr "ذخیره صندلی‌ها کامل نشد."
 
@@ -2552,7 +2760,7 @@ msgstr "ذخیره صندلی‌ها کامل نشد."
 msgid "ذخیره قوانین انجام نشد."
 msgstr "ذخیره قوانین انجام نشد."
 
-#: src/Admin/Pages.php:502
+#: src/Admin/Pages.php:507
 msgid "ذخیره قوانین جلسه"
 msgstr "ذخیره قوانین جلسه"
 
@@ -2560,7 +2768,7 @@ msgstr "ذخیره قوانین جلسه"
 msgid "ذخیره مشخصات رویداد ناموفق بود."
 msgstr "ذخیره مشخصات رویداد ناموفق بود."
 
-#: src/Admin/Pages.php:1199
+#: src/Admin/Pages.php:1204
 msgid "ذخیره پیش‌نویس ناموفق بود؛ نسخه محلی را به‌صورت JSON دریافت کنید."
 msgstr "ذخیره پیش‌نویس ناموفق بود؛ نسخه محلی را به‌صورت JSON دریافت کنید."
 
@@ -2568,15 +2776,47 @@ msgstr "ذخیره پیش‌نویس ناموفق بود؛ نسخه محلی ر�
 msgid "رابطه بلیت و سفارش نیازمند بررسی است."
 msgstr "رابطه بلیت و سفارش نیازمند بررسی است."
 
-#: src/Admin/Pages.php:240
+#: src/Domain/Venue/PresetCatalog.php:50
+msgid "ران‌وی تی"
+msgstr "ران‌وی تی"
+
+#: src/Domain/Venue/PresetCatalog.php:53
+msgid "ران‌وی حلقه مستطیلی"
+msgstr "ران‌وی حلقه مستطیلی"
+
+#: src/Domain/Venue/PresetCatalog.php:51
+msgid "ران‌وی ضربدری"
+msgstr "ران‌وی ضربدری"
+
+#: src/Domain/Venue/PresetCatalog.php:49
+msgid "ران‌وی مستقیم"
+msgstr "ران‌وی مستقیم"
+
+#: src/Domain/Venue/PresetCatalog.php:52
+msgid "ران‌وی یو"
+msgstr "ران‌وی یو"
+
+#: src/Admin/Pages.php:245
 msgid "راهرو"
 msgstr "راهرو"
+
+#: src/Domain/Venue/PresetCatalog.php:18
+msgid "راهروهای کناری"
+msgstr "راهروهای کناری"
+
+#: src/Domain/Venue/PresetCatalog.php:17
+msgid "راهروی مرکزی"
+msgstr "راهروی مرکزی"
+
+#: src/Domain/Venue/PresetCatalog.php:48
+msgid "راهروی مرکزی پذیرایی"
+msgstr "راهروی مرکزی پذیرایی"
 
 #: assets/js/capacity.js
 msgid "رایگان"
 msgstr "رایگان"
 
-#: assets/js/seat-status-admin.js src/Admin/Pages.php:260 src/Frontend/Shortcodes.php:257
+#: assets/js/seat-status-admin.js src/Admin/Pages.php:265 src/Frontend/Shortcodes.php:265
 msgid "ردیف"
 msgstr "ردیف"
 
@@ -2584,7 +2824,7 @@ msgstr "ردیف"
 msgid "ردیف "
 msgstr "ردیف "
 
-#: src/Admin/Pages.php:256
+#: src/Admin/Pages.php:261
 msgid "ردیف تازه در پیش‌نویس چیدمان ذخیره می‌شود؛ نقشه جلسه‌های قبلی تغییر نمی‌کند."
 msgstr "ردیف تازه در پیش‌نویس چیدمان ذخیره می‌شود؛ نقشه جلسه‌های قبلی تغییر نمی‌کند."
 
@@ -2592,7 +2832,23 @@ msgstr "ردیف تازه در پیش‌نویس چیدمان ذخیره می‌
 msgid "ردیف منحنی"
 msgstr "ردیف منحنی"
 
-#: src/Admin/Pages.php:581
+#: src/Domain/Venue/PresetCatalog.php:47
+msgid "ردیف‌های تراس"
+msgstr "ردیف‌های تراس"
+
+#: src/Domain/Venue/PresetCatalog.php:35
+msgid "ردیف‌های جناقی"
+msgstr "ردیف‌های جناقی"
+
+#: src/Domain/Venue/PresetCatalog.php:21
+msgid "ردیف‌های منحنی پلکانی"
+msgstr "ردیف‌های منحنی پلکانی"
+
+#: src/Domain/Venue/PresetCatalog.php:20
+msgid "ردیف‌های پلکانی متناوب"
+msgstr "ردیف‌های پلکانی متناوب"
+
+#: src/Admin/Pages.php:586
 msgid "رزرو"
 msgstr "رزرو"
 
@@ -2600,11 +2856,15 @@ msgstr "رزرو"
 msgid "رزرو از سبد فعلی جدا شده است."
 msgstr "رزرو از سبد فعلی جدا شده است."
 
+#: src/Domain/Allocation/Messages.php:35
+msgid "رزرو این جلسه در حال حاضر فعال نیست."
+msgstr "رزرو این جلسه در حال حاضر فعال نیست."
+
 #: src/Integrations/CartSeatManager.php:261
 msgid "رزرو این سبد قابل تأیید نیست."
 msgstr "رزرو این سبد قابل تأیید نیست."
 
-#: src/Frontend/Shortcodes.php:116
+#: src/Frontend/Shortcodes.php:118
 msgid "رزرو بلیت ظرفیت آزاد"
 msgstr "رزرو بلیت ظرفیت آزاد"
 
@@ -2612,17 +2872,29 @@ msgstr "رزرو بلیت ظرفیت آزاد"
 msgid "رزرو به سبد خرید منتقل شد؛ تغییر صندلی‌ها را در سبد انجام دهید."
 msgstr "رزرو به سبد خرید منتقل شد؛ تغییر صندلی‌ها را در سبد انجام دهید."
 
+#: src/Domain/Allocation/Messages.php:13
+msgid "رزرو جایگاه رویداد"
+msgstr "رزرو جایگاه رویداد"
+
 #: src/Integrations/CartSeatManager.php:217
 msgid "رزرو در سبد خرید فعلی وجود ندارد."
 msgstr "رزرو در سبد خرید فعلی وجود ندارد."
 
-#: src/Frontend/Shortcodes.php:153
+#: src/Frontend/Shortcodes.php:156
 msgid "رزرو دیگران"
 msgstr "رزرو دیگران"
 
-#: src/Domain/Checkout/CheckoutService.php:276
+#: src/Domain/Allocation/Messages.php:71
+msgid "رزرو دیگری برای این جلسه در سبد وجود دارد."
+msgstr "رزرو دیگری برای این جلسه در سبد وجود دارد."
+
+#: src/Domain/Checkout/CheckoutService.php:285
 msgid "رزرو رایگان و بلیت‌ها تأیید شدند."
 msgstr "رزرو رایگان و بلیت‌ها تأیید شدند."
+
+#: src/Domain/Allocation/Messages.php:70
+msgid "رزرو سبد خرید معتبر نیست."
+msgstr "رزرو سبد خرید معتبر نیست."
 
 #: src/Integrations/CartSeatManager.php:295
 msgid "رزرو سبد منقضی یا تغییر کرده است."
@@ -2636,7 +2908,7 @@ msgstr "رزرو شما"
 msgid "رزرو فعال برای محاسبه تخفیف یافت نشد."
 msgstr "رزرو فعال برای محاسبه تخفیف یافت نشد."
 
-#: src/Domain/Booking/HoldService.php:150
+#: src/Domain/Booking/HoldService.php:156
 msgid "رزرو فعلی صندلی ندارد."
 msgstr "رزرو فعلی صندلی ندارد."
 
@@ -2648,7 +2920,7 @@ msgstr "رزرو قابل تمدید بیشتر نیست."
 msgid "رزرو متعلق به این درخواست نیست."
 msgstr "رزرو متعلق به این درخواست نیست."
 
-#: src/Domain/Booking/CapacityService.php:100 src/Domain/GeneralAdmission/FreeAdmissionService.php:58
+#: src/Domain/Booking/CapacityService.php:100 src/Domain/GeneralAdmission/FreeAdmissionService.php:60
 msgid "رزرو متعلق به این دسترسی نیست."
 msgstr "رزرو متعلق به این دسترسی نیست."
 
@@ -2656,15 +2928,15 @@ msgstr "رزرو متعلق به این دسترسی نیست."
 msgid "رزرو موقت"
 msgstr "رزرو موقت"
 
-#: src/Domain/Booking/HoldService.php:62
+#: src/Domain/Booking/HoldService.php:65
 msgid "رزرو موقت این جلسه فعال نیست."
 msgstr "رزرو موقت این جلسه فعال نیست."
 
-#: src/Frontend/Shortcodes.php:120
+#: src/Frontend/Shortcodes.php:122
 msgid "رزرو موقت بلیت"
 msgstr "رزرو موقت بلیت"
 
-#: src/Frontend/Shortcodes.php:118
+#: src/Frontend/Shortcodes.php:120
 msgid "رزرو موقت تا پایان مهلت برای شما نگه داشته می‌شود. صدور بلیت پس از ثبت سفارش انجام می‌شود."
 msgstr "رزرو موقت تا پایان مهلت برای شما نگه داشته می‌شود. صدور بلیت پس از ثبت سفارش انجام می‌شود."
 
@@ -2680,19 +2952,31 @@ msgstr "رزرو موقت قابل تغییر یا افزودن به سبد نی
 msgid "رزرو موقت منقضی شده است."
 msgstr "رزرو موقت منقضی شده است."
 
-#: src/Frontend/Shortcodes.php:162
+#: src/Frontend/Shortcodes.php:165
 msgid "رزرو موقت و ادامه"
 msgstr "رزرو موقت و ادامه"
+
+#: src/Domain/Allocation/Messages.php:30
+msgid "رزرو هم‌زمان تغییر کرده است؛ دوباره تلاش کنید."
+msgstr "رزرو هم‌زمان تغییر کرده است؛ دوباره تلاش کنید."
+
+#: src/Domain/Allocation/Messages.php:22
+msgid "رزرو کامل این میز یا جایگاه در دسترس نیست."
+msgstr "رزرو کامل این میز یا جایگاه در دسترس نیست."
+
+#: src/Domain/Allocation/Messages.php:66
+msgid "رزرو گروهی پیدا نشد."
+msgstr "رزرو گروهی پیدا نشد."
 
 #: src/Domain/Calendar/CalendarFeed.php:44 src/Domain/Calendar/CalendarFeed.php:59
 msgid "رشته UTF-8 نامعتبر است."
 msgstr "رشته UTF-8 نامعتبر است."
 
-#: src/Admin/Pages.php:641
+#: src/Admin/Pages.php:646
 msgid "رفتن به محتوای اصلی"
 msgstr "رفتن به محتوای اصلی"
 
-#: src/Frontend/Shortcodes.php:255
+#: src/Frontend/Shortcodes.php:263
 msgid "روز"
 msgstr "روز"
 
@@ -2700,7 +2984,7 @@ msgstr "روز"
 msgid "روش پرداخت"
 msgstr "روش پرداخت"
 
-#: src/Frontend/Shortcodes.php:243
+#: src/Frontend/Shortcodes.php:251
 msgid "روند بلیت و مقایسه رویدادها"
 msgstr "روند بلیت و مقایسه رویدادها"
 
@@ -2708,39 +2992,39 @@ msgstr "روند بلیت و مقایسه رویدادها"
 msgid "روند تعداد بلیت‌های معتبر فعلی بر اساس تاریخ صدور (UTC)"
 msgstr "روند تعداد بلیت‌های معتبر فعلی بر اساس تاریخ صدور (UTC)"
 
-#: src/Frontend/Shortcodes.php:254
+#: src/Frontend/Shortcodes.php:262
 msgid "روند صدور بلیت‌های معتبر (UTC)"
 msgstr "روند صدور بلیت‌های معتبر (UTC)"
 
-#: src/Admin/Pages.php:470 src/Domain/Reporting/AttendanceReport.php:95 src/Domain/Reporting/XlsxExporter.php:18 src/Frontend/Shortcodes.php:256 src/Frontend/Shortcodes.php:300 src/Frontend/Shortcodes.php:49
+#: src/Admin/Pages.php:475 src/Domain/Reporting/AttendanceReport.php:106 src/Domain/Reporting/XlsxExporter.php:18 src/Frontend/Shortcodes.php:264 src/Frontend/Shortcodes.php:308 src/Frontend/Shortcodes.php:51
 msgid "رویداد"
 msgstr "رویداد"
 
-#: src/Admin/Pages.php:296
+#: src/Admin/Pages.php:301
 msgid "رویداد "
 msgstr "رویداد "
 
-#: src/Admin/Pages.php:627
+#: src/Admin/Pages.php:632
 msgid "رویداد بسازید، زمان فروش را تنظیم کنید و وضعیت انتشار را مدیریت کنید."
 msgstr "رویداد بسازید، زمان فروش را تنظیم کنید و وضعیت انتشار را مدیریت کنید."
 
-#: src/Frontend/Shortcodes.php:37
+#: src/Frontend/Shortcodes.php:39
 msgid "رویداد بعدی خود را پیدا کنید و جایگاهتان را رزرو کنید."
 msgstr "رویداد بعدی خود را پیدا کنید و جایگاهتان را رزرو کنید."
 
-#: src/Frontend/Shortcodes.php:74 src/Http/RestController.php:652 src/Http/RestController.php:661
+#: src/Frontend/Shortcodes.php:76 src/Http/RestController.php:653 src/Http/RestController.php:662
 msgid "رویداد منتشرشده پیدا نشد."
 msgstr "رویداد منتشرشده پیدا نشد."
 
-#: src/Admin/Pages.php:696
+#: src/Admin/Pages.php:701
 msgid "رویداد و جلسه"
 msgstr "رویداد و جلسه"
 
-#: src/Admin/Pages.php:643 src/Admin/Pages.php:65
+#: src/Admin/Pages.php:648 src/Admin/Pages.php:65
 msgid "رویداد و صندلی"
 msgstr "رویداد و صندلی"
 
-#: src/Frontend/Shortcodes.php:49
+#: src/Frontend/Shortcodes.php:51
 msgid "رویداد پیش رو"
 msgstr "رویداد پیش رو"
 
@@ -2752,43 +3036,43 @@ msgstr "رویداد یا عنوان نامعتبر است."
 msgid "رویداد یافت نشد."
 msgstr "رویداد یافت نشد."
 
-#: src/Admin/Pages.php:439
+#: src/Admin/Pages.php:444
 msgid "رویداد/جلسه"
 msgstr "رویداد/جلسه"
 
-#: src/Frontend/Shortcodes.php:37
+#: src/Frontend/Shortcodes.php:39
 msgid "رویدادها"
 msgstr "رویدادها"
 
-#: src/Admin/Pages.php:626
+#: src/Admin/Pages.php:631
 msgid "رویدادها و جلسات"
 msgstr "رویدادها و جلسات"
 
-#: src/Admin/Pages.php:688
+#: src/Admin/Pages.php:693
 msgid "رویدادها و جلسه‌های شما در دسترس‌اند. انتشار و بازه فروش را پیش از معرفی به مخاطبان بررسی کنید."
 msgstr "رویدادها و جلسه‌های شما در دسترس‌اند. انتشار و بازه فروش را پیش از معرفی به مخاطبان بررسی کنید."
 
-#: src/Admin/Pages.php:421
+#: src/Admin/Pages.php:426
 msgid "رویدادها و مدیریت انتشار"
 msgstr "رویدادها و مدیریت انتشار"
 
-#: src/Admin/Pages.php:625
+#: src/Admin/Pages.php:630
 msgid "رویدادها، سالن‌ها و کارهای بعدی را از یک نمای روشن دنبال کنید."
 msgstr "رویدادها، سالن‌ها و کارهای بعدی را از یک نمای روشن دنبال کنید."
 
-#: src/Admin/Pages.php:703
+#: src/Admin/Pages.php:708
 msgid "رویدادهای اخیر"
 msgstr "رویدادهای اخیر"
 
-#: src/Frontend/Shortcodes.php:39
+#: src/Frontend/Shortcodes.php:41
 msgid "رویدادهای جدید پس از انتشار در این بخش نمایش داده می‌شوند."
 msgstr "رویدادهای جدید پس از انتشار در این بخش نمایش داده می‌شوند."
 
-#: src/Admin/Pages.php:672
+#: src/Admin/Pages.php:677
 msgid "رویدادهای در دسترس"
 msgstr "رویدادهای در دسترس"
 
-#: src/Frontend/Shortcodes.php:39
+#: src/Frontend/Shortcodes.php:41
 msgid "رویدادی برای نمایش وجود ندارد"
 msgstr "رویدادی برای نمایش وجود ندارد"
 
@@ -2800,7 +3084,7 @@ msgstr "رکورد موجودی جلسه یافت نشد."
 msgid "زمان UTC نامعتبر است."
 msgstr "زمان UTC نامعتبر است."
 
-#: src/Admin/Pages.php:310
+#: src/Admin/Pages.php:315
 msgid "زمان آغاز جلسه"
 msgstr "زمان آغاز جلسه"
 
@@ -2808,11 +3092,11 @@ msgstr "زمان آغاز جلسه"
 msgid "زمان تقریبی باقی‌مانده: "
 msgstr "زمان تقریبی باقی‌مانده: "
 
-#: src/Admin/Pages.php:1334
+#: src/Admin/Pages.php:1339
 msgid "زمان تقویمی نامعتبر است."
 msgstr "زمان تقویمی نامعتبر است."
 
-#: src/Admin/Pages.php:486
+#: src/Admin/Pages.php:491
 msgid "زمان جدید UTC "
 msgstr "زمان جدید UTC "
 
@@ -2820,7 +3104,7 @@ msgstr "زمان جدید UTC "
 msgid "زمان جدید باید حداقل یک ساعت آینده و پس از پایان فروش باشد."
 msgstr "زمان جدید باید حداقل یک ساعت آینده و پس از پایان فروش باشد."
 
-#: src/Admin/Pages.php:480
+#: src/Admin/Pages.php:485
 msgid "زمان را به UTC وارد کنید. تغییر تاریخ پس از ثبت ورود یا با وجود رزرو موقت فعال مجاز نیست. سفارش‌های متأثر برای رسیدگی به اطلاع‌رسانی و امور مالی ثبت می‌شوند؛ بازپرداخت یا ارسال اعلان خودکار انجام نمی‌شود."
 msgstr "زمان را به UTC وارد کنید. تغییر تاریخ پس از ثبت ورود یا با وجود رزرو موقت فعال مجاز نیست. سفارش‌های متأثر برای رسیدگی به اطلاع‌رسانی و امور مالی ثبت می‌شوند؛ بازپرداخت یا ارسال اعلان خودکار انجام نمی‌شود."
 
@@ -2828,13 +3112,17 @@ msgstr "زمان را به UTC وارد کنید. تغییر تاریخ پس ا�
 msgid "زمان رویداد لغوشده قابل تغییر نیست."
 msgstr "زمان رویداد لغوشده قابل تغییر نیست."
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:111
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:123
 msgid "زمان صدور بلیت پایان یافته است."
 msgstr "زمان صدور بلیت پایان یافته است."
 
-#: src/Http/RestController.php:781
+#: src/Http/RestController.php:786
 msgid "زمان فروش این جلسه فعال نیست."
 msgstr "زمان فروش این جلسه فعال نیست."
+
+#: src/Domain/Allocation/Messages.php:60
+msgid "زمان مجاز ورود این بلیت نیست."
+msgstr "زمان مجاز ورود این بلیت نیست."
 
 #: src/Domain/Booking/HoldPolicy.php:67
 msgid "زمان معتبر در پایگاه داده یافت نشد."
@@ -2848,7 +3136,7 @@ msgstr "زمان معتبر پایگاه داده در دسترس نیست."
 msgid "زمان معتبر پایگاه داده دریافت نشد."
 msgstr "زمان معتبر پایگاه داده دریافت نشد."
 
-#: src/Admin/Pages.php:1329
+#: src/Admin/Pages.php:1334
 msgid "زمان نامعتبر است."
 msgstr "زمان نامعتبر است."
 
@@ -2860,15 +3148,15 @@ msgstr "زمان ورود این بلیت هنوز نرسیده یا پایان 
 msgid "زمان ورود هنوز آغاز نشده یا پایان یافته است."
 msgstr "زمان ورود هنوز آغاز نشده یا پایان یافته است."
 
-#: src/Frontend/Shortcodes.php:92
+#: src/Frontend/Shortcodes.php:94
 msgid "زمان‌بندی جلسه‌ها پس از انتشار در این بخش نمایش داده می‌شود."
 msgstr "زمان‌بندی جلسه‌ها پس از انتشار در این بخش نمایش داده می‌شود."
 
-#: assets/js/seat-status-admin.js src/Admin/Pages.php:260 src/Frontend/Shortcodes.php:257
+#: assets/js/seat-status-admin.js src/Admin/Pages.php:265 src/Frontend/Shortcodes.php:265
 msgid "زون"
 msgstr "زون"
 
-#: src/Frontend/Shortcodes.php:257
+#: src/Frontend/Shortcodes.php:265
 msgid "زون‌ها و ردیف‌های پربلیت"
 msgstr "زون‌ها و ردیف‌های پربلیت"
 
@@ -2876,7 +3164,7 @@ msgstr "زون‌ها و ردیف‌های پربلیت"
 msgid "زیرساخت انتقال مالکیت آماده نیست."
 msgstr "زیرساخت انتقال مالکیت آماده نیست."
 
-#: src/Admin/Pages.php:682
+#: src/Admin/Pages.php:687
 msgid "زیرساخت شما آماده است؛ نخستین رویداد را بسازید و جلسه‌های آن را مشخص کنید."
 msgstr "زیرساخت شما آماده است؛ نخستین رویداد را بسازید و جلسه‌های آن را مشخص کنید."
 
@@ -2896,11 +3184,11 @@ msgstr "ساخت نسخه پیش‌نویس از الگوی پارامتریک"
 msgid "ساخت نسخه پیش‌نویس الگو"
 msgstr "ساخت نسخه پیش‌نویس الگو"
 
-#: src/Domain/Hall/LayoutDocument.php:94
+#: src/Domain/Hall/LayoutDocument.php:97
 msgid "ساختار شیء نقشه نامعتبر است."
 msgstr "ساختار شیء نقشه نامعتبر است."
 
-#: src/Admin/Pages.php:1266 src/Domain/Gate/CheckinService.php:70 src/Domain/Reconciliation/ReconciliationService.php:23 src/Domain/Reporting/AttendanceReport.php:20 src/Domain/Ticket/TicketService.php:22 src/Domain/Ticket/TicketService.php:223
+#: src/Admin/Pages.php:1271 src/Domain/Gate/CheckinService.php:70 src/Domain/Reconciliation/ReconciliationService.php:23 src/Domain/Reporting/AttendanceReport.php:20 src/Domain/Ticket/TicketService.php:207 src/Domain/Ticket/TicketService.php:24
 msgid "ساختار پایگاه داده آماده نیست."
 msgstr "ساختار پایگاه داده آماده نیست."
 
@@ -2908,7 +3196,7 @@ msgstr "ساختار پایگاه داده آماده نیست."
 msgid "ساختار پایگاه داده استرداد آماده نیست."
 msgstr "ساختار پایگاه داده استرداد آماده نیست."
 
-#: src/Domain/Booking/HoldService.php:331
+#: src/Domain/Booking/HoldService.php:337
 msgid "ساختار پایگاه داده هنوز آماده نیست."
 msgstr "ساختار پایگاه داده هنوز آماده نیست."
 
@@ -2916,7 +3204,7 @@ msgstr "ساختار پایگاه داده هنوز آماده نیست."
 msgid "ساختار گزارش‌گیری آماده نیست."
 msgstr "ساختار گزارش‌گیری آماده نیست."
 
-#: src/Domain/Hall/LayoutDocument.php:41
+#: src/Domain/Hall/LayoutDocument.php:43
 msgid "ساختار یک صندلی نامعتبر است."
 msgstr "ساختار یک صندلی نامعتبر است."
 
@@ -2924,23 +3212,23 @@ msgstr "ساختار یک صندلی نامعتبر است."
 msgid "ساعت سرور قابل دریافت نیست."
 msgstr "ساعت سرور قابل دریافت نیست."
 
-#: src/Domain/Booking/HoldService.php:321
+#: src/Domain/Booking/HoldService.php:327
 msgid "ساعت معتبر پایگاه داده در دسترس نیست."
 msgstr "ساعت معتبر پایگاه داده در دسترس نیست."
 
-#: src/Domain/Checkout/CheckoutService.php:72 src/Domain/Ticket/TicketService.php:61
+#: src/Domain/Checkout/CheckoutService.php:72 src/Domain/Ticket/TicketService.php:63
 msgid "ساعت پایگاه داده در دسترس نیست."
 msgstr "ساعت پایگاه داده در دسترس نیست."
 
-#: src/Domain/Booking/HoldService.php:340 src/Domain/Reporting/AttendanceReport.php:74
+#: src/Domain/Booking/HoldService.php:346 src/Domain/Reporting/AttendanceReport.php:85
 msgid "ساعت پایگاه داده قابل دریافت نیست."
 msgstr "ساعت پایگاه داده قابل دریافت نیست."
 
-#: src/Admin/Pages.php:470
+#: src/Admin/Pages.php:475
 msgid "سالن"
 msgstr "سالن"
 
-#: src/Admin/Pages.php:167 src/Admin/Pages.php:184 src/Admin/Pages.php:300
+#: src/Admin/Pages.php:167 src/Admin/Pages.php:184 src/Admin/Pages.php:305
 msgid "سالن "
 msgstr "سالن "
 
@@ -2948,23 +3236,23 @@ msgstr "سالن "
 msgid "سالن موردنظر در محدوده دسترسی شما نیست."
 msgstr "سالن موردنظر در محدوده دسترسی شما نیست."
 
-#: src/Admin/Pages.php:696
+#: src/Admin/Pages.php:701
 msgid "سالن و نقشه صندلی"
 msgstr "سالن و نقشه صندلی"
 
-#: src/Admin/Pages.php:629
+#: src/Admin/Pages.php:634
 msgid "سالن، نسخه‌های نقشه و جایگاه‌های قابل رزرو را در یک بخش مدیریت کنید."
 msgstr "سالن، نسخه‌های نقشه و جایگاه‌های قابل رزرو را در یک بخش مدیریت کنید."
 
-#: src/Admin/Pages.php:463
+#: src/Admin/Pages.php:468
 msgid "سالن‌ها"
 msgstr "سالن‌ها"
 
-#: src/Admin/Pages.php:628
+#: src/Admin/Pages.php:633
 msgid "سالن‌ها و چیدمان"
 msgstr "سالن‌ها و چیدمان"
 
-#: src/Admin/Pages.php:671
+#: src/Admin/Pages.php:676
 msgid "سالن‌های در دسترس"
 msgstr "سالن‌های در دسترس"
 
@@ -2972,11 +3260,23 @@ msgstr "سالن‌های در دسترس"
 msgid "سامانه بازیابی در دسترس نیست."
 msgstr "سامانه بازیابی در دسترس نیست."
 
-#: src/Domain/Booking/HoldService.php:360
+#: src/Domain/Allocation/Messages.php:42
+msgid "سامانه رزرو مشغول است؛ چند لحظه دیگر دوباره تلاش کنید."
+msgstr "سامانه رزرو مشغول است؛ چند لحظه دیگر دوباره تلاش کنید."
+
+#: src/Domain/Booking/HoldService.php:366
 msgid "سامانه رزرو موقت مشغول است؛ دوباره تلاش کنید."
 msgstr "سامانه رزرو موقت مشغول است؛ دوباره تلاش کنید."
 
-#: src/Domain/Reporting/AttendanceReport.php:143
+#: src/Domain/Allocation/Messages.php:43
+msgid "سامانه رزرو موقتاً در دسترس نیست."
+msgstr "سامانه رزرو موقتاً در دسترس نیست."
+
+#: src/Domain/Allocation/Messages.php:72
+msgid "سبد خرید موقتاً در دسترس نیست."
+msgstr "سبد خرید موقتاً در دسترس نیست."
+
+#: src/Domain/Reporting/AttendanceReport.php:154
 msgid "سرآیندهای خروجی قبلاً ارسال شده‌اند."
 msgstr "سرآیندهای خروجی قبلاً ارسال شده‌اند."
 
@@ -2988,7 +3288,7 @@ msgstr "سطر بلیت در سفارش ووکامرس پیدا نشد."
 msgid "سطر سفارش تکراری است."
 msgstr "سطر سفارش تکراری است."
 
-#: src/Admin/Pages.php:581
+#: src/Admin/Pages.php:586
 msgid "سفارش"
 msgstr "سفارش"
 
@@ -2996,7 +3296,7 @@ msgstr "سفارش"
 msgid "سفارش #"
 msgstr "سفارش #"
 
-#: src/Admin/Pages.php:399
+#: src/Admin/Pages.php:404
 msgid "سفارش / آیتم"
 msgstr "سفارش / آیتم"
 
@@ -3016,11 +3316,11 @@ msgstr "سفارش بلیت برای تشکیل بسته معتبر نیست."
 msgid "سفارش بلیت صندلی‌دار یافت نشد."
 msgstr "سفارش بلیت صندلی‌دار یافت نشد."
 
-#: src/Domain/Ticket/TicketService.php:27
+#: src/Domain/Ticket/TicketService.php:29
 msgid "سفارش بلیت معتبر نیست."
 msgstr "سفارش بلیت معتبر نیست."
 
-#: src/Domain/Reconciliation/ReconciliationService.php:154 src/Domain/Reconciliation/ReconciliationService.php:211
+#: src/Domain/Reconciliation/ReconciliationService.php:174 src/Domain/Reconciliation/ReconciliationService.php:235
 msgid "سفارش به مرکز انتخاب‌شده تعلق ندارد."
 msgstr "سفارش به مرکز انتخاب‌شده تعلق ندارد."
 
@@ -3028,23 +3328,23 @@ msgstr "سفارش به مرکز انتخاب‌شده تعلق ندارد."
 msgid "سفارش ثبت شد."
 msgstr "سفارش ثبت شد."
 
-#: src/Domain/Checkout/CheckoutService.php:307
+#: src/Domain/Checkout/CheckoutService.php:316
 msgid "سفارش ثبت شد؛ پرداخت باید در درگاه ووکامرس تأیید شود."
 msgstr "سفارش ثبت شد؛ پرداخت باید در درگاه ووکامرس تأیید شود."
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:404
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:410
 msgid "سفارش ثبت شد؛ پس از تأیید پرداخت، بلیت صادر می‌شود."
 msgstr "سفارش ثبت شد؛ پس از تأیید پرداخت، بلیت صادر می‌شود."
 
-#: src/Domain/Reconciliation/ReconciliationService.php:141 src/Domain/Reconciliation/ReconciliationService.php:199
+#: src/Domain/Reconciliation/ReconciliationService.php:161 src/Domain/Reconciliation/ReconciliationService.php:219
 msgid "سفارش در دسترس نیست."
 msgstr "سفارش در دسترس نیست."
 
-#: src/Domain/Checkout/CheckoutService.php:307
+#: src/Domain/Checkout/CheckoutService.php:316
 msgid "سفارش رایگان ثبت و بلیت صادر شد."
 msgstr "سفارش رایگان ثبت و بلیت صادر شد."
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:404
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:410
 msgid "سفارش رایگان ظرفیت آزاد ثبت شد و بلیت‌ها صادر شدند."
 msgstr "سفارش رایگان ظرفیت آزاد ثبت شد و بلیت‌ها صادر شدند."
 
@@ -3052,7 +3352,7 @@ msgstr "سفارش رایگان ظرفیت آزاد ثبت شد و بلیت‌ه
 msgid "سفارش شماره "
 msgstr "سفارش شماره "
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:219
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:233
 msgid "سفارش ظرفیت آزاد معتبر نیست."
 msgstr "سفارش ظرفیت آزاد معتبر نیست."
 
@@ -3060,27 +3360,31 @@ msgstr "سفارش ظرفیت آزاد معتبر نیست."
 msgid "سفارش قابل انتقال نیست."
 msgstr "سفارش قابل انتقال نیست."
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:387
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:393
 msgid "سفارش قبلی نیازمند بررسی است."
 msgstr "سفارش قبلی نیازمند بررسی است."
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:231 src/Domain/Ticket/TicketService.php:37
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:245 src/Domain/Ticket/TicketService.php:39
 msgid "سفارش لغوشده یا ناموفق قابل صدور بلیت نیست."
 msgstr "سفارش لغوشده یا ناموفق قابل صدور بلیت نیست."
 
-#: src/Domain/Reconciliation/ReconciliationService.php:186
+#: src/Domain/Reconciliation/ReconciliationService.php:206
 msgid "سفارش متعلق به مرکز انتخاب‌شده نیست."
 msgstr "سفارش متعلق به مرکز انتخاب‌شده نیست."
 
-#: src/Domain/Ticket/TicketService.php:286
+#: src/Domain/Ticket/TicketService.php:270
 msgid "سفارش معتبر نیست."
 msgstr "سفارش معتبر نیست."
 
-#: src/Domain/Checkout/CheckoutService.php:292
+#: src/Domain/Allocation/Messages.php:52
+msgid "سفارش مورد نظر معتبر نیست."
+msgstr "سفارش مورد نظر معتبر نیست."
+
+#: src/Domain/Checkout/CheckoutService.php:301
 msgid "سفارش نیازمند بررسی است."
 msgstr "سفارش نیازمند بررسی است."
 
-#: src/Admin/Pages.php:439
+#: src/Admin/Pages.php:444
 msgid "سفارش نیازمند پیگیری"
 msgstr "سفارش نیازمند پیگیری"
 
@@ -3088,29 +3392,45 @@ msgstr "سفارش نیازمند پیگیری"
 msgid "سفارش هنوز تأیید نهایی نشده است."
 msgstr "سفارش هنوز تأیید نهایی نشده است."
 
-#: src/Domain/Reconciliation/ReconciliationService.php:174
+#: src/Domain/Reconciliation/ReconciliationService.php:194
 msgid "سفارش یافت نشد."
 msgstr "سفارش یافت نشد."
 
-#: src/Admin/Pages.php:579
+#: src/Admin/Pages.php:584
 msgid "سفارش‌های نیازمند تطبیق دستی"
 msgstr "سفارش‌های نیازمند تطبیق دستی"
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:106
+#: src/Domain/Allocation/Messages.php:48
+msgid "سقف خرید این شماره موبایل برای رویداد پر شده است."
+msgstr "سقف خرید این شماره موبایل برای رویداد پر شده است."
+
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:118
 msgid "سقف خرید این شماره موبایل پر شده است."
 msgstr "سقف خرید این شماره موبایل پر شده است."
 
-#: src/Domain/Checkout/CheckoutService.php:171
+#: src/Domain/Checkout/CheckoutService.php:180
 msgid "سقف خرید مجاز برای این شماره موبایل در این رویداد پر شده است."
 msgstr "سقف خرید مجاز برای این شماره موبایل در این رویداد پر شده است."
 
-#: src/Admin/Pages.php:240
+#: src/Admin/VenueDesigner.php:46
+msgid "سقف خرید هر شماره موبایل"
+msgstr "سقف خرید هر شماره موبایل"
+
+#: src/Admin/Pages.php:245
 msgid "سن/استیج"
 msgstr "سن/استیج"
 
-#: src/Admin/Pages.php:399
+#: src/Admin/Pages.php:404
 msgid "سند استرداد ووکامرس"
 msgstr "سند استرداد ووکامرس"
+
+#: src/Domain/Venue/PresetCatalog.php:19
+msgid "سه بلوک"
+msgstr "سه بلوک"
+
+#: src/Domain/Venue/PresetCatalog.php:66
+msgid "سه طبقه با جایگاه اختصاصی"
+msgstr "سه طبقه با جایگاه اختصاصی"
 
 #: src/Domain/Pricing/DiscountService.php:121
 msgid "سهمیه تخفیف به پایان رسیده است."
@@ -3120,22 +3440,46 @@ msgstr "سهمیه تخفیف به پایان رسیده است."
 msgid "سهمیه کد تخفیف به پایان رسیده است."
 msgstr "سهمیه کد تخفیف به پایان رسیده است."
 
+#: src/Domain/Venue/PresetCatalog.php:62
+msgid "سکوها با فاصله گوشه‌ها"
+msgstr "سکوها با فاصله گوشه‌ها"
+
+#: src/Domain/Venue/PresetCatalog.php:56
+msgid "سکوهای روبه‌رو"
+msgstr "سکوهای روبه‌رو"
+
+#: src/Domain/Venue/PresetCatalog.php:57
+msgid "سکوهای سه‌طرفه"
+msgstr "سکوهای سه‌طرفه"
+
+#: src/Domain/Venue/PresetCatalog.php:58
+msgid "سکوهای چهارطرفه"
+msgstr "سکوهای چهارطرفه"
+
+#: src/Domain/Venue/PresetCatalog.php:54
+msgid "سکوی شعاعی"
+msgstr "سکوی شعاعی"
+
+#: src/Domain/Venue/PresetCatalog.php:55
+msgid "سکوی یک‌طرفه"
+msgstr "سکوی یک‌طرفه"
+
 #: src/Domain/Hall/LayoutPresets.php:13
 msgid "سینما"
 msgstr "سینما"
 
-#: src/Admin/Pages.php:844 src/Frontend/Shortcodes.php:89
+#: src/Admin/Pages.php:849 src/Frontend/Shortcodes.php:91
 msgid "شرایط حضور"
 msgstr "شرایط حضور"
 
 msgid "شرایط حضور:"
 msgstr "شرایط حضور:"
 
-#: src/Domain/Reporting/AttendanceReport.php:95 src/Domain/Reporting/XlsxExporter.php:18
+#: src/Domain/Reporting/AttendanceReport.php:106 src/Domain/Reporting/XlsxExporter.php:18
 msgid "شروع (UTC)"
 msgstr "شروع (UTC)"
 
-#: src/Frontend/Shortcodes.php:327
+#: src/Frontend/Shortcodes.php:343
 msgid "شروع اسکن با دوربین"
 msgstr "شروع اسکن با دوربین"
 
@@ -3147,11 +3491,15 @@ msgstr "شروع تراکنش انجام نشد."
 msgid "شروع تراکنش ممکن نشد."
 msgstr "شروع تراکنش ممکن نشد."
 
-#: src/Admin/Pages.php:310
+#: src/Admin/Pages.php:315
 msgid "شروع نگهداری صندلی"
 msgstr "شروع نگهداری صندلی"
 
-#: src/Domain/Hall/LayoutVersionService.php:46
+#: src/Domain/Allocation/Messages.php:38
+msgid "شمار جایگاه‌ها با چیدمان مطابقت ندارد."
+msgstr "شمار جایگاه‌ها با چیدمان مطابقت ندارد."
+
+#: src/Domain/Hall/LayoutVersionService.php:47
 msgid "شمارش صندلی‌های چیدمان با بانک اطلاعاتی مطابقت ندارد."
 msgstr "شمارش صندلی‌های چیدمان با بانک اطلاعاتی مطابقت ندارد."
 
@@ -3159,7 +3507,7 @@ msgstr "شمارش صندلی‌های چیدمان با بانک اطلاعات
 msgid "شمارنده‌های موجودی با ظرفیت تطابق ندارند."
 msgstr "شمارنده‌های موجودی با ظرفیت تطابق ندارند."
 
-#: src/Admin/Pages.php:260
+#: src/Admin/Pages.php:265
 msgid "شماره"
 msgstr "شماره"
 
@@ -3167,11 +3515,11 @@ msgstr "شماره"
 msgid "شماره "
 msgstr "شماره "
 
-#: src/Frontend/Shortcodes.php:330
+#: src/Frontend/Shortcodes.php:346
 msgid "شماره بلیت"
 msgstr "شماره بلیت"
 
-#: src/Admin/Pages.php:339 src/Admin/Pages.php:365 src/Admin/Pages.php:376 src/Admin/Pages.php:382
+#: src/Admin/Pages.php:344 src/Admin/Pages.php:370 src/Admin/Pages.php:381 src/Admin/Pages.php:387
 msgid "شماره بلیت "
 msgstr "شماره بلیت "
 
@@ -3183,7 +3531,7 @@ msgstr "شماره بلیت معتبر نیست."
 msgid "شماره بلیت یا صندلی مقصد معتبر نیست."
 msgstr "شماره بلیت یا صندلی مقصد معتبر نیست."
 
-#: src/Frontend/Shortcodes.php:329
+#: src/Frontend/Shortcodes.php:345
 msgid "شماره درج‌شده روی بلیت را وارد کنید."
 msgstr "شماره درج‌شده روی بلیت را وارد کنید."
 
@@ -3191,14 +3539,14 @@ msgstr "شماره درج‌شده روی بلیت را وارد کنید."
 msgid "شماره ردیف خارج از محدوده است."
 msgstr "شماره ردیف خارج از محدوده است."
 
-#: src/Frontend/Shortcodes.php:194 src/Frontend/Shortcodes.php:200
+#: src/Frontend/Shortcodes.php:197 src/Frontend/Shortcodes.php:203
 msgid "شماره سفارش"
 msgstr "شماره سفارش"
 
 msgid "شماره سفارش "
 msgstr "شماره سفارش "
 
-#: src/Frontend/Shortcodes.php:193
+#: src/Frontend/Shortcodes.php:196
 msgid "شماره سفارش و کلید دسترسی را از رسید خرید وارد کنید."
 msgstr "شماره سفارش و کلید دسترسی را از رسید خرید وارد کنید."
 
@@ -3206,7 +3554,7 @@ msgstr "شماره سفارش و کلید دسترسی را از رسید خری
 msgid "شماره سفارش: "
 msgstr "شماره سفارش: "
 
-#: src/Frontend/Shortcodes.php:356
+#: src/Frontend/Shortcodes.php:372
 msgid "شماره موبایل"
 msgstr "شماره موبایل"
 
@@ -3221,7 +3569,15 @@ msgstr "شماره موبایل ایران معتبر نیست."
 msgid "شماره نسخه QR قابل افزایش نیست."
 msgstr "شماره نسخه QR قابل افزایش نیست."
 
-#: src/Admin/Pages.php:421 src/Admin/Pages.php:463 src/Admin/Pages.php:470
+#: src/Support/VenuePrint.php:156
+msgid "شماره نقشه"
+msgstr "شماره نقشه"
+
+#: src/Support/VenuePrint.php:136
+msgid "شماره‌های روی نقشه با جدول خوانای کد جایگاه‌ها در صفحات بعد مطابقت دارند."
+msgstr "شماره‌های روی نقشه با جدول خوانای کد جایگاه‌ها در صفحات بعد مطابقت دارند."
+
+#: src/Admin/Pages.php:426 src/Admin/Pages.php:468 src/Admin/Pages.php:475
 msgid "شناسه"
 msgstr "شناسه"
 
@@ -3233,7 +3589,7 @@ msgstr "شناسه بسته نامعتبر است."
 msgid "شناسه بلیت"
 msgstr "شناسه بلیت"
 
-#: src/Frontend/Shortcodes.php:222
+#: src/Frontend/Shortcodes.php:230
 msgid "شناسه بلیت از بخش «بلیت‌های من»"
 msgstr "شناسه بلیت از بخش «بلیت‌های من»"
 
@@ -3252,7 +3608,7 @@ msgstr "شناسه بلیت نامعتبر است."
 msgid "شناسه تراکنش"
 msgstr "شناسه تراکنش"
 
-#: src/Admin/Pages.php:856
+#: src/Admin/Pages.php:861
 msgid "شناسه تصویر پوستر در رسانه وردپرس "
 msgstr "شناسه تصویر پوستر در رسانه وردپرس "
 
@@ -3264,7 +3620,7 @@ msgstr "شناسه تکراری بلیت در بسته وجود دارد."
 msgid "شناسه جلسه"
 msgstr "شناسه جلسه"
 
-#: src/Domain/Booking/CapacityService.php:123 src/Domain/Booking/CapacityService.php:24 src/Domain/Booking/HoldService.php:24 src/Frontend/Shortcodes.php:110 src/Frontend/Shortcodes.php:133
+#: src/Domain/Booking/CapacityService.php:123 src/Domain/Booking/CapacityService.php:24 src/Domain/Booking/HoldService.php:24 src/Frontend/Shortcodes.php:112 src/Frontend/Shortcodes.php:135
 msgid "شناسه جلسه معتبر نیست."
 msgstr "شناسه جلسه معتبر نیست."
 
@@ -3276,11 +3632,11 @@ msgstr "شناسه جلسه نامعتبر است."
 msgid "شناسه جلسه یا کاربر معتبر نیست."
 msgstr "شناسه جلسه یا کاربر معتبر نیست."
 
-#: src/Admin/Pages.php:274
+#: src/Admin/Pages.php:279
 msgid "شناسه داخلی بلیت "
 msgstr "شناسه داخلی بلیت "
 
-#: src/Frontend/Shortcodes.php:227
+#: src/Frontend/Shortcodes.php:235
 msgid "شناسه درخواست"
 msgstr "شناسه درخواست"
 
@@ -3291,7 +3647,7 @@ msgstr "شناسه درخواست "
 msgid "شناسه درخواست با تعداد متفاوتی استفاده شده است."
 msgstr "شناسه درخواست با تعداد متفاوتی استفاده شده است."
 
-#: src/Domain/Booking/HoldService.php:52
+#: src/Domain/Booking/HoldService.php:55
 msgid "شناسه درخواست قبلاً برای انتخاب دیگری مصرف شده است."
 msgstr "شناسه درخواست قبلاً برای انتخاب دیگری مصرف شده است."
 
@@ -3303,7 +3659,7 @@ msgstr "شناسه درخواست نامعتبر است."
 msgid "شناسه دسترسی به رزرو معتبر نیست."
 msgstr "شناسه دسترسی به رزرو معتبر نیست."
 
-#: src/Domain/Booking/HoldService.php:113 src/Domain/Booking/HoldService.php:246
+#: src/Domain/Booking/HoldService.php:116 src/Domain/Booking/HoldService.php:252
 msgid "شناسه دسترسی معتبر نیست."
 msgstr "شناسه دسترسی معتبر نیست."
 
@@ -3311,7 +3667,7 @@ msgstr "شناسه دسترسی معتبر نیست."
 msgid "شناسه رزرو معتبر نیست."
 msgstr "شناسه رزرو معتبر نیست."
 
-#: src/Domain/Checkout/CheckoutService.php:41 src/Domain/GeneralAdmission/FreeAdmissionService.php:31
+#: src/Domain/Checkout/CheckoutService.php:41 src/Domain/GeneralAdmission/FreeAdmissionService.php:33
 msgid "شناسه رزرو نامعتبر است."
 msgstr "شناسه رزرو نامعتبر است."
 
@@ -3319,7 +3675,7 @@ msgstr "شناسه رزرو نامعتبر است."
 msgid "شناسه رویداد"
 msgstr "شناسه رویداد"
 
-#: src/Frontend/Shortcodes.php:71
+#: src/Frontend/Shortcodes.php:73
 msgid "شناسه رویداد نامعتبر است."
 msgstr "شناسه رویداد نامعتبر است."
 
@@ -3338,15 +3694,15 @@ msgstr "شناسه صندلی در نقشه معتبر نیست."
 msgid "شناسه صندلی نامعتبر است."
 msgstr "شناسه صندلی نامعتبر است."
 
-#: src/Admin/Pages.php:352
+#: src/Admin/Pages.php:357
 msgid "شناسه عددی بلیت‌ها (با ویرگول جدا شوند) "
 msgstr "شناسه عددی بلیت‌ها (با ویرگول جدا شوند) "
 
-#: src/Admin/Pages.php:415
+#: src/Admin/Pages.php:420
 msgid "شناسه عددی کاربر وردپرس "
 msgstr "شناسه عددی کاربر وردپرس "
 
-#: src/Frontend/Shortcodes.php:270
+#: src/Frontend/Shortcodes.php:278
 msgid "شناسه مرکز را در ویژگی center تعیین کنید."
 msgstr "شناسه مرکز را در ویژگی center تعیین کنید."
 
@@ -3358,11 +3714,11 @@ msgstr "شناسه مرکز و عنوان رویداد لازم است."
 msgid "شناسه نگهداری معتبر نیست."
 msgstr "شناسه نگهداری معتبر نیست."
 
-#: src/Admin/Pages.php:744
+#: src/Admin/Pages.php:749
 msgid "شناسه پترن تأیید بلیت "
 msgstr "شناسه پترن تأیید بلیت "
 
-#: src/Admin/Pages.php:755
+#: src/Admin/Pages.php:760
 msgid "شناسه پترن معتبر نیست."
 msgstr "شناسه پترن معتبر نیست."
 
@@ -3378,7 +3734,7 @@ msgstr "شناسه یکتای درخواست معتبر نیست."
 msgid "شیء "
 msgstr "شیء "
 
-#: src/Admin/Pages.php:239
+#: src/Admin/Pages.php:244
 msgid "شیء غیرصندلی "
 msgstr "شیء غیرصندلی "
 
@@ -3390,42 +3746,62 @@ msgstr "شیء نقشه نامعتبر است."
 msgid "صادرشده"
 msgstr "صادرشده"
 
-#: src/Domain/Ticket/TicketService.php:135
+#: src/Domain/Venue/PresetCatalog.php:29
+msgid "صحنه دوسویه"
+msgstr "صحنه دوسویه"
+
+#: src/Domain/Venue/PresetCatalog.php:26
+msgid "صحنه سه‌طرفه"
+msgstr "صحنه سه‌طرفه"
+
+#: src/Domain/Venue/PresetCatalog.php:25
+msgid "صحنه پیش‌آمده"
+msgstr "صحنه پیش‌آمده"
+
+#: src/Domain/Venue/PresetCatalog.php:27
+msgid "صحنه چهارطرفه"
+msgstr "صحنه چهارطرفه"
+
+#: src/Domain/Ticket/TicketService.php:119
 msgid "صدور بلیت انجام نشد."
 msgstr "صدور بلیت انجام نشد."
 
 msgid "صدور بلیت رایگان آزمایشی است؛ سفارش پولی فقط در محیط آزمایشی و پس از فعال‌سازی مدیریتی امکان‌پذیر است. سامانه هنوز برای فروش واقعی تأیید نشده است."
 msgstr "صدور بلیت رایگان آزمایشی است؛ سفارش پولی فقط در محیط آزمایشی و پس از فعال‌سازی مدیریتی امکان‌پذیر است. سامانه هنوز برای فروش واقعی تأیید نشده است."
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:294
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:300
 msgid "صدور بلیت ظرفیت آزاد ناموفق بود."
 msgstr "صدور بلیت ظرفیت آزاد ناموفق بود."
 
-#: src/Domain/Ticket/TicketService.php:63
+#: src/Domain/Ticket/TicketService.php:65
 msgid "صدور بلیت ظرفیت آزاد هنوز فعال نیست."
 msgstr "صدور بلیت ظرفیت آزاد هنوز فعال نیست."
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:313 src/Domain/Ticket/TicketService.php:155
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:319 src/Domain/Ticket/TicketService.php:139
 msgid "صدور بلیت نیازمند بررسی است."
 msgstr "صدور بلیت نیازمند بررسی است."
 
-#: src/Frontend/Shortcodes.php:361
+#: src/Frontend/Shortcodes.php:377
 msgid "صدور بلیت پس از ثبت سفارش و تأیید پرداخت انجام می‌شود."
 msgstr "صدور بلیت پس از ثبت سفارش و تأیید پرداخت انجام می‌شود."
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:197
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:211
 msgid "صدور سفارش نیازمند بررسی است؛ رزرو به‌طور خودکار آزاد نمی‌شود."
 msgstr "صدور سفارش نیازمند بررسی است؛ رزرو به‌طور خودکار آزاد نمی‌شود."
 
-#: src/Domain/Reconciliation/ReconciliationService.php:160
+#: src/Domain/Reconciliation/ReconciliationService.php:180
 msgid "صدور مجددِ کنترل‌شده بلیت رایگان ظرفیت آزاد."
 msgstr "صدور مجددِ کنترل‌شده بلیت رایگان ظرفیت آزاد."
 
-#: src/Admin/Pages.php:746
+#: src/Admin/Pages.php:751
 msgid "صف: "
 msgstr "صف: "
 
-#: src/Admin/Pages.php:196
+#: src/Domain/Allocation/Messages.php:76
+msgid "صفحه جایگاه‌ها معتبر نیست؛ فهرست را تازه کنید."
+msgstr "صفحه جایگاه‌ها معتبر نیست؛ فهرست را تازه کنید."
+
+#: src/Admin/Pages.php:196 src/Domain/Allocation/Messages.php:18
 msgid "صندلی"
 msgstr "صندلی"
 
@@ -3433,7 +3809,7 @@ msgstr "صندلی"
 msgid "صندلی "
 msgstr "صندلی "
 
-#: src/Admin/Pages.php:257
+#: src/Admin/Pages.php:262
 msgid "صندلی انتخابی: "
 msgstr "صندلی انتخابی: "
 
@@ -3461,15 +3837,15 @@ msgstr "صندلی تغییر کرد. QR قدیمی باطل است؛ بلیت �
 msgid "صندلی تکراری در درخواست وجود دارد."
 msgstr "صندلی تکراری در درخواست وجود دارد."
 
-#: src/Domain/Booking/HoldService.php:189
+#: src/Domain/Booking/HoldService.php:195
 msgid "صندلی جدید در دسترس نیست."
 msgstr "صندلی جدید در دسترس نیست."
 
-#: src/Domain/Booking/HoldService.php:177
+#: src/Domain/Booking/HoldService.php:183
 msgid "صندلی خارج از چیدمان جلسه است."
 msgstr "صندلی خارج از چیدمان جلسه است."
 
-#: src/Domain/Hall/SeatAdministration.php:36
+#: src/Domain/Hall/SeatAdministration.php:44
 msgid "صندلی در نقشه جلسه وجود ندارد."
 msgstr "صندلی در نقشه جلسه وجود ندارد."
 
@@ -3477,11 +3853,11 @@ msgstr "صندلی در نقشه جلسه وجود ندارد."
 msgid "صندلی در چیدمان جلسه وجود ندارد."
 msgstr "صندلی در چیدمان جلسه وجود ندارد."
 
-#: src/Domain/Ticket/TicketService.php:80
+#: src/Domain/Ticket/TicketService.php:82
 msgid "صندلی سفارش یافت نشد."
 msgstr "صندلی سفارش یافت نشد."
 
-#: src/Admin/Pages.php:304 src/Frontend/Shortcodes.php:98
+#: src/Admin/Pages.php:309 src/Frontend/Shortcodes.php:100
 msgid "صندلی شماره‌دار"
 msgstr "صندلی شماره‌دار"
 
@@ -3501,7 +3877,7 @@ msgstr "صندلی مقصد در این جلسه وجود ندارد."
 msgid "صندلی مقصد در دسترس نیست."
 msgstr "صندلی مقصد در دسترس نیست."
 
-#: src/Domain/Hall/SeatAdministration.php:47
+#: src/Domain/Hall/SeatAdministration.php:55
 msgid "صندلی نگهداری‌شده یا فروخته‌شده قابل مسدودکردن نیست."
 msgstr "صندلی نگهداری‌شده یا فروخته‌شده قابل مسدودکردن نیست."
 
@@ -3513,11 +3889,11 @@ msgstr "صندلی هر ردیف "
 msgid "صندلی پیدا نشد."
 msgstr "صندلی پیدا نشد."
 
-#: src/Admin/Pages.php:273 src/Frontend/Shortcodes.php:221
+#: src/Admin/Pages.php:278 src/Frontend/Shortcodes.php:229
 msgid "صندلی‌دار"
 msgstr "صندلی‌دار"
 
-#: src/Frontend/Shortcodes.php:156
+#: src/Frontend/Shortcodes.php:159
 msgid "صندلی‌ها"
 msgstr "صندلی‌ها"
 
@@ -3529,7 +3905,7 @@ msgstr "صندلی‌ها آزاد شدند."
 msgid "صندلی‌ها باید در یک بلوک کنار هم باشند"
 msgstr "صندلی‌ها باید در یک بلوک کنار هم باشند"
 
-#: src/Domain/Booking/HoldService.php:377
+#: src/Domain/Booking/HoldService.php:383
 msgid "صندلی‌ها تا پایان مهلت نمایش‌داده‌شده نگهداری می‌شوند. برای ثبت سفارش، اطلاعات خریدار را ارسال کنید."
 msgstr "صندلی‌ها تا پایان مهلت نمایش‌داده‌شده نگهداری می‌شوند. برای ثبت سفارش، اطلاعات خریدار را ارسال کنید."
 
@@ -3541,7 +3917,7 @@ msgstr "صندلی‌ها پیشنهاد شدند؛ موجودی تنها بعد
 msgid "صندلی‌های آبی رزرو فعلی شما هستند؛ تغییرات پس از ثبت سمت سرور اعمال می‌شوند."
 msgstr "صندلی‌های آبی رزرو فعلی شما هستند؛ تغییرات پس از ثبت سمت سرور اعمال می‌شوند."
 
-#: src/Frontend/Shortcodes.php:145
+#: src/Frontend/Shortcodes.php:148
 msgid "صندلی‌های آزاد را روی نقشه انتخاب کنید؛ سپس رزرو و اطلاعات خریدار را تکمیل کنید."
 msgstr "صندلی‌های آزاد را روی نقشه انتخاب کنید؛ سپس رزرو و اطلاعات خریدار را تکمیل کنید."
 
@@ -3553,9 +3929,13 @@ msgstr "صندلی‌های انتخابی باید واقعاً کنار یکد
 msgid "صندلی‌های انتخاب‌شده نامعتبر هستند."
 msgstr "صندلی‌های انتخاب‌شده نامعتبر هستند."
 
-#: src/Http/RestController.php:853
+#: src/Http/RestController.php:858
 msgid "صندلی‌های جایگزین را وارد کنید."
 msgstr "صندلی‌های جایگزین را وارد کنید."
+
+#: src/Domain/Venue/PresetCatalog.php:60
+msgid "صندلی‌های جمع‌شونده زمین"
+msgstr "صندلی‌های جمع‌شونده زمین"
 
 #: src/Integrations/CartSeatManager.php:163
 msgid "صندلی‌های رزرو نامعتبرند."
@@ -3573,7 +3953,7 @@ msgstr "صندلی‌های سبد با سرور یکسان نیستند."
 msgid "صندلی‌های سبد خرید شما"
 msgstr "صندلی‌های سبد خرید شما"
 
-#: src/Frontend/Shortcodes.php:158
+#: src/Frontend/Shortcodes.php:161
 msgid "صندلی‌های کنار هم می‌خواهید؟"
 msgstr "صندلی‌های کنار هم می‌خواهید؟"
 
@@ -3581,7 +3961,19 @@ msgstr "صندلی‌های کنار هم می‌خواهید؟"
 msgid "صورتحساب سفارش "
 msgstr "صورتحساب سفارش "
 
-#: src/Security/Capabilities.php:55
+#: src/Domain/Venue/PresetCatalog.php:42
+msgid "ضیافت مستطیلی"
+msgstr "ضیافت مستطیلی"
+
+#: src/Domain/Venue/PresetCatalog.php:41
+msgid "ضیافت میز گرد"
+msgstr "ضیافت میز گرد"
+
+#: src/Support/VenuePrint.php:106 src/Support/VenuePrint.php:135
+msgid "طبقه "
+msgstr "طبقه "
+
+#: src/Admin/Pages.php:206 src/Admin/VenueDesigner.php:23 src/Security/Capabilities.php:55
 msgid "طراح سالن"
 msgstr "طراح سالن"
 
@@ -3589,26 +3981,38 @@ msgstr "طراح سالن"
 msgid "طول یا نوع مشخصات رویداد معتبر نیست."
 msgstr "طول یا نوع مشخصات رویداد معتبر نیست."
 
-#: src/Domain/Reporting/AttendanceReport.php:95 src/Domain/Reporting/XlsxExporter.php:18 src/Frontend/Shortcodes.php:256 src/Frontend/Shortcodes.php:300
+#: src/Domain/Reporting/AttendanceReport.php:106 src/Domain/Reporting/XlsxExporter.php:18 src/Frontend/Shortcodes.php:264 src/Frontend/Shortcodes.php:308
 msgid "ظرفیت"
 msgstr "ظرفیت"
 
-#: src/Domain/Ticket/TicketService.php:273 src/Frontend/Shortcodes.php:98
+#: src/Domain/Ticket/TicketService.php:257 src/Frontend/Shortcodes.php:100
 msgid "ظرفیت آزاد"
 msgstr "ظرفیت آزاد"
 
 msgid "ظرفیت آزاد (بدون شماره صندلی)"
 msgstr "ظرفیت آزاد (بدون شماره صندلی)"
 
-#: src/Admin/Pages.php:304
+#: src/Admin/Pages.php:309
 msgid "ظرفیت آزاد (بدون صندلی)"
 msgstr "ظرفیت آزاد (بدون صندلی)"
+
+#: src/Domain/Allocation/Messages.php:24
+msgid "ظرفیت این میز یا جایگاه معتبر نیست."
+msgstr "ظرفیت این میز یا جایگاه معتبر نیست."
 
 #: src/Domain/Booking/CapacityPolicy.php:24
 msgid "ظرفیت باید بین ۱ و ۱۰۰٬۰۰۰ باشد."
 msgstr "ظرفیت باید بین ۱ و ۱۰۰٬۰۰۰ باشد."
 
-#: src/Admin/Pages.php:305
+#: src/Support/VenuePrint.php:107
+msgid "ظرفیت سالن: "
+msgstr "ظرفیت سالن: "
+
+#: src/Support/VenuePrint.php:107
+msgid "ظرفیت طبقه: "
+msgstr "ظرفیت طبقه: "
+
+#: src/Admin/Pages.php:310
 msgid "ظرفیت فروش آزاد "
 msgstr "ظرفیت فروش آزاد "
 
@@ -3624,7 +4028,7 @@ msgstr "ظرفیت موقت آزاد شد."
 msgid "ظرفیت موقتاً نگهداری شده است؛ پرداخت و صدور بلیت این نوع جلسه هنوز فعال نیست."
 msgstr "ظرفیت موقتاً نگهداری شده است؛ پرداخت و صدور بلیت این نوع جلسه هنوز فعال نیست."
 
-#: src/Admin/Pages.php:633
+#: src/Admin/Pages.php:638
 msgid "ظرفیت و روند صدور بلیت را بررسی کنید. این آمار جایگزین گزارش مالی ووکامرس نیست."
 msgstr "ظرفیت و روند صدور بلیت را بررسی کنید. این آمار جایگزین گزارش مالی ووکامرس نیست."
 
@@ -3632,15 +4036,19 @@ msgstr "ظرفیت و روند صدور بلیت را بررسی کنید. ای�
 msgid "ظرفیت کافی برای این تعداد وجود ندارد."
 msgstr "ظرفیت کافی برای این تعداد وجود ندارد."
 
-#: src/Domain/Reporting/XlsxExporter.php:20 src/Frontend/Shortcodes.php:300
+#: src/Domain/Allocation/Messages.php:25
+msgid "ظرفیت یک میز یا جایگاه از سقف خرید بیشتر است؛ سقف خرید را افزایش دهید یا فروش گروهی آن را غیرفعال کنید."
+msgstr "ظرفیت یک میز یا جایگاه از سقف خرید بیشتر است؛ سقف خرید را افزایش دهید یا فروش گروهی آن را غیرفعال کنید."
+
+#: src/Domain/Reporting/XlsxExporter.php:20 src/Frontend/Shortcodes.php:308
 msgid "عدم حضور پس از مهلت ورود"
 msgstr "عدم حضور پس از مهلت ورود"
 
-#: src/Domain/Reporting/AttendanceReport.php:95
+#: src/Domain/Reporting/AttendanceReport.php:106
 msgid "عدم حضور پس از پایان مهلت"
 msgstr "عدم حضور پس از پایان مهلت"
 
-#: src/Admin/Pages.php:246
+#: src/Admin/Pages.php:251
 msgid "عرض "
 msgstr "عرض "
 
@@ -3648,11 +4056,11 @@ msgstr "عرض "
 msgid "عقب"
 msgstr "عقب"
 
-#: src/Admin/Pages.php:439 src/Admin/Pages.php:581
+#: src/Admin/Pages.php:444 src/Admin/Pages.php:586
 msgid "علت"
 msgstr "علت"
 
-#: src/Admin/Pages.php:377
+#: src/Admin/Pages.php:382
 msgid "علت استرداد "
 msgstr "علت استرداد "
 
@@ -3660,7 +4068,7 @@ msgstr "علت استرداد "
 msgid "علت استرداد باید بین ۱۰ و ۵۰۰ نویسه باشد."
 msgstr "علت استرداد باید بین ۱۰ و ۵۰۰ نویسه باشد."
 
-#: src/Admin/Pages.php:487
+#: src/Admin/Pages.php:492
 msgid "علت تغییر "
 msgstr "علت تغییر "
 
@@ -3676,11 +4084,15 @@ msgstr "عملیات"
 msgid "عملیات انجام نشد."
 msgstr "عملیات انجام نشد."
 
-#: src/Admin/Pages.php:662
+#: src/Admin/Pages.php:667
 msgid "عملیات انجام نشد؛ جزئیات در گزارش خطا ثبت نشده و نیازمند بررسی است."
 msgstr "عملیات انجام نشد؛ جزئیات در گزارش خطا ثبت نشده و نیازمند بررسی است."
 
-#: src/Admin/Pages.php:661
+#: src/Domain/Allocation/Messages.php:11
+msgid "عملیات انجام نشد؛ دوباره تلاش کنید."
+msgstr "عملیات انجام نشد؛ دوباره تلاش کنید."
+
+#: src/Admin/Pages.php:666
 msgid "عملیات با موفقیت ثبت شد."
 msgstr "عملیات با موفقیت ثبت شد."
 
@@ -3692,21 +4104,25 @@ msgstr "عملیات تغییر وضعیت نامعتبر است."
 msgid "عملیات موجودی نیازمند بررسی است."
 msgstr "عملیات موجودی نیازمند بررسی است."
 
-#: assets/js/layout-editor.js src/Domain/Hall/LayoutPresets.php:81
+#: assets/js/layout-editor.js src/Domain/Hall/LayoutPresets.php:81 src/Support/VenuePrint.php:244
 msgid "عمومی"
 msgstr "عمومی"
 
-#: src/Admin/Pages.php:421
+#: src/Admin/Pages.php:426
 msgid "عنوان"
 msgstr "عنوان"
 
-#: src/Admin/Pages.php:245 src/Admin/Pages.php:455
+#: src/Admin/Pages.php:250 src/Admin/Pages.php:460
 msgid "عنوان "
 msgstr "عنوان "
 
-#: src/Admin/Pages.php:286
+#: src/Admin/Pages.php:291
 msgid "عنوان رویداد "
 msgstr "عنوان رویداد "
+
+#: src/Domain/Venue/PresetCatalog.php:44
+msgid "غرفه‌های پیرامونی"
+msgstr "غرفه‌های پیرامونی"
 
 #: src/Admin/Pages.php:188
 msgid "فایل JSON "
@@ -3716,7 +4132,7 @@ msgstr "فایل JSON "
 msgid "فایل خروجی JSON شامل صندلی‌ها و اشیای غیرصندلی است. واردکردن آن نسخه پیش‌نویس تازه‌ای ایجاد می‌کند؛ جلسات قبلی تغییر نمی‌کنند."
 msgstr "فایل خروجی JSON شامل صندلی‌ها و اشیای غیرصندلی است. واردکردن آن نسخه پیش‌نویس تازه‌ای ایجاد می‌کند؛ جلسات قبلی تغییر نمی‌کنند."
 
-#: src/Admin/Pages.php:1182
+#: src/Admin/Pages.php:1187
 msgid "فایل نقشه از حد مجاز بزرگ‌تر است."
 msgstr "فایل نقشه از حد مجاز بزرگ‌تر است."
 
@@ -3724,19 +4140,19 @@ msgstr "فایل نقشه از حد مجاز بزرگ‌تر است."
 msgid "فایل پشتیبان دریافت شد. می‌توانید آن را در فرم «واردکردن نسخه پیش‌نویس» نیز بارگذاری کنید."
 msgstr "فایل پشتیبان دریافت شد. می‌توانید آن را در فرم «واردکردن نسخه پیش‌نویس» نیز بارگذاری کنید."
 
-#: src/Domain/Hall/LayoutDocument.php:28
+#: src/Domain/Hall/LayoutDocument.php:30
 msgid "فایل چیدمان JSON معتبر نیست."
 msgstr "فایل چیدمان JSON معتبر نیست."
 
-#: src/Admin/Pages.php:549 src/Frontend/Shortcodes.php:300
+#: src/Admin/Pages.php:554 src/Frontend/Shortcodes.php:308
 msgid "فروخته"
 msgstr "فروخته"
 
-#: src/Frontend/Shortcodes.php:153
+#: src/Frontend/Shortcodes.php:156
 msgid "فروخته یا مسدود"
 msgstr "فروخته یا مسدود"
 
-#: assets/js/i18n.js assets/js/map.js assets/js/seat-status-admin.js src/Domain/Reporting/AttendanceReport.php:95 src/Domain/Reporting/XlsxExporter.php:19 src/Frontend/Shortcodes.php:256 src/Support/I18n.php:39
+#: assets/js/i18n.js assets/js/map.js assets/js/seat-status-admin.js src/Domain/Reporting/AttendanceReport.php:106 src/Domain/Reporting/XlsxExporter.php:19 src/Frontend/Shortcodes.php:264 src/Support/I18n.php:39
 msgid "فروخته‌شده"
 msgstr "فروخته‌شده"
 
@@ -3756,7 +4172,7 @@ msgstr "فروش پولی با مالیات فعال هنوز پشتیبانی �
 msgid "فروش پولی ظرفیت آزاد هنوز فعال نشده است."
 msgstr "فروش پولی ظرفیت آزاد هنوز فعال نشده است."
 
-#: src/Admin/Pages.php:646
+#: src/Admin/Pages.php:651
 msgid "فضای مدیریت"
 msgstr "فضای مدیریت"
 
@@ -3764,7 +4180,7 @@ msgstr "فضای مدیریت"
 msgid "فعال"
 msgstr "فعال"
 
-#: src/Admin/Pages.php:655
+#: src/Admin/Pages.php:660
 msgid "فقط اطلاعات و ابزارهای مراکز مجاز شما نمایش داده می‌شوند."
 msgstr "فقط اطلاعات و ابزارهای مراکز مجاز شما نمایش داده می‌شوند."
 
@@ -3772,31 +4188,31 @@ msgstr "فقط اطلاعات و ابزارهای مراکز مجاز شما ن�
 msgid "فقط بلیت رایگانِ ثبت‌شده قابل لغو از این مسیر است."
 msgstr "فقط بلیت رایگانِ ثبت‌شده قابل لغو از این مسیر است."
 
-#: src/Admin/Pages.php:362
+#: src/Admin/Pages.php:367
 msgid "فقط بلیت صفرریالیِ فعال، پیش از شروع جلسه لغو و صندلی آن آزاد می‌شود. "
 msgstr "فقط بلیت صفرریالیِ فعال، پیش از شروع جلسه لغو و صندلی آن آزاد می‌شود. "
 
-#: src/Admin/Pages.php:271
+#: src/Admin/Pages.php:276
 msgid "فقط بلیت فعال و استفاده‌نشده تا قبل از شروع جلسه قابل ویرایش است. تغییرات در تاریخچه ثبت می‌شوند و شماره بلیت، QR، مبلغ سفارش و سایر بلیت‌ها تغییر نمی‌کنند."
 msgstr "فقط بلیت فعال و استفاده‌نشده تا قبل از شروع جلسه قابل ویرایش است. تغییرات در تاریخچه ثبت می‌شوند و شماره بلیت، QR، مبلغ سفارش و سایر بلیت‌ها تغییر نمی‌کنند."
 
-#: src/Domain/Hall/SeatAdministration.php:50
+#: src/Domain/Hall/SeatAdministration.php:58
 msgid "فقط صندلی مسدودشده را می‌توان آزاد کرد."
 msgstr "فقط صندلی مسدودشده را می‌توان آزاد کرد."
 
-#: src/Admin/Pages.php:320
+#: src/Admin/Pages.php:325
 msgid "فقط صندلی‌های آزاد یا رزرو موقت منقضی را می‌توان مسدود کرد. عملیات روی صندلی فروخته‌شده یا رزرو موقت فعال مجاز نیست."
 msgstr "فقط صندلی‌های آزاد یا رزرو موقت منقضی را می‌توان مسدود کرد. عملیات روی صندلی فروخته‌شده یا رزرو موقت فعال مجاز نیست."
 
-#: src/Admin/Pages.php:349
+#: src/Admin/Pages.php:354
 msgid "فقط گروه‌بندی ۲ تا ۸ بلیت صندلی‌دارِ فعال از جلسات متفاوت همان رویداد برای یک شرکت‌کننده؛ "
 msgstr "فقط گروه‌بندی ۲ تا ۸ بلیت صندلی‌دارِ فعال از جلسات متفاوت همان رویداد برای یک شرکت‌کننده؛ "
 
-#: src/Domain/Hall/LayoutDocument.php:83
+#: src/Domain/Hall/LayoutDocument.php:86
 msgid "فهرست اشیای نقشه باید آرایه باشد."
 msgstr "فهرست اشیای نقشه باید آرایه باشد."
 
-#: src/Domain/Hall/LayoutDocument.php:88
+#: src/Domain/Hall/LayoutDocument.php:91
 msgid "فهرست اشیای نقشه نامعتبر است."
 msgstr "فهرست اشیای نقشه نامعتبر است."
 
@@ -3804,15 +4220,19 @@ msgstr "فهرست اشیای نقشه نامعتبر است."
 msgid "فهرست رویدادها"
 msgstr "فهرست رویدادها"
 
-#: src/Domain/Event/EventChangeService.php:178
+#: src/Domain/Event/EventChangeService.php:185
 msgid "فهرست سفارش‌ها قابل خواندن نیست."
 msgstr "فهرست سفارش‌ها قابل خواندن نیست."
 
-#: src/Frontend/Shortcodes.php:291
+#: src/Domain/Allocation/Messages.php:75
+msgid "فیلتر جایگاه‌ها معتبر نیست."
+msgstr "فیلتر جایگاه‌ها معتبر نیست."
+
+#: src/Frontend/Shortcodes.php:299
 msgid "فیلتر جلسه: "
 msgstr "فیلتر جلسه: "
 
-#: src/Domain/Hall/LayoutDocument.php:50
+#: src/Domain/Hall/LayoutDocument.php:52
 msgid "فیلدهای صندلی ناقص یا اضافی است."
 msgstr "فیلدهای صندلی ناقص یا اضافی است."
 
@@ -3820,7 +4240,7 @@ msgstr "فیلدهای صندلی ناقص یا اضافی است."
 msgid "قالب تاریخ میلادی UTC نامعتبر است."
 msgstr "قالب تاریخ میلادی UTC نامعتبر است."
 
-#: src/Domain/Hall/LayoutDocument.php:32
+#: src/Domain/Hall/LayoutDocument.php:34
 msgid "قالب فایل چیدمان پشتیبانی نمی‌شود."
 msgstr "قالب فایل چیدمان پشتیبانی نمی‌شود."
 
@@ -3828,7 +4248,7 @@ msgstr "قالب فایل چیدمان پشتیبانی نمی‌شود."
 msgid "قالب نقشه معتبر نیست."
 msgstr "قالب نقشه معتبر نیست."
 
-#: src/Admin/Pages.php:495
+#: src/Admin/Pages.php:500
 msgid "قوانین انتخاب صندلی (فقط قبل از اولین نگهداری موقت)"
 msgstr "قوانین انتخاب صندلی (فقط قبل از اولین نگهداری موقت)"
 
@@ -3847,11 +4267,11 @@ msgstr "قیمت بلیت نامعتبر است."
 msgid "قیمت رویداد معتبر نیست."
 msgstr "قیمت رویداد معتبر نیست."
 
-#: src/Admin/Pages.php:470
+#: src/Admin/Pages.php:475
 msgid "قیمت صندلی (واحد جزء)"
 msgstr "قیمت صندلی (واحد جزء)"
 
-#: src/Admin/Pages.php:308
+#: src/Admin/Pages.php:313
 msgid "قیمت هر صندلی در کوچک‌ترین واحد پول ووکامرس "
 msgstr "قیمت هر صندلی در کوچک‌ترین واحد پول ووکامرس "
 
@@ -3863,11 +4283,11 @@ msgstr "قیمت هر صندلی: "
 msgid "قیمت یا مهلت رزرو معتبر نیست."
 msgstr "قیمت یا مهلت رزرو معتبر نیست."
 
-#: src/Frontend/Shortcodes.php:71 src/Frontend/Shortcodes.php:74
+#: src/Frontend/Shortcodes.php:73 src/Frontend/Shortcodes.php:76
 msgid "لطفاً از فهرست رویدادها یک رویداد را انتخاب کنید."
 msgstr "لطفاً از فهرست رویدادها یک رویداد را انتخاب کنید."
 
-#: src/Admin/Pages.php:824
+#: src/Admin/Pages.php:829
 msgid "لغو"
 msgstr "لغو"
 
@@ -3875,19 +4295,19 @@ msgstr "لغو"
 msgid "لغو بلیت به بررسی نیاز دارد."
 msgstr "لغو بلیت به بررسی نیاز دارد."
 
-#: src/Admin/Pages.php:367
+#: src/Admin/Pages.php:372
 msgid "لغو بلیت رایگان"
 msgstr "لغو بلیت رایگان"
 
-#: src/Admin/Pages.php:361
+#: src/Admin/Pages.php:366
 msgid "لغو بلیت رایگان استفاده‌نشده"
 msgstr "لغو بلیت رایگان استفاده‌نشده"
 
-#: src/Domain/Event/EventChangeService.php:132
+#: src/Domain/Event/EventChangeService.php:136
 msgid "لغو جلسه ممکن نشد."
 msgstr "لغو جلسه ممکن نشد."
 
-#: src/Domain/Event/EventChangeService.php:123
+#: src/Domain/Event/EventChangeService.php:127
 msgid "لغو رویداد ممکن نشد."
 msgstr "لغو رویداد ممکن نشد."
 
@@ -3895,7 +4315,7 @@ msgstr "لغو رویداد ممکن نشد."
 msgid "لغو و آزادسازی صندلی ثبت نشد."
 msgstr "لغو و آزادسازی صندلی ثبت نشد."
 
-#: src/Domain/Event/EventChangeService.php:128
+#: src/Domain/Event/EventChangeService.php:132
 msgid "لغو یکی از جلسات ممکن نشد."
 msgstr "لغو یکی از جلسات ممکن نشد."
 
@@ -3914,7 +4334,7 @@ msgstr "مالک فعلی با کلید دسترسی بلیت درخواست م�
 msgid "مالکیت صندلی فعلی معتبر نیست."
 msgstr "مالکیت صندلی فعلی معتبر نیست."
 
-#: src/Domain/Booking/HoldService.php:185
+#: src/Domain/Booking/HoldService.php:191
 msgid "مالکیت یک صندلی رزرو قبلی تغییر کرده است."
 msgstr "مالکیت یک صندلی رزرو قبلی تغییر کرده است."
 
@@ -3926,6 +4346,10 @@ msgstr "مالیات"
 msgid "ماژول PHP Phar برای تولید XLSX لازم است."
 msgstr "ماژول PHP Phar برای تولید XLSX لازم است."
 
+#: src/Domain/Allocation/Messages.php:68
+msgid "مبلغ استرداد با کل قیمت گروه یکسان نیست."
+msgstr "مبلغ استرداد با کل قیمت گروه یکسان نیست."
+
 #: assets/js/tickets.js
 msgid "مبلغ استرداد ثبت‌شده"
 msgstr "مبلغ استرداد ثبت‌شده"
@@ -3934,11 +4358,11 @@ msgstr "مبلغ استرداد ثبت‌شده"
 msgid "مبلغ بلیت برای استرداد قابل تعیین نیست."
 msgstr "مبلغ بلیت برای استرداد قابل تعیین نیست."
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:264 src/Domain/Ticket/TicketService.php:98
+#: src/Domain/Checkout/FinancialSnapshot.php:64
 msgid "مبلغ تأییدشده با سفارش ثبت‌شده تطابق ندارد."
 msgstr "مبلغ تأییدشده با سفارش ثبت‌شده تطابق ندارد."
 
-#: src/Admin/Pages.php:399
+#: src/Admin/Pages.php:404
 msgid "مبلغ جزء / ارز"
 msgstr "مبلغ جزء / ارز"
 
@@ -3961,6 +4385,10 @@ msgstr "مبلغ پایه: "
 #: assets/js/tickets.js
 msgid "مبلغ کل"
 msgstr "مبلغ کل"
+
+#: src/Domain/Allocation/Messages.php:50
+msgid "مبلغ یا ارز سفارش با قیمت ثبت‌شده یکسان نیست."
+msgstr "مبلغ یا ارز سفارش با قیمت ثبت‌شده یکسان نیست."
 
 #: src/Support/I18n.php:34
 msgid "متوقف"
@@ -3986,11 +4414,11 @@ msgstr "مجوز تغییر رویداد یا جلسه را ندارید."
 msgid "مجوز تغییر صندلی بلیت را ندارید."
 msgstr "مجوز تغییر صندلی بلیت را ندارید."
 
-#: src/Admin/Pages.php:1178
+#: src/Admin/Pages.php:1183
 msgid "مجوز ذخیره وجود ندارد."
 msgstr "مجوز ذخیره وجود ندارد."
 
-#: src/Domain/Hall/LayoutVersionService.php:63
+#: src/Domain/Hall/LayoutVersionService.php:64
 msgid "مجوز سالن معتبر نیست."
 msgstr "مجوز سالن معتبر نیست."
 
@@ -4006,7 +4434,7 @@ msgstr "مجوز مدیریت بسته بلیت وجود ندارد."
 msgid "مجوز مدیریت چیدمان وجود ندارد."
 msgstr "مجوز مدیریت چیدمان وجود ندارد."
 
-#: src/Domain/Event/EventChangeService.php:200
+#: src/Domain/Event/EventChangeService.php:207
 msgid "مجوز مرکز معتبر نیست."
 msgstr "مجوز مرکز معتبر نیست."
 
@@ -4018,7 +4446,7 @@ msgstr "مجوز مشاهده یا انتقال بلیت معتبر نیست."
 msgid "مجوز ویرایش بلیت وجود ندارد."
 msgstr "مجوز ویرایش بلیت وجود ندارد."
 
-#: src/Admin/Pages.php:662
+#: src/Admin/Pages.php:667
 msgid "مجوز کافی برای این مرکز وجود ندارد."
 msgstr "مجوز کافی برای این مرکز وجود ندارد."
 
@@ -4042,7 +4470,7 @@ msgstr "محتوای QR معتبر نیست."
 msgid "محتوای اصلی در نمای سایت به‌صورت پویا و با مجوزهای سرور نمایش داده می‌شود."
 msgstr "محتوای اصلی در نمای سایت به‌صورت پویا و با مجوزهای سرور نمایش داده می‌شود."
 
-#: src/Domain/Hall/DraftSaveService.php:53
+#: src/Domain/Hall/DraftSaveService.php:52 src/Domain/Hall/DraftSaveService.php:64
 msgid "محتوای درخواست تکراری با نسخه ذخیره‌شده تفاوت دارد؛ نقشه را بازخوانی کنید."
 msgstr "محتوای درخواست تکراری با نسخه ذخیره‌شده تفاوت دارد؛ نقشه را بازخوانی کنید."
 
@@ -4050,17 +4478,25 @@ msgstr "محتوای درخواست تکراری با نسخه ذخیره‌شد
 msgid "محدوده مجوز رویداد تغییر کرده است."
 msgstr "محدوده مجوز رویداد تغییر کرده است."
 
-#: src/Frontend/Shortcodes.php:80
+#: src/Support/VenuePrint.php:245
+msgid "محدوده میز / باکس"
+msgstr "محدوده میز / باکس"
+
+#: src/Frontend/Shortcodes.php:82
 msgid "محل برگزاری"
 msgstr "محل برگزاری"
 
-#: src/Admin/Pages.php:260
+#: src/Admin/Pages.php:265
 msgid "مختصات X"
 msgstr "مختصات X"
 
-#: src/Admin/Pages.php:260
+#: src/Admin/Pages.php:265
 msgid "مختصات Y"
 msgstr "مختصات Y"
+
+#: src/Domain/Allocation/Messages.php:67
+msgid "مدرک استرداد سفارش معتبر نیست."
+msgstr "مدرک استرداد سفارش معتبر نیست."
 
 #: src/Security/Capabilities.php:55
 msgid "مدیر رویداد"
@@ -4078,13 +4514,17 @@ msgstr "مدیر مرکز"
 msgid "مدیر کل رویدادها"
 msgstr "مدیر کل رویدادها"
 
-#: src/Admin/Pages.php:65 src/Admin/Pages.php:657
+#: src/Admin/Pages.php:65 src/Admin/Pages.php:662
 msgid "مدیریت رویداد و صندلی"
 msgstr "مدیریت رویداد و صندلی"
 
-#: src/Admin/Pages.php:705
+#: src/Admin/Pages.php:710
 msgid "مدیریت رویدادها"
 msgstr "مدیریت رویدادها"
+
+#: src/Domain/Venue/PresetCatalog.php:38
+msgid "مربع توخالی"
+msgstr "مربع توخالی"
 
 #: assets/js/map.js
 msgid "مرحله سفارش ثبت شد. برای سفارش پولی، پرداخت باید تأیید شود."
@@ -4094,11 +4534,11 @@ msgstr "مرحله سفارش ثبت شد. برای سفارش پولی، پرد
 msgid "مرورگر فاقد تولید شناسه امن است."
 msgstr "مرورگر فاقد تولید شناسه امن است."
 
-#: src/Admin/Pages.php:421 src/Admin/Pages.php:463
+#: src/Admin/Pages.php:426 src/Admin/Pages.php:468
 msgid "مرکز"
 msgstr "مرکز"
 
-#: src/Admin/Pages.php:153 src/Admin/Pages.php:285 src/Admin/Pages.php:414
+#: src/Admin/Pages.php:153 src/Admin/Pages.php:290 src/Admin/Pages.php:419
 msgid "مرکز "
 msgstr "مرکز "
 
@@ -4106,11 +4546,11 @@ msgstr "مرکز "
 msgid "مرکز انتخاب‌شده وجود ندارد."
 msgstr "مرکز انتخاب‌شده وجود ندارد."
 
-#: src/Domain/Hall/HallService.php:128
+#: src/Domain/Hall/HallService.php:132
 msgid "مرکز رویداد و سالن یکسان نیست یا نقشه‌ای وجود ندارد."
 msgstr "مرکز رویداد و سالن یکسان نیست یا نقشه‌ای وجود ندارد."
 
-#: src/Admin/Pages.php:696
+#: src/Admin/Pages.php:701
 msgid "مرکز و دسترسی‌ها"
 msgstr "مرکز و دسترسی‌ها"
 
@@ -4122,11 +4562,11 @@ msgstr "مرکز وجود ندارد."
 msgid "مرکز یا نام سالن معتبر نیست."
 msgstr "مرکز یا نام سالن معتبر نیست."
 
-#: src/Admin/Pages.php:635
+#: src/Admin/Pages.php:640
 msgid "مرکزها، دسترسی مدیران و تنظیمات اعلان را سامان دهید."
 msgstr "مرکزها، دسترسی مدیران و تنظیمات اعلان را سامان دهید."
 
-#: src/Admin/Pages.php:671
+#: src/Admin/Pages.php:676
 msgid "مرکزهای در دسترس"
 msgstr "مرکزهای در دسترس"
 
@@ -4134,7 +4574,7 @@ msgstr "مرکزهای در دسترس"
 msgid "مستردشده"
 msgstr "مستردشده"
 
-#: assets/js/i18n.js assets/js/map.js assets/js/seat-status-admin.js src/Admin/Pages.php:549 src/Domain/Reporting/AttendanceReport.php:95 src/Domain/Reporting/XlsxExporter.php:19 src/Support/I18n.php:40
+#: assets/js/i18n.js assets/js/map.js assets/js/seat-status-admin.js src/Admin/Pages.php:554 src/Domain/Reporting/AttendanceReport.php:106 src/Domain/Reporting/XlsxExporter.php:19 src/Support/I18n.php:40
 msgid "مسدود"
 msgstr "مسدود"
 
@@ -4142,23 +4582,23 @@ msgstr "مسدود"
 msgid "مسدودسازی ورود بلیت ناموفق بود."
 msgstr "مسدودسازی ورود بلیت ناموفق بود."
 
-#: src/Admin/Pages.php:328
+#: src/Admin/Pages.php:333
 msgid "مسدودکردن"
 msgstr "مسدودکردن"
 
-#: src/Admin/Pages.php:319
+#: src/Admin/Pages.php:324
 msgid "مسدودکردن یا آزادسازی صندلی جلسه"
 msgstr "مسدودکردن یا آزادسازی صندلی جلسه"
 
-#: src/Admin/Pages.php:695
+#: src/Admin/Pages.php:700
 msgid "مسیر آماده‌سازی رویداد"
 msgstr "مسیر آماده‌سازی رویداد"
 
-#: src/Frontend/Shortcodes.php:230
+#: src/Frontend/Shortcodes.php:238
 msgid "مشاهده بلیت با کلید مالک جدید"
 msgstr "مشاهده بلیت با کلید مالک جدید"
 
-#: src/Frontend/Shortcodes.php:58
+#: src/Frontend/Shortcodes.php:60
 msgid "مشاهده رویداد"
 msgstr "مشاهده رویداد"
 
@@ -4166,7 +4606,7 @@ msgstr "مشاهده رویداد"
 msgid "مشخصات بلیت هم‌زمان تغییر کرده است."
 msgstr "مشخصات بلیت هم‌زمان تغییر کرده است."
 
-#: src/Admin/Pages.php:631
+#: src/Admin/Pages.php:636
 msgid "مشخصات بلیت، جابه‌جایی صندلی و پرونده‌های مالی را با دسترسی مجاز بررسی کنید."
 msgstr "مشخصات بلیت، جابه‌جایی صندلی و پرونده‌های مالی را با دسترسی مجاز بررسی کنید."
 
@@ -4174,7 +4614,7 @@ msgstr "مشخصات بلیت، جابه‌جایی صندلی و پرونده�
 msgid "مشخصات بلیت‌های بسته معتبر نیست."
 msgstr "مشخصات بلیت‌های بسته معتبر نیست."
 
-#: src/Frontend/Shortcodes.php:124 src/Frontend/Shortcodes.php:146 src/Frontend/Shortcodes.php:168 src/Integrations/CartSeatManager.php:412
+#: src/Frontend/Shortcodes.php:126 src/Frontend/Shortcodes.php:149 src/Frontend/Shortcodes.php:171 src/Integrations/CartSeatManager.php:412
 msgid "مشخصات خریدار"
 msgstr "مشخصات خریدار"
 
@@ -4186,7 +4626,11 @@ msgstr "مشخصات شیء نامعتبر است."
 msgid "مشخصات صندلی مطابق قواعد ذخیره‌سازی معتبر نیست."
 msgstr "مشخصات صندلی مطابق قواعد ذخیره‌سازی معتبر نیست."
 
-#: src/Admin/Pages.php:844
+#: src/Domain/Allocation/Messages.php:47
+msgid "مشخصات یکی از مهمانان معتبر نیست."
+msgstr "مشخصات یکی از مهمانان معتبر نیست."
+
+#: src/Admin/Pages.php:849
 msgid "معرفی رویداد"
 msgstr "معرفی رویداد"
 
@@ -4194,7 +4638,7 @@ msgstr "معرفی رویداد"
 msgid "مقادیر قانون تخفیف معتبر نیست."
 msgstr "مقادیر قانون تخفیف معتبر نیست."
 
-#: src/Frontend/Shortcodes.php:256
+#: src/Frontend/Shortcodes.php:264
 msgid "مقایسه رویدادها و درصد تکمیل ظرفیت"
 msgstr "مقایسه رویدادها و درصد تکمیل ظرفیت"
 
@@ -4206,7 +4650,7 @@ msgstr "منتشرشده"
 msgid "مهلت انتقال بلیت پایان یافته است."
 msgstr "مهلت انتقال بلیت پایان یافته است."
 
-#: src/Domain/Booking/HoldService.php:55
+#: src/Domain/Booking/HoldService.php:58
 msgid "مهلت این درخواست پایان یافته است؛ انتخاب تازه انجام دهید."
 msgstr "مهلت این درخواست پایان یافته است؛ انتخاب تازه انجام دهید."
 
@@ -4222,7 +4666,7 @@ msgstr "مهلت تمدید رزرو پایان یافته است."
 msgid "مهلت ثبت بلیت پایان یافته یا نیازمند بررسی است."
 msgstr "مهلت ثبت بلیت پایان یافته یا نیازمند بررسی است."
 
-#: src/Domain/Checkout/CheckoutService.php:180
+#: src/Domain/Checkout/CheckoutService.php:189
 msgid "مهلت ثبت سفارش پایان یافته است."
 msgstr "مهلت ثبت سفارش پایان یافته است."
 
@@ -4234,9 +4678,13 @@ msgstr "مهلت جابه‌جایی صندلی پایان یافته است."
 msgid "مهلت رزرو موقت به پایان رسید. برای بررسی موجودی، تازه‌سازی کنید."
 msgstr "مهلت رزرو موقت به پایان رسید. برای بررسی موجودی، تازه‌سازی کنید."
 
-#: src/Domain/Booking/HoldService.php:140 src/Domain/GeneralAdmission/AdmissionPolicy.php:43
+#: src/Domain/Booking/HoldService.php:146 src/Domain/GeneralAdmission/AdmissionPolicy.php:43
 msgid "مهلت رزرو موقت پایان یافته است."
 msgstr "مهلت رزرو موقت پایان یافته است."
+
+#: src/Domain/Allocation/Messages.php:28
+msgid "مهلت رزرو پایان یافته است؛ دوباره انتخاب کنید."
+msgstr "مهلت رزرو پایان یافته است؛ دوباره انتخاب کنید."
 
 #: assets/js/map.js
 msgid "مهلت نگهداری به پایان رسید؛ وضعیت صندلی‌ها را دوباره بررسی کنید."
@@ -4264,19 +4712,19 @@ msgstr "موبایل "
 msgid "موبایل ایران (الزامی؛ بدون ثبت‌نام در سایت) "
 msgstr "موبایل ایران (الزامی؛ بدون ثبت‌نام در سایت) "
 
-#: src/Frontend/Shortcodes.php:356
+#: src/Frontend/Shortcodes.php:372
 msgid "موبایل ایران؛ برای کنترل محدودیت خرید"
 msgstr "موبایل ایران؛ برای کنترل محدودیت خرید"
 
-#: src/Admin/Pages.php:735
+#: src/Admin/Pages.php:740
 msgid "موجود"
 msgstr "موجود"
 
-#: src/Domain/Hall/HallService.php:157
+#: src/Domain/Hall/HallService.php:164
 msgid "موجودی جلسه با نقشه مطابقت ندارد."
 msgstr "موجودی جلسه با نقشه مطابقت ندارد."
 
-#: src/Domain/Hall/SeatAdministration.php:44
+#: src/Domain/Hall/SeatAdministration.php:52
 msgid "موجودی صندلی یا زمان پایگاه داده نامعتبر است."
 msgstr "موجودی صندلی یا زمان پایگاه داده نامعتبر است."
 
@@ -4284,7 +4732,7 @@ msgstr "موجودی صندلی یا زمان پایگاه داده نامعتب
 msgid "موجودی صندلی‌ها با نگهداری فعلی سازگار نیست."
 msgstr "موجودی صندلی‌ها با نگهداری فعلی سازگار نیست."
 
-#: src/Http/RestController.php:755
+#: src/Http/RestController.php:759
 msgid "موجودی صندلی‌ها دریافت نشد."
 msgstr "موجودی صندلی‌ها دریافت نشد."
 
@@ -4292,38 +4740,58 @@ msgstr "موجودی صندلی‌ها دریافت نشد."
 msgid "موجودی و وضعیت بلیت برای استرداد مغایرت دارند."
 msgstr "موجودی و وضعیت بلیت برای استرداد مغایرت دارند."
 
-#: src/Domain/Booking/HoldService.php:309
+#: src/Domain/Booking/HoldService.php:315
 msgid "موجودی کامل جلسه برای بررسی قوانین در دسترس نیست."
 msgstr "موجودی کامل جلسه برای بررسی قوانین در دسترس نیست."
 
-#: src/Admin/Pages.php:240
+#: src/Domain/Allocation/Messages.php:16
+msgid "میز"
+msgstr "میز"
+
+#: src/Domain/Venue/PresetCatalog.php:43
+msgid "میز اشتراکی"
+msgstr "میز اشتراکی"
+
+#: src/Domain/Venue/PresetCatalog.php:45
+msgid "میز دونفره کافه"
+msgstr "میز دونفره کافه"
+
+#: src/Admin/Pages.php:245
 msgid "میز مستطیلی"
 msgstr "میز مستطیلی"
 
-#: src/Admin/Pages.php:240
+#: src/Admin/Pages.php:245
 msgid "میز گرد"
 msgstr "میز گرد"
+
+#: src/Domain/Venue/PresetCatalog.php:46
+msgid "میزهای ترکیبی"
+msgstr "میزهای ترکیبی"
+
+#: src/Domain/Venue/PresetCatalog.php:40
+msgid "میزهای کاباره"
+msgstr "میزهای کاباره"
 
 #: src/Domain/Hall/LayoutPresets.php:14
 msgid "میزگرد"
 msgstr "میزگرد"
 
-#: src/Admin/Pages.php:588
+#: src/Admin/Pages.php:593
 msgid "ناتمام‌ماندن ایجاد سفارش"
 msgstr "ناتمام‌ماندن ایجاد سفارش"
 
-#: src/Admin/Pages.php:242
+#: src/Admin/Pages.php:247
 msgid "ناحیه دسترس‌پذیر"
 msgstr "ناحیه دسترس‌پذیر"
 
-#: assets/js/attendees.js src/Admin/Pages.php:463 src/Frontend/Shortcodes.php:354 src/Integrations/CartSeatManager.php:413
+#: assets/js/attendees.js src/Admin/Pages.php:468 src/Frontend/Shortcodes.php:370 src/Integrations/CartSeatManager.php:413
 msgid "نام"
 msgstr "نام"
 
 msgid "نام "
 msgstr "نام "
 
-#: assets/js/attendees.js src/Frontend/Shortcodes.php:355 src/Integrations/CartSeatManager.php:414
+#: assets/js/attendees.js src/Frontend/Shortcodes.php:371 src/Integrations/CartSeatManager.php:414
 msgid "نام خانوادگی"
 msgstr "نام خانوادگی"
 
@@ -4333,7 +4801,7 @@ msgstr "نام خانوادگی "
 msgid "نام خانوادگی شرکت‌کننده"
 msgstr "نام خانوادگی شرکت‌کننده"
 
-#: src/Admin/Pages.php:253
+#: src/Admin/Pages.php:258
 msgid "نام ردیف جدید "
 msgstr "نام ردیف جدید "
 
@@ -4357,7 +4825,7 @@ msgstr "نام شرکت‌کننده نامعتبر است."
 msgid "نام شرکت‌کنندگان برای همین رزرو تغییر کرده است."
 msgstr "نام شرکت‌کنندگان برای همین رزرو تغییر کرده است."
 
-#: src/Frontend/Shortcodes.php:361
+#: src/Frontend/Shortcodes.php:377
 msgid "نام شرکت‌کنندگان را جداگانه وارد می‌کنم"
 msgstr "نام شرکت‌کنندگان را جداگانه وارد می‌کنم"
 
@@ -4373,18 +4841,18 @@ msgstr "نام مرکز لازم است."
 msgid "نام و نام خانوادگی هر شرکت‌کننده را وارد کنید."
 msgstr "نام و نام خانوادگی هر شرکت‌کننده را وارد کنید."
 
-#: src/Admin/Pages.php:275
+#: src/Admin/Pages.php:280
 msgid "نام کامل جدید "
 msgstr "نام کامل جدید "
 
-#: src/Frontend/Shortcodes.php:323 src/Frontend/Shortcodes.php:331
+#: src/Frontend/Shortcodes.php:339 src/Frontend/Shortcodes.php:347
 msgid "نام گیت"
 msgstr "نام گیت"
 
 msgid "نام گیت "
 msgstr "نام گیت "
 
-#: src/Frontend/Shortcodes.php:224
+#: src/Frontend/Shortcodes.php:232
 msgid "نام گیرنده"
 msgstr "نام گیرنده"
 
@@ -4411,7 +4879,7 @@ msgstr "نسخه"
 msgid "نسخه QR قابل افزایش نیست."
 msgstr "نسخه QR قابل افزایش نیست."
 
-#: src/Domain/Hall/DraftSaveService.php:63
+#: src/Domain/Hall/DraftSaveService.php:74
 msgid "نسخه انتخاب‌شده برای ویرایش معتبر نیست."
 msgstr "نسخه انتخاب‌شده برای ویرایش معتبر نیست."
 
@@ -4419,11 +4887,11 @@ msgstr "نسخه انتخاب‌شده برای ویرایش معتبر نیست
 msgid "نسخه قبلی ذخیره شد؛ تغییرات جدید در صف ذخیره قرار گرفت."
 msgstr "نسخه قبلی ذخیره شد؛ تغییرات جدید در صف ذخیره قرار گرفت."
 
-#: src/Domain/Hall/DraftSaveService.php:67
+#: src/Domain/Hall/DraftSaveService.php:81
 msgid "نسخه مبنای نقشه تغییر کرده است؛ دوباره بارگذاری کنید."
 msgstr "نسخه مبنای نقشه تغییر کرده است؛ دوباره بارگذاری کنید."
 
-#: src/Admin/Pages.php:463
+#: src/Admin/Pages.php:468
 msgid "نسخه نقشه"
 msgstr "نسخه نقشه"
 
@@ -4431,9 +4899,9 @@ msgstr "نسخه نقشه"
 msgid "نسخه چیدمان در این سالن وجود ندارد."
 msgstr "نسخه چیدمان در این سالن وجود ندارد."
 
-#: src/Admin/Pages.php:721
-msgid "نسخهٔ 1.0.0؛ پیش از فعال‌سازی فروش واقعی، گزارش پذیرش انتشار را بررسی کنید."
-msgstr "نسخهٔ 1.0.0؛ پیش از فعال‌سازی فروش واقعی، گزارش پذیرش انتشار را بررسی کنید."
+#: src/Admin/Pages.php:726
+msgid "نسخهٔ 2.0.0؛ پیش از فعال‌سازی فروش واقعی، گزارش پذیرش انتشار را بررسی کنید."
+msgstr "نسخهٔ 2.0.0؛ پیش از فعال‌سازی فروش واقعی، گزارش پذیرش انتشار را بررسی کنید."
 
 #: src/Admin/Pages.php:179
 msgid "نسخه‌بندی امن چیدمان سالن (JSON)"
@@ -4443,17 +4911,29 @@ msgstr "نسخه‌بندی امن چیدمان سالن (JSON)"
 msgid "نشانی ایمیل معتبر نیست."
 msgstr "نشانی ایمیل معتبر نیست."
 
+#: src/Domain/Allocation/Messages.php:46
+msgid "نشانی ایمیل معتبر وارد کنید."
+msgstr "نشانی ایمیل معتبر وارد کنید."
+
 #: assets/js/map.js
 msgid "نشانی سبد خرید معتبر نیست."
 msgstr "نشانی سبد خرید معتبر نیست."
 
-#: src/Admin/Pages.php:843
+#: src/Admin/Pages.php:848
 msgid "نشانی محل"
 msgstr "نشانی محل"
 
 #: assets/js/cart-seats.js assets/js/map.js
 msgid "نشانی پرداخت معتبر نیست."
 msgstr "نشانی پرداخت معتبر نیست."
+
+#: src/Domain/Venue/PresetCatalog.php:33
+msgid "نشست بادبزنی"
+msgstr "نشست بادبزنی"
+
+#: src/Domain/Venue/PresetCatalog.php:30
+msgid "نعل اسبی"
+msgstr "نعل اسبی"
 
 #: src/Integrations/Elementor/Widget.php:52
 msgid "نقشه انتخاب صندلی"
@@ -4467,11 +4947,11 @@ msgstr "نقشه باز شده: "
 msgid "نقشه تعاملی صندلی‌ها"
 msgstr "نقشه تعاملی صندلی‌ها"
 
-#: src/Domain/Hall/DraftSaveService.php:90
+#: src/Domain/Hall/DraftSaveService.php:104
 msgid "نقشه در پنجره دیگری ویرایش شده است. نسخه جدید را بارگذاری کنید."
 msgstr "نقشه در پنجره دیگری ویرایش شده است. نسخه جدید را بارگذاری کنید."
 
-#: src/Admin/Pages.php:511
+#: src/Admin/Pages.php:516
 msgid "نقشه زنده مدیریتی صندلی‌ها"
 msgstr "نقشه زنده مدیریتی صندلی‌ها"
 
@@ -4483,32 +4963,36 @@ msgstr "نقشه سالن برای تغییر جایگاه در سبد خرید"
 msgid "نقشه سالن: "
 msgstr "نقشه سالن: "
 
-#: src/Http/RestController.php:713
+#: src/Http/RestController.php:714
 msgid "نقشه صندلی‌ها دریافت نشد."
 msgstr "نقشه صندلی‌ها دریافت نشد."
 
-#: src/Frontend/Shortcodes.php:156
+#: src/Frontend/Shortcodes.php:159
 msgid "نقشه صندلی‌ها؛ پیمایش افقی و عمودی فعال است"
 msgstr "نقشه صندلی‌ها؛ پیمایش افقی و عمودی فعال است"
 
 msgid "نقشه صندلی‌های سبد خرید"
 msgstr "نقشه صندلی‌های سبد خرید"
 
-#: src/Admin/Pages.php:258
+#: src/Admin/Pages.php:263
 msgid "نقشه قابل ویرایش؛ انتخاب و جابه‌جایی صندلی‌ها"
 msgstr "نقشه قابل ویرایش؛ انتخاب و جابه‌جایی صندلی‌ها"
 
-#: src/Admin/Pages.php:524
+#: src/Admin/Pages.php:529
 msgid "نقشه وضعیت صندلی‌های جلسه"
 msgstr "نقشه وضعیت صندلی‌های جلسه"
 
-#: assets/js/cart-seats.js src/Admin/Pages.php:236 src/Frontend/Shortcodes.php:149
+#: assets/js/cart-seats.js src/Admin/Pages.php:241 src/Frontend/Shortcodes.php:152
 msgid "نمای کامل"
 msgstr "نمای کامل"
 
-#: src/Admin/Pages.php:624
+#: src/Admin/Pages.php:629 src/Support/VenuePrint.php:106
 msgid "نمای کلی"
 msgstr "نمای کلی"
+
+#: src/Support/VenuePrint.php:108
+msgid "نمای کلی طبقه سالن"
+msgstr "نمای کلی طبقه سالن"
 
 msgid "نمای کلی چیدمان سالن"
 msgstr "نمای کلی چیدمان سالن"
@@ -4517,11 +5001,11 @@ msgstr "نمای کلی چیدمان سالن"
 msgid "نمایش QR در دسترس نیست."
 msgstr "نمایش QR در دسترس نیست."
 
-#: src/Frontend/Shortcodes.php:231
+#: src/Frontend/Shortcodes.php:239
 msgid "نمایش بلیت منتقل‌شده"
 msgstr "نمایش بلیت منتقل‌شده"
 
-#: src/Frontend/Shortcodes.php:196
+#: src/Frontend/Shortcodes.php:199
 msgid "نمایش بلیت‌ها"
 msgstr "نمایش بلیت‌ها"
 
@@ -4533,7 +5017,7 @@ msgstr "نمایش نقشه و انتخاب جایگاه"
 msgid "نمایش پویا؛ اطلاعات از سمت سرور و با کنترل دسترسی دریافت می‌شود."
 msgstr "نمایش پویا؛ اطلاعات از سمت سرور و با کنترل دسترسی دریافت می‌شود."
 
-#: src/Frontend/Shortcodes.php:254
+#: src/Frontend/Shortcodes.php:262
 msgid "نمودار روند صدور بلیت"
 msgstr "نمودار روند صدور بلیت"
 
@@ -4549,7 +5033,7 @@ msgstr "نمونه دیگر: ۱۸ ردیف و ۵۰ صندلی. هر دو نمو�
 msgid "نهایی‌شده"
 msgstr "نهایی‌شده"
 
-#: src/Admin/Pages.php:439
+#: src/Admin/Pages.php:444
 msgid "نوع"
 msgstr "نوع"
 
@@ -4557,23 +5041,27 @@ msgstr "نوع"
 msgid "نوع الگو یا ابعاد نقشه معتبر نیست."
 msgstr "نوع الگو یا ابعاد نقشه معتبر نیست."
 
-#: src/Frontend/Shortcodes.php:221
+#: src/Frontend/Shortcodes.php:229
 msgid "نوع بلیت"
 msgstr "نوع بلیت"
 
-#: src/Admin/Pages.php:273
+#: src/Admin/Pages.php:278
 msgid "نوع بلیت "
 msgstr "نوع بلیت "
+
+#: src/Domain/Allocation/Messages.php:45
+msgid "نوع بلیت انتخابی معتبر نیست."
+msgstr "نوع بلیت انتخابی معتبر نیست."
 
 #: src/Domain/Ticket/OwnershipTransferPolicy.php:18
 msgid "نوع بلیت نامعتبر است."
 msgstr "نوع بلیت نامعتبر است."
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:245 src/Domain/Hall/HallService.php:118
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:259 src/Domain/Hall/HallService.php:118
 msgid "نوع جلسه نامعتبر است."
 msgstr "نوع جلسه نامعتبر است."
 
-#: src/Admin/Pages.php:304
+#: src/Admin/Pages.php:309
 msgid "نوع فروش "
 msgstr "نوع فروش "
 
@@ -4589,11 +5077,11 @@ msgstr "نوع، ابعاد یا عنوان شیء معتبر نیست."
 msgid "نگهداری ثبت شد؛ اطلاعات خریدار را کامل کنید تا سفارش ساخته شود."
 msgstr "نگهداری ثبت شد؛ اطلاعات خریدار را کامل کنید تا سفارش ساخته شود."
 
-#: src/Admin/Pages.php:549
+#: src/Admin/Pages.php:554
 msgid "نگهداری فعال"
 msgstr "نگهداری فعال"
 
-#: assets/js/i18n.js assets/js/seat-status-admin.js src/Domain/Reporting/AttendanceReport.php:95 src/Domain/Reporting/XlsxExporter.php:18 src/Support/I18n.php:38
+#: assets/js/i18n.js assets/js/seat-status-admin.js src/Domain/Reporting/AttendanceReport.php:106 src/Domain/Reporting/XlsxExporter.php:18 src/Support/I18n.php:38
 msgid "نگهداری موقت"
 msgstr "نگهداری موقت"
 
@@ -4607,7 +5095,7 @@ msgstr "نگهداری موقت ظرفیت"
 msgid "نگهداری‌شده توسط شما"
 msgstr "نگهداری‌شده توسط شما"
 
-#: src/Admin/Pages.php:584
+#: src/Admin/Pages.php:589
 msgid "نیازمند بررسی پرداخت"
 msgstr "نیازمند بررسی پرداخت"
 
@@ -4615,23 +5103,31 @@ msgstr "نیازمند بررسی پرداخت"
 msgid "همایش"
 msgstr "همایش"
 
-#: src/Frontend/Shortcodes.php:247
+#: src/Frontend/Shortcodes.php:255
 msgid "همه جلسات"
 msgstr "همه جلسات"
 
-#: src/Frontend/Shortcodes.php:292
+#: src/Frontend/Shortcodes.php:300
 msgid "همه جلسات (حداکثر ۲۰۰)"
 msgstr "همه جلسات (حداکثر ۲۰۰)"
 
-#: src/Frontend/Shortcodes.php:92
+#: src/Domain/Venue/PresetCatalog.php:23
+msgid "همکف و بالکن"
+msgstr "همکف و بالکن"
+
+#: src/Support/VenuePrint.php:137
+msgid "هندسه جزئی جایگاه‌ها"
+msgstr "هندسه جزئی جایگاه‌ها"
+
+#: src/Frontend/Shortcodes.php:94
 msgid "هنوز جلسه‌ای برای مشاهده وجود ندارد."
 msgstr "هنوز جلسه‌ای برای مشاهده وجود ندارد."
 
-#: src/Admin/Pages.php:710
+#: src/Admin/Pages.php:715
 msgid "هنوز رویدادی برای نمایش وجود ندارد."
 msgstr "هنوز رویدادی برای نمایش وجود ندارد."
 
-#: src/Admin/Pages.php:606
+#: src/Admin/Pages.php:611
 msgid "هنوز موردی ثبت نشده است."
 msgstr "هنوز موردی ثبت نشده است."
 
@@ -4639,7 +5135,7 @@ msgstr "هنوز موردی ثبت نشده است."
 msgid "هیچ"
 msgstr "هیچ"
 
-#: assets/js/map.js src/Frontend/Shortcodes.php:161
+#: assets/js/map.js src/Frontend/Shortcodes.php:164
 msgid "هیچ صندلی انتخاب نشده است."
 msgstr "هیچ صندلی انتخاب نشده است."
 
@@ -4647,15 +5143,23 @@ msgstr "هیچ صندلی انتخاب نشده است."
 msgid "واردکردن نسخه پیش‌نویس"
 msgstr "واردکردن نسخه پیش‌نویس"
 
-#: src/Frontend/Shortcodes.php:300
+#: src/Domain/Venue/PresetCatalog.php:61
+msgid "ورزشگاه بیضی"
+msgstr "ورزشگاه بیضی"
+
+#: src/Domain/Venue/PresetCatalog.php:64
+msgid "ورزشگاه نعل اسبی"
+msgstr "ورزشگاه نعل اسبی"
+
+#: src/Frontend/Shortcodes.php:308
 msgid "ورود"
 msgstr "ورود"
 
-#: src/Domain/Ticket/OwnershipTransferService.php:246 src/Domain/Ticket/TicketService.php:272
+#: src/Domain/Ticket/OwnershipTransferService.php:246 src/Domain/Ticket/TicketService.php:256
 msgid "ورود آزاد"
 msgstr "ورود آزاد"
 
-#: src/Domain/Gate/CheckinService.php:122 src/Domain/GeneralAdmission/AdmissionGateService.php:97
+#: src/Domain/Allocation/Messages.php:59 src/Domain/Gate/CheckinService.php:122 src/Domain/GeneralAdmission/AdmissionGateService.php:97
 msgid "ورود این بلیت قبلاً ثبت شده است."
 msgstr "ورود این بلیت قبلاً ثبت شده است."
 
@@ -4663,7 +5167,7 @@ msgstr "ورود این بلیت قبلاً ثبت شده است."
 msgid "ورود این بلیت متوقف شد. استرداد سطر سفارش را در ووکامرس ثبت کنید و سپس تطبیق را انجام دهید."
 msgstr "ورود این بلیت متوقف شد. استرداد سطر سفارش را در ووکامرس ثبت کنید و سپس تطبیق را انجام دهید."
 
-#: assets/js/i18n.js src/Domain/Reporting/AttendanceReport.php:95 src/Domain/Reporting/XlsxExporter.php:20 src/Support/I18n.php:35
+#: assets/js/i18n.js src/Domain/Reporting/AttendanceReport.php:106 src/Domain/Reporting/XlsxExporter.php:20 src/Support/I18n.php:35
 msgid "ورود ثبت‌شده"
 msgstr "ورود ثبت‌شده"
 
@@ -4671,7 +5175,7 @@ msgstr "ورود ثبت‌شده"
 msgid "ورود دستی ثبت شد: "
 msgstr "ورود دستی ثبت شد: "
 
-#: src/Frontend/Shortcodes.php:324
+#: src/Frontend/Shortcodes.php:340
 msgid "ورود مستقیم محتوای QR"
 msgstr "ورود مستقیم محتوای QR"
 
@@ -4679,25 +5183,29 @@ msgstr "ورود مستقیم محتوای QR"
 msgid "ورود موفق: "
 msgstr "ورود موفق: "
 
-#: src/Admin/Pages.php:1242
+#: src/Admin/Pages.php:1247
 msgid "ورودی فایل قابل خواندن نیست."
 msgstr "ورودی فایل قابل خواندن نیست."
 
-#: src/Admin/Pages.php:196 src/Admin/Pages.php:399 src/Admin/Pages.php:421 src/Admin/Pages.php:470
+#: src/Admin/Pages.php:196 src/Admin/Pages.php:404 src/Admin/Pages.php:426 src/Admin/Pages.php:475
 msgid "وضعیت"
 msgstr "وضعیت"
 
-#: src/Admin/Pages.php:398
+#: src/Admin/Pages.php:403
 msgid "وضعیت «نهایی» فقط به معنای تطبیق با سند استرداد ووکامرس و ابطال بلیت است؛ تسویه بانکی واقعی را به‌صورت مستقل بررسی کنید."
 msgstr "وضعیت «نهایی» فقط به معنای تطبیق با سند استرداد ووکامرس و ابطال بلیت است؛ تسویه بانکی واقعی را به‌صورت مستقل بررسی کنید."
 
-#: src/Domain/Event/LifecycleService.php:42
+#: src/Domain/Event/LifecycleService.php:47
 msgid "وضعیت به‌روز نشد."
 msgstr "وضعیت به‌روز نشد."
 
 #: src/Domain/Ticket/RefundReviewService.php:81
 msgid "وضعیت تخصیص جایگاه معتبر نیست."
 msgstr "وضعیت تخصیص جایگاه معتبر نیست."
+
+#: src/Domain/Allocation/Messages.php:29
+msgid "وضعیت رزرو تغییر کرده است؛ انتخاب خود را دوباره بررسی کنید."
+msgstr "وضعیت رزرو تغییر کرده است؛ انتخاب خود را دوباره بررسی کنید."
 
 #: assets/js/tickets.js
 msgid "وضعیت سفارش"
@@ -4707,6 +5215,10 @@ msgstr "وضعیت سفارش"
 msgid "وضعیت سفارش اجازه تغییر را نمی‌دهد."
 msgstr "وضعیت سفارش اجازه تغییر را نمی‌دهد."
 
+#: src/Domain/Allocation/Messages.php:53
+msgid "وضعیت سفارش نیازمند بررسی پشتیبانی است."
+msgstr "وضعیت سفارش نیازمند بررسی پشتیبانی است."
+
 #: assets/js/map.js
 msgid "وضعیت صندلی‌های نگهداری‌شده تغییر کرده است؛ اعتبار نگهداری را بررسی کنید."
 msgstr "وضعیت صندلی‌های نگهداری‌شده تغییر کرده است؛ اعتبار نگهداری را بررسی کنید."
@@ -4715,11 +5227,11 @@ msgstr "وضعیت صندلی‌های نگهداری‌شده تغییر کرد
 msgid "وضعیت مالی سفارش برای جابه‌جایی معتبر نیست."
 msgstr "وضعیت مالی سفارش برای جابه‌جایی معتبر نیست."
 
-#: src/Admin/Pages.php:720
-msgid "وضعیت پذیرش نسخهٔ 1.0.0"
-msgstr "وضعیت پذیرش نسخهٔ 1.0.0"
+#: src/Admin/Pages.php:725
+msgid "وضعیت پذیرش نسخهٔ 2.0.0"
+msgstr "وضعیت پذیرش نسخهٔ 2.0.0"
 
-#: src/Domain/Reconciliation/ReconciliationService.php:215
+#: src/Domain/Reconciliation/ReconciliationService.php:239
 msgid "وضعیت پرداخت قابل تأیید نیست."
 msgstr "وضعیت پرداخت قابل تأیید نیست."
 
@@ -4727,13 +5239,17 @@ msgstr "وضعیت پرداخت قابل تأیید نیست."
 msgid "وضعیت پرونده نیازمند بررسی دستی است."
 msgstr "وضعیت پرونده نیازمند بررسی دستی است."
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:28
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:30
 msgid "ووکامرس باید فعال باشد."
 msgstr "ووکامرس باید فعال باشد."
 
 #: src/Domain/Ticket/BundleService.php:27
 msgid "ووکامرس برای تشکیل بسته لازم است."
 msgstr "ووکامرس برای تشکیل بسته لازم است."
+
+#: src/Domain/Allocation/Messages.php:54
+msgid "ووکامرس برای ثبت سفارش باید فعال باشد."
+msgstr "ووکامرس برای ثبت سفارش باید فعال باشد."
 
 #: src/Integrations/CartSeatManager.php:121
 msgid "ووکامرس برای سبد خرید ضروری است."
@@ -4743,7 +5259,7 @@ msgstr "ووکامرس برای سبد خرید ضروری است."
 msgid "ووکامرس در دسترس نیست."
 msgstr "ووکامرس در دسترس نیست."
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:215 src/Domain/Ticket/AttendeeChangeService.php:46 src/Domain/Ticket/FreeTicketCancellationService.php:28 src/Domain/Ticket/RefundReviewService.php:260 src/Domain/Ticket/TicketService.php:24
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:229 src/Domain/Ticket/AttendeeChangeService.php:46 src/Domain/Ticket/FreeTicketCancellationService.php:28 src/Domain/Ticket/RefundReviewService.php:260 src/Domain/Ticket/TicketService.php:26
 msgid "ووکامرس فعال نیست."
 msgstr "ووکامرس فعال نیست."
 
@@ -4751,23 +5267,23 @@ msgstr "ووکامرس فعال نیست."
 msgid "ووکامرس فعال نیست؛ مسیر سفارش و صدور بلیت غیرفعال است."
 msgstr "ووکامرس فعال نیست؛ مسیر سفارش و صدور بلیت غیرفعال است."
 
-#: src/Admin/Pages.php:205
+#: src/Admin/Pages.php:210
 msgid "ویرایش دیداری"
 msgstr "ویرایش دیداری"
 
-#: src/Domain/Booking/HoldService.php:144
+#: src/Domain/Booking/HoldService.php:150
 msgid "ویرایش رزرو این جلسه بسته شده است."
 msgstr "ویرایش رزرو این جلسه بسته شده است."
 
-#: src/Admin/Pages.php:249
+#: src/Admin/Pages.php:254
 msgid "ویرایش شیء انتخابی"
 msgstr "ویرایش شیء انتخابی"
 
-#: src/Admin/Pages.php:452
+#: src/Admin/Pages.php:457
 msgid "ویرایش مشخصات رویداد "
 msgstr "ویرایش مشخصات رویداد "
 
-#: src/Admin/Pages.php:232
+#: src/Admin/Pages.php:237
 msgid "ویرایشگر دیداری نقشه — ذخیره خودکار پیش‌نویس"
 msgstr "ویرایشگر دیداری نقشه — ذخیره خودکار پیش‌نویس"
 
@@ -4805,7 +5321,7 @@ msgstr "پاکسازی اشیای پیش‌نویس انجام نشد."
 msgid "پاکسازی رزروهای منقضی به زمان بیشتری نیاز دارد."
 msgstr "پاکسازی رزروهای منقضی به زمان بیشتری نیاز دارد."
 
-#: src/Admin/Pages.php:310
+#: src/Admin/Pages.php:315
 msgid "پایان نگهداری صندلی"
 msgstr "پایان نگهداری صندلی"
 
@@ -4813,11 +5329,11 @@ msgstr "پایان نگهداری صندلی"
 msgid "پایگاه داده تخفیف‌ها نیازمند ارتقا است."
 msgstr "پایگاه داده تخفیف‌ها نیازمند ارتقا است."
 
-#: src/Domain/Checkout/CheckoutService.php:59 src/Domain/GeneralAdmission/AdmissionGateService.php:70 src/Domain/GeneralAdmission/FreeAdmissionService.php:237 src/Domain/Ticket/OwnershipTransferService.php:132 src/Domain/Ticket/OwnershipTransferService.php:42 src/Domain/Ticket/TicketService.php:46
+#: src/Domain/Checkout/CheckoutService.php:59 src/Domain/GeneralAdmission/AdmissionGateService.php:70 src/Domain/GeneralAdmission/FreeAdmissionService.php:251 src/Domain/Ticket/OwnershipTransferService.php:132 src/Domain/Ticket/OwnershipTransferService.php:42 src/Domain/Ticket/TicketService.php:48
 msgid "پایگاه داده در دسترس نیست."
 msgstr "پایگاه داده در دسترس نیست."
 
-#: src/Domain/Checkout/CheckoutService.php:35 src/Domain/GeneralAdmission/FreeAdmissionService.php:25 src/Domain/Ticket/FreeTicketCancellationService.php:25
+#: src/Domain/Checkout/CheckoutService.php:35 src/Domain/GeneralAdmission/FreeAdmissionService.php:27 src/Domain/Ticket/FreeTicketCancellationService.php:25
 msgid "پایگاه داده نیازمند ارتقا است."
 msgstr "پایگاه داده نیازمند ارتقا است."
 
@@ -4829,15 +5345,15 @@ msgstr "پرداخت این بلیت‌ها تنها از فرم اختصاصی 
 msgid "پرداخت این جلسه در نسخه آزمایشی غیرفعال است."
 msgstr "پرداخت این جلسه در نسخه آزمایشی غیرفعال است."
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:225
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:239
 msgid "پرداخت این سفارش تأیید نشده است."
 msgstr "پرداخت این سفارش تأیید نشده است."
 
-#: src/Domain/Ticket/TicketService.php:31
+#: src/Domain/Ticket/TicketService.php:33
 msgid "پرداخت سفارش تأیید نشده است."
 msgstr "پرداخت سفارش تأیید نشده است."
 
-#: src/Domain/Ticket/TicketService.php:34
+#: src/Domain/Allocation/Messages.php:49 src/Domain/Ticket/TicketService.php:36
 msgid "پرداخت سفارش هنوز تأیید نشده است."
 msgstr "پرداخت سفارش هنوز تأیید نشده است."
 
@@ -4853,11 +5369,11 @@ msgstr "پرداخت و صدور بلیت فروش آزاد هنوز فعال ن
 msgid "پرداخت، ارز یا هویت خریدار سفارش‌های بسته یکسان نیست."
 msgstr "پرداخت، ارز یا هویت خریدار سفارش‌های بسته یکسان نیست."
 
-#: src/Admin/Pages.php:580
+#: src/Admin/Pages.php:585
 msgid "پرداخت، بازگشت وجه و وضعیت نهایی سفارش‌ها را در ووکامرس بررسی کنید. این فهرست هیچ اقدامی خودکار انجام نمی‌دهد."
 msgstr "پرداخت، بازگشت وجه و وضعیت نهایی سفارش‌ها را در ووکامرس بررسی کنید. این فهرست هیچ اقدامی خودکار انجام نمی‌دهد."
 
-#: src/Admin/Pages.php:399
+#: src/Admin/Pages.php:404
 msgid "پرونده"
 msgstr "پرونده"
 
@@ -4865,7 +5381,7 @@ msgstr "پرونده"
 msgid "پرونده استرداد یافت نشد."
 msgstr "پرونده استرداد یافت نشد."
 
-#: src/Admin/Pages.php:397
+#: src/Admin/Pages.php:402
 msgid "پرونده‌های استرداد بلیت (۵۰ مورد اخیر)"
 msgstr "پرونده‌های استرداد بلیت (۵۰ مورد اخیر)"
 
@@ -4881,6 +5397,10 @@ msgstr "پس از آغاز جلسه، استرداد خودکار جایگاه �
 msgid "پس از اولین درخواست رزرو، قوانین چیدمان این جلسه قفل می‌شوند."
 msgstr "پس از اولین درخواست رزرو، قوانین چیدمان این جلسه قفل می‌شوند."
 
+#: src/Domain/Allocation/Messages.php:63
+msgid "پس از ورود مهمانان، تغییر یا لغو گروه امکان‌پذیر نیست."
+msgstr "پس از ورود مهمانان، تغییر یا لغو گروه امکان‌پذیر نیست."
+
 #: assets/js/blocks-editor.js src/Frontend/Blocks.php:16
 msgid "پنل بلیت‌های من"
 msgstr "پنل بلیت‌های من"
@@ -4888,7 +5408,7 @@ msgstr "پنل بلیت‌های من"
 msgid "پیدا کن"
 msgstr "پیدا کن"
 
-#: src/Frontend/Shortcodes.php:159
+#: src/Frontend/Shortcodes.php:162
 msgid "پیشنهاد صندلی مجاور"
 msgstr "پیشنهاد صندلی مجاور"
 
@@ -4908,7 +5428,7 @@ msgstr "پیش‌نویس شماره "
 msgid "چاپ بلیت‌ها"
 msgstr "چاپ بلیت‌ها"
 
-#: src/Frontend/Shortcodes.php:298
+#: src/Frontend/Shortcodes.php:306
 msgid "چاپ گزارش"
 msgstr "چاپ گزارش"
 
@@ -4916,13 +5436,25 @@ msgstr "چاپ گزارش"
 msgid "چندبخشی"
 msgstr "چندبخشی"
 
+#: src/Support/VenuePrint.php:86
+msgid "چیدمان سالن"
+msgstr "چیدمان سالن"
+
 #: src/Domain/Ticket/SeatTransferPolicy.php:47
 msgid "چیدمان صندلی‌ها معتبر نیست."
 msgstr "چیدمان صندلی‌ها معتبر نیست."
 
-#: src/Admin/Pages.php:677
+#: src/Admin/Pages.php:682
 msgid "کار بعدی شما"
 msgstr "کار بعدی شما"
+
+#: src/Domain/Venue/PresetCatalog.php:59
+msgid "کاسه بیضی"
+msgstr "کاسه بیضی"
+
+#: src/Domain/Venue/PresetCatalog.php:63
+msgid "کاسه پیوسته"
+msgstr "کاسه پیوسته"
 
 #: src/Domain/GeneralAdmission/AdmissionGateService.php:56
 msgid "کد QR معتبر نیست."
@@ -4932,7 +5464,7 @@ msgstr "کد QR معتبر نیست."
 msgid "کد QR ورود بلیت"
 msgstr "کد QR ورود بلیت"
 
-#: src/Admin/Pages.php:470
+#: src/Admin/Pages.php:475
 msgid "کد استفاده در صفحه سایت"
 msgstr "کد استفاده در صفحه سایت"
 
@@ -4953,6 +5485,10 @@ msgstr "کد بازیابی معتبر نیست."
 msgid "کد بازیابی منقضی یا نامعتبر است."
 msgstr "کد بازیابی منقضی یا نامعتبر است."
 
+#: src/Domain/Allocation/Messages.php:56
+msgid "کد بلیت معتبر نیست."
+msgstr "کد بلیت معتبر نیست."
+
 #: src/Domain/Ticket/OwnershipTransferService.php:102
 #, php-format
 msgid "کد تأیید انتقال بلیت: %s\nاعتبار: ۱۰ دقیقه. اگر این انتقال را نمی‌شناسید، آن را نادیده بگیرید."
@@ -4966,7 +5502,7 @@ msgstr "کد تأیید معتبر نیست."
 msgid "کد تأیید منقضی یا نادرست است."
 msgstr "کد تأیید منقضی یا نادرست است."
 
-#: src/Frontend/Shortcodes.php:359 src/Integrations/CartSeatManager.php:417
+#: src/Frontend/Shortcodes.php:375 src/Integrations/CartSeatManager.php:417
 msgid "کد تخفیف"
 msgstr "کد تخفیف"
 
@@ -4996,7 +5532,7 @@ msgstr "کد تخفیف برای جایگاه انتخاب‌شده معتبر �
 msgid "کد تخفیف ثبت شد. فعال‌سازی فروش واقعی نیازمند آزمون یکپارچه است."
 msgstr "کد تخفیف ثبت شد. فعال‌سازی فروش واقعی نیازمند آزمون یکپارچه است."
 
-#: src/Frontend/Shortcodes.php:359 src/Integrations/CartSeatManager.php:417
+#: src/Frontend/Shortcodes.php:375 src/Integrations/CartSeatManager.php:417
 msgid "کد تخفیف دارید؟"
 msgstr "کد تخفیف دارید؟"
 
@@ -5016,11 +5552,23 @@ msgstr "کد تخفیف معتبر نیست."
 msgid "کد تخفیف وارد نشده است."
 msgstr "کد تخفیف وارد نشده است."
 
-#: assets/js/cart-seats.js src/Admin/Pages.php:260 src/Frontend/Shortcodes.php:150
+#: src/Support/VenuePrint.php:156
+msgid "کد جایگاه"
+msgstr "کد جایگاه"
+
+#: src/Support/VenuePrint.php:154
+msgid "کد جایگاه‌ها — طبقه "
+msgstr "کد جایگاه‌ها — طبقه "
+
+#: src/Support/VenuePrint.php:246
+msgid "کد دسته‌های دیگر در جدول جزئیات آمده است."
+msgstr "کد دسته‌های دیگر در جدول جزئیات آمده است."
+
+#: assets/js/cart-seats.js src/Admin/Pages.php:265 src/Frontend/Shortcodes.php:153
 msgid "کد صندلی"
 msgstr "کد صندلی"
 
-#: src/Admin/Pages.php:327
+#: src/Admin/Pages.php:332
 msgid "کد صندلی "
 msgstr "کد صندلی "
 
@@ -5032,33 +5580,33 @@ msgstr "کد صندلی این ردیف از قبل وجود دارد."
 msgid "کد صندلی تکراری است."
 msgstr "کد صندلی تکراری است."
 
-#: src/Domain/Hall/LayoutDocument.php:65
+#: src/Domain/Hall/LayoutDocument.php:68
 msgid "کد صندلی تکراری است: "
 msgstr "کد صندلی تکراری است: "
 
-#: src/Admin/Pages.php:340
+#: src/Admin/Pages.php:345
 msgid "کد صندلی مقصد "
 msgstr "کد صندلی مقصد "
 
-#: src/Domain/Hall/SeatAdministration.php:19
+#: src/Domain/Hall/SeatAdministration.php:21
 msgid "کد صندلی یا جلسه معتبر نیست."
 msgstr "کد صندلی یا جلسه معتبر نیست."
 
-#: src/Frontend/Shortcodes.php:203
+#: src/Frontend/Shortcodes.php:206
 msgid "کد ۸ رقمی"
 msgstr "کد ۸ رقمی"
 
 msgid "کد ۸ رقمی "
 msgstr "کد ۸ رقمی "
 
-#: src/Frontend/Shortcodes.php:228
+#: src/Frontend/Shortcodes.php:236
 msgid "کد ۸ رقمی گیرنده"
 msgstr "کد ۸ رقمی گیرنده"
 
 msgid "کد ۸ رقمی گیرنده "
 msgstr "کد ۸ رقمی گیرنده "
 
-#: src/Admin/Pages.php:549
+#: src/Admin/Pages.php:554
 msgid "کل"
 msgstr "کل"
 
@@ -5070,6 +5618,10 @@ msgstr "کل ظرفیت: "
 msgid "کلاس"
 msgstr "کلاس"
 
+#: src/Domain/Venue/PresetCatalog.php:34
+msgid "کلاسی"
+msgstr "کلاسی"
+
 #: src/Domain/Ticket/RefundPolicy.php:15
 msgid "کلید درخواست استرداد نامعتبر است."
 msgstr "کلید درخواست استرداد نامعتبر است."
@@ -5078,7 +5630,7 @@ msgstr "کلید درخواست استرداد نامعتبر است."
 msgid "کلید درخواست برای علت استرداد متفاوت استفاده شده است."
 msgstr "کلید درخواست برای علت استرداد متفاوت استفاده شده است."
 
-#: src/Frontend/Shortcodes.php:195
+#: src/Frontend/Shortcodes.php:198
 msgid "کلید دسترسی"
 msgstr "کلید دسترسی"
 
@@ -5089,7 +5641,7 @@ msgstr "کلید دسترسی "
 msgid "کلید دسترسی بلیت‌ها"
 msgstr "کلید دسترسی بلیت‌ها"
 
-#: src/Frontend/Shortcodes.php:197
+#: src/Frontend/Shortcodes.php:200
 msgid "کلید دسترسی خصوصی است؛ آن را فقط در این صفحه وارد کنید."
 msgstr "کلید دسترسی خصوصی است؛ آن را فقط در این صفحه وارد کنید."
 
@@ -5097,11 +5649,11 @@ msgstr "کلید دسترسی خصوصی است؛ آن را فقط در این �
 msgid "کلید دسترسی را در محل امن نگهداری کنید؛ برای بازیابی بلیت‌ها به آن نیاز دارید."
 msgstr "کلید دسترسی را در محل امن نگهداری کنید؛ برای بازیابی بلیت‌ها به آن نیاز دارید."
 
-#: src/Frontend/Shortcodes.php:198
+#: src/Frontend/Shortcodes.php:201
 msgid "کلید دسترسی را ندارید؟"
 msgstr "کلید دسترسی را ندارید؟"
 
-#: src/Frontend/Shortcodes.php:223
+#: src/Frontend/Shortcodes.php:231
 msgid "کلید دسترسی مالک فعلی"
 msgstr "کلید دسترسی مالک فعلی"
 
@@ -5114,7 +5666,7 @@ msgstr "کلید دسترسی: "
 msgid "کلید را ندارم؛ بازیابی با ایمیل"
 msgstr "کلید را ندارم؛ بازیابی با ایمیل"
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:88
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:90
 msgid "کنترل سقف خرید ممکن نشد."
 msgstr "کنترل سقف خرید ممکن نشد."
 
@@ -5126,7 +5678,7 @@ msgstr "کنترل محدودیت خرید ممکن نشد."
 msgid "کنترل ورود با QR"
 msgstr "کنترل ورود با QR"
 
-#: src/Frontend/Shortcodes.php:321
+#: src/Frontend/Shortcodes.php:337
 msgid "کنترل ورود بلیت"
 msgstr "کنترل ورود بلیت"
 
@@ -5134,7 +5686,7 @@ msgstr "کنترل ورود بلیت"
 msgid "کوپن‌های هدفمند هنوز در تنظیمات آزمایشی فعال نشده‌اند."
 msgstr "کوپن‌های هدفمند هنوز در تنظیمات آزمایشی فعال نشده‌اند."
 
-#: src/Admin/Pages.php:235 src/Frontend/Shortcodes.php:148
+#: src/Admin/Pages.php:240 src/Frontend/Shortcodes.php:151
 msgid "کوچک‌نمایی"
 msgstr "کوچک‌نمایی"
 
@@ -5142,15 +5694,15 @@ msgstr "کوچک‌نمایی"
 msgid "کوچک‌نمایی −"
 msgstr "کوچک‌نمایی −"
 
-#: src/Admin/Pages.php:236
+#: src/Admin/Pages.php:241
 msgid "کپی انتخابی"
 msgstr "کپی انتخابی"
 
-#: src/Frontend/Shortcodes.php:288
+#: src/Frontend/Shortcodes.php:296
 msgid "گزارش تجمیعی مرکز "
 msgstr "گزارش تجمیعی مرکز "
 
-#: src/Admin/Pages.php:531
+#: src/Admin/Pages.php:536
 msgid "گزارش تحلیلی صدور بلیت و جایگاه‌ها"
 msgstr "گزارش تحلیلی صدور بلیت و جایگاه‌ها"
 
@@ -5158,19 +5710,19 @@ msgstr "گزارش تحلیلی صدور بلیت و جایگاه‌ها"
 msgid "گزارش حضور"
 msgstr "گزارش حضور"
 
-#: src/Domain/Reporting/AttendanceReport.php:70
+#: src/Domain/Reporting/AttendanceReport.php:81
 msgid "گزارش حضور قابل دریافت نیست."
 msgstr "گزارش حضور قابل دریافت نیست."
 
-#: src/Admin/Pages.php:548
+#: src/Admin/Pages.php:553
 msgid "گزارش ظرفیت جلسات (برخط)"
 msgstr "گزارش ظرفیت جلسات (برخط)"
 
-#: src/Admin/Pages.php:632
+#: src/Admin/Pages.php:637
 msgid "گزارش‌ها"
 msgstr "گزارش‌ها"
 
-#: src/Frontend/Shortcodes.php:227
+#: src/Frontend/Shortcodes.php:235
 msgid "گیرنده با شناسه درخواست و کد ایمیلی، انتقال را تأیید می‌کند."
 msgstr "گیرنده با شناسه درخواست و کد ایمیلی، انتقال را تأیید می‌کند."
 
@@ -5178,26 +5730,38 @@ msgstr "گیرنده با شناسه درخواست و کد ایمیلی، ان�
 msgid "یافتن"
 msgstr "یافتن"
 
+#: src/Domain/Venue/PresetCatalog.php:37
+msgid "یو دوبل"
+msgstr "یو دوبل"
+
+#: src/Domain/Venue/PresetCatalog.php:36
+msgid "یو شکل"
+msgstr "یو شکل"
+
 #: src/Domain/Ticket/BundleService.php:116
 msgid "یک بلیت یا جلسه در بسته دیگری ثبت شده است."
 msgstr "یک بلیت یا جلسه در بسته دیگری ثبت شده است."
 
-#: src/Domain/Booking/HoldService.php:70
+#: src/Domain/Allocation/Messages.php:20
+msgid "یک جایگاه را هم‌زمان به‌صورت تکی و گروهی انتخاب نکنید."
+msgstr "یک جایگاه را هم‌زمان به‌صورت تکی و گروهی انتخاب نکنید."
+
+#: src/Domain/Booking/HoldService.php:73
 msgid "یک یا چند صندلی متعلق به جلسه نیست."
 msgstr "یک یا چند صندلی متعلق به جلسه نیست."
 
-#: src/Domain/Booking/HoldService.php:74
+#: src/Domain/Booking/HoldService.php:77
 msgid "یکی از صندلی‌ها دیگر آزاد نیست."
 msgstr "یکی از صندلی‌ها دیگر آزاد نیست."
 
 msgid "۱. افزودن مرکز"
 msgstr "۱. افزودن مرکز"
 
-#: src/Frontend/Shortcodes.php:220
+#: src/Frontend/Shortcodes.php:228
 msgid "۱. درخواست انتقال"
 msgstr "۱. درخواست انتقال"
 
-#: src/Frontend/Shortcodes.php:227
+#: src/Frontend/Shortcodes.php:235
 msgid "۲. تأیید توسط گیرنده"
 msgstr "۲. تأیید توسط گیرنده"
 

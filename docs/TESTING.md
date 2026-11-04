@@ -1,4 +1,4 @@
-# Verification workflow — 1.0.0
+# Verification workflow — 2.0.0
 
 Run independent regressions and PHP/JavaScript syntax checks from the repository root:
 

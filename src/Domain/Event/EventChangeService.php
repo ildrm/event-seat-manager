@@ -102,6 +102,10 @@ final class EventChangeService
                     "SELECT COUNT(*) FROM {$p}holds WHERE session_id=%d AND status IN ('active','checkout_creating','payment_pending') AND expires_at>UTC_TIMESTAMP()", $id));
                 $activeGeneral = (int)$wpdb->get_var($wpdb->prepare(
                     "SELECT COUNT(*) FROM {$p}capacity_holds WHERE session_id=%d AND status IN ('active','checkout_creating','payment_pending') AND expires_at>UTC_TIMESTAMP()", $id));
+                if ((int) get_option('pesm_schema_version', 0) >= 19) {
+                    $activeGeneral += (int) $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$p}allocation_holds WHERE session_id=%d AND status IN ('active','checkout_creating','payment_pending') AND expires_at>UTC_TIMESTAMP()", $id));
+                    $activeGeneral += (int) $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$p}allocation_tickets WHERE session_id=%d AND status='checked_in'", $id));
+                }
                 $admitted = (int)$wpdb->get_var($wpdb->prepare(
                     "SELECT COUNT(*) FROM {$p}checkins c JOIN {$p}tickets t ON t.id=c.ticket_id WHERE t.session_id=%d", $id)) +
                     (int)$wpdb->get_var($wpdb->prepare(
@@ -172,6 +176,9 @@ final class EventChangeService
             "SELECT DISTINCT order_id FROM {$p}holds WHERE session_id IN ($placeholders) AND order_id>0",
             "SELECT DISTINCT order_id FROM {$p}capacity_holds WHERE session_id IN ($placeholders) AND order_id>0",
         ];
+        if ((int) get_option('pesm_schema_version', 0) >= 19) {
+            $queries[] = "SELECT DISTINCT order_id FROM {$p}allocation_holds WHERE session_id IN ($placeholders) AND order_id>0";
+        }
         $ids = [];
         foreach ($queries as $sql) {
             $found = $wpdb->get_col($wpdb->prepare($sql, ...$sessionIds));

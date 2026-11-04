@@ -1,0 +1,143 @@
+{
+  "passed": false,
+  "schema": 19,
+  "capacity": 150000,
+  "concurrent_purchase_attempts": 1000,
+  "gate_operators": 20,
+  "hold_p95_ms": 11881.56,
+  "availability_p95_ms": 10776.74,
+  "gate_p95_ms": 302.73,
+  "environment": {
+    "php": "8.5.8",
+    "wordpress": "7.1.4",
+    "woocommerce": "11.2.1",
+    "database": "13.0.2-MariaDB",
+    "application_profile": "Two PHP built-in replicas with 16 workers each; loopback load-balancing proxy; shared InnoDB; dedicated CLI jobs.",
+    "client": "macOS-26.7.2-arm64-arm-64bit-Mach-O",
+    "url_profile": "http://127.0.0.1:8093/index.php",
+    "memory_bytes": 8589934592,
+    "logical_cpus": 8,
+    "physical_cpus": 8,
+    "hardware_model": "Mac14,3",
+    "php_workers_per_replica": 16,
+    "replicas": 2,
+    "proxy_upstream_slots": 32
+  },
+  "overview": {
+    "status": 200,
+    "bytes": 25702,
+    "contains_seat_array": false
+  },
+  "tile": {
+    "status": 200,
+    "seats": 2000,
+    "bytes": 670993
+  },
+  "list": {
+    "status": 200,
+    "items": 100
+  },
+  "holds": {
+    "requests": 1000,
+    "successful": 1000,
+    "status_counts": {
+      "201": 1000
+    },
+    "error_codes": {},
+    "p50_ms": 5859.52,
+    "p95_ms": 11881.56,
+    "p99_ms": 12197.99,
+    "max_response_bytes": 622
+  },
+  "checkout": {
+    "requests": 1000,
+    "successful": 1000,
+    "status_counts": {
+      "200": 1000
+    },
+    "error_codes": {},
+    "p50_ms": 22901.44,
+    "p95_ms": 46990.97,
+    "p99_ms": 48435.15,
+    "max_response_bytes": 190
+  },
+  "availability": {
+    "requests": 100,
+    "successful": 100,
+    "status_counts": {
+      "200": 100
+    },
+    "error_codes": {},
+    "p50_ms": 10205.25,
+    "p95_ms": 10776.74,
+    "p99_ms": 10857.6,
+    "max_response_bytes": 172643
+  },
+  "gates": {
+    "requests": 20,
+    "successful": 20,
+    "status_counts": {
+      "200": 20
+    },
+    "error_codes": {},
+    "p50_ms": 148.71,
+    "p95_ms": 302.73,
+    "p99_ms": 336.28,
+    "max_response_bytes": 153
+  },
+  "hold_replay_successes": 10,
+  "contention": {
+    "requests": 50,
+    "successful": 1,
+    "status_counts": {
+      "409": 49,
+      "201": 1
+    },
+    "error_codes": {
+      "seat_unavailable": 49
+    },
+    "p50_ms": 326.58,
+    "p95_ms": 531.66,
+    "p99_ms": 596.58,
+    "max_response_bytes": 620,
+    "winners": 1
+  },
+  "group_member_contention": {
+    "requests": 40,
+    "successful": 1,
+    "status_counts": {
+      "409": 39,
+      "201": 1
+    },
+    "error_codes": {
+      "seat_unavailable": 39
+    },
+    "p50_ms": 366.01,
+    "p95_ms": 442.76,
+    "p99_ms": 470.74,
+    "max_response_bytes": 621,
+    "winners": 1
+  },
+  "gate_replay_status": 200,
+  "gate_duplicate_code": "already_checked_in",
+  "issued_order_count": 1000,
+  "integration_passed": true,
+  "note": "Functional and SQL integrity checks passed on the recorded local profile. Latency acceptance failed; new-session creation must remain gated. The additional order/check-in belongs to the isolated preliminary smoke request.",
+  "oversells": 0,
+  "duplicate_issuance": 0,
+  "integrity": {
+    "oversells": 0,
+    "duplicate_issuance": 0,
+    "sold_without_ticket": 0,
+    "ticket_without_sale": 0,
+    "broken_admission_lines": 0,
+    "issued_tickets": 1001,
+    "orders": 1001,
+    "checkins": 21,
+    "additional_smoke_orders": 1
+  },
+  "failed_criteria": [
+    "hold_p95_ms exceeds 2000",
+    "availability_p95_ms exceeds 500"
+  ]
+}

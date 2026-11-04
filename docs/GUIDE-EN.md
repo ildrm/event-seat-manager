@@ -1,8 +1,8 @@
-# Event Seat Manager 1.0.0
+# Event Seat Manager 2.0.0
 
 Install the ZIP through WordPress Plugins. PHP 8.1+ and InnoDB are required. WooCommerce must be active for orders and tickets. Read [release status](RELEASE-STATUS.md) and [compatibility evidence](COMPATIBILITY.md) before enabling live sales.
 
-If upgrading from the old plugin name, deactivate that copy first and activate `event-seat-manager/event-seat-manager.php`. Keep existing `pesm_` tables and options. Schema version remains 18. Pending orders created before financial snapshots were introduced require manual review; existing issued tickets remain intact. Network activation is unavailable; activate on each site individually.
+If upgrading from the old plugin name, deactivate that copy first and activate `event-seat-manager/event-seat-manager.php`. Keep existing `pesm_` tables and options. The additive schema upgrade advances to 19. Pending orders created before financial snapshots were introduced require manual review; existing issued tickets remain intact. Network activation is unavailable; activate on each site individually.
 
 ## Administrator workflow
 
@@ -28,3 +28,7 @@ Choose English or Persian in Settings → General → Site Language. Administrat
 Ticket seat movement supports the same price only. A paid refund is a controlled manual workflow: request a case to suspend admission, refund the exact item in WooCommerce, verify actual gateway settlement, then reconcile the case. Event rescheduling or cancellation records follow-up cases; it does not automatically refund or notify customers. Native ticket PDF, a commercial multi-session bundle, cross-price transfers and standard Checkout Blocks remain incomplete.
 
 Experimental settings, such as ownership transfers, discounts and ticket grouping, are disabled by default. They require their own acceptance tests. Uninstall retains all data.
+
+## Venue designer
+
+For the 50-configuration designer, allocated reservations, group admission, bounded large maps and the deployment creation gate, see the [venue guide](VENUE-DESIGNER.md) and [acceptance evidence](VENUE-ACCEPTANCE.md). The local burst missed latency targets, so new allocated sessions remain gated.

@@ -7,15 +7,15 @@ namespace PESM\Security;
 /** An InnoDB atomic conditional UPDATE, not a racy WordPress transient counter. */
 final class RateLimiter
 {
-    public static function allow(string $scope, int $max = 80, int $windowSeconds = 60): bool
+    public static function allow(string $scope, int $max = 80, int $windowSeconds = 60, ?string $identity = null): bool
     {
         global $wpdb;
-        if ((int) get_option('pesm_schema_version', 0) < 2) {
+        if ($max < 1 || $windowSeconds < 1 || (int) get_option('pesm_schema_version', 0) < 2) {
             return false; // Fail closed when migration is incomplete.
         }
         $ip = isset($_SERVER['REMOTE_ADDR']) && is_string($_SERVER['REMOTE_ADDR'])
             ? $_SERVER['REMOTE_ADDR'] : 'unavailable';
-        $bucket = hash_hmac('sha256', $scope . '|' . $ip, wp_salt('auth'));
+        $bucket = hash_hmac('sha256', $scope . '|' . ($identity ?? $ip), wp_salt('auth'));
         $table = $wpdb->prefix . 'pesm_rate_limits';
         $inserted = $wpdb->query($wpdb->prepare(
             "INSERT IGNORE INTO {$table} (bucket,hits,expires_at) VALUES (%s,0,UTC_TIMESTAMP())", $bucket
@@ -30,6 +30,13 @@ final class RateLimiter
             $windowSeconds, $bucket, $max
         ));
         return $updated === 1;
+    }
+
+    /** An authenticated operator has an independent allowance behind a shared venue router. */
+    public static function operator(string $scope, int $userId, int $centerId = 0): bool
+    {
+        return $userId > 0 && self::allow('gate_ip_abuse', 6000, 60)
+            && self::allow($scope, 240, 60, 'operator:' . $userId . ':center:' . $centerId);
     }
 
     public static function cleanup(): void

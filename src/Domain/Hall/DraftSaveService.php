@@ -43,6 +43,17 @@ final class DraftSaveService
             if (!$hall || !Capabilities::centerAllowed((int) $hall->center_id, $actorId)) {
                 throw new RuntimeException(\PESM\Support\I18n::text('دسترسی به سالن مجاز نیست.'));
             }
+            $receipt = $wpdb->get_row($wpdb->prepare(
+                "SELECT layout_id,revision,payload_hash,base_revision FROM {$p}layout_save_receipts WHERE request_hash=%s AND hall_id=%d FOR UPDATE",
+                $hash, $hallId
+            ));
+            if ($receipt) {
+                if (!hash_equals((string) $receipt->payload_hash, $payloadHash) || (int) $receipt->base_revision !== $expectedRevision) {
+                    throw new DraftConflictException(\PESM\Support\I18n::text('محتوای درخواست تکراری با نسخه ذخیره‌شده تفاوت دارد؛ نقشه را بازخوانی کنید.'));
+                }
+                if ($wpdb->query('COMMIT') === false) { throw new RuntimeException(\PESM\Support\I18n::text('تراکنش ذخیره تکمیل نشد.')); }
+                return ['layout_id' => (int) $receipt->layout_id, 'revision' => (int) $receipt->revision, 'created' => false];
+            }
             // A duplicated create request must return its original draft, not create a second version.
             $previous = $wpdb->get_row($wpdb->prepare(
                 "SELECT id,revision,status,editor_payload_hash FROM {$p}layout_versions WHERE hall_id=%d AND editor_request_hash=%s FOR UPDATE",
@@ -56,11 +67,14 @@ final class DraftSaveService
                 return ['layout_id' => (int) $previous->id, 'revision' => (int) $previous->revision, 'created' => false];
             }
             $source = $wpdb->get_row($wpdb->prepare(
-                "SELECT id,status,revision FROM {$p}layout_versions WHERE hall_id=%d AND id=%d FOR UPDATE",
+                "SELECT id,status,revision,format FROM {$p}layout_versions WHERE hall_id=%d AND id=%d FOR UPDATE",
                 $hallId, $sourceLayoutId
             ));
             if (!$source || !in_array($source->status, ['published', 'draft'], true)) {
                 throw new RuntimeException(\PESM\Support\I18n::text('نسخه انتخاب‌شده برای ویرایش معتبر نیست.'));
+            }
+            if (($source->format ?? LayoutDocument::FORMAT) !== LayoutDocument::FORMAT) {
+                throw new DraftConflictException('Use the venue designer to edit this layout.');
             }
             if ($source->status === 'published') {
                 if ($expectedRevision !== (int) $source->revision) {
@@ -115,6 +129,13 @@ final class DraftSaveService
                 }
             }
             LayoutObjectStorage::replace($draftId, $content['objects']);
+            if ($wpdb->insert($p . 'layout_save_receipts', [
+                'request_hash' => $hash, 'hall_id' => $hallId, 'layout_id' => $draftId,
+                'base_revision' => $expectedRevision, 'revision' => $revision,
+                'payload_hash' => $payloadHash, 'created_at' => gmdate('Y-m-d H:i:s'),
+            ]) !== 1) {
+                throw new RuntimeException(\PESM\Support\I18n::text('ثبت نهایی پیش‌نویس ناموفق بود.'));
+            }
             Audit::record($created ? 'layout_draft_created' : 'layout_draft_saved', 'layout', $draftId, $actorId);
             if ($wpdb->query('COMMIT') === false) { throw new RuntimeException(\PESM\Support\I18n::text('ثبت نهایی پیش‌نویس ناموفق بود.')); }
             return ['layout_id' => $draftId, 'revision' => $revision, 'created' => $created];

@@ -28,9 +28,11 @@ final class StubOrder {
         '_pesm_mode'=>'general', '_pesm_is_ticket_order'=>'yes', '_pesm_capacity_hold_id'=>12,
         '_pesm_attendees_v1'=>($GLOBALS['attendee_snapshot'] ?? null),
         '_pesm_session_id'=>7,
+        '_pesm_unit_price_minor'=>0,'_pesm_total_minor'=>0,'_pesm_price_decimals'=>0,'_pesm_currency'=>'IRR',
     ][$key] ?? null; }
     public function get_status(): string { return 'pending'; }
     public function get_total(): string { return '0'; }
+    public function get_currency(): string { return 'IRR'; }
     public function get_billing_first_name(): string { return 'نرگس'; }
     public function get_billing_last_name(): string { return 'نمونه'; }
 }

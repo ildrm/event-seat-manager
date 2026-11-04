@@ -8,7 +8,7 @@ use RuntimeException;
 
 final class Migrator
 {
-    public const VERSION = 18;
+    public const VERSION = 19;
 
     public static function run(): void
     {
@@ -76,6 +76,7 @@ final class Migrator
                 hall_id bigint(20) unsigned NOT NULL,
                 version_no int(11) unsigned NOT NULL,
                 status varchar(24) NOT NULL DEFAULT 'published',
+                format varchar(32) NOT NULL DEFAULT 'pesm.layout.v1',
                 revision int(11) unsigned NOT NULL DEFAULT 0,
                 editor_request_hash char(64) DEFAULT NULL,
                 editor_payload_hash char(64) DEFAULT NULL,
@@ -522,10 +523,27 @@ final class Migrator
                 KEY entity (entity_type,entity_id)
             ) ENGINE=InnoDB $charset;",
         ];
+        $defs[] = "CREATE TABLE {$p}layout_save_receipts (
+            request_hash char(64) NOT NULL,
+            hall_id bigint(20) unsigned NOT NULL,
+            layout_id bigint(20) unsigned NOT NULL,
+            base_revision int(11) unsigned NOT NULL,
+            revision int(11) unsigned NOT NULL,
+            payload_hash char(64) NOT NULL,
+            created_at datetime NOT NULL,
+            PRIMARY KEY  (request_hash),
+            KEY layout_id (layout_id)
+        ) ENGINE=InnoDB $charset;";
+        $extensions = [VenueSchema::class, AllocationSchema::class];
+        foreach ($extensions as $schema) {
+            array_push($defs, ...$schema::definitions($p, $charset));
+        }
         foreach ($defs as $sql) {
             dbDelta($sql);
         }
         $names = ['centers', 'center_users', 'halls', 'layout_versions', 'seats', 'layout_objects', 'events', 'sessions', 'session_seats', 'session_capacity', 'capacity_holds', 'capacity_order_links', 'capacity_tickets', 'capacity_checkins', 'holds', 'hold_mutations', 'hold_items', 'phone_locks', 'order_links', 'tickets', 'ticket_attendee_changes', 'ticket_seat_transfers', 'ticket_owners', 'ticket_ownership_transfers', 'ticket_bundles', 'ticket_bundle_items', 'checkins', 'guest_recovery_requests', 'guest_access_tokens', 'notification_jobs', 'rate_limits', 'audit_logs', 'event_changes', 'event_change_cases', 'refund_cases', 'discount_rules', 'discount_claims'];
+        $names[] = 'layout_save_receipts';
+        foreach ($extensions as $schema) { array_push($names, ...$schema::tables()); }
         foreach ($names as $name) {
             $table = $p . $name;
             $actual = $wpdb->get_var($wpdb->prepare('SHOW TABLES LIKE %s', $wpdb->esc_like($table)));
@@ -574,6 +592,8 @@ final class Migrator
             'discount_rules' => 'event_coupon',
             'discount_claims' => 'hold_id',
         ];
+        $required['layout_save_receipts'] = 'PRIMARY';
+        foreach ($extensions as $schema) { $required = array_merge($required, $schema::uniqueIndexes()); }
         foreach ($required as $suffix => $index) {
             $table = $p . $suffix;
             $present = $wpdb->get_var($wpdb->prepare(
@@ -585,7 +605,7 @@ final class Migrator
                 return;
             }
         }
-        foreach (['revision', 'editor_request_hash', 'editor_payload_hash'] as $column) {
+        foreach (['revision', 'editor_request_hash', 'editor_payload_hash', 'format'] as $column) {
             $present = $wpdb->get_var($wpdb->prepare(
                 'SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = %s AND COLUMN_NAME = %s LIMIT 1',
                 $p . 'layout_versions', $column

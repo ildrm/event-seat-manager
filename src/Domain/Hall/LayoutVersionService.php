@@ -35,9 +35,10 @@ final class LayoutVersionService
         self::assertHall($hallId, $actorId);
         $p = $wpdb->prefix . 'pesm_';
         $layout = $wpdb->get_row($wpdb->prepare(
-            "SELECT id,seat_count FROM {$p}layout_versions WHERE hall_id=%d AND id=%d", $hallId, $layoutId
+            "SELECT id,seat_count,format FROM {$p}layout_versions WHERE hall_id=%d AND id=%d", $hallId, $layoutId
         ));
         if (!$layout) { throw new RuntimeException(\PESM\Support\I18n::text('نسخه چیدمان در این سالن وجود ندارد.')); }
+        if (($layout->format ?? LayoutDocument::FORMAT) !== LayoutDocument::FORMAT) { throw new RuntimeException('Use the streaming venue export for this layout.'); }
         $rows = $wpdb->get_results($wpdb->prepare(
             "SELECT seat_code AS code,row_label,seat_number AS number,zone_label AS zone,pos_x AS x,pos_y AS y
              FROM {$p}seats WHERE layout_id=%d ORDER BY id", $layoutId
@@ -105,11 +106,12 @@ final class LayoutVersionService
                 throw new RuntimeException(\PESM\Support\I18n::text('دسترسی به سالن وجود ندارد.'));
             }
             $layout = $wpdb->get_row($wpdb->prepare(
-                "SELECT id,status,seat_count FROM {$p}layout_versions WHERE hall_id=%d AND id=%d FOR UPDATE", $hallId, $layoutId
+                "SELECT id,status,seat_count,format FROM {$p}layout_versions WHERE hall_id=%d AND id=%d FOR UPDATE", $hallId, $layoutId
             ));
             if (!$layout || $layout->status !== 'draft') {
                 throw new RuntimeException(\PESM\Support\I18n::text('تنها نسخه پیش‌نویسِ متعلق به همین سالن قابل انتشار است.'));
             }
+            if (($layout->format ?? LayoutDocument::FORMAT) !== LayoutDocument::FORMAT) { throw new RuntimeException('Publish this layout through its validation job.'); }
             $actual = (int) $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$p}seats WHERE layout_id=%d", $layoutId));
             if ($actual < 1 || $actual !== (int) $layout->seat_count) {
                 throw new RuntimeException(\PESM\Support\I18n::text('تعداد صندلی‌های نسخه با مقدار ثبت‌شده مطابقت ندارد.'));

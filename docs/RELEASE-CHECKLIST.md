@@ -1,4 +1,4 @@
-# Release checklist — event-seat-manager 1.0.0
+# Release checklist — event-seat-manager 2.0.0
 
 - [x] Public slug, main file, text domain, plugin and block versions are consistent.
 - [x] Release history is empty; historical progress/release logs removed.

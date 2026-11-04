@@ -34,6 +34,7 @@ final class DraftDbFake
     public array $objects=[];
     public array $sessions = [50=>['layout_id'=>5]];
     public array $audit=[];
+    public array $receipts=[];
     private ?string $snapshot=null;
     public function prepare(string $sql, mixed ...$values): string {
         foreach ($values as $value) {
@@ -43,6 +44,10 @@ final class DraftDbFake
         return $sql;
     }
     public function get_row(string $sql): ?object {
+        if (str_contains($sql, 'wp_pesm_layout_save_receipts')) {
+            preg_match("/request_hash='([a-f0-9]{64})'/", $sql, $m);
+            return isset($this->receipts[$m[1] ?? '']) ? (object) $this->receipts[$m[1]] : null;
+        }
         if (str_contains($sql, 'wp_pesm_halls')) {
             preg_match('/\bid\s*=\s*(\d+)/',$sql,$m);
             return isset($this->halls[(int)($m[1]??0)]) ? (object)$this->halls[(int)$m[1]] : null;
@@ -79,6 +84,7 @@ final class DraftDbFake
                'x'=>$data['pos_x'],'y'=>$data['pos_y'],'width'=>$data['width'],
                'height'=>$data['height'],'label'=>$data['label']];
         } elseif ($table==='wp_pesm_audit_logs') { $this->audit[]=$data; }
+        elseif ($table==='wp_pesm_layout_save_receipts') { $this->receipts[$data['request_hash']]=$data; }
         else throw new RuntimeException('Unexpected insert table: '.$table);
         return 1;
     }
@@ -91,10 +97,10 @@ final class DraftDbFake
         return 1;
     }
     public function query(string $sql): int|false {
-        if ($sql==='START TRANSACTION') { $this->snapshot=serialize([$this->versions,$this->seats,$this->objects,$this->audit]); return 1; }
+        if ($sql==='START TRANSACTION') { $this->snapshot=serialize([$this->versions,$this->seats,$this->objects,$this->audit,$this->receipts]); return 1; }
         if ($sql==='COMMIT') { $this->snapshot=null; return 1; }
         if ($sql==='ROLLBACK') {
-            if ($this->snapshot!==null) [$this->versions,$this->seats,$this->objects,$this->audit]=unserialize($this->snapshot);
+            if ($this->snapshot!==null) [$this->versions,$this->seats,$this->objects,$this->audit,$this->receipts]=unserialize($this->snapshot);
             $this->snapshot=null;return 1;
         }
         if (str_starts_with($sql,'DELETE FROM wp_pesm_layout_objects')) {
@@ -136,6 +142,10 @@ catch (DraftConflictException $e) { qa10db(count($wpdb->seats[6])===2,'changed r
 $updated=$service->save(1,6,7,1,str_repeat('b',48),$second);
 qa10db($updated['layout_id']===6 && $updated['revision']===2 && !$updated['created'],'revision increased');
 qa10db(count($wpdb->seats[6])===1 && $wpdb->seats[6][0]['code']==='C-1','replacement atomic');
+$updateReplay=$service->save(1,6,7,1,str_repeat('b',48),$second);
+qa10db($updateReplay['revision']===2 && count($wpdb->audit)===2,'lost update response replay is idempotent');
+try { $service->save(1,6,7,1,str_repeat('b',48),$first); throw new RuntimeException('Changed update replay accepted'); }
+catch (DraftConflictException $e) { qa10db($wpdb->versions[6]['revision']===2,'changed update replay rejected'); }
 try { $service->save(1,6,7,1,str_repeat('c',48),$first);throw new RuntimeException('Stale revision accepted'); }
 catch (DraftConflictException $e) { qa10db($wpdb->versions[6]['revision']===2 && count($wpdb->seats[6])===1,'stale revision rejected'); }
 try { $service->save(1,5,8,0,str_repeat('d',48),$first);throw new RuntimeException('Unauth allowed'); }

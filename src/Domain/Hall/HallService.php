@@ -115,17 +115,24 @@ final class HallService
         global $wpdb;
         $p = $wpdb->prefix . 'pesm_';
         if ($unitPriceMinor < 0 || $unitPriceMinor > 1000000000) { throw new RuntimeException(\PESM\Support\I18n::text('قیمت بلیت نامعتبر است.')); }
-        if (!in_array($mode, ['seated', 'general'], true)) { throw new RuntimeException(\PESM\Support\I18n::text('نوع جلسه نامعتبر است.')); }
+        if (!in_array($mode, ['seated', 'general', 'allocated'], true)) { throw new RuntimeException(\PESM\Support\I18n::text('نوع جلسه نامعتبر است.')); }
+        if ($mode === 'allocated' && !\PESM\Domain\Venue\Acceptance::creationEnabled()) {
+            throw new RuntimeException('Large-venue session creation is awaiting acceptance.');
+        }
         if ($mode === 'general') { \PESM\Domain\Booking\CapacityPolicy::capacity($capacity); }
         if ($mode === 'seated' && $capacity !== 0) { throw new RuntimeException(\PESM\Support\I18n::text('برای جلسه شماره‌دار، ظرفیت از نقشه محاسبه می‌شود.')); }
         self::begin();
         try {
             $event = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$p}events WHERE id = %d FOR UPDATE", $eventId));
-            $hall = $hallId > 0 ? $wpdb->get_row($wpdb->prepare("SELECT * FROM {$p}halls WHERE id = %d", $hallId)) : null;
+            $hall = $hallId > 0 ? $wpdb->get_row($wpdb->prepare("SELECT h.*,l.format AS layout_format FROM {$p}halls h LEFT JOIN {$p}layout_versions l ON l.id=h.current_layout_id WHERE h.id = %d", $hallId)) : null;
             if (!$event || ($mode === 'seated' && (!$hall || !$hall->current_layout_id)) ||
+                ($mode === 'allocated' && (!$hall || !$hall->current_layout_id || ($hall->layout_format ?? '') !== 'pesm.layout.v2')) ||
                 ($hall && (int) $event->center_id !== (int) $hall->center_id) ||
                 ($mode === 'seated' && $hallId < 1) || ($mode === 'general' && $hallId > 0 && !$hall)) {
                 throw new RuntimeException(\PESM\Support\I18n::text('مرکز رویداد و سالن یکسان نیست یا نقشه‌ای وجود ندارد.'));
+            }
+            if ($mode === 'seated' && ($hall->layout_format ?? 'pesm.layout.v1') !== 'pesm.layout.v1') {
+                throw new RuntimeException('This venue requires an allocated session.');
             }
             if ($saleEndUtc <= $saleStartUtc || $startUtc <= $saleEndUtc || $startUtc <= gmdate('Y-m-d H:i:s')) {
                 throw new RuntimeException(\PESM\Support\I18n::text('بازه فروش و تاریخ اجرا نامعتبر است.'));
@@ -146,7 +153,7 @@ final class HallService
                 ]) !== 1) {
                     throw new RuntimeException(\PESM\Support\I18n::text('ایجاد موجودی ظرفیت آزاد ناموفق بود.'));
                 }
-            } else {
+            } elseif ($mode === 'seated') {
                 $count = $wpdb->query($wpdb->prepare(
                 "INSERT INTO {$p}session_seats (session_id,seat_id,status,updated_at)
                  SELECT %d,id,'available',UTC_TIMESTAMP() FROM {$p}seats WHERE layout_id = %d",
@@ -159,6 +166,10 @@ final class HallService
             }
             \PESM\Support\Audit::record('session_created', 'session', $sessionId);
             self::commit();
+            if ($mode === 'allocated') {
+                \PESM\Domain\Allocation\SessionService::configure($sessionId, []);
+                \PESM\Domain\Venue\JobService::create((int) $event->center_id, $hallId, 'provision', ['session_id' => $sessionId], get_current_user_id());
+            }
             return $sessionId;
         } catch (\Throwable $e) {
             $wpdb->query('ROLLBACK');

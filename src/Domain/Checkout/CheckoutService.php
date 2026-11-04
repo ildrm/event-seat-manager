@@ -137,7 +137,7 @@ final class CheckoutService
             // Serialize checkouts for the SAME phone across every session of an event.
             // Expired pending orders are excluded by database UTC, no cron dependency.
             $phoneHash = hash_hmac('sha256', $phone, wp_salt('auth'));
-            $phoneLimit = max(1, min(100, (int) get_option('pesm_phone_event_limit', 20)));
+            $phoneLimit = max(1, min(200, (int) get_option('pesm_phone_event_limit', 20)));
             if ($wpdb->query($wpdb->prepare(
                 "INSERT IGNORE INTO {$p}phone_locks (event_id,phone_hash) VALUES (%d,%s)",
                 (int) $session->event_id, $phoneHash
@@ -164,6 +164,15 @@ final class CheckoutService
                      WHERE cs.event_id=%d AND ch.phone_hash=%s AND
                      (ch.status='issued' OR
                      (ch.status IN ('checkout_creating','payment_pending') AND ch.expires_at>UTC_TIMESTAMP()))",
+                    (int) $session->event_id, $phoneHash
+                ));
+            }
+            if ((int) get_option('pesm_schema_version', 0) >= 19) {
+                $usage += (int) $wpdb->get_var($wpdb->prepare(
+                    "SELECT COALESCE(SUM(l.admission_count),0) FROM {$p}allocation_lines l
+                     JOIN {$p}allocation_holds h ON h.id=l.hold_id JOIN {$p}sessions s ON s.id=h.session_id
+                     WHERE s.event_id=%d AND h.phone_hash=%s AND (h.status='sold' OR
+                     (h.status IN ('checkout_creating','payment_pending') AND h.expires_at>UTC_TIMESTAMP()))",
                     (int) $session->event_id, $phoneHash
                 ));
             }

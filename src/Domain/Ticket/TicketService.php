@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace PESM\Domain\Ticket;
 
+require_once __DIR__ . '/../Checkout/FinancialSnapshot.php';
+
 use PESM\Domain\Booking\HoldException;
 use PESM\Support\Audit;
 use Throwable;
@@ -78,25 +80,7 @@ final class TicketService
                 "SELECT seat_id FROM {$p}hold_items WHERE hold_id=%d ORDER BY seat_id", $holdId
             )));
             if (!$seatIds) { throw new HoldException('invalid_order', \PESM\Support\I18n::text('صندلی سفارش یافت نشد.'), 409); }
-            $unit = $order->get_meta('_pesm_unit_price_minor');
-            $total = $order->get_meta('_pesm_total_minor');
-            $decimals = $order->get_meta('_pesm_price_decimals');
-            $currency = (string) $order->get_meta('_pesm_currency');
-            $discount = $order->get_meta('_pesm_discount_minor');
-            $discount = $discount === '' || $discount === null ? 0 : $discount;
-            // Missing snapshots on old engineering-preview orders require
-            // supervised reconciliation, never silent issuance at an edited total.
-            $integer = static fn(mixed $value): bool => (is_int($value) || is_string($value)) &&
-                preg_match('/^(0|[1-9][0-9]*)$/D', (string) $value) === 1;
-            if (!$integer($unit) || !$integer($total) || !$integer($decimals) || !$integer($discount) ||
-                (float) $unit > 100000000000 || (int) $decimals > 6 || count($seatIds) > 20 ||
-                $currency === '' || !hash_equals($currency, (string) $order->get_currency()) ||
-                (float) $discount > (int) $unit * count($seatIds) ||
-                (int) $total !== (int) $unit * count($seatIds) - (int) $discount ||
-                (int) round((float) $order->get_total() * (10 ** (int) $decimals)) !== (int) $total ||
-                ($free ? (int) $total !== 0 : (int) $total <= 0)) {
-                throw new HoldException('price_mismatch', \PESM\Support\I18n::text('مبلغ تأییدشده با سفارش ثبت‌شده تطابق ندارد.'), 409);
-            }
+            \PESM\Domain\Checkout\FinancialSnapshot::uniform($order, count($seatIds), $free);
             $rows = $wpdb->get_results($wpdb->prepare(
                 "SELECT seat_id,status,hold_id,expires_at FROM {$p}session_seats WHERE session_id=%d AND hold_id=%d ORDER BY seat_id FOR UPDATE",
                 $sessionId, $holdId

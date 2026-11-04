@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "checks": 114,
+  "center_id": 22,
+  "hall_id": 18,
+  "layout_id": 37,
+  "imported_layout_id": 38,
+  "evidence": {
+    "large_layout_id": 39,
+    "generation_database_seconds": 7.397,
+    "peak_php_memory_mib": 178.81,
+    "geometry_tiles": 90
+  }
+}

@@ -160,7 +160,14 @@
     refreshButton.addEventListener('click', () => {
       refresh().catch(error => { result.textContent = error.message; });
     });
-    window.addEventListener('pagehide', () => { if (tickTimer) window.clearInterval(tickTimer); }, {once: true});
+    window.addEventListener('pagehide', () => { if (tickTimer) window.clearInterval(tickTimer); tickTimer = null; });
+    window.addEventListener('pageshow', async event => {
+      if (!event.persisted) return;
+      setBusy(true);
+      try { tick(); await refresh(); if (hold && !tickTimer) tickTimer = window.setInterval(tick, 1000); }
+      catch (error) { result.textContent = error.message; }
+      finally { setBusy(false); }
+    });
     toggle();
     const disclosure = el.closest('details');
     const load = () => refresh().catch(error => { result.textContent = error.message; });

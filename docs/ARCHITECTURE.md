@@ -1,6 +1,8 @@
-# Architecture — event-seat-manager 1.0.0
+# Architecture — event-seat-manager 2.0.0
 
 The plugin is a WordPress modular monolith. The bootstrap registers lifecycle hooks and autoloads `PESM\` classes. The public plugin slug and text domain are `event-seat-manager`; existing `pesm_` tables, capabilities, options, routes and shortcodes remain stable to retain data.
+
+Schema 19 adds the `Venue` and `Allocation` boundaries described in [Venue designer](VENUE-DESIGNER.md). Geometry has explicit topology and immutable v2 layout versions; seat/table/box purchases share `session_seats`. Allocation transactions use shared event/session lifecycle locks, sorted section locks, READ COMMITTED isolation and explicit resource locks. Per-section revisions avoid a global inventory-version write bottleneck. Dedicated allocation order lines and admission slots enforce one active credential regime. Legacy session modes retain their own interfaces and cannot mutate allocated inventory. The frontend is a shared Canvas2D/list client with a separately loaded Three.js module; no application framework rewrite is introduced.
 
 | Boundary | Responsibility | Main implementations |
 |---|---|---|

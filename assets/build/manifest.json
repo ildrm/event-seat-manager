@@ -1,0 +1,37 @@
+{
+  "format": 1,
+  "files": {
+    "venue-app.js": {
+      "bytes": 146776,
+      "sha256": "87e8d9a9d5282a1ab23d886550009d847362f1b4ec9fa42dab6144e58ca72855"
+    },
+    "venue-app.css": {
+      "bytes": 10390,
+      "sha256": "7dcf594b2274891b1215e3e8b8cde750323c13acff46aaa6b4af5b5d5da46f36"
+    },
+    "preview3d.mjs": {
+      "bytes": 567771,
+      "sha256": "098dad714fefa28d6528e3703adc76766ac1f5b36a0de7ce578930ade76c187c"
+    },
+    "geometry-worker.js": {
+      "bytes": 856,
+      "sha256": "744af4c3591bc06d701776eedddb012313e29733d19d0e79e04d0557d43445b8"
+    },
+    "THIRD-PARTY-LICENSES.txt": {
+      "bytes": 1099,
+      "sha256": "b9b0a9064703d4e445e106ff23e65b0b00a82a6ab0a7214099439bbc6e4292c6"
+    }
+  },
+  "source_sha256": "fcdb8bf9ffd9502201fffba0c51741cb68cbffbfdda53ecaf05e4af85c2e386d",
+  "sources": [
+    "assets/src/venue-app.mjs",
+    "assets/src/venue-core.mjs",
+    "assets/src/venue-canvas.mjs",
+    "assets/src/venue-app.css",
+    "assets/src/preview3d.mjs",
+    "assets/src/geometry-worker.mjs",
+    "package.json",
+    "package-lock.json",
+    "tools/build-assets.mjs"
+  ]
+}

@@ -53,6 +53,7 @@
       const leaseActions = el.querySelector('.pesm-lease-actions');
       if (leaseActions) leaseActions.hidden = !hold;
       if (cartButton) { cartButton.disabled = busy || !hold || isDirty(); cartButton.hidden = !hold; }
+      for (const [sid, node] of seatNodes) node.disabled = busy || (seatStates.get(sid) !== 'available' && !hold?.seat_ids.includes(sid));
       checkoutForm.hidden = !hold;
       const phase = hold ? 2 : (selected.size ? 1 : (receipt.childElementCount ? 3 : 1));
       el.querySelectorAll('[data-booking-step]').forEach(step => {
@@ -98,13 +99,15 @@
       if (!e.ctrlKey) return;
       e.preventDefault(); setScale(scale + (e.deltaY < 0 ? 0.1 : -0.1));
     }, {passive: false});
+    const seatNodes = new Map();
+    let geometryDrawn = false;
     const render = () => {
       const activeSeat = canvas.contains(document.activeElement) ? document.activeElement?.dataset.seatId : null;
       if (activeSeat) focusSeatId = Number(activeSeat);
       const enabledSeatIds = seats.filter(seat => (seatStates.get(Number(seat.id)) || 'blocked') === 'available' || hold?.seat_ids.includes(Number(seat.id))).map(seat => Number(seat.id));
       if (!enabledSeatIds.includes(focusSeatId)) focusSeatId = enabledSeatIds[0] ?? null;
       const fragment = document.createDocumentFragment();
-      objects.forEach(o => {
+      if (!geometryDrawn) objects.forEach(o => {
         const node = document.createElement('div');
         node.className = 'pesm-layout-object';
         node.setAttribute('role', 'img');
@@ -121,11 +124,13 @@
         const seatId = Number(seat.id);
         const state = seatStates.get(seatId) || 'blocked';
         const owned = Boolean(hold && hold.seat_ids.includes(seatId));
-        const button = document.createElement('button');
+        let button = seatNodes.get(seatId);
+        const created = !button;
+        if (!button) { button = document.createElement('button'); seatNodes.set(seatId, button); }
         button.type = 'button';
         button.dataset.seatId = String(seatId);
         button.tabIndex = seatId === focusSeatId ? 0 : -1;
-        button.addEventListener('focus', () => {
+        if (created) button.addEventListener('focus', () => {
           focusSeatId = seatId;
           for (const node of canvas.querySelectorAll('.pesm-seat')) node.tabIndex = node === button ? 0 : -1;
         });
@@ -137,18 +142,21 @@
         button.textContent = String(seat.seat_number);
         const status = owned ? window.PESM_I18N.text("نگهداری‌شده توسط شما") : statusFa[state] || window.PESM_I18N.text("نامشخص");
         button.title = `${seat.seat_code}: ${status}`;
-        button.setAttribute('aria-label', (window.PESM_I18N.text("ردیف ") + String(seat.row_label) + window.PESM_I18N.text("، صندلی ") + String(seat.seat_number) + window.PESM_I18N.text("، ") + String(status)));
+        button.setAttribute('aria-label', (String(seat.zone_label || '') + '، ' + String(seat.seat_code) + '، ' + window.PESM_I18N.text("ردیف ") + String(seat.row_label) + window.PESM_I18N.text("، صندلی ") + String(seat.seat_number) + window.PESM_I18N.text("، ") + String(status)));
         button.setAttribute('aria-pressed', String(selected.has(seatId)));
         button.disabled = busy || (state !== 'available' && !owned);
-        button.addEventListener('click', () => {
+        if (created) button.addEventListener('click', () => {
+          if (busy) return;
           if (selected.has(seatId)) selected.delete(seatId);
           else if (selected.size < 20) selected.add(seatId);
           else setFeedback(window.PESM_I18N.text("حداکثر ۲۰ صندلی در هر سفارش قابل نگهداری است."));
           render(); label();
         });
-        fragment.appendChild(button);
+        if (created) fragment.appendChild(button);
       });
-      canvas.replaceChildren(fragment);
+      if (!geometryDrawn) canvas.replaceChildren(fragment);
+      else if (fragment.childNodes.length) canvas.append(fragment);
+      geometryDrawn = true;
       if (activeSeat) canvas.querySelector(`[data-seat-id="${focusSeatId}"]`)?.focus({preventScroll: true});
       label();
     };
@@ -403,10 +411,22 @@
         schedulePoll();
       }, pollDelay);
     };
-    const interval = window.setInterval(tick, 1000);
+    let interval = window.setInterval(tick, 1000);
     window.addEventListener('pagehide', () => {
-      alive = false; window.clearInterval(interval); window.clearTimeout(pollTimeout);
-    }, {once: true});
+      alive = false; window.clearInterval(interval); interval = null;
+      window.clearTimeout(pollTimeout); pollTimeout = null;
+    });
+    window.addEventListener('pageshow', async event => {
+      if (!event.persisted) return;
+      alive = true; busy = true; updateButtons();
+      try {
+        tick();
+        if (initialized) await refresh();
+        if (!interval) interval = window.setInterval(tick, 1000);
+        if (initialized && !pollTimeout) schedulePoll();
+      } catch (error) { setFeedback(error.message); }
+      finally { busy = false; render(); updateButtons(); }
+    });
     const initialize = async () => {
       if (initialized || initializing) return;
       initializing = true;

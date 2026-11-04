@@ -190,7 +190,7 @@ final class Pages
             echo '</form>';
             foreach (array_slice($halls, 0, 40) as $hall) {
                 $versions = $wpdb->get_results($wpdb->prepare(
-                    "SELECT id,version_no,status,seat_count,revision FROM {$p}layout_versions WHERE hall_id=%d ORDER BY version_no DESC LIMIT 20", (int) $hall->id
+                    "SELECT id,version_no,status,seat_count,revision,format FROM {$p}layout_versions WHERE hall_id=%d ORDER BY version_no DESC LIMIT 20", (int) $hall->id
                 ));
                 echo '<h3>' . esc_html($hall->name) . '</h3>';
                 echo (\PESM\Support\I18n::text('<table class="widefat striped"><thead><tr><th>نسخه</th><th>صندلی</th><th>وضعیت</th><th>عملیات</th></tr></thead><tbody>'));
@@ -201,6 +201,11 @@ final class Pages
                     ], admin_url('admin-post.php')), 'pesm_layout_export_' . $hall->id . '_' . $version->id);
                     echo '<tr><td>' . esc_html((string) $version->version_no) . '</td><td>' . esc_html((string) $version->seat_count)
                         . '</td><td>' . esc_html(\PESM\Support\I18n::status((string) $version->status)) . '</td><td>';
+                    if (($version->format ?? LayoutDocument::FORMAT) === 'pesm.layout.v2') {
+                        $designer = add_query_arg(['page'=>'pesm-venue-designer','hall_id'=>(int)$hall->id,'layout_id'=>(int)$version->id], admin_url('admin.php'));
+                        echo '<a href="' . esc_url($designer) . '">' . esc_html(\PESM\Support\I18n::isPersian() ? 'طراح سالن' : 'Venue designer') . '</a></td></tr>';
+                        continue;
+                    }
                     echo '<a href="' . esc_url($exportUrl) . (\PESM\Support\I18n::text('">خروجی JSON</a>'));
                     echo ' <button type="button" class="button pesm-edit-layout" data-url="' . esc_url($exportUrl) . '" data-hall="' . esc_attr((string) $hall->id) . '" data-layout="' . esc_attr((string) $version->id) . '" data-revision="' . esc_attr((string) $version->revision) . (\PESM\Support\I18n::text('">ویرایش دیداری</button>'));
                     foreach (['A4', 'A3'] as $paper) {
@@ -717,8 +722,8 @@ final class Pages
             }
             echo '</ul>';
         }
-        echo '</article><details class="pesm-admin-release"><summary>' . esc_html(\PESM\Support\I18n::text('وضعیت پذیرش نسخهٔ 1.0.0')) . '</summary><p>'
-            . esc_html(\PESM\Support\I18n::text('نسخهٔ 1.0.0؛ پیش از فعال‌سازی فروش واقعی، گزارش پذیرش انتشار را بررسی کنید.')) . '</p></details></section>';
+        echo '</article><details class="pesm-admin-release"><summary>' . esc_html(\PESM\Support\I18n::text('وضعیت پذیرش نسخهٔ 2.0.0')) . '</summary><p>'
+            . esc_html(\PESM\Support\I18n::text('نسخهٔ 2.0.0؛ پیش از فعال‌سازی فروش واقعی، گزارش پذیرش انتشار را بررسی کنید.')) . '</p></details></section>';
         foreach ($cards as $key => $items) {
             if (!$items || !isset($views[$key])) { continue; }
             echo '<section class="pesm-admin-panel" id="pesm-' . esc_attr($key) . '" data-pesm-panel="' . esc_attr($key)

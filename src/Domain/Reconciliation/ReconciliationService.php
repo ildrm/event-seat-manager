@@ -13,7 +13,7 @@ use PESM\Security\Capabilities;
 final class ReconciliationService
 {
     /** @return array{items:array<int,array<string,mixed>>,count:int} */
-    public function anomalies(int $userId, int $centerId, int $limit = 100): array
+    public function anomalies(int $userId, int $centerId, int $limit = 100, array $cursor = []): array
     {
         if ($userId < 1 || !user_can($userId, 'pesm_view_orders') ||
             !Capabilities::centerAllowed($centerId, $userId)) {
@@ -25,7 +25,11 @@ final class ReconciliationService
         global $wpdb;
         $p = $wpdb->prefix . 'pesm_';
         $limit = max(1, min(200, $limit));
-        $rows = $wpdb->get_results($wpdb->prepare(
+        $now = (string) $wpdb->get_var('SELECT UTC_TIMESTAMP()');
+        if ($now === '') { throw new HoldException('db_unavailable', 'Database clock unavailable.', 503); }
+        $seatedBefore = max(0, (int) ($cursor['seated'] ?? 0));
+        $generalBefore = max(0, (int) ($cursor['general'] ?? 0));
+        $rows = (int) ($cursor['seated'] ?? 0) < 0 ? [] : $wpdb->get_results($wpdb->prepare(
             "SELECT h.id AS hold_id,h.order_id,h.status AS hold_status,h.expires_at,
                     s.id AS session_id,s.event_id,l.status AS link_status,
                     l.order_id AS linked_order_id,
@@ -36,14 +40,20 @@ final class ReconciliationService
                JOIN {$p}events e ON e.id=s.event_id
                LEFT JOIN {$p}order_links l ON l.hold_id=h.id
               WHERE e.center_id=%d
+                AND (%d=0 OR h.id<%d)
                 AND (h.status IN ('checkout_creating','payment_pending','sold') OR l.status='review_required')
-              ORDER BY h.id DESC LIMIT %d", $centerId, $limit
+              HAVING link_status='review_required'
+                 OR (hold_status='sold' AND (seat_count<>ticket_count OR COALESCE(link_status,'')<>'issued'))
+                 OR (hold_status IN ('checkout_creating','payment_pending') AND expires_at<=%s)
+                 OR (hold_status='payment_pending' AND COALESCE(linked_order_id,0)=0)
+              ORDER BY h.id DESC LIMIT %d", $centerId, $seatedBefore, $seatedBefore, $now, $limit + 1
         ), ARRAY_A);
         if (!is_array($rows)) {
             throw new HoldException('db_unavailable', \PESM\Support\I18n::text('خواندن گزارش مغایرت امکان‌پذیر نیست.'), 503);
         }
         $items = [];
-        $now = (string) $wpdb->get_var('SELECT UTC_TIMESTAMP()');
+        $next = ['seated' => -1, 'general' => -1];
+        if (count($rows) > $limit) { $rows = array_slice($rows, 0, $limit); $next['seated'] = (int) end($rows)['hold_id']; }
         foreach ($rows as $row) {
             $kind = self::classify($row, $now);
             if ($kind === null) { continue; }
@@ -58,7 +68,7 @@ final class ReconciliationService
             ];
         }
         if ((int) get_option('pesm_schema_version', 0) >= 10) {
-            $ga = $wpdb->get_results($wpdb->prepare(
+            $ga = (int) ($cursor['general'] ?? 0) < 0 ? [] : $wpdb->get_results($wpdb->prepare(
                 "SELECT h.id AS hold_id,h.order_id,h.status AS hold_status,h.expires_at,
                         h.quantity AS seat_count,s.id AS session_id,s.event_id,
                         l.status AS link_status,l.order_id AS linked_order_id,
@@ -66,13 +76,18 @@ final class ReconciliationService
                    FROM {$p}capacity_holds h JOIN {$p}sessions s ON s.id=h.session_id
                    JOIN {$p}events e ON e.id=s.event_id
                    LEFT JOIN {$p}capacity_order_links l ON l.hold_id=h.id
-                  WHERE e.center_id=%d AND
+                  WHERE e.center_id=%d AND (%d=0 OR h.id<%d) AND
                         (h.status IN ('checkout_creating','payment_pending','issued') OR l.status='review_required')
-                  ORDER BY h.id DESC LIMIT %d", $centerId, $limit
+                  HAVING link_status='review_required'
+                     OR (hold_status='issued' AND (seat_count<>ticket_count OR COALESCE(link_status,'')<>'issued'))
+                     OR (hold_status IN ('checkout_creating','payment_pending') AND expires_at<=%s)
+                     OR (hold_status='payment_pending' AND COALESCE(linked_order_id,0)=0)
+                  ORDER BY h.id DESC LIMIT %d", $centerId, $generalBefore, $generalBefore, $now, $limit + 1
             ), ARRAY_A);
             if (!is_array($ga)) {
                 throw new HoldException('db_unavailable', \PESM\Support\I18n::text('خواندن مغایرت ظرفیت آزاد ممکن نشد.'), 503);
             }
+            if (count($ga) > $limit) { $ga = array_slice($ga, 0, $limit); $next['general'] = (int) end($ga)['hold_id']; }
             foreach ($ga as $row) {
                 $kind = self::classifyCapacity($row, $now);
                 if ($kind === null) { continue; }
@@ -87,7 +102,12 @@ final class ReconciliationService
                 ];
             }
         }
-        return ['items' => $items, 'count' => count($items)];
+        if ((int) get_option('pesm_schema_version', 0) >= 19) {
+            $allocated = (int) ($cursor['allocated'] ?? 0) < 0 ? ['items' => [], 'next_cursor' => null] : \PESM\Domain\Allocation\Reconciliation::page($centerId, max(0, (int) ($cursor['allocated'] ?? 0)), $limit, $userId);
+            array_push($items, ...$allocated['items']);
+            $next['allocated'] = $allocated['next_cursor'] ?? -1;
+        }
+        return ['items' => $items, 'count' => count($items), 'next_cursor' => $next];
     }
 
     /** Pure classification, independently testable. */
@@ -200,6 +220,10 @@ final class ReconciliationService
         }
         global $wpdb;
         $p = $wpdb->prefix . 'pesm_';
+        if ((int) get_option('pesm_schema_version', 0) >= 19) {
+            $allocatedOrder = $wpdb->get_var($wpdb->prepare("SELECT o.order_id FROM {$p}allocation_orders o JOIN {$p}allocation_holds h ON h.id=o.hold_id JOIN {$p}sessions s ON s.id=h.session_id JOIN {$p}events e ON e.id=s.event_id WHERE o.order_id=%d AND e.center_id=%d", $orderId, $centerId));
+            if ($allocatedOrder) { return (string) \PESM\Domain\Allocation\Reconciliation::retryOrder($orderId, $userId)['status']; }
+        }
         $match = (int) $wpdb->get_var($wpdb->prepare(
             "SELECT COUNT(*) FROM {$p}order_links l
                  JOIN {$p}holds h ON h.id=l.hold_id

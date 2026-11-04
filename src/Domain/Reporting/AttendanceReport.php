@@ -21,6 +21,16 @@ final class AttendanceReport
         }
         global $wpdb;
         $p = $wpdb->prefix . 'pesm_';
+        $hasAllocated = (int) get_option('pesm_schema_version', 0) >= 19;
+        $allocatedJoin = $hasAllocated ? "LEFT JOIN (
+            SELECT a.session_id,SUM(a.status='active' AND l.status='issued') AS active,
+                   SUM(a.status='checked_in') AS checked_in,
+                   SUM(a.status IN ('cancelled','refunded','revoked')) AS cancelled
+              FROM {$p}allocation_tickets a JOIN {$p}allocation_lines l ON l.id=a.line_id GROUP BY a.session_id
+            ) at ON at.session_id=s.id" : '';
+        $allocatedActive = $hasAllocated ? "WHEN s.mode='allocated' THEN COALESCE(at.active,0)" : '';
+        $allocatedUsed = $hasAllocated ? "WHEN s.mode='allocated' THEN COALESCE(at.checked_in,0)" : '';
+        $allocatedCancelled = $hasAllocated ? "WHEN s.mode='allocated' THEN COALESCE(at.cancelled,0)" : '';
         $conditions = 'WHERE e.center_id=%d';
         $args = [$centerId];
         if ($sessionId > 0) {
@@ -35,9 +45,9 @@ final class AttendanceReport
                 CASE WHEN s.mode='general' THEN COALESCE(c.pending_units,0) ELSE COALESCE(i.payment_pending,0) END AS payment_pending,
                 CASE WHEN s.mode='general' THEN COALESCE(c.sold_units,0) ELSE COALESCE(i.sold,0) END AS sold,
                 CASE WHEN s.mode='general' THEN COALESCE(c.blocked_units,0) ELSE COALESCE(i.blocked,0) END AS blocked,
-                CASE WHEN s.mode='general' THEN COALESCE(gt.active,0) ELSE COALESCE(t.active,0) END AS active_tickets,
-                CASE WHEN s.mode='general' THEN COALESCE(gt.checked_in,0) ELSE COALESCE(t.checked_in,0) END AS checked_in,
-                CASE WHEN s.mode='general' THEN COALESCE(gt.cancelled,0) ELSE COALESCE(t.cancelled,0) END AS cancelled_tickets
+                CASE WHEN s.mode='general' THEN COALESCE(gt.active,0) {$allocatedActive} ELSE COALESCE(t.active,0) END AS active_tickets,
+                CASE WHEN s.mode='general' THEN COALESCE(gt.checked_in,0) {$allocatedUsed} ELSE COALESCE(t.checked_in,0) END AS checked_in,
+                CASE WHEN s.mode='general' THEN COALESCE(gt.cancelled,0) {$allocatedCancelled} ELSE COALESCE(t.cancelled,0) END AS cancelled_tickets
               FROM {$p}sessions s JOIN {$p}events e ON e.id=s.event_id
               LEFT JOIN {$p}session_capacity c ON c.session_id=s.id
               LEFT JOIN (
@@ -64,6 +74,7 @@ final class AttendanceReport
                     SUM(status IN ('cancelled','refunded','transferred')) AS cancelled
                  FROM {$p}capacity_tickets GROUP BY session_id
               ) gt ON gt.session_id=s.id
+              {$allocatedJoin}
               {$conditions} ORDER BY s.starts_at DESC,s.id DESC LIMIT 200";
         $rows = $wpdb->get_results($wpdb->prepare($sql, ...$args), ARRAY_A);
         if (!is_array($rows)) {

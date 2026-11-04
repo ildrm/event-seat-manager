@@ -17,7 +17,7 @@ namespace {
     $GLOBALS['script_enqueued'] = [];
     if (!defined('ARRAY_A')) define('ARRAY_A', 'ARRAY_A');
     if (!defined('PESM_DIR')) define('PESM_DIR', dirname(__DIR__) . '/');
-    if (!defined('PESM_VERSION')) define('PESM_VERSION','1.0.0');
+    if (!defined('PESM_VERSION')) define('PESM_VERSION','2.0.0');
     if (!defined('PESM_URL')) define('PESM_URL','https://example.test/wp-content/plugins/pesm/');
     function is_user_logged_in(): bool { return $GLOBALS['allow']; }
     function current_user_can(string $cap): bool { return $GLOBALS['allow'] && $cap === 'pesm_view_reports'; }

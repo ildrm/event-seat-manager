@@ -1,4 +1,4 @@
-# Remaining product acceptance — 1.0.0
+# Remaining product acceptance — 2.0.0
 
 The repository contains a versioned installable package, bilingual runtime and verified core booking/ticket paths. [Release status](RELEASE-STATUS.md) identifies what is proven and what still prevents declaring the complete original product finished.
 

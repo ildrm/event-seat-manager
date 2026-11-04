@@ -33,12 +33,15 @@ final class HoldService
             $p = $wpdb->prefix . 'pesm_';
             // All commands lock session -> holds -> inventory in the same order.
             $session = $wpdb->get_row($wpdb->prepare(
-                "SELECT s.id,s.status,s.starts_at,s.sale_starts_at,s.sale_ends_at,s.require_adjacent,s.avoid_single_gap,e.status AS event_status
+                "SELECT s.id,s.mode,s.status,s.starts_at,s.sale_starts_at,s.sale_ends_at,s.require_adjacent,s.avoid_single_gap,e.status AS event_status
                  FROM {$p}sessions s INNER JOIN {$p}events e ON e.id = s.event_id
                  WHERE s.id = %d FOR UPDATE", $sessionId
             ));
             if (!$session) {
                 throw new HoldException('invalid_session', \PESM\Support\I18n::text('جلسه موردنظر وجود ندارد.'), 404);
+            }
+            if (($session->mode ?? 'seated') !== 'seated') {
+                throw new HoldException('layout_requires_v2', 'Use the allocated reservation interface for this session.', 409);
             }
             $now = $this->lockedNow();
             $previous = $wpdb->get_row($wpdb->prepare(
@@ -121,12 +124,15 @@ final class HoldService
             global $wpdb;
             $p = $wpdb->prefix . 'pesm_';
             $session = $wpdb->get_row($wpdb->prepare(
-                "SELECT s.id,s.status,s.starts_at,s.sale_starts_at,s.sale_ends_at,s.require_adjacent,s.avoid_single_gap,e.status AS event_status
+                "SELECT s.id,s.mode,s.status,s.starts_at,s.sale_starts_at,s.sale_ends_at,s.require_adjacent,s.avoid_single_gap,e.status AS event_status
                  FROM {$p}sessions s JOIN {$p}events e ON e.id=s.event_id
                  WHERE s.id=%d FOR UPDATE", $sessionId
             ));
             if (!$session) {
                 throw new HoldException('invalid_session', \PESM\Support\I18n::text('جلسه پیدا نشد.'), 404);
+            }
+            if (($session->mode ?? 'seated') !== 'seated') {
+                throw new HoldException('layout_requires_v2', 'Use the allocated reservation interface for this session.', 409);
             }
             $now = $this->lockedNow();
             $hold = $wpdb->get_row($wpdb->prepare(

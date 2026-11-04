@@ -11,6 +11,8 @@ use PESM\Domain\Ticket\TicketToken;
 use PESM\Support\Audit;
 use Throwable;
 
+require_once __DIR__ . '/../Checkout/FinancialSnapshot.php';
+
 /**
  * General-admission order creation (free and opt-in paid preview). Dedicated tables prevent collisions
  * between general-admission hold IDs and numbered-seat hold IDs.
@@ -101,8 +103,18 @@ final class FreeAdmissionService
                  AND (h.status='issued' OR (h.status IN ('checkout_creating','payment_pending') AND h.expires_at>UTC_TIMESTAMP()))",
                 (int) $session->event_id, $phoneHash
             ));
-            $limit = max(1, min(100, (int) get_option('pesm_phone_event_limit', 20)));
-            if ($seatUsed + $generalUsed + $quantity > $limit) {
+            $allocatedUsed = 0;
+            if ((int) get_option('pesm_schema_version', 0) >= 19) {
+                $allocatedUsed = (int) $wpdb->get_var($wpdb->prepare(
+                    "SELECT COALESCE(SUM(l.admission_count),0) FROM {$p}allocation_lines l
+                     JOIN {$p}allocation_holds h ON h.id=l.hold_id JOIN {$p}sessions s ON s.id=h.session_id
+                     WHERE s.event_id=%d AND h.phone_hash=%s AND (h.status='sold' OR
+                     (h.status IN ('checkout_creating','payment_pending') AND h.expires_at>UTC_TIMESTAMP()))",
+                    (int) $session->event_id, $phoneHash
+                ));
+            }
+            $limit = max(1, min(200, (int) get_option('pesm_phone_event_limit', 20)));
+            if ($seatUsed + $generalUsed + $allocatedUsed + $quantity > $limit) {
                 throw new HoldException('phone_limit', \PESM\Support\I18n::text('سقف خرید این شماره موبایل پر شده است.'), 409);
             }
             // Payment pending has a bounded lease, no implicit extension on replay.
@@ -138,6 +150,8 @@ final class FreeAdmissionService
             $order->update_meta_data('_pesm_attendees_v1', $attendeeSnapshot);
             $order->update_meta_data('_pesm_unit_price_minor', (int) $session->unit_price_minor);
             $order->update_meta_data('_pesm_total_minor', (int) $session->unit_price_minor * (int) $hold->quantity);
+            $order->update_meta_data('_pesm_currency', (string) $order->get_currency());
+            $order->update_meta_data('_pesm_price_decimals', wc_get_price_decimals());
             $item = new \WC_Order_Item_Product();
             $item->set_product($product);
             $item->set_quantity((int) $hold->quantity);
@@ -255,15 +269,7 @@ final class FreeAdmissionService
             if (!$inventory || !$hold || !$link || (int) $hold->order_id !== $orderId) {
                 throw new HoldException('invalid_order', \PESM\Support\I18n::text('ارتباط رزرو و سفارش معتبر نیست.'), 409);
             }
-            if ($paid) {
-                $unitMinor = (int) $order->get_meta('_pesm_unit_price_minor');
-                $totalMinor = (int) $order->get_meta('_pesm_total_minor');
-                $actualMinor = (int) round((float) $order->get_total() * (10 ** wc_get_price_decimals()));
-                if ($unitMinor <= 0 || $totalMinor !== $unitMinor * (int) $hold->quantity ||
-                    $actualMinor !== $totalMinor) {
-                    throw new HoldException('price_mismatch', \PESM\Support\I18n::text('مبلغ تأییدشده با سفارش ثبت‌شده تطابق ندارد.'), 409);
-                }
-            }
+            \PESM\Domain\Checkout\FinancialSnapshot::uniform($order, (int) $hold->quantity, !$paid);
             if ($hold->status === 'issued' && $link->status === 'issued') {
                 if ($wpdb->query('COMMIT') === false) { throw new HoldException('write_failed', \PESM\Support\I18n::text('تراکنش نهایی نشد.'), 503); }
                 return 'already_issued';

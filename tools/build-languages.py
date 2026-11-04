@@ -46,7 +46,7 @@ def quote(value: str) -> str:
 
 
 def po_content(messages: dict[str, str], locale: str, references: dict[str, list[str]], template: bool = False) -> str:
-    header = ("Project-Id-Version: event-seat-manager 1.0.0\n"
+    header = ("Project-Id-Version: event-seat-manager 2.0.0\n"
               "Report-Msgid-Bugs-To: \n"
               "POT-Creation-Date: 2026-11-04 00:00+0000\n"
               "PO-Revision-Date: 2026-11-04 00:00+0000\n"
@@ -68,7 +68,7 @@ def po_content(messages: dict[str, str], locale: str, references: dict[str, list
 
 
 def mo_content(messages: dict[str, str], locale: str) -> bytes:
-    header = (f"Project-Id-Version: event-seat-manager 1.0.0\nLanguage: {locale}\n"
+    header = (f"Project-Id-Version: event-seat-manager 2.0.0\nLanguage: {locale}\n"
               "Content-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n"
               "Plural-Forms: nplurals=2; plural=(n != 1);\n")
     entries = {"": header, **messages}
@@ -98,7 +98,7 @@ def main() -> None:
     parser.add_argument("--check", action="store_true", help="Validate sources and compare generated files without writing")
     args = parser.parse_args()
     english: dict[str, str] = {}
-    for filename in ["backend-en.json", "client-en.json", "admin-en.json", "ui-en.json"]:
+    for filename in ["backend-en.json", "client-en.json", "admin-en.json", "ui-en.json", "venue-en.json"]:
         english.update(json.loads((LANG / filename).read_text()))
     persian_bootstrap = json.loads((LANG / "bootstrap-fa.json").read_text())
     references = source_messages()

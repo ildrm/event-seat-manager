@@ -373,7 +373,8 @@ final class RestController
     {
         try {
             return self::publicResponse((new ReconciliationService())->anomalies(
-                get_current_user_id(), (int) $request['center_id'], (int) ($request['limit'] ?: 100)
+                get_current_user_id(), (int) $request['center_id'], (int) ($request['limit'] ?: 100),
+                ['seated' => (int) $request['before_seated'], 'general' => (int) $request['before_general'], 'allocated' => (int) $request['after_allocated']]
             ));
         } catch (HoldException $e) { return self::error($e->errorCode, $e->getMessage(), $e->httpStatus); }
     }
@@ -596,7 +597,7 @@ final class RestController
 
     public static function gateLookup(WP_REST_Request $request): WP_REST_Response|WP_Error
     {
-        if (!RateLimiter::allow('gate_lookup')) {
+        if (!RateLimiter::operator('gate_lookup', get_current_user_id())) {
             return self::error('rate_limited', \PESM\Support\I18n::text('تعداد درخواست بیش از حد مجاز است.'), 429);
         }
         try {
@@ -608,7 +609,7 @@ final class RestController
 
     public static function gateManual(WP_REST_Request $request): WP_REST_Response|WP_Error
     {
-        if (!RateLimiter::allow('gate_manual')) {
+        if (!RateLimiter::operator('gate_manual', get_current_user_id())) {
             return self::error('rate_limited', \PESM\Support\I18n::text('تعداد درخواست بیش از حد مجاز است.'), 429);
         }
         try {
@@ -620,7 +621,7 @@ final class RestController
 
     public static function checkin(WP_REST_Request $request): WP_REST_Response|WP_Error
     {
-        if (!RateLimiter::allow('gate')) {
+        if (!RateLimiter::operator('gate', get_current_user_id())) {
             return self::error('rate_limited', \PESM\Support\I18n::text('تعداد درخواست بیش از حد مجاز است.'), 429);
         }
         try {
@@ -746,6 +747,9 @@ final class RestController
             return self::error('invalid_session', \PESM\Support\I18n::text('جلسه منتشرشده‌ای با این شناسه وجود ندارد.'), 404);
         }
         $p = $wpdb->prefix . 'pesm_';
+        if ($wpdb->get_var($wpdb->prepare("SELECT mode FROM {$p}sessions WHERE id=%d", $sessionId)) === 'allocated') {
+            return self::error('layout_requires_v2', 'Use the bounded venue availability API.', 409);
+        }
         $items = $wpdb->get_results($wpdb->prepare(
             "SELECT seat_id,
              CASE WHEN status IN ('held','payment_pending') AND expires_at <= UTC_TIMESTAMP() THEN 'available' ELSE status END AS status
@@ -773,10 +777,11 @@ final class RestController
         global $wpdb;
         $p = $wpdb->prefix . 'pesm_';
         $session = $wpdb->get_row($wpdb->prepare(
-            "SELECT require_adjacent,avoid_single_gap,starts_at,sale_starts_at,sale_ends_at
+            "SELECT require_adjacent,avoid_single_gap,starts_at,sale_starts_at,sale_ends_at,mode
              FROM {$p}sessions WHERE id=%d", $sessionId));
         $now = (string) $wpdb->get_var('SELECT UTC_TIMESTAMP()');
         if (!$session || !$now) { return self::error('db_unavailable', \PESM\Support\I18n::text('ارتباط پایگاه داده در دسترس نیست.'), 503); }
+        if (($session->mode ?? 'seated') === 'allocated') { return self::error('layout_requires_v2', 'Use the section-based venue browser.', 409); }
         if ($session->sale_starts_at > $now || $session->sale_ends_at <= $now || $session->starts_at <= $now) {
             return self::error('event_closed', \PESM\Support\I18n::text('زمان فروش این جلسه فعال نیست.'), 409);
         }

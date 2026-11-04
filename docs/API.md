@@ -1,4 +1,6 @@
-# قرارداد REST — event-seat-manager 1.0.0
+# قرارداد REST — event-seat-manager 2.0.0
+
+API نسخهٔ دوم برای چیدمان بزرگ، میز/جایگاه، قیمت دسته‌ای و بلیت گروهی در [راهنمای طراح سالن](VENUE-DESIGNER.md) آمده است. مسیرهای قدیمی اجازهٔ تغییر جلسه‌های `allocated` را ندارند. صفحه‌بندی گزارش مغایرت، cursor مستقل `before_seated`، `before_general` و `after_allocated` دارد؛ مقدار `-1` یعنی آن نوع موجودی به انتها رسیده و نباید از ابتدا خوانده شود.
 
 تمام مسیرها با prefix `wp-json/pesm/v1/`، پاسخ JSON و `Cache-Control: private, no-store` پیاده شده‌اند. نتایج آزمون واقعی و محدودیت‌های مسیرها در `INTEGRATION-RESULTS.md` ثبت می‌شود. آدرس پایه را با `rest_url()` دریافت کنید؛ در پیوند یکتای ساده مسیر از query `rest_route` استفاده می‌کند.
 

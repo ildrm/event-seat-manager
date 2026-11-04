@@ -1,0 +1,31 @@
+{
+  "passed": true,
+  "checks": 24,
+  "scenarios": [
+    "registered public catalog exposes fifty recipes",
+    "public overview has no unbounded seat array",
+    "overview includes canonical server prices and purchase limit",
+    "geometry tile remains bounded",
+    "public inventory list applies its bound",
+    "row filtering and availability/price precede pagination",
+    "row filtering and availability/price precede pagination",
+    "row filtering and availability/price precede pagination",
+    "group row filter cannot silently return unrelated groups",
+    "public groups include their canonical map locator",
+    "admin configuration supplies its exact venue identities",
+    "legacy attendance dashboard counts allocated admission slots",
+    "existing analytics accepts allocated sessions without SQL errors",
+    "combined reconciliation provides an independent allocated cursor",
+    "exhausted inventory streams never restart during composite pagination",
+    "anonymous callers cannot read administrator layouts",
+    "legacy availability cannot expand allocated inventory",
+    "legacy acquisition cannot bypass allocation group rules",
+    "creation cannot bypass dedicated pricing capability",
+    "denied pricing creation leaves no session or provisioning side effects",
+    "configuration PATCH enforces the same pricing capability",
+    "invalid settings are rejected before committing a session",
+    "private cart mount initializes the canonical sessionId",
+    "allocated ticket clients load the local QR renderer"
+  ],
+  "schema": 19
+}

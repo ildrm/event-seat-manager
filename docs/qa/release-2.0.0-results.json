@@ -1,0 +1,1554 @@
+{
+  "checks": [
+    {
+      "kind": "catalog",
+      "file": "tools/build-languages.py",
+      "passed": true,
+      "output": "PASS: 1386 source messages covered; 1460 English translations; gettext catalogs checked.\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/admin-workspace-unit.php",
+      "passed": true,
+      "output": "PASS: 107 grouped workspace, form integrity, escaping and permission checks.\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/allocation-policy-unit.php",
+      "passed": true,
+      "output": "PASS: 28 allocation/pricing/admission/financial policy assertions.\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/attendance-access-unit.php",
+      "passed": true,
+      "output": "PASS: 12 report scope & aggregation assertions (mocked DB).\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/attendee-change-fake-db.php",
+      "passed": true,
+      "output": "PASS: 15 simulated attendee changes (not real InnoDB).\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/attendee-change-unit.php",
+      "passed": true,
+      "output": "PASS: 15 attendee policy assertions (pure PHP).\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/attendee-manifest-unit.php",
+      "passed": true,
+      "output": "OK: 31 attendee snapshot and validation assertions\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/bootstrap-lifecycle-unit.php",
+      "passed": true,
+      "output": "PASS: duplicate plugin activation protection\nPASS: 13 lifecycle and migration safety checks\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/bundle-policy-unit.php",
+      "passed": true,
+      "output": "bundle policy: 21 assertions OK\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/bundle-service-fake-db.php",
+      "passed": true,
+      "output": "bundle fake-db: 14 assertions OK\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/capacity-fake-db.php",
+      "passed": true,
+      "output": "PASS: 24 capacity-hold fake-DB behavioral checks (not InnoDB concurrency).\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/capacity-session-fake-db.php",
+      "passed": true,
+      "output": "PASS: 12 general-admission session creation fake-DB assertions.\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/capacity-unit.php",
+      "passed": true,
+      "output": "PASS: 23 pure general-admission capacity assertions.\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/cart-seat-bridge-fake-wc.php",
+      "passed": true,
+      "output": "PASS: 48 WC Cart bridge mock checks (no real WooCommerce, Blocks or InnoDB).\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/checkout-ticket-unit.php",
+      "passed": true,
+      "output": "PASS: 40 checkout/ticket pure-PHP assertions.\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/discount-claims-fake-db.php",
+      "passed": true,
+      "output": "PASS: 29 discount reservation fake-DB assertions; no actual SQL transactions exercised.\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/discount-policy-unit.php",
+      "passed": true,
+      "output": "PASS: 29 discount policy assertions (PHP only).\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/draft-autosave-fake-db.php",
+      "passed": true,
+      "output": "PASS: 23 draft autosave fake-DB assertions (not InnoDB integration).\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/elementor-registration-unit.php",
+      "passed": true,
+      "output": "PASS: 6 Elementor widgets registered against isolated mock. Elementor/browser integration not tested.\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/event-change-fake-db.php",
+      "passed": true,
+      "output": "event-change simulated DB tests: PASS (14 checks and negative cases)\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/free-ticket-cancel-fake-db.php",
+      "passed": true,
+      "output": "PASS: 10 free-ticket cancellation fake-DB checks; no live DB tested.\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/frontend-locale-unit.php",
+      "passed": true,
+      "output": "PASS: English/Persian views, direction, block metadata, escaping and script dependencies.\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/gate-number-fake-db.php",
+      "passed": true,
+      "output": "PASS: 9 gate-number fake-DB checks; no real WordPress, InnoDB or multi-scanner tests.\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/general-admission-free-fake-db.php",
+      "passed": true,
+      "output": "PASS: 36 free-general-admission policy/transaction assertions (fake DB, NOT InnoDB).\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/general-admission-gate-fake-db.php",
+      "passed": true,
+      "output": "PASS: 14 free-general-admission gate assertions (fake DB, NOT concurrent scanners).\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/general-admission-guest-fake-db.php",
+      "passed": true,
+      "output": "PASS: 4 general-admission guest authorization and invoice assertions (fake DB).\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/general-admission-paid-fake-db.php",
+      "passed": true,
+      "output": "PASS: 27 paid-general-admission fake-DB assertions (NOT a live payment or concurrent InnoDB test).\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/guest-report-unit.php",
+      "passed": true,
+      "output": "PASS: 38 guest recovery / report / Gutenberg assertions (fake DB; not WordPress/MySQL).\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/hold-extension-unit.php",
+      "passed": true,
+      "output": "PASS: 6 bounded hold-renewal assertions. No DB integration tested.\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/holds-fake-db.php",
+      "passed": true,
+      "output": "PASS: 28 fake-db behavioral assertions. No real isolation/transaction/concurrency tested.\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/i18n-unit.php",
+      "passed": true,
+      "output": "PASS: 28 bilingual runtime assertions.\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/layout-calendar-unit.php",
+      "passed": true,
+      "output": "PASS: 81 layout/calendar unit assertions (no WordPress or DB).\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/layout-objects-unit.php",
+      "passed": true,
+      "output": "PASS: 25 layout object assertions (pure PHP, not WordPress/MySQL).\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/layout-presets-unit.php",
+      "passed": true,
+      "output": "PASS: 152 layout preset assertions (pure PHP).\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/layout-print-unit.php",
+      "passed": true,
+      "output": "PASS: 30 print-unit assertions (HTML not browser/PDF integration).\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/layout-version-fake-db.php",
+      "passed": true,
+      "output": "PASS: 23 layout version fake DB assertions (not MySQL integration).\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/notification-queue-fake-db.php",
+      "passed": true,
+      "output": "notification-queue-fake-db: 21 checks passed (not a real InnoDB test)\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/notification-unit.php",
+      "passed": true,
+      "output": "notification-unit: 25 checks passed\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/ownership-transfer-fake-db.php",
+      "passed": true,
+      "output": "PASS: 35 ownership transfer assertions with DB mock; no InnoDB/SMTP tested.\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/ownership-transfer-policy-unit.php",
+      "passed": true,
+      "output": "PASS: 26 ownership transfer policy assertions.\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/phone-requirement-unit.php",
+      "passed": true,
+      "output": "PASS: 12 guest phone requirement checks (pure PHP/static, not browser).\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/reconciliation-unit.php",
+      "passed": true,
+      "output": "PASS: 8 reconciliation classification tests.\nPASS: 8 general-admission reconciliation classifications.\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/recovered-ticket-regression.php",
+      "passed": true,
+      "output": "PASS: recovered guest token and rejected-token isolation.\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/refund-policy-unit.php",
+      "passed": true,
+      "output": "PASS: 32 refund policy and Woo refund matching checks (no gateway or InnoDB).\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/refund-review-fake-db.php",
+      "passed": true,
+      "output": "PASS: 25 refund request/reconcile fake-DB checks (not real InnoDB).\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/report-dashboard-unit.php",
+      "passed": true,
+      "output": "PASS: 11 dashboard integration/access/escaping assertions (mocked WP).\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/report-xlsx-unit.php",
+      "passed": true,
+      "output": "PASS: 17 XLSX integrity/injection/bounds assertions.\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/sales-insights-fake-db.php",
+      "passed": true,
+      "output": "PASS: 19 analytics scope/count/range/security assertions (fake DB).\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/seat-status-report-fake-db.php",
+      "passed": true,
+      "output": "PASS: 13 scoped seat status fake DB assertions (not MySQL integration).\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/seat-transfer-fake-db.php",
+      "passed": true,
+      "output": "PASS: 18 transactional fake-DB seat-transfer checks; NOT MySQL concurrency.\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/seat-transfer-unit.php",
+      "passed": true,
+      "output": "PASS: 20 pure seat-transfer assertions. No real WordPress/InnoDB tests.\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/seated-payment-fake-db.php",
+      "passed": true,
+      "output": "PASS: 23 seated payment/expiry/rollback assertions (fake DB).\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/seating-rules-unit.php",
+      "passed": true,
+      "output": "PASS: 29 seating topology / gap / suggestion assertions (pure PHP).\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/smoke.php",
+      "passed": true,
+      "output": "PASS: 15 × 60 = 900 seats\nPASS: 15 × 60 unique codes\nPASS: 15 × 60 first seat A-1\nPASS: 15 × 60 last seat\nPASS: 15 × 60 distinct columns\nPASS: 15 × 60 distinct rows\nPASS: 18 × 50 = 900 seats\nPASS: 18 × 50 unique codes\nPASS: 18 × 50 first seat A-1\nPASS: 18 × 50 last seat\nPASS: 18 × 50 distinct columns\nPASS: 18 × 50 distinct rows\nPASS: Row 26 = Z\nPASS: Row 27 = AA\nPASS: Oversized layout rejected\nPASS: Fixture layout-15x60.json has 900 seat entries\nPASS: Fixture layout-18x50.json has 900 seat entries\nAll pure-PHP smoke checks passed. No WordPress/MySQL integration was run.\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/unit.php",
+      "passed": true,
+      "output": "PASS: 39 pure-PHP assertions; no WordPress/MySQL integration performed.\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/venue-acceptance-unit.php",
+      "passed": true,
+      "output": "PASS: 29 creation-gate and shared seat/zone boundary assertions.\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/venue-generators-unit.php",
+      "passed": true,
+      "output": "PASS: 769 venue generation/document assertions.\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/venue-geometry-unit.php",
+      "passed": true,
+      "output": "PASS: 110 physical geometry scenarios; section/group allocation, chair spacing and focal-object separation.\n"
+    },
+    {
+      "kind": "test",
+      "file": "tests/venue-print-unit.php",
+      "passed": true,
+      "output": "PASS: 42 venue-print assertions (SVG geometry, bounded detail, tier isolation, Unicode, RTL, CSP and escaping).\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "event-seat-manager.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/event-seat-manager.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "uninstall.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/uninstall.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Admin/Pages.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Admin/Pages.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Admin/VenueDesigner.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Admin/VenueDesigner.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Database/AllocationSchema.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Database/AllocationSchema.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Database/Migrator.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Database/Migrator.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Database/VenueSchema.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Database/VenueSchema.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Allocation/CartService.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Allocation/CartService.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Allocation/CheckoutService.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Allocation/CheckoutService.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Allocation/Credential.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Allocation/Credential.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Allocation/Database.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Allocation/Database.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Allocation/GateService.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Allocation/GateService.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Allocation/GroupAdministration.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Allocation/GroupAdministration.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Allocation/Messages.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Allocation/Messages.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Allocation/Policy.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Allocation/Policy.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Allocation/Pricing.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Allocation/Pricing.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Allocation/Reconciliation.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Allocation/Reconciliation.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Allocation/ReservationService.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Allocation/ReservationService.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Allocation/SessionService.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Allocation/SessionService.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Allocation/Topology.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Allocation/Topology.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Allocation/UnitBrowser.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Allocation/UnitBrowser.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Booking/CapacityMaintenance.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Booking/CapacityMaintenance.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Booking/CapacityPolicy.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Booking/CapacityPolicy.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Booking/CapacityService.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Booking/CapacityService.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Booking/HoldException.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Booking/HoldException.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Booking/HoldMaintenance.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Booking/HoldMaintenance.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Booking/HoldPolicy.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Booking/HoldPolicy.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Booking/HoldService.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Booking/HoldService.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Booking/SeatSuggestions.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Booking/SeatSuggestions.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Booking/SeatingRules.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Booking/SeatingRules.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Booking/SeatingRulesService.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Booking/SeatingRulesService.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Calendar/CalendarFeed.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Calendar/CalendarFeed.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Checkout/AttendeeManifest.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Checkout/AttendeeManifest.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Checkout/CheckoutPolicy.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Checkout/CheckoutPolicy.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Checkout/CheckoutService.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Checkout/CheckoutService.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Checkout/FinancialSnapshot.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Checkout/FinancialSnapshot.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Event/EventChangePolicy.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Event/EventChangePolicy.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Event/EventChangeService.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Event/EventChangeService.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Event/EventDetails.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Event/EventDetails.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Event/EventEditor.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Event/EventEditor.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Event/LifecyclePolicy.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Event/LifecyclePolicy.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Event/LifecycleService.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Event/LifecycleService.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Gate/CheckinService.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Gate/CheckinService.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/GeneralAdmission/AdmissionGateService.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/GeneralAdmission/AdmissionGateService.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/GeneralAdmission/AdmissionPolicy.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/GeneralAdmission/AdmissionPolicy.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/GeneralAdmission/FreeAdmissionService.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/GeneralAdmission/FreeAdmissionService.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Guest/GuestAccessPolicy.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Guest/GuestAccessPolicy.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Guest/GuestAccessService.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Guest/GuestAccessService.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Hall/DraftSaveService.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Hall/DraftSaveService.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Hall/GridGenerator.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Hall/GridGenerator.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Hall/HallService.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Hall/HallService.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Hall/LayoutDocument.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Hall/LayoutDocument.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Hall/LayoutObjectStorage.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Hall/LayoutObjectStorage.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Hall/LayoutPresets.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Hall/LayoutPresets.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Hall/LayoutPrintRenderer.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Hall/LayoutPrintRenderer.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Hall/LayoutVersionService.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Hall/LayoutVersionService.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Hall/SeatAdministration.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Hall/SeatAdministration.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Hall/SeatCode.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Hall/SeatCode.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Notification/MelipayamakClient.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Notification/MelipayamakClient.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Notification/NotificationPolicy.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Notification/NotificationPolicy.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Notification/NotificationQueue.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Notification/NotificationQueue.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Notification/PayloadCipher.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Notification/PayloadCipher.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Pricing/DiscountPolicy.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Pricing/DiscountPolicy.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Pricing/DiscountService.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Pricing/DiscountService.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Reconciliation/ReconciliationService.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Reconciliation/ReconciliationService.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Reporting/AttendanceReport.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Reporting/AttendanceReport.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Reporting/CsvSafety.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Reporting/CsvSafety.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Reporting/SalesInsights.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Reporting/SalesInsights.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Reporting/SeatStatusReport.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Reporting/SeatStatusReport.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Reporting/XlsxExporter.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Reporting/XlsxExporter.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Ticket/AttendeeChangePolicy.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Ticket/AttendeeChangePolicy.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Ticket/AttendeeChangeService.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Ticket/AttendeeChangeService.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Ticket/BundlePolicy.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Ticket/BundlePolicy.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Ticket/BundleService.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Ticket/BundleService.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Ticket/FreeTicketCancellationService.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Ticket/FreeTicketCancellationService.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Ticket/OwnershipTransferPolicy.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Ticket/OwnershipTransferPolicy.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Ticket/OwnershipTransferService.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Ticket/OwnershipTransferService.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Ticket/RefundPolicy.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Ticket/RefundPolicy.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Ticket/RefundReviewService.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Ticket/RefundReviewService.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Ticket/SeatTransferPolicy.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Ticket/SeatTransferPolicy.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Ticket/SeatTransferService.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Ticket/SeatTransferService.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Ticket/TicketService.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Ticket/TicketService.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Ticket/TicketToken.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Ticket/TicketToken.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Venue/Acceptance.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Venue/Acceptance.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Venue/Document.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Venue/Document.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Venue/Generator.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Venue/Generator.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Venue/JobService.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Venue/JobService.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Venue/LayoutRepository.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Venue/LayoutRepository.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Domain/Venue/PresetCatalog.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Domain/Venue/PresetCatalog.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Frontend/Blocks.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Frontend/Blocks.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Frontend/Shortcodes.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Frontend/Shortcodes.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Http/RestController.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Http/RestController.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Http/VenueRestController.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Http/VenueRestController.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Integrations/CartSeatManager.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Integrations/CartSeatManager.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Integrations/Elementor/Widget.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Integrations/Elementor/Widget.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Integrations/ElementorWidgets.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Integrations/ElementorWidgets.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Integrations/WooCommerceBridge.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Integrations/WooCommerceBridge.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Security/Capabilities.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Security/Capabilities.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Security/RateLimiter.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Security/RateLimiter.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Support/Audit.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Support/Audit.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Support/I18n.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Support/I18n.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Support/Jalali.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Support/Jalali.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Support/Ui.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Support/Ui.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Support/VenuePrint.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Support/VenuePrint.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "src/Support/VenueUi.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/src/Support/VenueUi.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/admin-workspace-unit.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/admin-workspace-unit.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/allocation-policy-unit.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/allocation-policy-unit.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/attendance-access-unit.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/attendance-access-unit.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/attendee-change-fake-db.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/attendee-change-fake-db.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/attendee-change-unit.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/attendee-change-unit.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/attendee-manifest-unit.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/attendee-manifest-unit.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/bootstrap-lifecycle-unit.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/bootstrap-lifecycle-unit.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/bundle-policy-unit.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/bundle-policy-unit.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/bundle-service-fake-db.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/bundle-service-fake-db.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/capacity-fake-db.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/capacity-fake-db.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/capacity-session-fake-db.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/capacity-session-fake-db.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/capacity-unit.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/capacity-unit.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/cart-seat-bridge-fake-wc.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/cart-seat-bridge-fake-wc.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/checkout-ticket-unit.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/checkout-ticket-unit.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/discount-claims-fake-db.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/discount-claims-fake-db.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/discount-policy-unit.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/discount-policy-unit.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/draft-autosave-fake-db.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/draft-autosave-fake-db.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/elementor-registration-unit.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/elementor-registration-unit.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/event-change-fake-db.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/event-change-fake-db.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/free-ticket-cancel-fake-db.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/free-ticket-cancel-fake-db.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/frontend-locale-unit.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/frontend-locale-unit.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/gate-number-fake-db.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/gate-number-fake-db.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/general-admission-free-fake-db.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/general-admission-free-fake-db.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/general-admission-gate-fake-db.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/general-admission-gate-fake-db.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/general-admission-guest-fake-db.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/general-admission-guest-fake-db.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/general-admission-paid-fake-db.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/general-admission-paid-fake-db.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/generate-fixtures.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/generate-fixtures.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/guest-report-unit.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/guest-report-unit.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/hold-extension-unit.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/hold-extension-unit.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/holds-fake-db.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/holds-fake-db.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/i18n-unit.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/i18n-unit.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/integration-allocation.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/integration-allocation.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/integration-locale.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/integration-locale.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/integration-venue-adapters.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/integration-venue-adapters.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/integration-venue-load-seed.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/integration-venue-load-seed.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/integration-venue-package.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/integration-venue-package.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/integration-venue-profile.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/integration-venue-profile.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/integration-venue-races.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/integration-venue-races.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/integration-venue-ui.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/integration-venue-ui.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/integration-venue.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/integration-venue.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/integration-wp.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/integration-wp.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/layout-calendar-unit.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/layout-calendar-unit.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/layout-objects-unit.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/layout-objects-unit.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/layout-presets-unit.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/layout-presets-unit.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/layout-print-unit.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/layout-print-unit.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/layout-version-fake-db.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/layout-version-fake-db.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/notification-queue-fake-db.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/notification-queue-fake-db.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/notification-unit.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/notification-unit.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/ownership-transfer-fake-db.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/ownership-transfer-fake-db.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/ownership-transfer-policy-unit.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/ownership-transfer-policy-unit.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/phone-requirement-unit.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/phone-requirement-unit.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/reconciliation-unit.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/reconciliation-unit.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/recovered-ticket-regression.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/recovered-ticket-regression.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/refund-policy-unit.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/refund-policy-unit.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/refund-review-fake-db.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/refund-review-fake-db.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/report-dashboard-unit.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/report-dashboard-unit.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/report-xlsx-unit.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/report-xlsx-unit.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/sales-insights-fake-db.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/sales-insights-fake-db.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/seat-status-report-fake-db.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/seat-status-report-fake-db.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/seat-transfer-fake-db.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/seat-transfer-fake-db.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/seat-transfer-unit.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/seat-transfer-unit.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/seated-payment-fake-db.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/seated-payment-fake-db.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/seating-rules-unit.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/seating-rules-unit.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/seed-wp-cli.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/seed-wp-cli.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/smoke.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/smoke.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/unit.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/unit.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/venue-acceptance-unit.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/venue-acceptance-unit.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/venue-generators-unit.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/venue-generators-unit.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/venue-geometry-unit.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/venue-geometry-unit.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tests/venue-print-unit.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tests/venue-print-unit.php\n"
+    },
+    {
+      "kind": "php-lint",
+      "file": "tools/extract-i18n.php",
+      "passed": true,
+      "output": "No syntax errors detected in /Users/shahinilderemi/Documents/tmp/event-seat-manager/tools/extract-i18n.php\n"
+    },
+    {
+      "kind": "js-lint",
+      "file": "assets/build/geometry-worker.js",
+      "passed": true,
+      "output": ""
+    },
+    {
+      "kind": "js-lint",
+      "file": "assets/build/venue-app.js",
+      "passed": true,
+      "output": ""
+    },
+    {
+      "kind": "js-lint",
+      "file": "assets/js/admin.js",
+      "passed": true,
+      "output": ""
+    },
+    {
+      "kind": "js-lint",
+      "file": "assets/js/attendance.js",
+      "passed": true,
+      "output": ""
+    },
+    {
+      "kind": "js-lint",
+      "file": "assets/js/attendees.js",
+      "passed": true,
+      "output": ""
+    },
+    {
+      "kind": "js-lint",
+      "file": "assets/js/blocks-editor.js",
+      "passed": true,
+      "output": ""
+    },
+    {
+      "kind": "js-lint",
+      "file": "assets/js/capacity.js",
+      "passed": true,
+      "output": ""
+    },
+    {
+      "kind": "js-lint",
+      "file": "assets/js/cart-seats.js",
+      "passed": true,
+      "output": ""
+    },
+    {
+      "kind": "js-lint",
+      "file": "assets/js/gate.js",
+      "passed": true,
+      "output": ""
+    },
+    {
+      "kind": "js-lint",
+      "file": "assets/js/i18n.js",
+      "passed": true,
+      "output": ""
+    },
+    {
+      "kind": "js-lint",
+      "file": "assets/js/layout-editor.js",
+      "passed": true,
+      "output": ""
+    },
+    {
+      "kind": "js-lint",
+      "file": "assets/js/map.js",
+      "passed": true,
+      "output": ""
+    },
+    {
+      "kind": "js-lint",
+      "file": "assets/js/ownership-transfer.js",
+      "passed": true,
+      "output": ""
+    },
+    {
+      "kind": "js-lint",
+      "file": "assets/js/sales-insights.js",
+      "passed": true,
+      "output": ""
+    },
+    {
+      "kind": "js-lint",
+      "file": "assets/js/seat-status-admin.js",
+      "passed": true,
+      "output": ""
+    },
+    {
+      "kind": "js-lint",
+      "file": "assets/js/tickets.js",
+      "passed": true,
+      "output": ""
+    },
+    {
+      "kind": "js-lint",
+      "file": "assets/vendor/qrcodegen-bundled.js",
+      "passed": true,
+      "output": ""
+    },
+    {
+      "kind": "js-test",
+      "file": "tests/admin-navigation-unit.js",
+      "passed": true,
+      "output": "PASS: 25 admin navigation, history, focus, permission-fallback and form-return checks.\n"
+    },
+    {
+      "kind": "js-test",
+      "file": "tests/frontend-rest-url.js",
+      "passed": true,
+      "output": "PASS: REST URLs preserve plain permalinks, subdirectories and endpoint query parameters.\n"
+    },
+    {
+      "kind": "js-test",
+      "file": "tests/venue-form-state-unit.js",
+      "passed": true,
+      "output": "PASS: actual hold forms, reversed session/config/overview/tile races, draft/version URLs, expiry recovery and exact/advanced generator payloads.\n"
+    },
+    {
+      "kind": "js-test",
+      "file": "tests/venue-ui-unit.js",
+      "passed": true,
+      "output": "PASS: bounded geometry, four-request queue, shared selection, group locators, renewal/refresh/BFCache form persistence, 3D scope fitting, physical navigation and private REST transport.\n"
+    }
+  ],
+  "passed": true,
+  "count": 256,
+  "seconds": 18.0,
+  "version": "2.0.0",
+  "schema": 19,
+  "release_metadata": {
+    "plugin_header": true,
+    "runtime_constant": true,
+    "stable_tag": true,
+    "block_manifests": 5,
+    "gettext_headers": true,
+    "changelog_empty": true
+  },
+  "scope": "Offline source, syntax, catalog and release metadata verification. Earlier database/load evidence retains its original provenance."
+}

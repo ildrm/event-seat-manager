@@ -25,8 +25,13 @@ final class LifecycleService
             if ($entity === 'event') {
                 $item = $wpdb->get_row($wpdb->prepare("SELECT id,status FROM {$table} WHERE id=%d FOR UPDATE", $id));
             } else {
-                $item = $wpdb->get_row($wpdb->prepare("SELECT id,status,event_id FROM {$table} WHERE id=%d FOR UPDATE", $id));
+                $item = $wpdb->get_row($wpdb->prepare("SELECT id,status,event_id,mode FROM {$table} WHERE id=%d FOR UPDATE", $id));
                 if ($item && $target === 'published') {
+                    if (($item->mode ?? 'seated') === 'allocated' &&
+                        ($item->status === 'draft' && !\PESM\Domain\Venue\Acceptance::creationEnabled())) {
+                        throw new RuntimeException('Allocated inventory and operational acceptance must be ready before publication.');
+                    }
+                    if (($item->mode ?? 'seated') === 'allocated') { \PESM\Domain\Allocation\SessionService::assertPublishable($id); }
                     $eventStatus = $wpdb->get_var($wpdb->prepare(
                         "SELECT status FROM {$wpdb->prefix}pesm_events WHERE id=%d", (int) $item->event_id
                     ));

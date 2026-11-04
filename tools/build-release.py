@@ -8,10 +8,11 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 SLUG = 'event-seat-manager'
-VERSION = '1.0.0'
+VERSION = '2.0.0'
 
 
 def validate():
+    subprocess.run(['node', str(ROOT / 'tools/build-assets.mjs'), '--check'], check=True, cwd=ROOT)
     subprocess.run(['python3', str(ROOT / 'tools/build-languages.py'), '--check'], check=True, cwd=ROOT)
     bootstrap = (ROOT / f'{SLUG}.php').read_text()
     assert f'Plugin Name: {SLUG}\n' in bootstrap
@@ -35,10 +36,15 @@ def main():
     validate()
     files = [ROOT / name for name in (f'{SLUG}.php', 'uninstall.php', 'readme.txt', 'README.md', 'LICENSE', 'CHANGELOG.md')]
     for directory in ('src', 'assets', 'blocks', 'languages'):
-        files.extend(path for path in (ROOT / directory).rglob('*') if path.is_file() and not path.name.startswith('.'))
+        files.extend(path for path in (ROOT / directory).rglob('*') if path.is_file() and not path.name.startswith('.')
+                     and not (directory == 'assets' and ('src' in path.relative_to(ROOT / directory).parts or path.suffix == '.map')))
     files.extend(path for path in (ROOT / 'docs').rglob('*.md'))
     files.extend(path for path in (ROOT / 'design-system').rglob('*.md'))
-    for name in ('integration-results.json', 'package-results.json', 'verification-summary.json', 'locale-results.json'):
+    for name in ('integration-results.json', 'package-results.json', 'verification-summary.json', 'locale-results.json',
+                 'venue-verification-results.json', 'venue-legacy-results.json', 'venue-generator-results.json',
+                 'venue-allocation-results.json', 'venue-adapter-results.json', 'venue-load-results.json',
+                 'venue-profile-results.json', 'venue-package-results.json', 'venue-hpos-results.json',
+                 'venue-race-results.json', f'release-{VERSION}-results.json'):
         evidence = ROOT / 'docs' / 'qa' / name
         if evidence.is_file():
             files.append(evidence)

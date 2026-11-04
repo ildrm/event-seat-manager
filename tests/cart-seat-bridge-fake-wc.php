@@ -7,7 +7,7 @@ require_once __DIR__ . '/../src/Support/Ui.php';
 
 /** Behavioral WC cart/session double. Not a WordPress, MySQL, Cart Blocks or payment test. */
 define('PESM_URL', 'https://example.test/wp-content/plugins/pesm/');
-define('PESM_VERSION','1.0.0');
+define('PESM_VERSION','2.0.0');
 define('PESM_DIR', dirname(__DIR__) . '/');
 require_once __DIR__ . '/../src/Domain/Booking/HoldException.php';
 require_once __DIR__ . '/../src/Domain/Booking/HoldPolicy.php';
