@@ -3,6 +3,8 @@
  * Plugin Name: event-seat-manager
  * Description: Bilingual event, hall, seat reservation, WooCommerce ticketing and online admission management.
  * Version: 1.0.0
+ * Author: Shahin Ilderemi
+ * Author URI:  https://ildrm.com
  * Requires PHP: 8.1
  * Text Domain: event-seat-manager
  * Domain Path: /languages
