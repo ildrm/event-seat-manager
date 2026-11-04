@@ -1,0 +1,21 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "pesm/event",
+  "version": "1.0.0",
+  "title": "رویداد",
+  "category": "widgets",
+  "icon": "tickets-alt",
+  "description": "نمایش پویا؛ اطلاعات از سمت سرور و با کنترل دسترسی دریافت می‌شود.",
+  "textdomain": "event-seat-manager",
+  "editorScript": "pesm-blocks-editor",
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "eventId": {
+      "type": "number",
+      "default": 0
+    }
+  }
+}

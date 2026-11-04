@@ -1,0 +1,123 @@
+/* Scoped event and booking interfaces; physical seat coordinates remain LTR. */
+.pesm-event-list,.pesm-event-detail,.pesm-tickets-panel,.pesm-gate,.pesm-ownership-transfer,.pesm-attendance{inline-size:100%;max-inline-size:1160px;margin:32px auto;min-inline-size:0}
+.pesm-event-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.pesm-ui .pesm-event-card{display:flex;flex-direction:column;min-inline-size:0;padding:24px;background:#fff;border:1px solid var(--pesm-border);border-radius:16px;box-shadow:var(--pesm-shadow)}
+.pesm-event-card h3{font-size:20px;margin-block:16px 8px}.pesm-event-card p{color:var(--pesm-muted);font-size:14px}
+.pesm-event-card-icon{display:grid;place-items:center;inline-size:48px;block-size:48px;border-radius:12px;background:var(--pesm-primary-soft);color:var(--pesm-primary)}
+.pesm-event-card .pesm-button{margin-block-start:auto}.pesm-event-card img{inline-size:100%;block-size:170px;object-fit:cover;border-radius:12px}
+.pesm-event-meta,.pesm-event-metadata{display:flex;flex-wrap:wrap;gap:12px 24px;color:var(--pesm-muted);font-size:14px;margin-block:16px}
+.pesm-event-meta>*,.pesm-event-metadata>*{display:inline-flex;align-items:center;gap:8px}.pesm-event-meta .pesm-icon{color:var(--pesm-primary)}
+.pesm-event-detail .pesm-page-heading{padding:32px;border:1px solid var(--pesm-border);border-radius:20px;background:#fff}
+.pesm-event-detail .pesm-event-poster{float:inline-end;inline-size:min(100%,240px);border-radius:14px;margin-inline-start:24px;margin-block-end:16px}
+.pesm-event-description{color:var(--pesm-muted);max-inline-size:75ch}
+.pesm-event-detail>details,.pesm-event-detail .pesm-session{border:1px solid var(--pesm-border);border-radius:16px;margin-block:16px;background:#fff;box-shadow:var(--pesm-shadow);overflow:clip}
+.pesm-event-detail>details>summary,.pesm-session>summary{display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:20px 24px;color:var(--pesm-ink);font-size:15px;font-weight:650;list-style:none;min-block-size:72px;cursor:pointer}
+.pesm-event-detail>details>summary::-webkit-details-marker,.pesm-session>summary::-webkit-details-marker{display:none}
+.pesm-event-detail>details>summary::after,.pesm-session>summary::after{content:"+";display:grid;place-items:center;font-size:22px;font-weight:400;inline-size:32px;block-size:32px;margin-inline-start:auto;border-radius:8px;background:var(--pesm-canvas);color:var(--pesm-primary)}
+.pesm-event-detail>details[open]>summary::after,.pesm-session[open]>summary::after{content:"−"}
+.pesm-event-detail>details[open]>summary,.pesm-session[open]>summary{border-block-end:1px solid var(--pesm-border)}
+.pesm-event-detail>details>.pesm-map,.pesm-event-detail>details>.pesm-capacity{margin:0;border:0;border-radius:0;box-shadow:none}
+.pesm-ui.pesm-map,.pesm-ui.pesm-capacity{inline-size:100%;max-inline-size:1160px;margin:24px auto;padding:24px;border:1px solid var(--pesm-border);border-radius:20px;background:#fff;box-shadow:var(--pesm-shadow);min-inline-size:0}
+.pesm-booking-steps{display:flex;flex-wrap:wrap;gap:8px 24px;padding:0 0 20px;margin:0 0 24px;border-block-end:1px solid var(--pesm-border);list-style:none;counter-reset:booking;color:var(--pesm-muted)}
+.pesm-booking-steps li{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;counter-increment:booking}
+.pesm-booking-steps li>span{display:grid;place-items:center;inline-size:28px;block-size:28px;border-radius:50%;background:#f0f3f9;color:var(--pesm-muted);font-size:12px}
+.pesm-booking-steps [aria-current=step]{color:var(--pesm-primary-hover)}.pesm-booking-steps [aria-current=step]>span{background:var(--pesm-primary);color:#fff}
+.pesm-booking-layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:24px;align-items:start}.pesm-map-panel{min-inline-size:0}
+.pesm-booking-summary{min-inline-size:0;position:sticky;inset-block-start:48px;padding:20px;border:1px solid var(--pesm-border);background:#f8faff;border-radius:14px}
+.pesm-booking-summary :is(h3,h4){font-size:17px}.pesm-ui .pesm-booking-summary>button{inline-size:100%;margin-block-start:10px}
+.pesm-ui .pesm-booking-summary>.pesm-hold{min-block-size:48px}.pesm-booking-summary .pesm-selected{font-size:13px;line-height:1.9;overflow-wrap:anywhere;padding-block:12px;border-block:1px solid var(--pesm-border)}
+.pesm-booking-summary .pesm-price{font-size:15px;font-weight:650;padding-block:8px;margin:0;color:var(--pesm-ink)}
+.pesm-ui .pesm-map-toolbar,.pesm-ui .pesm-map .pesm-toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-block:0 14px}
+.pesm-toolbar-group{display:flex;gap:6px;align-items:center;flex-wrap:wrap}.pesm-ui .pesm-map-toolbar :is(input,select),.pesm-ui .pesm-toolbar :is(input,select){inline-size:144px}
+.pesm-ui .pesm-map-toolbar button{padding:8px 12px;font-size:12px;min-block-size:44px}.pesm-scale-label{min-inline-size:44px;text-align:center;color:var(--pesm-muted);font-size:12px;direction:ltr}
+.pesm-ui .pesm-viewport{direction:ltr;overflow:auto;min-block-size:390px;max-block-size:580px;max-inline-size:100%;border:1px solid var(--pesm-border);border-radius:12px;touch-action:pan-x pan-y;background-color:#f8fafc;background-image:radial-gradient(#dbe2ed .8px,transparent .8px);background-size:16px 16px;overscroll-behavior-inline:contain}
+.pesm-stage{position:relative;min-inline-size:0}.pesm-canvas{position:relative;transform-origin:0 0}
+/* Shared controls are 44px; seat geometry must remain exactly 30px. */
+.pesm-ui .pesm-seat{position:absolute;display:flex;justify-content:center;align-items:center;inline-size:30px;min-inline-size:30px;max-inline-size:30px;block-size:30px;min-block-size:30px;max-block-size:30px;width:30px;height:30px;padding:0;margin:0;border:1px solid #5b9e93;border-radius:7px 7px 5px 5px;background:#e2f4ed;color:#14554b;font-size:11px;font-weight:650;line-height:1;direction:ltr;box-shadow:inset 0 -3px 0 rgb(15 118 110 / 13%)}
+.pesm-ui .pesm-seat:hover{background:#d0ece2;color:#14554b;border-color:var(--pesm-success)}.pesm-ui .pesm-seat:focus-visible{outline:3px solid var(--pesm-primary);outline-offset:2px;z-index:2}
+.pesm-ui .pesm-seat:is(.pesm-state-held,.pesm-state-payment_pending){background:#ffebc1;color:#7c470b;border-color:#b99051;box-shadow:inset 0 -3px 0 rgb(146 64 14 / 13%)}
+.pesm-ui .pesm-seat:is(.pesm-state-sold,.pesm-state-blocked){background:repeating-linear-gradient(135deg,#e4e8ef,#e4e8ef 4px,#edf0f5 4px,#edf0f5 7px);color:#5b6576;border-color:#a5afbf;box-shadow:none}
+.pesm-ui .pesm-seat.pesm-is-selected{color:#fff;border-color:#1d4ed8;background:var(--pesm-primary);box-shadow:inset 0 -3px 0 rgb(0 0 0 / 12%)}
+.pesm-ui .pesm-seat.pesm-is-owned{color:#fff;border-color:#0c5c56;background:var(--pesm-success)}.pesm-ui .pesm-seat:disabled{cursor:not-allowed;opacity:1}
+.pesm-layout-object{position:absolute;display:flex;align-items:center;justify-content:center;overflow:hidden;border:1px solid #aebbd0;color:#334155;background:#e6eaf2;border-radius:5px;font-size:12px;text-align:center;white-space:normal}
+.pesm-ui .pesm-seat-legend,.pesm-ui .pesm-legend{display:flex;flex-wrap:wrap;gap:10px 18px;padding-block:14px;color:var(--pesm-muted);font-size:12px;line-height:1.7}
+.pesm-legend-item{display:inline-flex;align-items:center;gap:6px}.pesm-legend-swatch{display:inline-block;inline-size:12px;block-size:12px;border-radius:4px;border:1px solid #5b9e93;background:#e2f4ed}
+.pesm-legend-selected,.pesm-legend-swatch.pesm-is-selected{background:#2563eb;border-color:#1d4ed8}.pesm-legend-held,.pesm-legend-swatch.pesm-state-held{background:#ffebc1;border-color:#b99051}
+.pesm-legend-sold,.pesm-legend-swatch.pesm-state-sold,.pesm-legend-swatch.pesm-state-blocked{background:repeating-linear-gradient(135deg,#d7dce6,#d7dce6 3px,#eef0f5 3px,#eef0f5 5px);border-color:#a5afbf}
+.pesm-ui .pesm-checkout-form{margin-block-start:24px;padding:24px;border:1px solid var(--pesm-border);border-radius:14px;background:#fff}.pesm-checkout-heading{margin-block-end:20px}
+.pesm-checkout-form .pesm-form-grid>label{min-inline-size:0}.pesm-ui .pesm-checkout-form>label{margin-block:14px}.pesm-ui .pesm-checkout-form>button{margin-block-start:12px}
+.pesm-ui .pesm-checkout-form .pesm-attendees-opt-in{display:flex;flex-direction:row;align-items:center;gap:10px;font-size:13px;padding:12px;border-radius:10px;background:var(--pesm-canvas)}
+.pesm-attendee-fields{display:grid;gap:16px;margin-block:16px}.pesm-attendee-fields fieldset{min-inline-size:0;border:1px solid var(--pesm-border);border-radius:12px;margin:0;padding:16px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.pesm-attendee-fields legend{font-weight:650;font-size:13px;padding-inline:8px}.pesm-attendee-fields label{display:flex;flex-direction:column;gap:6px}
+.pesm-coupon-result{color:var(--pesm-muted);font-size:13px;margin:0}.pesm-ui .pesm-receipt{margin-block-start:24px;padding:24px;border:1px solid #95cbbf;border-radius:14px;background:var(--pesm-success-soft);overflow-wrap:anywhere}
+.pesm-receipt code{display:block;direction:ltr;white-space:normal;margin-block:12px;padding:12px;background:#fff;color:var(--pesm-ink)}
+.pesm-ticket-access-grid,.pesm-gate-layout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:24px;align-items:start}
+.pesm-ui .pesm-ticket-entry,.pesm-ui .pesm-ticket-recovery,.pesm-ui .pesm-gate-manual{min-inline-size:0;padding:24px;background:#fff;border:1px solid var(--pesm-border);border-radius:16px;box-shadow:var(--pesm-shadow)}
+.pesm-ui :is(.pesm-ticket-search,.pesm-recovery-request,.pesm-recovery-verify){display:grid;gap:18px}.pesm-ui :is(.pesm-ticket-search,.pesm-recovery-request,.pesm-recovery-verify) label{margin:0}
+.pesm-ticket-recovery summary{min-block-size:44px;display:flex;align-items:center;gap:8px;cursor:pointer;color:var(--pesm-ink);font-weight:650}.pesm-ticket-recovery>p{margin-block:12px 20px;color:var(--pesm-muted);font-size:14px}
+.pesm-recovery-verify{margin-block-start:24px;padding-block-start:24px;border-block-start:1px solid var(--pesm-border)}
+.pesm-invoice-results:not(:empty){margin-block:24px;padding:24px;border:1px solid var(--pesm-border);border-radius:16px;background:#fff}.pesm-invoice-table{margin-block:16px 0}.pesm-invoice-table th{inline-size:42%}
+.pesm-ticket-results,.pesm-owner-ticket{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.pesm-ui .pesm-ticket-card{position:relative;min-inline-size:0;margin:0;padding:24px;border:1px solid var(--pesm-border);border-block-start:4px solid var(--pesm-primary);border-radius:16px;background:#fff;box-shadow:var(--pesm-shadow);break-inside:avoid}
+.pesm-ticket-card h4{font-size:15px;direction:inherit;overflow-wrap:anywhere}.pesm-ticket-card p{margin-block:8px;color:var(--pesm-muted);font-size:14px}
+.pesm-ticket-card svg{display:block;max-inline-size:100%;margin:20px auto 0;padding-block-start:16px;border-block-start:1px dashed var(--pesm-border);background:#fff}.pesm-ticket-results>button{grid-column:1/-1;justify-self:start}
+.pesm-ui.pesm-gate{padding:24px;border:1px solid var(--pesm-border);border-radius:20px;background:var(--pesm-canvas)}
+.pesm-gate-form,.pesm-gate-number-form{display:grid;gap:16px}.pesm-gate-number-form{padding-block-start:24px;margin-block-start:24px;border-block-start:1px solid var(--pesm-border)}
+.pesm-gate-video{display:block;inline-size:100%;aspect-ratio:4/3;background:#101d33;border-radius:12px;object-fit:cover;margin-block:16px}
+.pesm-ownership-transfer form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;padding:24px;border:1px solid var(--pesm-border);border-radius:16px;background:#fff;margin-block:24px}.pesm-ownership-transfer form button{align-self:end}
+.pesm-report-controls{display:flex;align-items:end;gap:12px;flex-wrap:wrap;margin-block:20px}.pesm-report-controls label{display:flex;flex-direction:column;gap:8px}
+.pesm-sales-insights{max-inline-size:1160px;margin-block:24px;padding:24px;border:1px solid var(--pesm-border);border-radius:16px;background:#fff;min-inline-size:0}
+.pesm-sales-insights>label{display:inline-flex;flex-direction:column;gap:6px;margin-inline-end:12px}.pesm-sales-insights>:is(h4,table,details){margin-block:24px 12px}.pesm-insights-trend-chart{display:block;max-inline-size:100%;background:#f8faff;border-radius:12px;margin-block:16px}
+.pesm-admin-seat-map{position:relative;overflow:auto;min-block-size:260px;max-block-size:520px;direction:ltr;border:1px solid var(--pesm-border);background:#f8fafc}
+.pesm-admin-seat-map .pesm-admin-seat{position:absolute;width:30px;height:30px;font-size:10px;display:flex;align-items:center;justify-content:center;border-radius:5px;background:#e2f4ed;color:#14554b;border:1px solid #5b9e93}
+.pesm-admin-seat-map .status-sold,.pesm-admin-seat-map .status-blocked{background:#e4e8ef;border-color:#a5afbf}.pesm-admin-seat-map .status-held,.pesm-admin-seat-map .status-payment_pending{background:#ffebc1;border-color:#b99051}
+@media(max-width:1023px){.pesm-event-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.pesm-booking-layout{grid-template-columns:minmax(0,1fr)}.pesm-booking-summary{position:static}.pesm-booking-summary>button{max-inline-size:380px}}
+@media(max-width:767px){
+.pesm-event-list,.pesm-event-detail,.pesm-tickets-panel,.pesm-gate,.pesm-ownership-transfer,.pesm-attendance{margin-block:20px}.pesm-ui.pesm-map,.pesm-ui.pesm-capacity{padding:20px 14px;border-radius:16px}
+.pesm-event-grid,.pesm-ticket-access-grid,.pesm-ticket-results,.pesm-owner-ticket,.pesm-gate-layout{grid-template-columns:minmax(0,1fr);gap:16px}.pesm-event-detail .pesm-page-heading{padding:24px 20px}
+.pesm-event-detail .pesm-event-poster{float:none;inline-size:100%;max-block-size:240px;object-fit:cover;margin:0 0 20px}.pesm-booking-steps{gap:10px 12px;padding-block-end:16px;margin-block-end:20px}
+.pesm-booking-steps li{font-size:12px}.pesm-booking-steps li>span{inline-size:24px;block-size:24px}.pesm-ui .pesm-viewport{min-block-size:340px;max-block-size:460px}
+.pesm-ui .pesm-map-toolbar{align-items:stretch}.pesm-toolbar-group{flex:1 1 auto}.pesm-ui .pesm-map-toolbar input{inline-size:140px;flex:1}
+.pesm-ui .pesm-checkout-form,.pesm-ui .pesm-ticket-entry,.pesm-ui .pesm-ticket-recovery,.pesm-ui .pesm-gate-manual{padding:20px 16px}.pesm-attendee-fields fieldset,.pesm-ownership-transfer form{grid-template-columns:minmax(0,1fr)}
+.pesm-ui .pesm-booking-summary>button,.pesm-ui .pesm-form-actions>button{max-inline-size:none;inline-size:100%}}
+@media print{.pesm-ui :is(.pesm-map-panel,.pesm-booking-summary,.pesm-booking-steps,.pesm-ticket-access-grid,.pesm-ticket-search,.pesm-gate,.pesm-ticket-results>button){display:none!important}.pesm-ticket-results{display:block}.pesm-ui .pesm-ticket-card{display:inline-block;inline-size:46%;margin:8px;border:1px solid #333;color:#000;box-shadow:none}}
+
+/* Semantic component contracts shared by the English and Persian markup. */
+.pesm-ui .pesm-panel-heading{display:flex;align-items:flex-start;gap:14px}.pesm-panel-heading>div{min-inline-size:0}.pesm-panel-heading p{font-size:14px;color:var(--pesm-muted)}
+.pesm-panel-icon,.pesm-event-card-mark,.pesm-session-icon{display:grid;place-items:center;flex:0 0 auto;inline-size:44px;block-size:44px;border-radius:12px;color:var(--pesm-primary);background:var(--pesm-primary-soft)}
+.pesm-event-card-mark{inline-size:56px;block-size:56px}.pesm-event-card-mark .pesm-icon{inline-size:26px;block-size:26px}
+.pesm-event-card-content{display:flex;flex-direction:column;align-items:start;flex:1;padding-block-start:20px;min-inline-size:0}.pesm-event-card-content h3{margin-block:0 12px}.pesm-event-card-content .pesm-event-link{margin-block-start:auto;inline-size:100%}
+.pesm-ui .pesm-event-meta{padding:0;list-style:none}.pesm-event-card .pesm-event-meta{flex-direction:column;align-items:flex-start;flex:1;gap:10px;margin-block:0 20px}
+.pesm-ui .pesm-event-hero{display:grid;grid-template-columns:minmax(0,1fr);gap:32px;padding:32px;border:1px solid var(--pesm-border);border-radius:20px;background:#fff;box-shadow:var(--pesm-shadow)}
+.pesm-event-hero:has(.pesm-event-hero-poster){grid-template-columns:minmax(0,1fr) 250px}.pesm-event-hero-content{min-inline-size:0}.pesm-event-hero-content h2{font-size:clamp(26px,3vw,36px);margin-block:0 12px}
+.pesm-event-hero-poster img{inline-size:100%;block-size:100%;max-block-size:300px;object-fit:cover;border-radius:14px}.pesm-meta-label{display:block;font-size:12px;color:var(--pesm-muted);font-weight:500;margin-block-end:2px}
+.pesm-ui .pesm-event-description{max-inline-size:none;padding:24px;border:1px solid var(--pesm-border);border-radius:16px;background:#fff;margin-block:20px}.pesm-event-description p{max-inline-size:78ch}
+.pesm-session-list{margin-block-start:32px;scroll-margin-block-start:48px}.pesm-session-label{display:grid;gap:2px;flex:1}.pesm-session>summary::after{content:none!important}.pesm-session>summary>.pesm-icon{color:var(--pesm-muted)}
+.pesm-session[open]>summary>.pesm-icon{transform:rotate(90deg)}.pesm-session-content{padding:20px}.pesm-session-content>.pesm-map,.pesm-session-content>.pesm-capacity{max-inline-size:none;margin:12px 0 0;border:0;padding:12px 0 0;box-shadow:none}
+.pesm-calendar-link{display:inline-flex;align-items:center;gap:8px;font-size:13px;text-decoration:none;min-block-size:44px}.pesm-legend-dot{display:inline-block;inline-size:13px;block-size:13px;border-radius:4px;border:1px solid #5b9e93;background:#e2f4ed}
+.pesm-legend-dot.pesm-legend-selected{background:#2563eb;border-color:#1d4ed8}.pesm-legend-dot.pesm-legend-held{background:#ffebc1;border-color:#b99051}.pesm-legend-dot.pesm-legend-sold{background:repeating-linear-gradient(135deg,#d7dce6,#d7dce6 3px,#eef0f5 3px,#eef0f5 5px);border-color:#a5afbf}
+.pesm-ui .pesm-seat-legend{margin:0;padding-inline:0;list-style:none}.pesm-ui .pesm-help-text{font-size:12px;color:var(--pesm-muted);line-height:1.9;margin-block:12px 0}.pesm-map-help{display:flex;align-items:start;gap:8px}
+.pesm-seat-assist{margin-block-start:16px;border-block-start:1px solid var(--pesm-border);padding-block:12px}.pesm-seat-assist summary{font-size:13px;min-block-size:44px;cursor:pointer;font-weight:600;color:var(--pesm-primary-hover)}
+.pesm-seat-assist .pesm-toolbar-group{align-items:end;padding-block:10px}.pesm-seat-assist input{max-inline-size:100px}.pesm-seat-search{align-items:end}.pesm-seat-search label{font-size:12px;display:flex;flex-direction:column;gap:5px}
+.pesm-ui .pesm-price-caption,.pesm-ui .pesm-price-unit{display:block;font-size:12px;font-weight:500;color:var(--pesm-muted);margin-block:4px}.pesm-ui .pesm-price-total{display:block;font-size:26px;font-weight:750;color:var(--pesm-ink);line-height:1.4;margin-block:8px}
+.pesm-lease-actions{display:grid;gap:8px;margin-block-start:12px}.pesm-ui .pesm-lease-actions button{inline-size:100%;font-size:12px;min-block-size:44px;padding:8px 12px}.pesm-ui .pesm-button-quiet{border-color:transparent;box-shadow:none;background:transparent;color:var(--pesm-muted)}
+.pesm-ui .pesm-button-quiet:hover{background:#eef3fc;color:var(--pesm-primary-hover);border-color:#d8e2f4}.pesm-booking-steps li.is-complete>span{color:#fff;background:var(--pesm-success)}
+.pesm-capacity-reservation{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;padding:24px;border:1px solid var(--pesm-border);border-radius:14px;background:#f8faff}
+.pesm-capacity-counts{font-size:20px;line-height:1.8;font-weight:650}.pesm-capacity-actions{display:flex;flex-wrap:wrap;align-items:end;gap:12px}.pesm-capacity-actions label{display:grid;gap:6px}.pesm-ui .pesm-capacity-quantity{inline-size:90px}
+.pesm-capacity-receipt:empty,.pesm-receipt:empty{display:none}.pesm-capacity-result:not(:empty){padding:12px 16px;border-radius:10px;border:1px solid #cbdcfb;background:var(--pesm-primary-soft);margin-block:16px}
+.pesm-coupon-disclosure{padding:12px 16px;background:var(--pesm-canvas);border-radius:10px;margin-block:20px}.pesm-coupon-disclosure summary{min-block-size:44px;cursor:pointer;font-weight:600;font-size:13px}.pesm-coupon-disclosure label{display:grid;gap:6px;margin-block:12px}
+.pesm-ticket-head{display:flex;flex-wrap:wrap;align-items:start;justify-content:space-between;gap:10px;padding-block-end:16px;border-block-end:1px dashed var(--pesm-border)}.pesm-ticket-head h4{margin:0;flex:1;min-inline-size:140px}
+.pesm-ticket-info{margin-block:20px}.pesm-ticket-info>div{display:flex;align-items:start;justify-content:space-between;gap:20px;padding-block:7px;font-size:13px}.pesm-ticket-info dt{color:var(--pesm-muted);font-weight:400}.pesm-ticket-info dd{margin:0;color:var(--pesm-ink);font-weight:650;overflow-wrap:anywhere;text-align:end}
+.pesm-ticket-qr{display:grid;place-items:center;border-block-start:1px dashed var(--pesm-border);padding-block-start:20px}.pesm-ticket-qr svg{margin:0;padding:0;border:0}.pesm-ui .pesm-access-key{display:block;inline-size:100%;direction:ltr;padding:12px;border:1px dashed #8bb6ae;background:white;border-radius:8px;overflow-wrap:anywhere}
+.pesm-gate-camera{padding:24px;border:1px solid var(--pesm-border);border-radius:16px;background:#fff}.pesm-gate-camera-placeholder{display:grid;place-content:center;justify-items:center;gap:12px;min-block-size:240px;border:1px dashed #b7c4d7;border-radius:12px;background:#f4f7fc;padding:24px;text-align:center;color:var(--pesm-muted)}.pesm-gate-camera-placeholder>.pesm-icon{inline-size:44px;block-size:44px;color:var(--pesm-primary)}
+.pesm-gate-camera-actions{display:flex;flex-wrap:wrap;gap:10px;margin-block:16px}.pesm-gate-manual h4{font-size:16px}.pesm-gate-manual form label{display:grid;gap:7px}
+.pesm-ui form[aria-busy=true]{opacity:.75}.pesm-ui form[aria-busy=true] button[type=submit]{cursor:wait}
+@media(max-width:767px){.pesm-event-hero:has(.pesm-event-hero-poster),.pesm-capacity-reservation{grid-template-columns:minmax(0,1fr)}.pesm-ui .pesm-event-hero{padding:24px 16px;gap:20px}.pesm-event-hero-poster{order:-1}.pesm-event-hero-poster img{max-block-size:220px}.pesm-capacity-reservation,.pesm-gate-camera{padding:20px 16px}.pesm-session>summary{padding:16px;gap:10px}.pesm-session-content{padding:14px}.pesm-session>summary .pesm-badge{font-size:11px;padding:4px 8px}.pesm-session-label strong{font-size:14px}.pesm-session-icon{inline-size:36px;block-size:36px}.pesm-ui .pesm-price-total{font-size:24px}}
+
+.pesm-ui .pesm-page-heading{display:flex;align-items:flex-start;gap:14px}.pesm-ui .pesm-page-heading>div{min-inline-size:0}.pesm-ui .pesm-page-heading .pesm-panel-icon{margin-block-start:3px}
+.pesm-ui .pesm-coupon-details{padding:12px 16px;background:var(--pesm-canvas);border-radius:10px;margin-block:20px}.pesm-coupon-details summary{min-block-size:44px;cursor:pointer;font-weight:600;font-size:13px}.pesm-coupon-details label{display:grid;gap:7px;margin-block:12px}
+.pesm-owner-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}.pesm-owner-card{padding:24px;border:1px solid var(--pesm-border);border-radius:16px;background:#fff;min-inline-size:0}.pesm-owner-card form,.pesm-owner-view-panel form{display:grid;grid-template-columns:1fr;gap:16px;padding:0;margin:0;border:0}
+.pesm-owner-view-panel{padding:20px 24px;border:1px solid var(--pesm-border);border-radius:16px;background:#fff;margin-block:24px}.pesm-owner-view-panel>summary{cursor:pointer;min-block-size:44px;font-weight:650}.pesm-owner-view-panel form{margin-block-start:16px}
+@media(max-width:767px){.pesm-owner-grid{grid-template-columns:1fr}.pesm-owner-card,.pesm-owner-view-panel{padding:20px 16px}}
+
+.pesm-ui .pesm-checkout-form{scroll-margin-block-start:64px}

@@ -1,0 +1,9 @@
+{
+  "event-seat-manager": "event-seat-manager",
+  "Bilingual event, hall, seat reservation, WooCommerce ticketing and online admission management.": "مدیریت دوزبانهٔ رویداد، سالن، رزرو صندلی، فروش بلیت با ووکامرس و کنترل ورود آنلاین.",
+  "Activate Event Seat Manager on individual sites; network activation is not supported.": "افزونه را در هر سایت جداگانه فعال کنید؛ فعال‌سازی شبکه‌ای پشتیبانی نمی‌شود.",
+  "The booking database could not be prepared. Check database permissions and InnoDB support, then activate again.": "پایگاه دادهٔ رزرو آماده نشد. مجوزهای پایگاه داده و پشتیبانی InnoDB را بررسی و سپس افزونه را دوباره فعال کنید.",
+  "Event Seat Manager is paused because its database is not ready. Check InnoDB and database permissions, then reactivate the plugin.": "افزونه به دلیل آماده نبودن پایگاه داده متوقف شده است. InnoDB و مجوزهای پایگاه داده را بررسی و افزونه را دوباره فعال کنید.",
+  "Event Seat Manager: 5 minutes": "مدیریت رویداد و صندلی: هر پنج دقیقه",
+  "Deactivate the previous Event Seat Manager copy before activating this package. Existing booking data will be retained.": "پیش از فعال‌سازی این بسته، نسخهٔ قبلی افزونه را غیرفعال کنید. اطلاعات رزرو موجود حفظ می‌شوند."
+}

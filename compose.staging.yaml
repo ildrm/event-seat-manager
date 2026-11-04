@@ -1,0 +1,49 @@
+# Optional LOCAL staging environment, NOT run or validated in this workspace.
+# Do not expose this example to the public internet or reuse development passwords.
+services:
+  database:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: local_only_change_me
+      MYSQL_ROOT_PASSWORD: local_root_change_me
+    volumes:
+      - pesm_mysql:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -uroot -p$$MYSQL_ROOT_PASSWORD --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+  wordpress:
+    image: wordpress:php8.2-apache
+    depends_on:
+      database:
+        condition: service_healthy
+    environment:
+      WORDPRESS_DB_HOST: database:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: local_only_change_me
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DEBUG: '1'
+    ports:
+      - '127.0.0.1:8088:80'
+    volumes:
+      - pesm_wordpress:/var/www/html
+      - ./:/var/www/html/wp-content/plugins/event-seat-manager
+  wpcli:
+    image: wordpress:cli-php8.2
+    profiles: ['tools']
+    depends_on:
+      - wordpress
+    environment:
+      WORDPRESS_DB_HOST: database:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: local_only_change_me
+      WORDPRESS_DB_NAME: wordpress
+    volumes:
+      - pesm_wordpress:/var/www/html
+      - ./:/var/www/html/wp-content/plugins/event-seat-manager
+volumes:
+  pesm_mysql:
+  pesm_wordpress:

@@ -1,0 +1,186 @@
+/* Event Seat Manager admin workspace. Every selector is scoped to the plugin. */
+.pesm-admin {
+  position: relative;
+  max-width: 1440px;
+  margin: 24px 20px 32px 0;
+  border: 1px solid var(--pesm-border);
+  border-radius: 20px;
+  overflow: clip;
+  background: var(--pesm-canvas, #f4f6fa);
+  color: var(--pesm-ink);
+  text-align: start;
+}
+.rtl .pesm-admin { margin: 24px 0 32px 20px; }
+.pesm-admin [hidden] { display: none !important; }
+.pesm-admin .pesm-admin-topbar {
+  min-height: 76px;
+  padding: 16px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  background: var(--pesm-surface);
+  border-bottom: 1px solid var(--pesm-border);
+}
+.pesm-admin .pesm-admin-brand { display: flex; align-items: center; gap: 12px; font-size: 18px; font-weight: 750; }
+.pesm-admin .pesm-admin-brand > svg { width: 40px; height: 40px; padding: 9px; color: var(--pesm-primary); background: #edf3ff; border-radius: 12px; }
+.pesm-admin .pesm-admin-version { border: 1px solid var(--pesm-border); padding: 4px 10px; color: var(--pesm-muted); border-radius: 8px; font-size: 12px; direction: ltr; font-variant-numeric: tabular-nums; }
+.pesm-admin .pesm-admin-shell { display: grid; grid-template-columns: 224px minmax(0, 1fr); min-height: 700px; }
+.pesm-admin .pesm-admin-sidebar { background: var(--pesm-nav); color: #fff; padding: 28px 16px; }
+.pesm-admin .pesm-nav-label { margin: 0 12px 18px; color: #aebcd1; font-size: 12px; font-weight: 650; }
+.pesm-admin .pesm-admin-sidebar nav { display: grid; gap: 7px; }
+.pesm-admin .pesm-admin-nav-link {
+  min-height: 48px; display: flex; align-items: center; gap: 12px; padding: 11px 13px;
+  border-radius: 10px; color: #ccd7e8; font-size: 14px; font-weight: 550;
+  text-decoration: none; transition: background-color 160ms, color 160ms;
+}
+.pesm-admin .pesm-admin-nav-link:hover { color: #fff; background: #20324f; }
+.pesm-admin .pesm-admin-nav-link[aria-current="page"] { background: #2563eb; color: #fff; }
+.pesm-admin .pesm-admin-nav-link svg { flex: 0 0 20px; width: 20px; height: 20px; }
+.pesm-admin .pesm-admin-sidebar a:focus-visible { outline: 3px solid #b7d2ff; outline-offset: 3px; }
+.pesm-admin .pesm-sidebar-note { display: flex; align-items: flex-start; gap: 10px; margin: 32px 12px 0; padding-block-start: 24px; border-top: 1px solid #31405a; color: #b6c5d9; }
+.pesm-admin .pesm-sidebar-note svg { flex: 0 0 18px; width: 18px; margin-top: 4px; }
+.pesm-admin .pesm-sidebar-note p { margin: 0; font-size: 12px; line-height: 1.9; }
+.pesm-admin .pesm-admin-main { min-width: 0; padding: 32px; scroll-margin-top: 48px; }
+.pesm-admin .pesm-admin-page-header { margin-bottom: 28px; }
+.pesm-admin .pesm-admin-eyebrow { margin: 0 0 6px; color: var(--pesm-primary); font-size: 12px; font-weight: 700; }
+.pesm-admin .pesm-admin-page-header h1 { margin: 0 0 10px; padding: 0; color: var(--pesm-ink); font: inherit; font-size: clamp(25px, 2vw, 32px); font-weight: 750; line-height: 1.5; scroll-margin-top: 72px; }
+.pesm-admin .pesm-admin-page-header > p:last-child { margin: 0; max-width: 75ch; color: var(--pesm-muted); font-size: 14px; line-height: 1.8; }
+.pesm-admin .pesm-admin-panel { display: grid; gap: 22px; min-width: 0; }
+.pesm-admin .pesm-admin-panel + .pesm-admin-panel { margin-top: 28px; }
+.pesm-admin.pesm-admin-enhanced .pesm-admin-panel + .pesm-admin-panel { margin-top: 0; }
+.pesm-admin .pesm-admin-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.pesm-admin .pesm-admin-stat { min-width: 0; display: flex; align-items: center; gap: 12px; padding: 20px 16px; border: 1px solid var(--pesm-border); border-radius: 14px; background: var(--pesm-surface); }
+.pesm-admin .pesm-stat-icon { flex: 0 0 40px; width: 40px; height: 40px; display: grid; place-items: center; background: #edf3ff; color: var(--pesm-primary); border-radius: 12px; }
+.pesm-admin .pesm-stat-icon svg { width: 20px; height: 20px; }
+.pesm-admin .pesm-admin-stat strong { display: block; color: var(--pesm-ink); font-size: 26px; line-height: 1.25; font-weight: 750; font-variant-numeric: tabular-nums; }
+.pesm-admin .pesm-admin-stat div > span { display: block; margin-top: 5px; color: var(--pesm-muted); font-size: 12px; line-height: 1.6; }
+.pesm-admin .pesm-admin-card { min-width: 0; padding: 26px; background: var(--pesm-surface); border: 1px solid var(--pesm-border); border-radius: 16px; box-shadow: 0 3px 12px rgb(16 29 51 / 2%); }
+.pesm-admin .pesm-admin-card > h2:first-child, .pesm-admin .pesm-admin-card > h3:first-child { margin-top: 0; }
+.pesm-admin .pesm-admin-card h2 { font-size: 19px; line-height: 1.6; color: var(--pesm-ink); margin-block: 26px 12px; }
+.pesm-admin .pesm-admin-card h3 { font-size: 16px; line-height: 1.7; margin-block: 24px 10px; }
+.pesm-admin .pesm-admin-card p { color: var(--pesm-muted); font-size: 14px; line-height: 1.9; max-width: 90ch; }
+.pesm-admin .pesm-admin-card p > strong { color: var(--pesm-ink); }
+.pesm-admin .pesm-admin-card form:not(.pesm-inline-form) { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: end; gap: 18px 20px; margin-block: 22px; padding: 0 !important; }
+.pesm-admin .pesm-admin-card form > label { display: flex; flex-direction: column; align-self: start; align-items: stretch; gap: 8px; margin: 0 !important; font-size: 13px; font-weight: 650; color: var(--pesm-ink); }
+.pesm-admin .pesm-admin-card form > p { margin: 0; min-width: 0; }
+.pesm-admin .pesm-admin-card form > p label { display: flex; flex-direction: column; align-items: stretch; gap: 8px; width: 100%; font-size: 13px; font-weight: 650; }
+.pesm-admin .pesm-admin-card form > p:has(textarea), .pesm-admin .pesm-admin-card form > small { grid-column: 1 / -1; }
+.pesm-admin .pesm-admin-card form > span, .pesm-admin .pesm-admin-card form > p > span { display: block; color: var(--pesm-muted); font-size: 12px; line-height: 1.8; font-weight: 400; }
+.pesm-admin .pesm-admin-card form .submit { margin: 0; padding: 0; grid-column: 1 / -1; }
+.pesm-admin .pesm-admin-card form > .button, .pesm-admin .pesm-admin-card form > button { width: fit-content; max-width: 100%; margin: 0; grid-column: 1 / -1; }
+.pesm-admin .pesm-admin-card form input:not([type="checkbox"]):not([type="hidden"]):not([type="submit"]):not([type="button"]), .pesm-admin .pesm-admin-card form select, .pesm-admin .pesm-admin-card form textarea { margin: 0; width: 100%; max-width: 100%; min-height: 44px; box-shadow: none; }
+.pesm-admin .pesm-admin-card form input[type="checkbox"] { width: 18px; height: 18px; min-height: 18px; margin: 0; flex: 0 0 18px; }
+.pesm-admin .pesm-admin-card label:has(input[type="checkbox"]) { flex-direction: row; align-items: center; min-height: 44px; font-weight: 500; }
+.pesm-admin .pesm-admin-card table { width: 100%; border: 0; border-collapse: collapse; box-shadow: none; font-size: 13px; background: transparent; }
+.pesm-admin .pesm-admin-card thead th { text-align: start; background: #f6f8fc; color: var(--pesm-muted); font-size: 12px; font-weight: 650; border-bottom: 1px solid var(--pesm-border); padding: 12px 14px; white-space: nowrap; }
+.pesm-admin .pesm-admin-card td { border-bottom: 1px solid #edf0f5; padding: 14px; color: var(--pesm-ink); vertical-align: middle; line-height: 1.7; }
+.pesm-admin .pesm-admin-card .striped > tbody > :nth-child(odd) { background: transparent; }
+.pesm-admin .pesm-admin-card tbody tr:hover { background: #f8faff; }
+.pesm-admin .pesm-table-scroll { max-width: 100%; min-width: 0; overflow: auto; margin-block: 16px; border: 1px solid var(--pesm-border); border-radius: 12px; }
+.pesm-admin .pesm-table-empty { text-align: center; padding: 32px !important; color: var(--pesm-muted) !important; }
+.pesm-admin .pesm-admin-card td form { display: inline-flex !important; flex-wrap: wrap; gap: 8px; margin: 4px !important; vertical-align: middle; }
+.pesm-admin .pesm-admin-card td .button { font-size: 12px; min-height: 44px; padding-inline: 10px; }
+.pesm-admin .pesm-admin-card .pesm-action-cancelled,
+.pesm-admin .pesm-admin-card .pesm-task-danger :is(button,input)[type="submit"] { color: var(--pesm-danger); border-color: #e6bbb6; background: var(--pesm-danger-soft); }
+.pesm-admin .pesm-admin-card .pesm-action-cancelled:hover,
+.pesm-admin .pesm-admin-card .pesm-task-danger :is(button,input)[type="submit"]:hover { color: #8f1b12; background: #ffe4e0; border-color: #ce9890; }
+.pesm-admin .pesm-admin-card .pesm-action-paused { color: var(--pesm-muted); background: var(--pesm-surface); border-color: var(--pesm-border); }
+.pesm-admin .pesm-admin-card td label { min-width: 160px; }
+.pesm-admin .pesm-admin-card details { margin-block: 16px; padding: 16px; border: 1px solid var(--pesm-border); border-radius: 12px; background: #fafbfd; }
+.pesm-admin .pesm-admin-card summary { cursor: pointer; min-height: 30px; line-height: 1.8; font-weight: 650; }
+.pesm-admin .pesm-admin-card code { font-size: 12px; background: #f0f4fa; padding: 4px 6px; border-radius: 6px; overflow-wrap: anywhere; }
+.pesm-admin .pesm-overview-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 20px; }
+.pesm-admin .pesm-overview-icon { display: inline-grid; place-items: center; width: 48px; height: 48px; background: #edf3ff; border-radius: 14px; color: var(--pesm-primary); }
+.pesm-admin .pesm-next-step h2 { margin-top: 18px; }
+.pesm-admin .pesm-next-step .pesm-button { display: inline-flex; align-items: center; justify-content: center; gap: 10px; margin-top: 12px; }
+.pesm-admin .pesm-start-guide ol { counter-reset: step; list-style: none; padding: 0; margin: 18px 0 0; }
+.pesm-admin .pesm-start-guide li { counter-increment: step; }
+.pesm-admin .pesm-start-guide li a { min-height: 48px; display: flex; align-items: center; gap: 10px; color: var(--pesm-ink); text-decoration: none; font-size: 14px; border-bottom: 1px solid #edf0f5; }
+.pesm-admin .pesm-start-guide li:last-child a { border-bottom: 0; }
+.pesm-admin .pesm-start-guide li a::before { content: counter(step); width: 24px; height: 24px; border-radius: 8px; display: grid; place-items: center; background: #edf3ff; color: var(--pesm-primary); font-size: 12px; flex-shrink: 0; }
+.pesm-admin .pesm-start-guide li svg { margin-inline-start: auto; width: 16px; height: 16px; color: var(--pesm-muted); }
+.pesm-admin .pesm-card-title { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+.pesm-admin .pesm-card-title h2 { margin: 0; }
+.pesm-admin .pesm-card-title a { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 650; text-decoration: none; }
+.pesm-admin .pesm-card-title a svg { width: 16px; height: 16px; }
+.pesm-admin .pesm-recent-list { list-style: none; padding: 0; margin: 12px 0 0; }
+.pesm-admin .pesm-recent-list li { display: flex; align-items: center; gap: 12px; min-height: 72px; border-bottom: 1px solid #edf0f5; }
+.pesm-admin .pesm-recent-list li:last-child { border-bottom: 0; }
+.pesm-admin .pesm-recent-icon { display: grid; place-items: center; width: 38px; height: 38px; flex: 0 0 38px; background: #f1f5fa; color: #52627a; border-radius: 10px; }
+.pesm-admin .pesm-recent-icon svg { width: 18px; height: 18px; }
+.pesm-admin .pesm-recent-list li > div { min-width: 0; flex: 1; }
+.pesm-admin .pesm-recent-list strong { display: block; font-size: 14px; overflow-wrap: anywhere; font-weight: 650; }
+.pesm-admin .pesm-recent-list div > span { display: block; font-size: 12px; color: var(--pesm-muted); direction: ltr; text-align: start; margin-top: 2px; }
+.pesm-admin .pesm-admin-status { display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; padding: 4px 10px; background: #edf1f7; color: #52627a; font-size: 12px; white-space: nowrap; }
+.pesm-admin .pesm-admin-status::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+.pesm-admin .pesm-status-published { color: #0f766e; background: #eaf7f3; }
+.pesm-admin .pesm-status-cancelled { color: #b42318; background: #fff1f0; }
+.pesm-admin .pesm-status-paused { color: #92400e; background: #fff7e6; }
+.pesm-admin .pesm-admin-empty { display: grid; place-items: center; text-align: center; padding: 28px 16px; }
+.pesm-admin .pesm-admin-empty > svg { width: 38px; height: 38px; color: #7c8da5; margin-bottom: 10px; }
+.pesm-admin .pesm-admin-release { border: 1px solid #e8d9b5; border-radius: 12px; padding: 14px 18px; background: #fffbf0; color: #6d501a; font-size: 12px; }
+.pesm-admin .pesm-admin-release summary { cursor: pointer; min-height: 24px; font-weight: 650; }
+.pesm-admin .pesm-admin-release p { margin-bottom: 0; line-height: 1.8; }
+.pesm-admin .pesm-admin-result { display: flex; align-items: center; gap: 10px; border-radius: 12px; padding: 12px 16px; margin-bottom: 22px; font-size: 14px; }
+.pesm-admin .pesm-admin-result p { margin: 0; line-height: 1.8; }
+.pesm-admin .pesm-admin-result svg { width: 20px; height: 20px; flex: 0 0 20px; }
+.pesm-admin .pesm-admin-result-success { color: #0f766e; background: #eaf7f3; border: 1px solid #b8dfd2; }
+.pesm-admin .pesm-admin-result-error { color: #b42318; background: #fff1f0; border: 1px solid #f1c7c3; }
+.pesm-admin .pesm-admin-skip { position: absolute; z-index: 100; inset-inline-start: 24px; top: -1000px; padding: 12px 16px; border-radius: 10px; background: #fff; color: var(--pesm-primary); }
+.pesm-admin .pesm-admin-skip:focus { top: 12px; }
+.pesm-admin .pesm-layout-editor { margin-block: 20px; }
+.pesm-admin .pesm-layout-editor .pesm-toolbar { gap: 8px; }
+.pesm-admin .pesm-layout-editor .pesm-fields { margin-top: 18px; }
+.pesm-admin .pesm-layout-editor .pesm-fields label { display: grid; gap: 6px; }
+.pesm-admin .pesm-layout-editor .pesm-object-tools { display: flex; flex-wrap: wrap; align-items: end; gap: 12px; width: 100%; }
+.pesm-admin .pesm-layout-editor .pesm-object-tools label { display: grid; gap: 6px; font-size: 12px; }
+.pesm-admin .pesm-layout-editor .pesm-row-tools { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto; gap: 12px; align-items: end; padding: 18px; margin-block: 18px; border: 1px solid var(--pesm-border); border-radius: 12px; background: var(--pesm-canvas); }
+.pesm-admin .pesm-layout-editor .pesm-row-tools label { display: grid; gap: 6px; font-size: 13px; }
+.pesm-admin .pesm-layout-editor .pesm-row-tools p { grid-column: 1 / -1; margin: 0; font-size: 12px; }
+.pesm-admin[dir="rtl"] .pesm-start-guide li svg, .pesm-admin[dir="rtl"] .pesm-card-title a svg, .pesm-admin[dir="rtl"] .pesm-next-step .pesm-button svg { transform: scaleX(-1); }
+@media (max-width: 1250px) {
+  .pesm-admin .pesm-admin-shell { grid-template-columns: 195px minmax(0, 1fr); }
+  .pesm-admin .pesm-admin-main { padding: 24px; }
+  .pesm-admin .pesm-admin-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 960px) {
+  .pesm-admin, .rtl .pesm-admin { margin: 16px 12px 24px 0; border-radius: 16px; }
+  .rtl .pesm-admin { margin: 16px 0 24px 12px; }
+  .pesm-admin .pesm-admin-shell { display: block; min-height: 0; }
+  .pesm-admin .pesm-admin-sidebar { padding: 12px; }
+  .pesm-admin .pesm-admin-sidebar nav { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pesm-admin .pesm-admin-nav-link { min-height: 44px; padding: 9px 12px; gap: 8px; }
+  .pesm-admin .pesm-nav-label, .pesm-admin .pesm-sidebar-note { display: none; }
+  .pesm-admin .pesm-admin-main { padding: 24px; }
+  .pesm-admin .pesm-admin-topbar { min-height: 68px; padding: 14px 24px; }
+}
+@media (max-width: 640px) {
+  .pesm-admin :is(input,select,textarea) { font-size: 16px; }
+  .pesm-admin .pesm-admin-main { padding: 20px 14px; }
+  .pesm-admin .pesm-admin-topbar { padding-inline: 16px; }
+  .pesm-admin .pesm-admin-brand { font-size: 16px; gap: 8px; }
+  .pesm-admin .pesm-admin-brand > svg { width: 34px; height: 34px; padding: 7px; }
+  .pesm-admin .pesm-admin-sidebar nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pesm-admin .pesm-admin-nav-link { min-width: 0; font-size: 12px; gap: 8px; }
+  .pesm-admin .pesm-admin-nav-link svg { width: 18px; height: 18px; flex-basis: 18px; }
+  .pesm-admin .pesm-admin-stats { gap: 10px; }
+  .pesm-admin .pesm-admin-stat { padding: 16px 12px; gap: 10px; }
+  .pesm-admin .pesm-stat-icon { display: none; }
+  .pesm-admin .pesm-admin-stat strong { font-size: 24px; }
+  .pesm-admin .pesm-overview-grid { grid-template-columns: 1fr; }
+  .pesm-admin .pesm-admin-card { padding: 20px 16px; }
+  .pesm-admin .pesm-admin-card h2 { font-size: 17px; }
+  .pesm-admin .pesm-admin-card form:not(.pesm-inline-form) { grid-template-columns: 1fr; gap: 16px; }
+  .pesm-admin .pesm-admin-card td { padding: 12px; }
+  .pesm-admin .pesm-card-title { align-items: flex-start; flex-direction: column; }
+  .pesm-admin .pesm-recent-list li { flex-wrap: wrap; padding-block: 12px; }
+  .pesm-admin .pesm-admin-status { font-size: 11px; }
+  .pesm-admin .pesm-layout-editor .pesm-row-tools { grid-template-columns: 1fr; padding: 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pesm-admin *, .pesm-admin *::before, .pesm-admin *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+}
+
+/* Preserve readable data columns on small screens; scroll only the table region. */
+@media(max-width:640px){.pesm-admin .pesm-table-scroll table{min-inline-size:620px}.pesm-admin .pesm-admin-card td .button{white-space:nowrap}}

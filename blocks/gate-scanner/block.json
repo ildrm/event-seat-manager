@@ -1,0 +1,16 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "pesm/gate-scanner",
+  "version": "1.0.0",
+  "title": "اسکنر کنترل ورود",
+  "category": "widgets",
+  "icon": "tickets-alt",
+  "description": "نمایش پویا؛ اطلاعات از سمت سرور و با کنترل دسترسی دریافت می‌شود.",
+  "textdomain": "event-seat-manager",
+  "editorScript": "pesm-blocks-editor",
+  "supports": {
+    "html": false
+  },
+  "attributes": {}
+}

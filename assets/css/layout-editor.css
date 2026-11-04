@@ -1,0 +1,13 @@
+/* Editor geometry and interaction are preserved; controls share the product tokens. */
+.pesm-layout-editor{background:#fff;border:1px solid var(--pesm-border,#dce3ed);border-radius:16px;padding:24px;margin:24px 0;max-inline-size:100%;box-sizing:border-box;min-inline-size:0;box-shadow:var(--pesm-shadow)}
+.pesm-layout-editor[hidden]{display:none!important}.pesm-layout-editor .pesm-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0;align-items:end}.pesm-layout-editor .pesm-toolbar>.button{font-size:12px;min-height:44px;padding:8px 12px}
+.pesm-layout-editor>svg{display:block;max-inline-size:100%;inline-size:100%;block-size:490px;background-color:#f8fafc;background-image:radial-gradient(#dbe2ed .8px,transparent .8px);background-size:16px 16px;border:1px solid var(--pesm-border,#dce3ed);border-radius:12px;touch-action:none}
+.pesm-layout-editor .pesm-editor-seat{fill:#dce9ff;stroke:#4477b7;stroke-width:1.5;cursor:move}.pesm-layout-editor .pesm-editor-seat.is-selected{fill:#2563eb;stroke:#12377e;stroke-width:3}
+.pesm-layout-editor .pesm-editor-seat:focus{outline:none;stroke:#101d33;stroke-width:4}.pesm-layout-editor .pesm-fields{display:flex;flex-wrap:wrap;gap:14px;align-items:end;margin:20px 0;padding:20px;border-radius:12px;background:#f4f6fa}
+.pesm-layout-editor .pesm-fields label{display:grid;gap:6px;min-inline-size:95px;flex:1;font-size:12px}.pesm-layout-editor .pesm-fields input{min-inline-size:70px;max-inline-size:160px}
+.pesm-layout-editor .pesm-editor-marquee{fill:rgb(37 99 235 / 10%);stroke:#2563eb;stroke-dasharray:8 4;pointer-events:none}
+.pesm-layout-editor .pesm-object-tools{display:flex;align-items:end;gap:12px;flex-wrap:wrap;margin:8px 0;padding:18px;background:#f4f6fa;border-radius:12px;inline-size:100%;border:1px solid var(--pesm-border,#dce3ed)}
+.pesm-layout-editor .pesm-object-tools label{display:grid;gap:6px;font-size:12px;min-inline-size:0}.pesm-layout-editor .pesm-object-tools input[type=number]{inline-size:90px}.pesm-layout-editor .pesm-editor-object{fill:#c6d1e3;stroke:#667993;stroke-width:2;cursor:move}
+.pesm-layout-editor .pesm-editor-object.is-selected{stroke:#2563eb;stroke-width:4}.pesm-layout-editor .pesm-editor-object-label{font-size:12px;fill:#17243b;pointer-events:none}
+.pesm-layout-editor .pesm-editor-status:not(:empty){padding:12px 16px;border:1px solid #cbdcfb;border-radius:10px;background:#edf3ff;color:#17243b}
+@media(max-width:767px){.pesm-layout-editor{padding:20px 14px}.pesm-layout-editor>svg{block-size:360px}.pesm-layout-editor .pesm-fields{padding:16px;gap:12px}.pesm-layout-editor .pesm-toolbar>.button{flex-grow:1}}

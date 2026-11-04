@@ -1,0 +1,30 @@
+{
+  "test": "tests/integration-locale.php",
+  "environment": "Installed local WordPress with the official Persian core language pack",
+  "passed": true,
+  "checks": 26,
+  "initial_locale": "fa_IR",
+  "site_language_unchanged": true,
+  "outcomes": [
+    {
+      "locale": "fa_IR",
+      "direction": "rtl",
+      "gettext": true,
+      "views": true,
+      "role_labels": true,
+      "notification": true,
+      "csv": true,
+      "xlsx": true
+    },
+    {
+      "locale": "en_US",
+      "direction": "ltr",
+      "gettext": true,
+      "views": true,
+      "role_labels": true,
+      "notification": true,
+      "csv": true,
+      "xlsx": true
+    }
+  ]
+}

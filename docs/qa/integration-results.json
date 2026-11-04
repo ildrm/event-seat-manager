@@ -1,0 +1,214 @@
+{
+  "concurrency_run": {
+    "sequential": {
+      "mode": "all",
+      "passed": 55,
+      "seconds": 1.406,
+      "wordpress": "7.1.4",
+      "woocommerce": "11.2.1",
+      "php": "8.5.8",
+      "database": "13.0.2-MariaDB",
+      "schema": 18,
+      "hpos_enabled": false,
+      "order_data_store": "WC_Order_Data_Store_CPT",
+      "checks": [
+        "Schema version matches migrator",
+        "Migration has no recorded error",
+        "All 37 plugin tables created",
+        "All plugin tables use InnoDB",
+        "Real 15x60 session has 900 inventory rows",
+        "Gate role user created",
+        "Real hold replay reuses the same reservation",
+        "Second holder cannot acquire occupied seat [seat_unavailable]",
+        "Guest free order completes without account or gateway",
+        "Free seated order issues one ticket per selected seat",
+        "Each seated ticket has distinct QR",
+        "Real issued QR validates",
+        "Wrong bearer token cannot view order or invoice [permission_denied]",
+        "Free checkout replay does not duplicate WooCommerce order",
+        "Free checkout replay does not duplicate tickets",
+        "Gate operator from another center is denied [permission_denied]",
+        "Authorized scanner accepts valid ticket",
+        "Duplicate check-in rejected [already_checked_in]",
+        "Paid checkout uses server total and awaits payment",
+        "Unpaid order has no tickets",
+        "Unpaid direct confirmation rejected [payment_unverified]",
+        "Tampered paid total rejected by actual payment hook",
+        "Explicit confirmation rejects mismatched paid total [price_mismatch]",
+        "Verified payment with correct total issues tickets",
+        "Paid callback replay remains idempotent",
+        "Actual refunded-status hook revokes both tickets",
+        "Refund does not silently resell sold inventory",
+        "Late actual payment hook cannot issue a reassigned seat",
+        "Late payment is recorded for supervised reconciliation",
+        "Late callback preserves the replacement owner",
+        "Guest recovery code is sent only to the captured mailbox",
+        "Wrong recovery OTP rejected [invalid_code]",
+        "Failed OTP attempt commits its counter",
+        "Verified mailbox recovery retrieves existing tickets",
+        "Recovery code is consumed exactly once [invalid_code]",
+        "Actual fully discounted paid session issues a free ticket",
+        "Discount quota is redeemed once after issuance",
+        "Real same-price ticket transfer changes seat atomically",
+        "Transfer releases source seat",
+        "Transfer rotates QR and rejects the previous QR [invalid_qr]",
+        "Real free cancellation revokes the transferred ticket",
+        "Free cancellation retry is idempotent",
+        "Used ticket cannot be cancelled and resold [ticket_not_cancelable]",
+        "Free general admission issues three independent tickets",
+        "General-admission QR uses authorized gate pipeline",
+        "General-admission duplicate check-in rejected [already_checked_in]",
+        "Opt-in paid general admission issues after Woo payment completion",
+        "Attendance report treats expired seat lease as available without cron",
+        "Seat-status report agrees with booking expiry rules",
+        "Analyst cannot access another center report [permission_denied]",
+        "Expired inventory can be acquired without cron",
+        "Upgrade from prior schema completes",
+        "Schema upgrade preserves tickets",
+        "Public guest REST flow returns only authorized order tickets",
+        "Anonymous admin report REST access is denied"
+      ]
+    },
+    "concurrency": {
+      "worker-seat": {
+        "processes": 20,
+        "accepted": 1,
+        "rejected": 19,
+        "errors": {
+          "seat_unavailable": 19
+        }
+      },
+      "worker-capacity": {
+        "processes": 20,
+        "accepted": 3,
+        "rejected": 17,
+        "errors": {
+          "capacity_unavailable": 17
+        }
+      },
+      "worker-gate": {
+        "processes": 20,
+        "accepted": 1,
+        "rejected": 19,
+        "errors": {
+          "already_checked_in": 19
+        }
+      },
+      "worker-upgrade": {
+        "processes": 20,
+        "accepted": 20,
+        "rejected": 0
+      }
+    },
+    "verification": {
+      "mode": "verify-races",
+      "passed": 4,
+      "checks": [
+        "Twenty seat contenders yield one active hold",
+        "Twenty capacity contenders allocate exactly three units",
+        "Concurrent general admission never oversells",
+        "Concurrent scanners commit one check-in"
+      ]
+    },
+    "migration": {
+      "mode": "verify-upgrade",
+      "passed": 4,
+      "checks": [
+        "Concurrent upgrade reaches schema18 without error",
+        "Concurrent upgrade recreates both new bundle tables",
+        "Migration advisory lock is released after all workers",
+        "Concurrent schema upgrade preserves issued tickets"
+      ]
+    }
+  },
+  "cpt_representative": {
+    "mode": "representative-storage",
+    "passed": 9,
+    "hpos_enabled": false,
+    "order_data_store": "WC_Order_Data_Store_CPT",
+    "checks": [
+      "Storage-mode order remains a guest order",
+      "Storage-mode order preserves server price",
+      "Storage-mode checkout issues one ticket after valid completion",
+      "Storage-mode callback replay is idempotent",
+      "Storage-mode order remains a guest order",
+      "Storage-mode order preserves server price",
+      "Storage-mode checkout issues one ticket after valid completion",
+      "Storage-mode callback replay is idempotent",
+      "Both storage-mode orders retain inventory mappings"
+    ]
+  },
+  "hpos_representative": {
+    "mode": "representative-storage",
+    "passed": 10,
+    "hpos_enabled": true,
+    "order_data_store": "Automattic\\WooCommerce\\Internal\\DataStores\\Orders\\OrdersTableDataStore",
+    "checks": [
+      "Storage-mode order remains a guest order",
+      "Storage-mode order preserves server price",
+      "Storage-mode checkout issues one ticket after valid completion",
+      "Storage-mode callback replay is idempotent",
+      "Storage-mode order remains a guest order",
+      "Storage-mode order preserves server price",
+      "Storage-mode checkout issues one ticket after valid completion",
+      "Storage-mode callback replay is idempotent",
+      "Both storage-mode orders retain inventory mappings",
+      "HPOS writes both orders to authoritative custom order tables"
+    ]
+  },
+  "retention": {
+    "mode": "retention",
+    "passed": 41,
+    "checks": [
+      "Actual deactivation changes plugin state",
+      "Deactivation removes maintenance schedules",
+      "Deactivation retains wp_pesm_sessions",
+      "Deactivation retains wp_pesm_center_users",
+      "Deactivation retains wp_pesm_hold_mutations",
+      "Deactivation retains wp_pesm_capacity_holds",
+      "Deactivation retains wp_pesm_capacity_order_links",
+      "Deactivation retains wp_pesm_holds",
+      "Deactivation retains wp_pesm_layout_versions",
+      "Deactivation retains wp_pesm_phone_locks",
+      "Deactivation retains wp_pesm_rate_limits",
+      "Deactivation retains wp_pesm_session_seats",
+      "Deactivation retains wp_pesm_discount_rules",
+      "Deactivation retains wp_pesm_discount_claims",
+      "Deactivation retains wp_pesm_capacity_tickets",
+      "Deactivation retains wp_pesm_guest_recovery_requests",
+      "Deactivation retains wp_pesm_centers",
+      "Deactivation retains wp_pesm_hold_items",
+      "Deactivation retains wp_pesm_notification_jobs",
+      "Deactivation retains wp_pesm_ticket_owners",
+      "Deactivation retains wp_pesm_event_change_cases",
+      "Deactivation retains wp_pesm_event_changes",
+      "Deactivation retains wp_pesm_checkins",
+      "Deactivation retains wp_pesm_audit_logs",
+      "Deactivation retains wp_pesm_halls",
+      "Deactivation retains wp_pesm_layout_objects",
+      "Deactivation retains wp_pesm_ticket_bundle_items",
+      "Deactivation retains wp_pesm_guest_access_tokens",
+      "Deactivation retains wp_pesm_ticket_bundles",
+      "Deactivation retains wp_pesm_ticket_seat_transfers",
+      "Deactivation retains wp_pesm_capacity_checkins",
+      "Deactivation retains wp_pesm_ticket_ownership_transfers",
+      "Deactivation retains wp_pesm_tickets",
+      "Deactivation retains wp_pesm_refund_cases",
+      "Deactivation retains wp_pesm_events",
+      "Deactivation retains wp_pesm_seats",
+      "Deactivation retains wp_pesm_order_links",
+      "Deactivation retains wp_pesm_session_capacity",
+      "Deactivation retains wp_pesm_ticket_attendee_changes",
+      "Reactivation succeeds after retention check",
+      "Reactivation validates schema"
+    ]
+  },
+  "network_activation_guard": {
+    "mode": "network-activation",
+    "passed": 2,
+    "checks": [
+      "Network activation explicitly rejected by actual registered callback",
+      "Rejected network activation preserves issued tickets"
+    ]
+  }
+}

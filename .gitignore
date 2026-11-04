@@ -1,0 +1,9 @@
+.DS_Store
+.remember/
+.codebase-memory/
+__pycache__/
+*.pyc
+dist/
+.env
+.env.*
+!.env.example
