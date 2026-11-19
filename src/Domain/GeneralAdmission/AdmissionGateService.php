@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PESM\Domain\GeneralAdmission;
 
 use PESM\Domain\Booking\HoldException;
+use PESM\Domain\Event\LifecycleService;
 use PESM\Domain\Ticket\TicketToken;
 use PESM\Security\Capabilities;
 use PESM\Support\Audit;
@@ -59,10 +60,11 @@ final class AdmissionGateService
         $gate = function_exists('mb_substr') ? mb_substr(trim($gate), 0, 100, 'UTF-8') : substr(trim($gate), 0, 100);
         global $wpdb;
         $p = $wpdb->prefix . 'pesm_';
-        $centerId = (int) $wpdb->get_var($wpdb->prepare(
-            "SELECT e.center_id FROM {$p}capacity_tickets t JOIN {$p}sessions s ON s.id=t.session_id
+        $location = $wpdb->get_row($wpdb->prepare(
+            "SELECT t.session_id,s.event_id,e.center_id FROM {$p}capacity_tickets t JOIN {$p}sessions s ON s.id=t.session_id
              JOIN {$p}events e ON e.id=s.event_id WHERE t.public_id=%s", $publicId
         ));
+        $centerId = (int) ($location->center_id ?? 0);
         if (!$centerId || !Capabilities::centerAllowed($centerId, $operatorId)) {
             throw new HoldException('permission_denied', \PESM\Support\I18n::text('این بلیت به مرکز مجاز شما تعلق ندارد.'), 403);
         }
@@ -70,14 +72,12 @@ final class AdmissionGateService
             throw new HoldException('db_unavailable', \PESM\Support\I18n::text('پایگاه داده در دسترس نیست.'), 503);
         }
         try {
+            $session = LifecycleService::lockSession((int) $location->event_id, (int) $location->session_id);
             $ticket = $wpdb->get_row($wpdb->prepare(
                 "SELECT * FROM {$p}capacity_tickets WHERE public_id=%s FOR UPDATE", $publicId
             ));
-            $session = $ticket ? $wpdb->get_row($wpdb->prepare(
-                "SELECT s.starts_at,s.status,e.center_id,e.status AS event_status FROM {$p}sessions s
-                 JOIN {$p}events e ON e.id=s.event_id WHERE s.id=%d", (int) $ticket->session_id
-            )) : null;
-            if (!$ticket || !$session || (int) $session->center_id !== $centerId ||
+            if (!$ticket || !$session || (int) $ticket->session_id !== (int) $location->session_id ||
+                (int) $session->center_id !== $centerId || !Capabilities::centerAllowed($centerId, $operatorId) ||
                 !TicketToken::valid($payload, (string) $ticket->public_id, (int) $ticket->qr_version, wp_salt('secure_auth')) ||
                 !hash_equals((string) $ticket->qr_token_hash, hash('sha256', $payload))) {
                 throw new HoldException('invalid_qr', \PESM\Support\I18n::text('این کد QR قابل اعتبارسنجی نیست.'), 422);
@@ -86,6 +86,7 @@ final class AdmissionGateService
                 throw new HoldException('event_cancelled', \PESM\Support\I18n::text('جلسه یا رویداد لغو شده است.'), 409);
             }
             $now = (string) $wpdb->get_var('SELECT UTC_TIMESTAMP()');
+            if ($now === '') { throw new HoldException('db_unavailable', \PESM\Support\I18n::text('پایگاه داده در دسترس نیست.'), 503); }
             $start = strtotime((string) $session->starts_at . ' UTC');
             $current = strtotime($now . ' UTC');
             $before = max(0, (int) get_option('pesm_entry_before_seconds', 7200));

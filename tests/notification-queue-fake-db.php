@@ -22,13 +22,14 @@ function wp_remote_post(string $url,array $args): array {$GLOBALS['smsCalls'][]=
 function wp_remote_retrieve_response_code(array $response):int{return $response['code'];}
 function wp_remote_retrieve_body(array $response):string{return $response['body'];}
 function wp_mail(string $email,string $title,string $message):bool {$GLOBALS['mailCalls'][]=[$email,$title,$message];return $GLOBALS['mailWorks'];}
-function do_action(string $action,mixed ...$args):void {$GLOBALS['actions'][]=$action;}
+function do_action(string $action,mixed ...$args):void {$GLOBALS['actions'][]=[$action,...$args];}
 const PESM_SMS_USERNAME='fake'; const PESM_SMS_PASSWORD='not-real';
 
 class FakeOrder {
     public string $status='completed';
     public string $email='customer@example.org';
     public string $phone='+989123456789';
+    public function get_id():int{return 77;}
     public function get_meta(string $k):string{return ['_pesm_is_ticket_order'=>'yes','_pesm_mode'=>'seated'][$k]??'';}
     public function get_status():string{return $this->status;}
     public function get_billing_email():string{return $this->email;}
@@ -39,6 +40,7 @@ class QueueFakeDb {
     public array $rows=[];
     public int $insertCount=0;
     public array $queries=[];
+    public ?string $failedChannel=null;
     public function prepare(string $sql,mixed ...$args):string {
         foreach($args as $arg) {$replacement=is_int($arg)?(string)$arg:"'".str_replace("'","''",(string)$arg)."'"; $sql=preg_replace('/%[ds]/',$replacement,$sql,1);}
         return $sql;
@@ -50,9 +52,10 @@ class QueueFakeDb {
     }
     public function query(string $sql):int|false {
         $this->queries[]=$sql;
-        if (str_contains($sql,'INSERT IGNORE INTO wp_pesm_notification_jobs')) {
+        if (str_contains($sql,'INSERT INTO wp_pesm_notification_jobs')) {
             $pattern="/VALUES \\('([^']+)',(\\d+),'([^']+)','([^']+)','([^']+)','queued',0,'([^']+)','([^']+)','([^']+)'\\)/";
             if (!preg_match($pattern,$sql,$m)) throw new RuntimeException('Unexpected insert: '.$sql);
+            if ($m[3]===$this->failedChannel) return false;
             foreach($this->rows as $row) if ($row['dedupe_hash']===$m[4]) return 0;
             $id=count($this->rows)+1;
             $this->rows[$id]=['id'=>$id,'event_key'=>$m[1],'order_id'=>(int)$m[2],'channel'=>$m[3],
@@ -103,6 +106,16 @@ foreach ($GLOBALS['wpdb']->rows as $row) {
     expectN(!str_contains($row['payload'],'customer@example.org') && !str_contains($row['payload'],'09123456789'),'PII in DB');
     expectN(Cipher::open($row['payload'])['order_id']===77,'Cannot recover valid payload');
 }
+$queued=$GLOBALS['wpdb'];
+$GLOBALS['wpdb']=new QueueFakeDb();$GLOBALS['wpdb']->failedChannel='email';
+Queue::onTicketsIssued(77);
+expectN(array_column($GLOBALS['wpdb']->rows,'channel')===['sms'],'Email insert failure must leave SMS enqueue available');
+expectN($GLOBALS['actions']===[['pesm_notification_queue_error','enqueue_failed',77]],'Failed insert must be reported');
+// After the database recovers, replay fills the missing channel without duplicating SMS.
+$GLOBALS['wpdb']->failedChannel=null;Queue::onTicketsIssued(77);
+expectN(count($GLOBALS['wpdb']->rows)===2,'Replay must repair only the missing job');
+// The original jobs retain their lifecycle independently of the failure test.
+$GLOBALS['wpdb']=$queued;
 expectN(Queue::process(10)===2,'Two jobs should process');
 expectN(count($GLOBALS['mailCalls'])===1 && count($GLOBALS['smsCalls'])===1,'One email one SMS');
 expectN(Queue::summary()['sent']===2,'Both channels accepted');

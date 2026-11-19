@@ -7,6 +7,7 @@ namespace PESM\Integrations;
 use PESM\Domain\Ticket\TicketService;
 use PESM\Domain\GeneralAdmission\FreeAdmissionService;
 use PESM\Domain\Notification\NotificationQueue;
+use PESM\Domain\Checkout\CheckoutOrder;
 use PESM\Domain\Pricing\DiscountService;
 use Throwable;
 
@@ -16,6 +17,9 @@ final class WooCommerceBridge
     {
         // A status change alone is NOT proof of payment; only payment_complete may confirm paid seats.
         add_filter('woocommerce_is_purchasable', [self::class, 'preventDirectProductPurchase'], 10, 2);
+        add_filter('woocommerce_valid_order_statuses_for_payment', [CheckoutOrder::class, 'paymentStatuses'], PHP_INT_MAX, 2);
+        add_filter('woocommerce_valid_order_statuses_for_payment_complete', [CheckoutOrder::class, 'paymentStatuses'], PHP_INT_MAX, 2);
+        add_filter('woocommerce_order_needs_payment', [CheckoutOrder::class, 'canPay'], 10, 2);
         add_action('woocommerce_payment_complete', [self::class, 'paymentComplete'], 10, 1);
         add_action('woocommerce_order_status_failed', [self::class, 'flagCancellation'], 10, 1);
         add_action('woocommerce_order_status_cancelled', [self::class, 'flagCancellation'], 10, 1);
@@ -40,6 +44,7 @@ final class WooCommerceBridge
         if ($order->get_meta('_pesm_mode') === 'allocated') {
             try {
                 $result = \PESM\Domain\Allocation\CheckoutService::confirmOrder($orderId, false);
+                if (in_array($result, ['issued','already_issued'], true)) { NotificationQueue::onTicketsIssued($orderId); }
                 if ($result === 'review_required') { $order->add_order_note('PESM: allocated payment requires supervised reconciliation.'); $order->save(); }
             } catch (Throwable $e) {
                 try { \PESM\Domain\Allocation\Reconciliation::markReview($orderId); }

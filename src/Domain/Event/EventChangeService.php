@@ -58,12 +58,12 @@ final class EventChangeService
         if (!Capabilities::centerAllowed($centerId, $actorId)) {
             throw new HoldException('permission_denied', \PESM\Support\I18n::text('این مرکز در محدوده دسترسی شما نیست.'), 403);
         }
+        $eventId = $entity === 'event' ? $id : (int) $wpdb->get_var($wpdb->prepare(
+            "SELECT event_id FROM {$p}sessions WHERE id=%d", $id));
         if ($wpdb->query('START TRANSACTION') === false) {
             throw new HoldException('db_unavailable', \PESM\Support\I18n::text('امکان آغاز تراکنش وجود ندارد.'), 503);
         }
         try {
-            $eventId = $entity === 'event' ? $id : (int) $wpdb->get_var($wpdb->prepare(
-                "SELECT event_id FROM {$p}sessions WHERE id=%d", $id));
             $event = $wpdb->get_row($wpdb->prepare(
                 "SELECT id,center_id,status FROM {$p}events WHERE id=%d FOR UPDATE", $eventId));
             if (!$event || (int) $event->center_id !== $centerId ||
@@ -82,7 +82,7 @@ final class EventChangeService
             }
             $sessions = $wpdb->get_results($wpdb->prepare(
                 "SELECT id,event_id,status,starts_at,sale_ends_at FROM {$p}sessions WHERE event_id=%d ORDER BY id FOR UPDATE", $eventId));
-            if (!is_array($sessions)) { throw new HoldException('db_unavailable', \PESM\Support\I18n::text('خواندن جلسات ممکن نیست.'), 503); }
+            if (!is_array($sessions) || !empty($wpdb->last_error)) { throw new HoldException('db_unavailable', \PESM\Support\I18n::text('خواندن جلسات ممکن نیست.'), 503); }
             $session = null;
             foreach ($sessions as $candidate) {
                 if ((int)$candidate->id === $id && $entity === 'session') { $session = $candidate; }
@@ -181,8 +181,8 @@ final class EventChangeService
         }
         $ids = [];
         foreach ($queries as $sql) {
-            $found = $wpdb->get_col($wpdb->prepare($sql, ...$sessionIds));
-            if (!is_array($found)) { throw new HoldException('db_unavailable', \PESM\Support\I18n::text('فهرست سفارش‌ها قابل خواندن نیست.'), 503); }
+            $found = $wpdb->get_col($wpdb->prepare($sql . ' LIMIT %d', ...[...$sessionIds, self::MAX_CASES + 1]));
+            if (!is_array($found) || !empty($wpdb->last_error)) { throw new HoldException('db_unavailable', \PESM\Support\I18n::text('فهرست سفارش‌ها قابل خواندن نیست.'), 503); }
             foreach ($found as $orderId) { if ((int)$orderId > 0) { $ids[(int)$orderId] = (int)$orderId; } }
             if (count($ids) > self::MAX_CASES) { break; }
         }

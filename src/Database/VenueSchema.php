@@ -44,7 +44,7 @@ final class VenueSchema
                 category_code varchar(60) NOT NULL DEFAULT 'STANDARD',
                 rotation int(11) unsigned NOT NULL DEFAULT 0,
                 elevation int(11) NOT NULL DEFAULT 0,
-                accessible tinyint(1) unsigned NOT NULL DEFAULT 0,
+                `accessible` tinyint(1) unsigned NOT NULL DEFAULT 0,
                 tile_code varchar(80) NOT NULL,
                 PRIMARY KEY  (seat_id),
                 KEY layout_section (layout_id,section_code,seat_id),

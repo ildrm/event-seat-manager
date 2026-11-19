@@ -22,29 +22,41 @@ final class NotificationQueue
         try {
             $order = wc_get_order($orderId);
             if (!$order || $order->get_meta('_pesm_is_ticket_order') !== 'yes') { return; }
-            global $wpdb;
-            $table = $wpdb->prefix . 'pesm_';
-            $links = (int) $wpdb->get_var($wpdb->prepare(
-                $order->get_meta('_pesm_mode') === 'general'
-                    ? "SELECT COUNT(*) FROM {$table}capacity_tickets WHERE order_id=%d AND status='active'"
-                    : "SELECT COUNT(*) FROM {$table}tickets WHERE order_id=%d AND status='active'", $orderId
-            ));
-            if ($links < 1) { return; }
+            if (!self::hasActiveTickets($order)) { return; }
             $email = trim((string) $order->get_billing_email());
             $phone = trim((string) $order->get_billing_phone());
             if ($email !== '' && is_email($email)) {
-                self::enqueue('ticket_confirmed', $orderId, 'email', ['email'=>$email,'order_id'=>$orderId]);
+                self::enqueueConfirmation($orderId, 'email', ['email'=>$email,'order_id'=>$orderId]);
             }
             $patternId = (int) get_option('pesm_sms_ticket_confirmed_pattern', 0);
             if ($patternId > 0 && defined('PESM_SMS_USERNAME') && defined('PESM_SMS_PASSWORD')) {
                 try {
                     $normalized = NotificationPolicy::normalizeIranMobile($phone);
-                    self::enqueue('ticket_confirmed', $orderId, 'sms', ['phone'=>$normalized,'order_id'=>$orderId,'pattern_id'=>$patternId]);
+                    self::enqueueConfirmation($orderId, 'sms', ['phone'=>$normalized,'order_id'=>$orderId,'pattern_id'=>$patternId]);
                 } catch (\InvalidArgumentException $e) { /* Unsupported phone: email remains available. */ }
             }
         } catch (Throwable $e) {
-            // Failed enqueue is reported by reconciliation/health checks, never rolls back paid tickets.
-            do_action('pesm_notification_queue_error', 'enqueue_failed', $orderId);
+            self::reportFailure('enqueue_failed', $orderId);
+        }
+    }
+
+    private static function enqueueConfirmation(int $orderId, string $channel, array $payload): void
+    {
+        try {
+            if (self::enqueue('ticket_confirmed', $orderId, $channel, $payload)) { return; }
+        } catch (Throwable $e) {
+            // The other channel can still be enqueued.
+        }
+        self::reportFailure('enqueue_failed', $orderId);
+    }
+
+    private static function reportFailure(string $code, int $orderId): void
+    {
+        error_log('PESM notification queue ' . $code . ' for order ' . $orderId);
+        try {
+            do_action('pesm_notification_queue_error', $code, $orderId);
+        } catch (Throwable $e) {
+            // A notification observer must not interrupt payment or fulfillment.
         }
     }
 
@@ -56,13 +68,13 @@ final class NotificationQueue
         global $wpdb;
         $table = $wpdb->prefix . 'pesm_' . self::TABLE;
         $now = gmdate('Y-m-d H:i:s');
-        // INSERT IGNORE is safe only for the unique dedupe key; never overwrite another worker's state.
+        // Only suppress identical jobs. Other database errors must be visible to the caller.
         $result = $wpdb->query($wpdb->prepare(
-            "INSERT IGNORE INTO {$table} (event_key,order_id,channel,dedupe_hash,payload,status,attempts,available_at,created_at,updated_at)
-             VALUES (%s,%d,%s,%s,%s,'queued',0,%s,%s,%s)",
+            "INSERT INTO {$table} (event_key,order_id,channel,dedupe_hash,payload,status,attempts,available_at,created_at,updated_at)
+             VALUES (%s,%d,%s,%s,%s,'queued',0,%s,%s,%s) ON DUPLICATE KEY UPDATE id=id",
             $event, $orderId, $channel, $hash, $encrypted, $now, $now, $now
         ));
-        return $result !== false;
+        return $result === 0 || $result === 1;
     }
 
     public static function process(int $limit = 10): int
@@ -127,20 +139,22 @@ final class NotificationQueue
                     $status = 'failed'; $code = 'retry_exhausted';
                 } else {
                     $delay = NotificationPolicy::retryDelay($attempts);
-                    $wpdb->query($wpdb->prepare(
+                    $saved = $wpdb->query($wpdb->prepare(
                         "UPDATE {$table} SET status='queued',locked_until=NULL,available_at=DATE_ADD(UTC_TIMESTAMP(), INTERVAL %d SECOND),
                          last_error_code=%s,updated_at=UTC_TIMESTAMP() WHERE id=%d AND status='sending'", $delay, $code, $id
                     ));
+                    if ($saved !== 1) { self::reportFailure('retry_write_failed', (int) ($job->order_id ?? 0)); }
                     continue;
                 }
             }
             // Only predefined, non-sensitive machine codes go into the log.
-            $wpdb->update($table, [
+            $saved = $wpdb->update($table, [
                 'status'=>$status, 'last_error_code'=>$code, 'locked_until'=>null,
                 'updated_at'=>gmdate('Y-m-d H:i:s'),
                 // Once delivered, remove encrypted contact data from the database.
                 'payload'=>$status === 'sent' ? '' : (string) ($job->payload ?? ''),
             ], ['id'=>$id, 'status'=>'sending']);
+            if ($saved !== 1) { self::reportFailure('result_write_failed', (int) ($job->order_id ?? 0)); }
         }
         return $processed;
     }
@@ -160,12 +174,24 @@ final class NotificationQueue
             try { if (NotificationPolicy::normalizeIranMobile($recipient) !== ($payload['phone'] ?? '')) { return false; } }
             catch (\InvalidArgumentException $e) { return false; }
         }
+        return self::hasActiveTickets($order);
+    }
+
+    private static function hasActiveTickets(object $order): bool
+    {
         global $wpdb;
         $p = $wpdb->prefix . 'pesm_';
-        $sql = $order->get_meta('_pesm_mode') === 'general'
-            ? "SELECT COUNT(*) FROM {$p}capacity_tickets WHERE order_id=%d AND status='active'"
-            : "SELECT COUNT(*) FROM {$p}tickets WHERE order_id=%d AND status='active'";
-        return (int) $wpdb->get_var($wpdb->prepare($sql, (int) $job->order_id)) > 0;
+        $tickets = match ($order->get_meta('_pesm_mode')) {
+            'general' => 'capacity_tickets', 'allocated' => 'allocation_tickets', default => 'tickets',
+        };
+        $line = $tickets === 'allocation_tickets' ? " JOIN {$p}allocation_lines l ON l.id=t.line_id AND l.status='issued'" : '';
+        $count = $wpdb->get_var($wpdb->prepare(
+            "SELECT COUNT(*) FROM {$p}{$tickets} t{$line} JOIN {$p}sessions s ON s.id=t.session_id
+             JOIN {$p}events e ON e.id=s.event_id WHERE t.order_id=%d AND t.status='active'
+             AND s.status<>'cancelled' AND e.status<>'cancelled'", (int) $order->get_id()
+        ));
+        if ($count === null) { throw new \RuntimeException('Could not read notification eligibility.'); }
+        return (int) $count > 0;
     }
 
     /** Dead letters stay visible for review, but no contact data survives the retention period. */

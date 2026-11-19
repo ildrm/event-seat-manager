@@ -6,6 +6,7 @@ namespace PESM\Domain\Checkout;
 
 use PESM\Domain\Booking\HoldException;
 use PESM\Domain\Booking\SeatingRules;
+use PESM\Domain\Event\LifecycleService;
 use PESM\Domain\Ticket\TicketService;
 use PESM\Domain\GeneralAdmission\FreeAdmissionService;
 use PESM\Domain\Pricing\DiscountService;
@@ -83,8 +84,11 @@ final class CheckoutService
                 if ($hold->status === 'payment_pending' && $hold->expires_at <= $now) {
                     throw new HoldException('payment_deadline_passed', \PESM\Support\I18n::text('مهلت پرداخت پایان یافته است؛ از پرداخت این سفارش خودداری کنید.'), 410);
                 }
-                $wpdb->query('COMMIT');
+                if ($wpdb->query('COMMIT') === false) { throw new \RuntimeException('Checkout replay transaction did not commit.'); }
                 return $this->existingOrder((int) $hold->order_id, (int) $hold->id, $token);
+            }
+            if ($hold->status === 'checkout_creating') {
+                throw new HoldException('checkout_reconciliation_required', \PESM\Support\I18n::text('سفارش نیازمند بررسی است.'), 503);
             }
             if ($hold->status !== 'active' || $hold->expires_at <= $now) {
                 throw new HoldException('hold_expired', \PESM\Support\I18n::text('رزرو موقت منقضی شده است.'), 410);
@@ -206,18 +210,15 @@ final class CheckoutService
 
         // WooCommerce writes happen outside the inventory SQL transaction.
         // Crashes leave a checkout_creating lease that requires reconciliation.
+        $order = null;
         try {
             $product = $this->product();
-            $order = wc_create_order(['created_via' => 'pesm']);
-            if (is_wp_error($order)) { throw new \RuntimeException('Order creation failed.'); }
+            $order = CheckoutOrder::stage('seated', $sessionId, (int) $hold->id);
             $order->set_address([
                 'first_name' => $firstName, 'last_name' => $lastName, 'phone' => $phone, 'email' => $email,
             ], 'billing');
             $order->set_customer_id(get_current_user_id());
             $order->set_currency(get_woocommerce_currency());
-            $order->update_meta_data('_pesm_is_ticket_order', 'yes');
-            $order->update_meta_data('_pesm_hold_id', (int) $hold->id);
-            $order->update_meta_data('_pesm_session_id', $sessionId);
             $order->update_meta_data('_pesm_attendees_v1', $attendeeSnapshot);
             // Keep the checkout agreement independent of later session-price,
             // shop-currency and currency-decimal changes.
@@ -251,44 +252,37 @@ final class CheckoutService
                 $order->add_item($item);
             }
             $order->calculate_totals(false);
-            $actualMinor = (int) round((float) $order->get_total() * (10 ** wc_get_price_decimals()));
-            if ($actualMinor !== $expectedMinor) {
-                throw new \RuntimeException('WooCommerce total differs from server price snapshot.');
-            }
-            $order->set_status('pending');
-            $order->save();
-            $orderId = (int) $order->get_id();
+            $orderId = CheckoutOrder::remember('seated', (int) $hold->id, $order);
             $guestToken = $this->guestToken((int) $hold->id, $token);
             if ($wpdb->query('START TRANSACTION') === false) { throw new \RuntimeException('Could not start mapping transaction.'); }
             try {
-                $wpdb->get_var($wpdb->prepare("SELECT id FROM {$p}sessions WHERE id=%d FOR UPDATE", $sessionId));
+                $lifecycle = LifecycleService::lockSession((int) $session->event_id, $sessionId);
                 $locked = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$p}holds WHERE id=%d FOR UPDATE", (int) $hold->id));
-                if (!$locked || $locked->status !== 'checkout_creating' || $locked->expires_at <= (string) $wpdb->get_var('SELECT UTC_TIMESTAMP()')) {
+                $linkedAt = (string) $wpdb->get_var('SELECT UTC_TIMESTAMP()');
+                if (!$lifecycle || $lifecycle->status !== 'published' || $lifecycle->event_status !== 'published' ||
+                    !$locked || (int) $locked->order_id !== $orderId || $locked->status !== 'checkout_creating' ||
+                    $linkedAt === '' || $locked->expires_at <= $linkedAt) {
                     throw new \RuntimeException('Reservation expired while creating WooCommerce order.');
                 }
                 if ($wpdb->insert($p . 'order_links', [
                     'hold_id' => (int) $hold->id, 'order_id' => $orderId,
                     'guest_token_hash' => hash('sha256', $guestToken),
-                    'status' => 'pending', 'created_at' => $now,
+                    'status' => 'pending', 'created_at' => $linkedAt,
                 ]) !== 1 || $wpdb->update($p . 'holds', [
-                    'status' => 'payment_pending', 'order_id' => $orderId,
-                ], ['id' => (int) $hold->id]) !== 1) {
+                    'status' => 'payment_pending',
+                ], ['id' => (int) $hold->id, 'status'=>'checkout_creating', 'order_id'=>$orderId]) !== 1) {
                     throw new \RuntimeException('Could not bind order to inventory.');
                 }
                 if ($wpdb->query('COMMIT') === false) { throw new \RuntimeException('Could not commit order link.'); }
             } catch (Throwable $e) { $wpdb->query('ROLLBACK'); throw $e; }
             if ($expectedMinor === 0) {
-                $result = (new TicketService())->confirmOrder($orderId, true);
-                if ($result !== 'issued' && $result !== 'already_issued') {
-                    throw new \RuntimeException('Ticket issuance requires reconciliation.');
-                }
-                $order->update_status('completed', \PESM\Support\I18n::text('رزرو رایگان و بلیت‌ها تأیید شدند.'), true);
-                (new DiscountService())->redeemOrder($orderId);
-                \PESM\Domain\Notification\NotificationQueue::onTicketsIssued($orderId);
+                $this->finishFree($order);
+            } else {
+                CheckoutOrder::publish($order);
             }
             return $this->response($order, $guestToken, (int) $hold->id);
         } catch (Throwable $e) {
-            // Leave the hold for supervised reconciliation; never auto-issue or release an order.
+            CheckoutOrder::onFailure($order, 'seated', (int) $hold->id);
             throw new HoldException('checkout_reconciliation_required', \PESM\Support\I18n::text('تکمیل سفارش ناموفق بود؛ برای بررسی وضعیت پرداخت یا رزرو با پشتیبانی تماس بگیرید.'), 503);
         }
     }
@@ -300,17 +294,34 @@ final class CheckoutService
         if (!$order || $order->get_meta('_pesm_hold_id') != $holdId) {
             throw new HoldException('checkout_reconciliation_required', \PESM\Support\I18n::text('سفارش نیازمند بررسی است.'), 503);
         }
+        if ((float) $order->get_total() === 0.0 && in_array($order->get_status(), [CheckoutOrder::DRAFT, 'pending'], true)) {
+            $this->finishFree($order);
+        } else {
+            CheckoutOrder::publish($order);
+        }
         return $this->response($order, $this->guestToken($holdId, $token), $holdId);
+    }
+
+    private function finishFree(object $order): void
+    {
+        $orderId = (int) $order->get_id();
+        if (!in_array((new TicketService())->confirmOrder($orderId, true), ['issued', 'already_issued'], true)) {
+            throw new \RuntimeException('Ticket issuance requires reconciliation.');
+        }
+        CheckoutOrder::updateStatus($order, 'completed', \PESM\Support\I18n::text('رزرو رایگان و بلیت‌ها تأیید شدند.'), true);
+        (new DiscountService())->redeemOrder($orderId);
+        \PESM\Domain\Notification\NotificationQueue::onTicketsIssued($orderId);
     }
 
     /** @return array<string,mixed> */
     private function response(object $order, string $guestToken, int $holdId): array
     {
+        $payable = $order->needs_payment();
         return [
             'order_id' => (int) $order->get_id(), 'hold_id' => $holdId,
             'order_status' => (string) $order->get_status(),
-            'payment_required' => (float) $order->get_total() > 0,
-            'payment_url' => (float) $order->get_total() > 0 ? $order->get_checkout_payment_url() : null,
+            'payment_required' => $payable,
+            'payment_url' => $payable ? $order->get_checkout_payment_url() : null,
             'guest_access_token' => $guestToken,
             'message' => (float) $order->get_total() > 0
                 ? \PESM\Support\I18n::text('سفارش ثبت شد؛ پرداخت باید در درگاه ووکامرس تأیید شود.') : \PESM\Support\I18n::text('سفارش رایگان ثبت و بلیت صادر شد.'),

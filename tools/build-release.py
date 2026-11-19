@@ -9,6 +9,7 @@ import zipfile
 ROOT = Path(__file__).resolve().parents[1]
 SLUG = 'event-seat-manager'
 VERSION = '2.0.0'
+BLOCKS = ('events', 'event', 'seat-map', 'my-tickets', 'gate-scanner')
 
 
 def validate():
@@ -22,10 +23,13 @@ def validate():
     assert f'Stable tag: {VERSION}\n' in (ROOT / 'readme.txt').read_text()
     assert (ROOT / 'CHANGELOG.md').read_bytes() == b'', 'Release history must be empty'
     assert not (ROOT / 'persian-event-seat-manager.php').exists()
-    for path in (ROOT / 'blocks').glob('*/block.json'):
+    for slug in BLOCKS:
+        path = ROOT / 'blocks' / slug / 'block.json'
         block = json.loads(path.read_text())
+        assert block['name'] == f'pesm/{slug}', path
         assert block['version'] == VERSION, path
         assert block['textdomain'] == SLUG, path
+    assert (ROOT / 'assets/js/blocks-editor.js').is_file(), 'Missing block editor script'
     for path in (ROOT / 'languages').glob('*.json'):
         json.loads(path.read_text())
     for path in [*ROOT.glob('*.php'), *(ROOT / 'src').rglob('*.php'), *(ROOT / 'assets/js').glob('*.js')]:
@@ -62,6 +66,8 @@ def main():
         names = archive.namelist()
         assert len(names) == len(set(names))
         assert f'{SLUG}/{SLUG}.php' in names
+        assert f'{SLUG}/assets/js/blocks-editor.js' in names
+        assert all(f'{SLUG}/blocks/{slug}/block.json' in names for slug in BLOCKS)
         assert all(name.startswith(f'{SLUG}/') and '..' not in name.split('/') for name in names)
     digest = hashlib.sha256(destination.read_bytes()).hexdigest()
     destination.with_suffix('.zip.sha256').write_text(f'{digest}  {destination.name}\n')

@@ -363,7 +363,7 @@ msgstr "The map version could not be linked to the hall."
 msgid "اجازه آزادسازی این صندلی‌ها وجود ندارد."
 msgstr "You do not have permission to release these seats."
 
-#: src/Domain/Checkout/CheckoutService.php:81
+#: src/Domain/Checkout/CheckoutService.php:82
 msgid "اجازه استفاده از این رزرو وجود ندارد."
 msgstr "You do not have permission to use this reservation."
 
@@ -447,11 +447,11 @@ msgstr "The database connection could not be established."
 msgid "ارتباط ذخیره قطع شد."
 msgstr "The save connection was interrupted."
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:270
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:256
 msgid "ارتباط رزرو و سفارش معتبر نیست."
 msgstr "The reservation and order link is invalid."
 
-#: src/Domain/Gate/CheckinService.php:93 src/Domain/Hall/SeatAdministration.php:31
+#: src/Domain/Gate/CheckinService.php:111 src/Domain/Gate/CheckinService.php:94 src/Domain/Hall/SeatAdministration.php:31
 msgid "ارتباط پایگاه داده برقرار نشد."
 msgstr "The database connection could not be established."
 
@@ -645,7 +645,7 @@ msgstr "The preset creates a seating draft. Published layouts and existing ticke
 msgid "امکان آغاز تراکنش نیست."
 msgstr "The transaction could not be started."
 
-#: src/Domain/Event/EventChangeService.php:62 src/Domain/GeneralAdmission/FreeAdmissionService.php:45
+#: src/Domain/Event/EventChangeService.php:64 src/Domain/GeneralAdmission/FreeAdmissionService.php:47
 msgid "امکان آغاز تراکنش وجود ندارد."
 msgstr "The transaction could not be started."
 
@@ -661,7 +661,7 @@ msgstr "The report could not be generated."
 msgid "امکان خروجی: خطا یا کد تکراری در صندلی "
 msgstr "Export unavailable: invalid or duplicate seat "
 
-#: src/Domain/Event/LifecycleService.php:22
+#: src/Domain/Event/LifecycleService.php:40
 msgid "امکان شروع تراکنش وجود ندارد."
 msgstr "The transaction could not be started."
 
@@ -739,7 +739,7 @@ msgstr "The ticket transfer needs review."
 msgid "انتقال رزرو به سبد خرید ووکامرس"
 msgstr "Move reservation to WooCommerce cart"
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:130
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:128
 msgid "انتقال رزرو به مرحله صدور بلیت انجام نشد."
 msgstr "The reservation could not be moved to ticket issuance."
 
@@ -870,7 +870,7 @@ msgstr "Order email address "
 msgid "ایمیل دریافت و بازیابی بلیت"
 msgstr "Ticket delivery and recovery email"
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:40
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:42
 msgid "ایمیل واردشده معتبر نیست."
 msgstr "The email address is invalid."
 
@@ -893,7 +893,7 @@ msgstr "This bundle only groups existing tickets. Group purchases and refunds ar
 msgid "این بلیت برای انتقال فعال نیست."
 msgstr "This ticket is not active for transfer."
 
-#: src/Domain/Gate/CheckinService.php:91 src/Domain/GeneralAdmission/AdmissionGateService.php:67
+#: src/Domain/Gate/CheckinService.php:92 src/Domain/GeneralAdmission/AdmissionGateService.php:69
 msgid "این بلیت به مرکز مجاز شما تعلق ندارد."
 msgstr "This ticket does not belong to your permitted center."
 
@@ -901,7 +901,7 @@ msgstr "This ticket does not belong to your permitted center."
 msgid "این بلیت در محدوده مرکز شما نیست."
 msgstr "This ticket is outside your center’s scope."
 
-#: src/Domain/Allocation/Messages.php:58 src/Domain/Gate/CheckinService.php:125 src/Domain/GeneralAdmission/AdmissionGateService.php:100
+#: src/Domain/Allocation/Messages.php:58 src/Domain/Gate/CheckinService.php:123 src/Domain/GeneralAdmission/AdmissionGateService.php:101
 msgid "این بلیت فعال نیست."
 msgstr "This ticket is not active."
 
@@ -921,7 +921,7 @@ msgstr "This session does not use assigned seating."
 msgid "این جلسه در مرکز شما نقشه صندلی ندارد."
 msgstr "This session has no seat map in your center."
 
-#: src/Domain/Gate/CheckinService.php:111
+#: src/Domain/Gate/CheckinService.php:107
 msgid "این جلسه یا رویداد لغو شده است."
 msgstr "This session or event has been cancelled."
 
@@ -941,11 +941,10 @@ msgstr "This group reservation cannot be changed."
 msgid "این رویداد یا جلسه قابل لغو مجدد نیست."
 msgstr "This event or session cannot be cancelled again."
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:71
 msgid "این سفارش به بررسی نیاز دارد."
 msgstr "This order needs review."
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:242
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:228
 msgid "این سفارش رایگان نیست."
 msgstr "This order is not free."
 
@@ -1121,7 +1120,7 @@ msgstr "General admission"
 msgid "بدون نیاز به ساخت حساب کاربری، اطلاعات دریافت بلیت را تکمیل کنید."
 msgstr "Enter your ticket details without creating an account."
 
-#: src/Domain/Event/LifecycleService.php:39
+#: src/Domain/Event/LifecycleService.php:57
 msgid "برای انتشار جلسه، ابتدا رویداد آن را منتشر کنید."
 msgstr "Publish the event before publishing its session."
 
@@ -1169,7 +1168,7 @@ msgstr "Scroll to explore the map. You can also use the arrow keys to move and S
 msgid "برای جلسه شماره‌دار، ظرفیت از نقشه محاسبه می‌شود."
 msgstr "For assigned seating, capacity is calculated from the map."
 
-#: src/Domain/Checkout/CheckoutService.php:135
+#: src/Domain/Checkout/CheckoutService.php:139
 msgid "برای خرید پولی با مالیات فعال، اتصال مالیاتی هنوز تأیید نشده است."
 msgstr "Tax integration for paid orders with taxes enabled has not been verified yet."
 
@@ -1189,7 +1188,7 @@ msgstr "Required for paid orders."
 msgid "برای شروع، یک مرکز ایجاد کنید یا از مدیر کل بخواهید دسترسی مرکز را به شما بدهد."
 msgstr "Create a center to get started, or ask your administrator to grant you center access."
 
-#: src/Domain/Checkout/CheckoutService.php:38
+#: src/Domain/Checkout/CheckoutService.php:39
 msgid "برای صدور سفارش باید ووکامرس فعال باشد."
 msgstr "WooCommerce must be active to create orders."
 
@@ -1228,7 +1227,7 @@ msgstr "Only one ticket per session is permitted."
 msgid "برای ویرایش ابتدا شیء را انتخاب کنید."
 msgstr "Select an object before editing."
 
-#: src/Domain/Checkout/CheckoutService.php:131
+#: src/Domain/Checkout/CheckoutService.php:135
 msgid "برای پیگیری سفارش پولی، ایمیل لازم است."
 msgstr "An email address is required to track a paid order."
 
@@ -1264,7 +1263,7 @@ msgstr "Review capacity and attendance"
 msgid "بررسی قوانین صندلی ممکن نیست."
 msgstr "The seating rules could not be checked."
 
-#: src/Domain/Checkout/CheckoutService.php:117
+#: src/Domain/Checkout/CheckoutService.php:121
 msgid "بررسی نهایی چیدمان ممکن نشد."
 msgstr "The final seating check could not be completed."
 
@@ -1348,7 +1347,7 @@ msgstr "The ticket has changed or could not be found."
 msgid "بلیت دارای پرونده استرداد را نمی‌توان گروه‌بندی کرد."
 msgstr "A ticket with a refund case cannot be grouped."
 
-#: src/Domain/Allocation/Messages.php:57 src/Domain/Gate/CheckinService.php:40
+#: src/Domain/Allocation/Messages.php:57 src/Domain/Gate/CheckinService.php:41
 msgid "بلیت در محدوده دسترسی شما پیدا نشد."
 msgstr "The ticket was not found within your access scope."
 
@@ -1360,11 +1359,11 @@ msgstr "The ticket is outside your permitted scope."
 msgid "بلیت در محدوده مجاز پیدا نشد."
 msgstr "The ticket was not found within the permitted scope."
 
-#: src/Domain/GeneralAdmission/AdmissionGateService.php:31
+#: src/Domain/GeneralAdmission/AdmissionGateService.php:32
 msgid "بلیت در محدوده مجاز یافت نشد."
 msgstr "The ticket was not found within the permitted scope."
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:205
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:406
 msgid "بلیت رایگان ظرفیت آزاد صادر شد."
 msgstr "The free general admission ticket has been issued."
 
@@ -1372,7 +1371,7 @@ msgstr "The free general admission ticket has been issued."
 msgid "بلیت رایگان لغو شد و صندلی، بدون عملیات مالی، آزاد شد."
 msgstr "The free ticket has been cancelled and its seat released without a financial transaction."
 
-#: src/Domain/Allocation/CheckoutService.php:218 src/Domain/Checkout/CheckoutService.php:331 src/Domain/GeneralAdmission/FreeAdmissionService.php:374 src/Integrations/CartSeatManager.php:507
+#: src/Domain/Allocation/CheckoutService.php:233 src/Domain/Checkout/CheckoutService.php:342 src/Domain/GeneralAdmission/FreeAdmissionService.php:360 src/Integrations/CartSeatManager.php:507
 msgid "بلیت رویداد (محصول فنی)"
 msgstr "Event ticket (technical product)"
 
@@ -1400,7 +1399,7 @@ msgstr "Active tickets issued"
 msgid "بلیت فعال قابل مشاهده است. توکن را محرمانه نگه دارید."
 msgstr "The active ticket is available. Keep your token confidential."
 
-#: src/Domain/Gate/CheckinService.php:108
+#: src/Domain/Gate/CheckinService.php:104
 msgid "بلیت قابل اعتبارسنجی نیست."
 msgstr "The ticket cannot be verified."
 
@@ -1428,7 +1427,7 @@ msgstr "The ticket does not exist."
 msgid "بلیت پیدا نشد یا تغییر کرده است."
 msgstr "The ticket was not found or has changed."
 
-#: src/Domain/GeneralAdmission/AdmissionGateService.php:46
+#: src/Domain/GeneralAdmission/AdmissionGateService.php:47
 msgid "بلیت یافت نشد."
 msgstr "The ticket was not found."
 
@@ -1456,7 +1455,6 @@ msgstr "Your tickets are ready."
 msgid "بلیت‌های من"
 msgstr "My tickets"
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:397
 msgid "بلیت‌های موجود این سفارش رایگان بازیابی شدند."
 msgstr "The existing tickets for this free order have been recovered."
 
@@ -1480,7 +1478,7 @@ msgstr "Confirm receipt of your event ticket"
 msgid "تأیید شد. دسترسی موقت حداکثر ۲۴ ساعت اعتبار دارد."
 msgstr "Verified. Temporary access is valid for up to 24 hours."
 
-#: src/Domain/Notification/NotificationQueue.php:106
+#: src/Domain/Notification/NotificationQueue.php:118
 msgid "تأیید صدور بلیت"
 msgstr "Ticket issuance confirmation"
 
@@ -1552,11 +1550,11 @@ msgstr "The transaction could not be started."
 msgid "تراکنش انتشار تکمیل نشد."
 msgstr "The publishing transaction could not be completed."
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:314
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:300
 msgid "تراکنش تأیید نشد."
 msgstr "The transaction could not be committed."
 
-#: src/Domain/GeneralAdmission/AdmissionGateService.php:109 src/Domain/Ticket/AttendeeChangeService.php:124
+#: src/Domain/GeneralAdmission/AdmissionGateService.php:110 src/Domain/Ticket/AttendeeChangeService.php:124
 msgid "تراکنش ثبت نشد."
 msgstr "The transaction could not be recorded."
 
@@ -1584,7 +1582,7 @@ msgstr "The cancellation transaction could not be completed."
 msgid "تراکنش موجودی ثبت نشد."
 msgstr "The inventory transaction could not be recorded."
 
-#: src/Domain/Event/EventChangeService.php:156 src/Domain/Event/EventChangeService.php:79 src/Domain/GeneralAdmission/FreeAdmissionService.php:274
+#: src/Domain/Event/EventChangeService.php:156 src/Domain/Event/EventChangeService.php:79 src/Domain/GeneralAdmission/FreeAdmissionService.php:260
 msgid "تراکنش نهایی نشد."
 msgstr "The transaction could not be finalized."
 
@@ -1732,7 +1730,7 @@ msgstr "The requested change was not found."
 msgid "تغییر وضعیت"
 msgstr "Change status"
 
-#: src/Domain/Event/LifecycleService.php:44
+#: src/Domain/Event/LifecycleService.php:62
 msgid "تغییر وضعیت در این مرحله مجاز نیست."
 msgstr "A status change is not permitted at this stage."
 
@@ -1862,7 +1860,7 @@ msgstr "Your ticket access token: %s\nKeep this token private to protect your ti
 msgid "تکمیل سفارش این بلیت‌ها فقط از مسیر اختصاصی افزونه در محیط آزمایشی مجاز است."
 msgstr "These tickets can only be ordered through the plugin's dedicated testing flow."
 
-#: src/Domain/Checkout/CheckoutService.php:292
+#: src/Domain/Checkout/CheckoutService.php:286
 msgid "تکمیل سفارش ناموفق بود؛ برای بررسی وضعیت پرداخت یا رزرو با پشتیبانی تماس بگیرید."
 msgstr "The order could not be completed. Contact support to check your payment or reservation status."
 
@@ -1914,11 +1912,11 @@ msgstr "The new date could not be recorded."
 msgid "ثبت تراکنش انجام نشد."
 msgstr "The transaction could not be recorded."
 
-#: src/Domain/Checkout/CheckoutService.php:200
+#: src/Domain/Checkout/CheckoutService.php:204
 msgid "ثبت تراکنش ممکن نشد."
 msgstr "The transaction could not be recorded."
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:132 src/Domain/GeneralAdmission/FreeAdmissionService.php:62 src/Domain/GeneralAdmission/FreeAdmissionService.php:66 src/Domain/Ticket/OwnershipTransferService.php:312 src/Domain/Ticket/RefundReviewService.php:296
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:130 src/Domain/GeneralAdmission/FreeAdmissionService.php:64 src/Domain/GeneralAdmission/FreeAdmissionService.php:71 src/Domain/Ticket/OwnershipTransferService.php:312 src/Domain/Ticket/RefundReviewService.php:296
 msgid "ثبت تراکنش ناموفق بود."
 msgstr "The transaction could not be committed."
 
@@ -1937,7 +1935,7 @@ msgstr "Save seat changes"
 msgid "ثبت تغییر صندلی‌های رزرو"
 msgstr "Save seat changes"
 
-#: src/Domain/Event/LifecycleService.php:51 src/Domain/Hall/SeatAdministration.php:68
+#: src/Domain/Event/LifecycleService.php:69 src/Domain/Hall/SeatAdministration.php:68
 msgid "ثبت تغییر وضعیت ناموفق بود."
 msgstr "The status change could not be recorded."
 
@@ -1996,11 +1994,11 @@ msgstr "Place order from cart"
 msgid "ثبت سفارش انجام شد؛ کلید بازیابی را در محل امن نگهداری کنید."
 msgstr "Order placed. Keep the recovery key in a safe place."
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:136
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:134
 msgid "ثبت سفارش ظرفیت آزاد ناموفق بود."
 msgstr "The general admission order could not be recorded."
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:77
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:75
 msgid "ثبت سفارش قبلی هنوز نیازمند بررسی است."
 msgstr "The previous order attempt still needs review."
 
@@ -2020,15 +2018,15 @@ msgstr "The discount usage could not be reserved."
 msgid "ثبت صندلی انتخابی انجام نشد."
 msgstr "The selected seat could not be recorded."
 
-#: src/Domain/Checkout/CheckoutService.php:191
+#: src/Domain/Checkout/CheckoutService.php:195
 msgid "ثبت مرحله سفارش ممکن نشد."
 msgstr "The order stage could not be recorded."
 
-#: src/Domain/Checkout/CheckoutService.php:204
+#: src/Domain/Checkout/CheckoutService.php:208
 msgid "ثبت مرحله سفارش ناموفق بود."
 msgstr "The order stage could not be recorded."
 
-#: src/Domain/Checkout/CheckoutService.php:197
+#: src/Domain/Checkout/CheckoutService.php:201
 msgid "ثبت مرحله پرداخت صندلی ناموفق بود."
 msgstr "The seat payment stage could not be recorded."
 
@@ -2056,7 +2054,7 @@ msgstr "Not recorded"
 msgid "ثبت نهایی بسته انجام نشد."
 msgstr "The bundle could not be finalized."
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:311
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:297
 msgid "ثبت نهایی موجودی ناموفق بود."
 msgstr "The final inventory update failed."
 
@@ -2076,11 +2074,11 @@ msgstr "The temporary reservation could not be recorded."
 msgid "ثبت ورود"
 msgstr "Record admission"
 
-#: src/Domain/Gate/CheckinService.php:131
+#: src/Domain/Gate/CheckinService.php:129
 msgid "ثبت ورود انجام نشد."
 msgstr "The check-in could not be recorded."
 
-#: assets/js/gate.js src/Domain/Gate/CheckinService.php:134 src/Domain/GeneralAdmission/AdmissionGateService.php:106
+#: assets/js/gate.js src/Domain/Gate/CheckinService.php:132 src/Domain/GeneralAdmission/AdmissionGateService.php:107
 msgid "ثبت ورود ناموفق بود."
 msgstr "Check-in failed."
 
@@ -2254,7 +2252,7 @@ msgstr "The session was not found."
 msgid "جلسه یا رویداد لغو شده است."
 msgstr "The session or event has been cancelled."
 
-#: src/Domain/Checkout/CheckoutService.php:65 src/Domain/GeneralAdmission/FreeAdmissionService.php:257 src/Domain/GeneralAdmission/FreeAdmissionService.php:52 src/Domain/Ticket/OwnershipTransferService.php:296
+#: src/Domain/Checkout/CheckoutService.php:66 src/Domain/GeneralAdmission/FreeAdmissionService.php:243 src/Domain/GeneralAdmission/FreeAdmissionService.php:54 src/Domain/Ticket/OwnershipTransferService.php:296
 msgid "جلسه یافت نشد."
 msgstr "The session was not found."
 
@@ -2366,7 +2364,7 @@ msgstr "Report retrieval error"
 msgid "خطای ساخت پایگاه داده: "
 msgstr "Database setup error: "
 
-#: src/Domain/Gate/CheckinService.php:139 src/Domain/GeneralAdmission/AdmissionGateService.php:114
+#: src/Domain/Gate/CheckinService.php:137 src/Domain/GeneralAdmission/AdmissionGateService.php:115
 msgid "خطای کنترل ورود رخ داد."
 msgstr "A check-in error occurred."
 
@@ -2867,7 +2865,7 @@ msgstr "Held by others"
 msgid "رزرو دیگری برای این جلسه در سبد وجود دارد."
 msgstr "Another reservation for this session is already in the cart."
 
-#: src/Domain/Checkout/CheckoutService.php:285
+#: src/Domain/Checkout/CheckoutService.php:311
 msgid "رزرو رایگان و بلیت‌ها تأیید شدند."
 msgstr "The free reservation and tickets have been confirmed."
 
@@ -2899,7 +2897,7 @@ msgstr "This reservation cannot be extended again."
 msgid "رزرو متعلق به این درخواست نیست."
 msgstr "This reservation does not belong to this request."
 
-#: src/Domain/Booking/CapacityService.php:100 src/Domain/GeneralAdmission/FreeAdmissionService.php:60
+#: src/Domain/Booking/CapacityService.php:100 src/Domain/GeneralAdmission/FreeAdmissionService.php:62
 msgid "رزرو متعلق به این دسترسی نیست."
 msgstr "The reservation does not belong to this access token."
 
@@ -2927,7 +2925,7 @@ msgstr "Your temporary reservation"
 msgid "رزرو موقت قابل تغییر یا افزودن به سبد نیست."
 msgstr "This hold cannot be changed or added to the cart."
 
-#: src/Domain/Checkout/CheckoutService.php:90
+#: src/Domain/Checkout/CheckoutService.php:94 src/Domain/GeneralAdmission/FreeAdmissionService.php:69
 msgid "رزرو موقت منقضی شده است."
 msgstr "The temporary reservation has expired."
 
@@ -3091,7 +3089,7 @@ msgstr "Enter the new time in UTC. Rescheduling is unavailable after check-in or
 msgid "زمان رویداد لغوشده قابل تغییر نیست."
 msgstr "The date of a cancelled event cannot be changed."
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:123
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:121
 msgid "زمان صدور بلیت پایان یافته است."
 msgstr "The ticket issuance deadline has passed."
 
@@ -3119,11 +3117,11 @@ msgstr "A valid database time could not be retrieved."
 msgid "زمان نامعتبر است."
 msgstr "The time is invalid."
 
-#: src/Domain/Gate/CheckinService.php:119
+#: src/Domain/Gate/CheckinService.php:117
 msgid "زمان ورود این بلیت هنوز نرسیده یا پایان یافته است."
 msgstr "The ticket’s entry window has not opened or has already closed."
 
-#: src/Domain/GeneralAdmission/AdmissionGateService.php:94
+#: src/Domain/GeneralAdmission/AdmissionGateService.php:95
 msgid "زمان ورود هنوز آغاز نشده یا پایان یافته است."
 msgstr "The entry window has not opened or has already closed."
 
@@ -3167,7 +3165,7 @@ msgstr "Create preset draft"
 msgid "ساختار شیء نقشه نامعتبر است."
 msgstr "The map object structure is invalid."
 
-#: src/Admin/Pages.php:1271 src/Domain/Gate/CheckinService.php:70 src/Domain/Reconciliation/ReconciliationService.php:23 src/Domain/Reporting/AttendanceReport.php:20 src/Domain/Ticket/TicketService.php:207 src/Domain/Ticket/TicketService.php:24
+#: src/Admin/Pages.php:1271 src/Domain/Gate/CheckinService.php:71 src/Domain/Reconciliation/ReconciliationService.php:23 src/Domain/Reporting/AttendanceReport.php:20 src/Domain/Ticket/TicketService.php:207 src/Domain/Ticket/TicketService.php:24
 msgid "ساختار پایگاه داده آماده نیست."
 msgstr "The database schema is not ready."
 
@@ -3195,7 +3193,7 @@ msgstr "The server time could not be retrieved."
 msgid "ساعت معتبر پایگاه داده در دسترس نیست."
 msgstr "A valid database time is unavailable."
 
-#: src/Domain/Checkout/CheckoutService.php:72 src/Domain/Ticket/TicketService.php:63
+#: src/Domain/Checkout/CheckoutService.php:73 src/Domain/Ticket/TicketService.php:63
 msgid "ساعت پایگاه داده در دسترس نیست."
 msgstr "The database time is unavailable."
 
@@ -3307,11 +3305,11 @@ msgstr "The order does not belong to the selected center."
 msgid "سفارش ثبت شد."
 msgstr "Order placed."
 
-#: src/Domain/Checkout/CheckoutService.php:316
+#: src/Domain/Checkout/CheckoutService.php:327
 msgid "سفارش ثبت شد؛ پرداخت باید در درگاه ووکامرس تأیید شود."
 msgstr "Your order has been placed. Payment must be confirmed through WooCommerce."
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:410
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:397
 msgid "سفارش ثبت شد؛ پس از تأیید پرداخت، بلیت صادر می‌شود."
 msgstr "Your order has been placed. Tickets will be issued after payment is confirmed."
 
@@ -3319,11 +3317,11 @@ msgstr "Your order has been placed. Tickets will be issued after payment is conf
 msgid "سفارش در دسترس نیست."
 msgstr "The order is unavailable."
 
-#: src/Domain/Checkout/CheckoutService.php:316
+#: src/Domain/Checkout/CheckoutService.php:327
 msgid "سفارش رایگان ثبت و بلیت صادر شد."
 msgstr "The free order has been placed and the ticket has been issued."
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:410
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:397
 msgid "سفارش رایگان ظرفیت آزاد ثبت شد و بلیت‌ها صادر شدند."
 msgstr "The free general admission order has been placed and tickets have been issued."
 
@@ -3331,7 +3329,7 @@ msgstr "The free general admission order has been placed and tickets have been i
 msgid "سفارش شماره "
 msgstr "Order number "
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:233
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:219
 msgid "سفارش ظرفیت آزاد معتبر نیست."
 msgstr "The general admission order is invalid."
 
@@ -3339,11 +3337,11 @@ msgstr "The general admission order is invalid."
 msgid "سفارش قابل انتقال نیست."
 msgstr "The order cannot be transferred."
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:393
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:379
 msgid "سفارش قبلی نیازمند بررسی است."
 msgstr "The previous order needs review."
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:245 src/Domain/Ticket/TicketService.php:39
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:231 src/Domain/Ticket/TicketService.php:39
 msgid "سفارش لغوشده یا ناموفق قابل صدور بلیت نیست."
 msgstr "Tickets cannot be issued for a cancelled or failed order."
 
@@ -3359,7 +3357,7 @@ msgstr "The order is invalid."
 msgid "سفارش مورد نظر معتبر نیست."
 msgstr "The requested order is invalid."
 
-#: src/Domain/Checkout/CheckoutService.php:301
+#: src/Domain/Checkout/CheckoutService.php:295 src/Domain/Checkout/CheckoutService.php:91
 msgid "سفارش نیازمند بررسی است."
 msgstr "The order needs review."
 
@@ -3383,11 +3381,11 @@ msgstr "Orders requiring manual reconciliation"
 msgid "سقف خرید این شماره موبایل برای رویداد پر شده است."
 msgstr "This phone number has reached the purchase limit for the event."
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:118
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:116
 msgid "سقف خرید این شماره موبایل پر شده است."
 msgstr "This mobile number has reached its purchase limit."
 
-#: src/Domain/Checkout/CheckoutService.php:180
+#: src/Domain/Checkout/CheckoutService.php:184
 msgid "سقف خرید مجاز برای این شماره موبایل در این رویداد پر شده است."
 msgstr "This mobile number has reached the purchase limit for this event."
 
@@ -3502,7 +3500,7 @@ msgstr "Ticket number"
 msgid "شماره بلیت "
 msgstr "Ticket number "
 
-#: src/Domain/Gate/CheckinService.php:27 src/Domain/GeneralAdmission/AdmissionGateService.php:21
+#: src/Domain/Gate/CheckinService.php:28 src/Domain/GeneralAdmission/AdmissionGateService.php:22
 msgid "شماره بلیت معتبر نیست."
 msgstr "The ticket number is invalid."
 
@@ -3646,7 +3644,7 @@ msgstr "The access token is invalid."
 msgid "شناسه رزرو معتبر نیست."
 msgstr "The reservation ID is invalid."
 
-#: src/Domain/Checkout/CheckoutService.php:41 src/Domain/GeneralAdmission/FreeAdmissionService.php:33
+#: src/Domain/Checkout/CheckoutService.php:42 src/Domain/GeneralAdmission/FreeAdmissionService.php:35
 msgid "شناسه رزرو نامعتبر است."
 msgstr "The reservation ID is invalid."
 
@@ -3748,7 +3746,7 @@ msgstr "The ticket could not be issued."
 msgid "صدور بلیت رایگان آزمایشی است؛ سفارش پولی فقط در محیط آزمایشی و پس از فعال‌سازی مدیریتی امکان‌پذیر است. سامانه هنوز برای فروش واقعی تأیید نشده است."
 msgstr "Free ticket issuance is experimental. Paid orders require the administrator to enable testing. Real sales have not been approved."
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:300
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:286
 msgid "صدور بلیت ظرفیت آزاد ناموفق بود."
 msgstr "The general admission ticket could not be issued."
 
@@ -3756,7 +3754,7 @@ msgstr "The general admission ticket could not be issued."
 msgid "صدور بلیت ظرفیت آزاد هنوز فعال نیست."
 msgstr "General admission ticket issuance is not enabled yet."
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:319 src/Domain/Ticket/TicketService.php:139
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:305 src/Domain/Ticket/TicketService.php:139
 msgid "صدور بلیت نیازمند بررسی است."
 msgstr "Ticket issuance needs review."
 
@@ -3764,7 +3762,7 @@ msgstr "Ticket issuance needs review."
 msgid "صدور بلیت پس از ثبت سفارش و تأیید پرداخت انجام می‌شود."
 msgstr "Tickets are issued after you place your order and payment is confirmed."
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:211
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:197
 msgid "صدور سفارش نیازمند بررسی است؛ رزرو به‌طور خودکار آزاد نمی‌شود."
 msgstr "The order needs review. Its reservation will not be released automatically."
 
@@ -3792,7 +3790,7 @@ msgstr "Seat "
 msgid "صندلی انتخابی: "
 msgstr "Selected seat: "
 
-#: src/Domain/Checkout/CheckoutService.php:103
+#: src/Domain/Checkout/CheckoutService.php:107
 msgid "صندلی انتخاب‌شده دیگر در اختیار شما نیست."
 msgstr "The selected seat is no longer held for you."
 
@@ -3840,7 +3838,7 @@ msgstr "The order seat was not found."
 msgid "صندلی شماره‌دار"
 msgstr "Numbered seats"
 
-#: src/Domain/Checkout/CheckoutService.php:106
+#: src/Domain/Checkout/CheckoutService.php:110
 msgid "صندلی قابل ثبت نیست."
 msgstr "The seat cannot be booked."
 
@@ -3904,7 +3902,7 @@ msgstr "Choose available seats on the map, then reserve them and enter the buyer
 msgid "صندلی‌های انتخابی باید واقعاً کنار یکدیگر و در یک بلوک باشند."
 msgstr "The selected seats must be adjacent and in the same seating block."
 
-#: src/Domain/Checkout/CheckoutService.php:96
+#: src/Domain/Checkout/CheckoutService.php:100
 msgid "صندلی‌های انتخاب‌شده نامعتبر هستند."
 msgstr "The selected seats are invalid."
 
@@ -4075,7 +4073,7 @@ msgstr "The operation could not be completed. Please retry."
 msgid "عملیات با موفقیت ثبت شد."
 msgstr "The operation was saved successfully."
 
-#: src/Domain/Event/LifecycleService.php:18
+#: src/Domain/Event/LifecycleService.php:36
 msgid "عملیات تغییر وضعیت نامعتبر است."
 msgstr "The status change operation is invalid."
 
@@ -4135,7 +4133,7 @@ msgstr "Sold or blocked"
 msgid "فروخته‌شده"
 msgstr "Sold"
 
-#: src/Domain/Checkout/CheckoutService.php:75
+#: src/Domain/Checkout/CheckoutService.php:76
 msgid "فروش این جلسه فعال نیست."
 msgstr "Sales are closed for this session."
 
@@ -4258,7 +4256,7 @@ msgstr "Seat price in the smallest WooCommerce currency unit "
 msgid "قیمت هر صندلی: "
 msgstr "Price per seat: "
 
-#: src/Domain/Checkout/CheckoutService.php:128
+#: src/Domain/Checkout/CheckoutService.php:132
 msgid "قیمت یا مهلت رزرو معتبر نیست."
 msgstr "The price or reservation deadline is invalid."
 
@@ -4373,7 +4371,7 @@ msgstr "The order amount or currency does not match the accepted price."
 msgid "متوقف"
 msgstr "Paused"
 
-#: src/Domain/Gate/CheckinService.php:73
+#: src/Domain/Gate/CheckinService.php:74
 msgid "مجوز اسکن بلیت ندارید."
 msgstr "You do not have permission to scan tickets."
 
@@ -4429,7 +4427,7 @@ msgstr "You do not have permission to edit this ticket."
 msgid "مجوز کافی برای این مرکز وجود ندارد."
 msgstr "You do not have permission for this center."
 
-#: src/Domain/Gate/CheckinService.php:24 src/Domain/GeneralAdmission/AdmissionGateService.php:121
+#: src/Domain/Gate/CheckinService.php:25 src/Domain/GeneralAdmission/AdmissionGateService.php:122
 msgid "مجوز کنترل ورود ندارید."
 msgstr "You do not have permission to check in tickets."
 
@@ -4441,7 +4439,7 @@ msgstr "You do not have permission to report on this center."
 msgid "محاسبه این استرداد نیازمند بررسی مالی است."
 msgstr "This refund calculation needs financial review."
 
-#: src/Domain/Gate/CheckinService.php:76
+#: src/Domain/Gate/CheckinService.php:77
 msgid "محتوای QR معتبر نیست."
 msgstr "The QR content is invalid."
 
@@ -4645,7 +4643,7 @@ msgstr "The reservation extension deadline has passed."
 msgid "مهلت ثبت بلیت پایان یافته یا نیازمند بررسی است."
 msgstr "The ticket issuance deadline has passed or needs review."
 
-#: src/Domain/Checkout/CheckoutService.php:189
+#: src/Domain/Checkout/CheckoutService.php:193
 msgid "مهلت ثبت سفارش پایان یافته است."
 msgstr "The order deadline has passed."
 
@@ -4677,7 +4675,7 @@ msgstr "Hold extended."
 msgid "مهلت ویرایش مشخصات شرکت‌کننده پایان یافته است."
 msgstr "The attendee editing deadline has passed."
 
-#: src/Domain/Checkout/CheckoutService.php:84
+#: src/Domain/Checkout/CheckoutService.php:85
 msgid "مهلت پرداخت پایان یافته است؛ از پرداخت این سفارش خودداری کنید."
 msgstr "The payment deadline has passed. Do not pay this order."
 
@@ -4886,7 +4884,7 @@ msgstr "Version 2.0.0. Review the release acceptance report before enabling live
 msgid "نسخه‌بندی امن چیدمان سالن (JSON)"
 msgstr "Versioned hall layouts (JSON)"
 
-#: src/Domain/Checkout/CheckoutService.php:48
+#: src/Domain/Checkout/CheckoutService.php:49
 msgid "نشانی ایمیل معتبر نیست."
 msgstr "The email address is invalid."
 
@@ -4992,7 +4990,7 @@ msgstr "Show tickets"
 msgid "نمایش نقشه و انتخاب جایگاه"
 msgstr "Show map and choose seats"
 
-#: src/Frontend/Blocks.php:24
+#: src/Frontend/Blocks.php:26
 msgid "نمایش پویا؛ اطلاعات از سمت سرور و با کنترل دسترسی دریافت می‌شود."
 msgstr "Dynamic display with server-side access checks."
 
@@ -5036,7 +5034,7 @@ msgstr "Choose a valid ticket mode."
 msgid "نوع بلیت نامعتبر است."
 msgstr "The ticket type is invalid."
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:259 src/Domain/Hall/HallService.php:118
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:245 src/Domain/Hall/HallService.php:118
 msgid "نوع جلسه نامعتبر است."
 msgstr "The session type is invalid."
 
@@ -5138,7 +5136,7 @@ msgstr "Checked in"
 msgid "ورود آزاد"
 msgstr "General admission"
 
-#: src/Domain/Allocation/Messages.php:59 src/Domain/Gate/CheckinService.php:122 src/Domain/GeneralAdmission/AdmissionGateService.php:97
+#: src/Domain/Allocation/Messages.php:59 src/Domain/Gate/CheckinService.php:120 src/Domain/GeneralAdmission/AdmissionGateService.php:98
 msgid "ورود این بلیت قبلاً ثبت شده است."
 msgstr "This ticket has already been checked in."
 
@@ -5174,7 +5172,7 @@ msgstr "Status"
 msgid "وضعیت «نهایی» فقط به معنای تطبیق با سند استرداد ووکامرس و ابطال بلیت است؛ تسویه بانکی واقعی را به‌صورت مستقل بررسی کنید."
 msgstr "Final status means the WooCommerce refund record was reconciled and the ticket revoked. Verify bank settlement separately."
 
-#: src/Domain/Event/LifecycleService.php:47
+#: src/Domain/Event/LifecycleService.php:65
 msgid "وضعیت به‌روز نشد."
 msgstr "The status could not be updated."
 
@@ -5218,7 +5216,7 @@ msgstr "The payment status could not be verified."
 msgid "وضعیت پرونده نیازمند بررسی دستی است."
 msgstr "The case status needs manual review."
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:30
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:32
 msgid "ووکامرس باید فعال باشد."
 msgstr "WooCommerce must be active."
 
@@ -5238,7 +5236,7 @@ msgstr "WooCommerce is required for the cart."
 msgid "ووکامرس در دسترس نیست."
 msgstr "WooCommerce is unavailable."
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:229 src/Domain/Ticket/AttendeeChangeService.php:46 src/Domain/Ticket/FreeTicketCancellationService.php:28 src/Domain/Ticket/RefundReviewService.php:260 src/Domain/Ticket/TicketService.php:26
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:215 src/Domain/Ticket/AttendeeChangeService.php:46 src/Domain/Ticket/FreeTicketCancellationService.php:28 src/Domain/Ticket/RefundReviewService.php:260 src/Domain/Ticket/TicketService.php:26
 msgid "ووکامرس فعال نیست."
 msgstr "WooCommerce is not active."
 
@@ -5308,11 +5306,11 @@ msgstr "Sales end"
 msgid "پایگاه داده تخفیف‌ها نیازمند ارتقا است."
 msgstr "The discount database needs an upgrade."
 
-#: src/Domain/Checkout/CheckoutService.php:59 src/Domain/GeneralAdmission/AdmissionGateService.php:70 src/Domain/GeneralAdmission/FreeAdmissionService.php:251 src/Domain/Ticket/OwnershipTransferService.php:132 src/Domain/Ticket/OwnershipTransferService.php:42 src/Domain/Ticket/TicketService.php:48
+#: src/Domain/Checkout/CheckoutService.php:60 src/Domain/GeneralAdmission/AdmissionGateService.php:72 src/Domain/GeneralAdmission/AdmissionGateService.php:89 src/Domain/GeneralAdmission/FreeAdmissionService.php:237 src/Domain/Ticket/OwnershipTransferService.php:132 src/Domain/Ticket/OwnershipTransferService.php:42 src/Domain/Ticket/TicketService.php:48
 msgid "پایگاه داده در دسترس نیست."
 msgstr "The database is unavailable."
 
-#: src/Domain/Checkout/CheckoutService.php:35 src/Domain/GeneralAdmission/FreeAdmissionService.php:27 src/Domain/Ticket/FreeTicketCancellationService.php:25
+#: src/Domain/Checkout/CheckoutService.php:36 src/Domain/GeneralAdmission/FreeAdmissionService.php:29 src/Domain/Ticket/FreeTicketCancellationService.php:25
 msgid "پایگاه داده نیازمند ارتقا است."
 msgstr "The database needs to be upgraded."
 
@@ -5324,7 +5322,7 @@ msgstr "These tickets must use the plugin's dedicated cart form. Checkout Blocks
 msgid "پرداخت این جلسه در نسخه آزمایشی غیرفعال است."
 msgstr "Payments for this session are disabled in the preview."
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:239
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:225
 msgid "پرداخت این سفارش تأیید نشده است."
 msgstr "Payment for this order has not been confirmed."
 
@@ -5340,7 +5338,7 @@ msgstr "Payment for this order has not been verified."
 msgid "پرداخت ظرفیت آزاد هنوز در محیط واقعی تأیید نشده است."
 msgstr "General admission payments have not been verified in a live environment yet."
 
-#: src/Domain/Checkout/CheckoutService.php:67
+#: src/Domain/Checkout/CheckoutService.php:68
 msgid "پرداخت و صدور بلیت فروش آزاد هنوز فعال نیست."
 msgstr "General admission payment and ticket issuance are not enabled yet."
 
@@ -5435,7 +5433,7 @@ msgstr "Oval bowl"
 msgid "کاسه پیوسته"
 msgstr "Continuous bowl"
 
-#: src/Domain/GeneralAdmission/AdmissionGateService.php:56
+#: src/Domain/GeneralAdmission/AdmissionGateService.php:57
 msgid "کد QR معتبر نیست."
 msgstr "The QR code is invalid."
 
@@ -5499,7 +5497,7 @@ msgstr "The discount code cannot be used for this session."
 msgid "کد تخفیف برای این جلسه معتبر نیست."
 msgstr "The discount code is not valid for this session."
 
-#: src/Domain/Checkout/CheckoutService.php:30
+#: src/Domain/Checkout/CheckoutService.php:31
 msgid "کد تخفیف برای بلیت بدون شماره صندلی هنوز فعال نیست."
 msgstr "Discount codes are not enabled for general admission tickets yet."
 
@@ -5645,11 +5643,11 @@ msgstr "Access key: "
 msgid "کلید را ندارم؛ بازیابی با ایمیل"
 msgstr "Lost your key? Recover by email"
 
-#: src/Domain/GeneralAdmission/FreeAdmissionService.php:90
+#: src/Domain/GeneralAdmission/FreeAdmissionService.php:88
 msgid "کنترل سقف خرید ممکن نشد."
 msgstr "The purchase limit could not be checked."
 
-#: src/Domain/Checkout/CheckoutService.php:145
+#: src/Domain/Checkout/CheckoutService.php:149
 msgid "کنترل محدودیت خرید ممکن نشد."
 msgstr "The purchase limit could not be checked."
 

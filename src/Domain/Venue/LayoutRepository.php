@@ -454,7 +454,8 @@ final class LayoutRepository
         if (!$rows) { return; }
         global $wpdb; $args=[]; $pattern='('.implode(',',$formats).')';
         foreach ($rows as $row) { array_push($args,...$row); }
-        $result=$wpdb->query($wpdb->prepare('INSERT INTO '.$table.' ('.implode(',',$columns).') VALUES '.implode(',',array_fill(0,count($rows),$pattern)),...$args));
+        $quotedColumns = '`' . implode('`,`', $columns) . '`';
+        $result=$wpdb->query($wpdb->prepare('INSERT INTO '.$table.' ('.$quotedColumns.') VALUES '.implode(',',array_fill(0,count($rows),$pattern)),...$args));
         if ($result!==count($rows)) { throw new RuntimeException('Venue batch persistence was incomplete.'); }
     }
     private static function rows(string $sql): array { global $wpdb; $rows=$wpdb->get_results($sql,ARRAY_A); if (!is_array($rows)||$wpdb->last_error) { throw new RuntimeException('Venue database read failed.'); } return $rows; }
