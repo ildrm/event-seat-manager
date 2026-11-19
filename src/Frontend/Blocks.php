@@ -9,7 +9,7 @@ final class Blocks
 {
     public static function register(): void
     {
-        if (!function_exists('register_block_type')) { return; }
+        if (!function_exists('register_block_type_from_metadata')) { return; }
         wp_register_script('pesm-blocks-editor', PESM_URL . 'assets/js/blocks-editor.js',
             ['pesm-i18n', 'wp-blocks', 'wp-element', 'wp-components', 'wp-block-editor'], PESM_VERSION, true);
         $titles = ['events'=>'فهرست رویدادها', 'event'=>'جزئیات رویداد', 'seat-map'=>'نقشه تعاملی صندلی‌ها',
@@ -19,7 +19,9 @@ final class Blocks
             'my-tickets' => 'tickets', 'gate-scanner' => 'gate',
         ];
         foreach ($mapping as $slug => $method) {
-            register_block_type(PESM_DIR . 'blocks/' . $slug, [
+            $metadata = PESM_DIR . 'blocks/' . $slug . '/block.json';
+            if (!is_readable($metadata)) { continue; }
+            register_block_type_from_metadata($metadata, [
                 'title' => \PESM\Support\I18n::text($titles[$slug]),
                 'description' => \PESM\Support\I18n::text('نمایش پویا؛ اطلاعات از سمت سرور و با کنترل دسترسی دریافت می‌شود.'),
                 'render_callback' => static function (array $attributes) use ($method): string {

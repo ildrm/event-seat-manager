@@ -11,6 +11,24 @@ use Throwable;
 /** Administrative publish/pause/cancel transitions, with center-scoped authorization in the caller. */
 final class LifecycleService
 {
+    /** Keep both lifecycle rows stable until the caller commits its transaction. */
+    public static function lockSession(int $eventId, int $sessionId): ?object
+    {
+        global $wpdb;
+        $p = $wpdb->prefix . 'pesm_';
+        $event = $wpdb->get_row($wpdb->prepare(
+            "SELECT center_id,status FROM {$p}events WHERE id=%d LOCK IN SHARE MODE", $eventId
+        ));
+        if (!$event) { return null; }
+        $session = $wpdb->get_row($wpdb->prepare(
+            "SELECT starts_at,status FROM {$p}sessions WHERE id=%d AND event_id=%d LOCK IN SHARE MODE", $sessionId, $eventId
+        ));
+        if (!$session) { return null; }
+        $session->center_id = (int) $event->center_id;
+        $session->event_status = (string) $event->status;
+        return $session;
+    }
+
     public static function change(string $entity, int $id, string $target, int $actorUserId): void
     {
         global $wpdb;

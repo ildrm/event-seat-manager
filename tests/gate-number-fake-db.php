@@ -8,6 +8,7 @@ require_once __DIR__ . '/../src/Support/I18n.php';
 require __DIR__ . '/../src/Domain/Booking/HoldException.php';
 require __DIR__ . '/../src/Domain/Ticket/TicketToken.php';
 require __DIR__ . '/../src/Security/Capabilities.php';
+require __DIR__ . '/../src/Domain/Event/LifecycleService.php';
 require __DIR__ . '/../src/Support/Audit.php';
 require __DIR__ . '/../src/Domain/Gate/CheckinService.php';
 
@@ -42,19 +43,22 @@ class GateFakeDatabase {
     public function get_var(string $sql): mixed {
         if ($sql === 'SELECT UTC_TIMESTAMP()') return '2026-11-02 12:00:00';
         if (str_contains($sql, 'FROM wp_pesm_center_users')) return str_contains($sql, 'center_id = 1') ? 1 : null;
-        if (str_contains($sql, 'SELECT e.center_id') && str_contains($sql, "'" . $this->ticket['public_id'] . "'")) return $this->ticket['center_id'];
         throw new RuntimeException('Unexpected get_var query: ' . $sql);
     }
     public function get_row(string $sql): ?object {
         if (str_contains($sql, 'FROM wp_pesm_tickets t JOIN wp_pesm_sessions') &&
             str_contains($sql, "'" . $this->ticket['ticket_number'] . "'")) return (object) $this->ticket;
+        if (str_contains($sql, 'SELECT t.session_id,s.event_id,e.center_id') &&
+            str_contains($sql, "'" . $this->ticket['public_id'] . "'")) return (object) ($this->ticket + ['event_id'=>4]);
         if (str_contains($sql, 'FROM wp_pesm_tickets WHERE public_id=') &&
             str_contains($sql, "'" . $this->ticket['public_id'] . "'")) return (object) $this->ticket;
         if (str_contains($sql, 'SELECT public_id,qr_version FROM wp_pesm_tickets') &&
             str_contains($sql, "'" . $this->ticket['ticket_number'] . "'")) return (object) $this->ticket;
-        if (str_contains($sql, 'SELECT s.starts_at') && str_contains($sql, 'FROM wp_pesm_sessions s')) {
-            return (object) ['starts_at'=>'2026-11-02 12:00:00', 'status'=>'published',
-                'event_status'=>'published', 'center_id'=>1];
+        if (str_contains($sql, 'FROM wp_pesm_events') && str_ends_with($sql, 'LOCK IN SHARE MODE')) {
+            return (object) ['center_id'=>1, 'status'=>'published'];
+        }
+        if (str_contains($sql, 'FROM wp_pesm_sessions') && str_ends_with($sql, 'LOCK IN SHARE MODE')) {
+            return (object) ['starts_at'=>'2026-11-02 12:00:00', 'status'=>'published'];
         }
         throw new RuntimeException('Unexpected get_row query: ' . $sql);
     }

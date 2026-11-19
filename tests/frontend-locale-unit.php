@@ -41,7 +41,7 @@ function is_user_logged_in(): bool { return false; }
 function current_user_can(string $capability): bool { return false; }
 function get_permalink(): string { return 'https://example.test/events/'; }
 function add_query_arg(string $key, int $value, string $url): string { return $url . '?' . $key . '=' . $value; }
-function register_block_type(string $path, array $args): void { $GLOBALS['blocks'][basename($path)] = $args; }
+function register_block_type_from_metadata(string $path, array $args): void { $GLOBALS['blocks'][basename(dirname($path))] = $args; }
 
 final class LocaleFakeDatabase
 {

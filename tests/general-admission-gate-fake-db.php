@@ -7,6 +7,7 @@ require_once __DIR__ . '/../src/Support/I18n.php';
 require __DIR__ . '/../src/Domain/Booking/HoldException.php';
 require __DIR__ . '/../src/Domain/Ticket/TicketToken.php';
 require __DIR__ . '/../src/Security/Capabilities.php';
+require __DIR__ . '/../src/Domain/Event/LifecycleService.php';
 require __DIR__ . '/../src/Support/Audit.php';
 require __DIR__ . '/../src/Domain/GeneralAdmission/AdmissionGateService.php';
 
@@ -46,15 +47,17 @@ final class GateFakeDb {
     }
     public function get_var(string $sql):mixed {
         if ($sql==='SELECT UTC_TIMESTAMP()') return $this->now;
-        if (str_contains($sql,'SELECT e.center_id FROM wp_pesm_capacity_tickets')) return 13;
         throw new RuntimeException('Unknown get_var '.$sql);
     }
     public function get_row(string $sql):?object {
         if (str_contains($sql,'FROM wp_pesm_capacity_tickets t') && str_contains($sql,'ticket_number='))
             return (object)array_merge($this->ticket,['center_id'=>13]);
+        if (str_contains($sql,'SELECT t.session_id,s.event_id,e.center_id')) return (object) ['session_id'=>7,'event_id'=>4,'center_id'=>13];
         if (str_contains($sql,'FROM wp_pesm_capacity_tickets WHERE public_id=')) return (object)$this->ticket;
         if (str_contains($sql,'FROM wp_pesm_capacity_tickets WHERE ticket_number=')) return (object)$this->ticket;
-        if (str_contains($sql,'FROM wp_pesm_sessions s')) return (object)$this->event;
+        if (str_contains($sql,'FROM wp_pesm_events') && str_ends_with($sql,'LOCK IN SHARE MODE'))
+            return (object) ['center_id'=>13,'status'=>$this->event['event_status']];
+        if (str_contains($sql,'FROM wp_pesm_sessions') && str_ends_with($sql,'LOCK IN SHARE MODE')) return (object)$this->event;
         throw new RuntimeException('Unknown get_row '.$sql);
     }
     public function insert(string $table,array $data):int|false {

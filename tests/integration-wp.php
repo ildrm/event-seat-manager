@@ -23,6 +23,7 @@ use PESM\Domain\Booking\CapacityService;
 use PESM\Domain\Booking\HoldException;
 use PESM\Domain\Booking\HoldService;
 use PESM\Domain\Checkout\CheckoutService;
+use PESM\Domain\Event\EventChangeService;
 use PESM\Domain\Event\LifecycleService;
 use PESM\Domain\Gate\CheckinService;
 use PESM\Domain\Hall\HallService;
@@ -95,6 +96,32 @@ if (str_starts_with($mode, 'worker-')) {
         } elseif ($mode === 'worker-gate') {
             $result = (new CheckinService())->scan($state['race_qr'], $state['operator'], 'integration-race');
             echo wp_json_encode(['ok' => true, 'checked_in' => $result['checked_in']]) . "\n";
+        } elseif ($mode === 'worker-session-cancel') {
+            $barrier = 'pesm_test_cancel_' . $state['cancel_session'];
+            $pause = static function (string $sql) use ($wpdb, $p, $barrier): string {
+                if (str_starts_with($sql, "UPDATE `{$p}sessions` SET `status` = 'cancelled'")) {
+                    $wpdb->get_var($wpdb->prepare('SELECT GET_LOCK(%s,0)', $barrier));
+                    $wpdb->get_var('SELECT SLEEP(1)');
+                }
+                return $sql;
+            };
+            add_filter('query', $pause);
+            try {
+                (new EventChangeService())->cancel('session', $state['cancel_session'], 'Local cancellation race', bin2hex(random_bytes(24)), 1);
+            } finally {
+                remove_filter('query', $pause);
+                $wpdb->get_var($wpdb->prepare('SELECT RELEASE_LOCK(%s)', $barrier));
+            }
+            echo wp_json_encode(['ok' => true]) . "\n";
+        } elseif ($mode === 'worker-session-scan') {
+            $barrier = 'pesm_test_cancel_' . $state['cancel_session'];
+            $deadline = microtime(true) + 5;
+            while (!$wpdb->get_var($wpdb->prepare('SELECT IS_USED_LOCK(%s)', $barrier))) {
+                if (microtime(true) >= $deadline) { throw new RuntimeException('Cancellation worker never reached the locked session.'); }
+                usleep(10000);
+            }
+            (new CheckinService())->scan($state['cancel_qr'], $state['operator'], 'integration-cancel-race');
+            echo wp_json_encode(['ok' => true]) . "\n";
         } elseif ($mode === 'worker-upgrade') {
             \PESM\Database\Migrator::run();
             echo wp_json_encode(['ok' => (int) get_option('pesm_schema_version') === \PESM\Database\Migrator::VERSION && !get_option('pesm_schema_error')]) . "\n";
@@ -240,6 +267,7 @@ $general = $session(0, 'general', 900);
 $paidGeneral = $session(500, 'general', 10);
 $raceSession = $session();
 $raceCapacity = $session(0, 'general', 3);
+$cancelSession = $session();
 $seatIds = array_map('intval', $wpdb->get_col($wpdb->prepare("SELECT seat_id FROM {$p}session_seats WHERE session_id=%d ORDER BY seat_id LIMIT 12", $free)));
 $assert((int) $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$p}session_seats WHERE session_id=%d", $free)) === 900, 'Real 15x60 session has 900 inventory rows');
 
@@ -278,6 +306,60 @@ $gate = new CheckinService();
 $reject(fn() => $gate->scan($first['qr_payload'], (int) $wrongOperator), 'permission_denied', 'Gate operator from another center is denied');
 $assert($gate->scan($first['qr_payload'], (int) $operator, 'integration')['checked_in'], 'Authorized scanner accepts valid ticket');
 $reject(fn() => $gate->scan($first['qr_payload'], (int) $operator), 'already_checked_in', 'Duplicate check-in rejected');
+
+$cancelHold = $holds->acquire($cancelSession, [$seatIds[0]], bin2hex(random_bytes(24)));
+$cancelOrder = $checkout->prepare($cancelSession, $cancelHold['token'], $buyer);
+$cancelTicket = $tickets->forGuest($cancelOrder['order_id'], $cancelOrder['guest_access_token'])['tickets'][0];
+
+$staged = $holds->acquire($paid, [$seatIds[10]], bin2hex(random_bytes(24)));
+$failLink = static fn(string $query): string => str_starts_with($query, "INSERT INTO `{$p}order_links`")
+    ? str_replace("`{$p}order_links`", "`{$p}missing_link_fixture`", $query) : $query;
+add_filter('query', $failLink);
+$wasSuppressing = $wpdb->suppress_errors(true);
+try {
+    $reject(fn() => $checkout->prepare($paid, $staged['token'], $buyer), 'checkout_reconciliation_required', 'Link insert failure reports reconciliation');
+} finally {
+    remove_filter('query', $failLink);
+    $wpdb->suppress_errors($wasSuppressing);
+}
+$stagedOrderId = (int) $wpdb->get_var($wpdb->prepare("SELECT order_id FROM {$p}holds WHERE id=%d", $staged['hold_id']));
+$stagedOrder = wc_get_order($stagedOrderId);
+$assert($stagedOrder && $stagedOrder->get_status() === 'cancelled' && !$stagedOrder->needs_payment(), 'Failed link preserves order identity and cancels the unpaid draft');
+$assert((int) $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$p}order_links WHERE order_id=%d", $stagedOrderId)) === 0, 'Failed link leaves no partial inventory association');
+$reject(fn() => $checkout->prepare($paid, $staged['token'], $buyer), 'checkout_reconciliation_required', 'Same hold cannot create another order after a failed link');
+
+$retryHold = $holds->acquire($paid, [$seatIds[11]], bin2hex(random_bytes(24)));
+$interruptPublish = static function (WC_Order $order) use ($retryHold): void {
+    if ($order->get_status() === 'pending' && (int) $order->get_meta('_pesm_hold_id') === $retryHold['hold_id']) {
+        throw new RuntimeException('Simulated interruption before order publication.');
+    }
+};
+add_action('woocommerce_before_order_object_save', $interruptPublish);
+try {
+    $reject(fn() => $checkout->prepare($paid, $retryHold['token'], $buyer), 'checkout_reconciliation_required', 'Interrupted order publication reports reconciliation');
+} finally {
+    remove_action('woocommerce_before_order_object_save', $interruptPublish);
+}
+$linkedId = (int) $wpdb->get_var($wpdb->prepare("SELECT order_id FROM {$p}order_links WHERE hold_id=%d", $retryHold['hold_id']));
+$assert($linkedId > 0 && !wc_get_order($linkedId)->needs_payment(), 'Linked order draft remains unpayable before publication');
+$linked = $checkout->prepare($paid, $retryHold['token'], $buyer);
+$assert($linked['order_id'] === $linkedId && $linked['payment_required'], 'Same hold resumes publishing its already linked order');
+$failedOrder = wc_get_order($linkedId);
+$failedOrder->update_status('failed', 'Offline gateway failure fixture');
+$assert(!wc_get_order($linkedId)->needs_payment() && $wpdb->get_var($wpdb->prepare(
+    "SELECT status FROM {$p}session_seats WHERE session_id=%d AND seat_id=%d", $paid, $seatIds[11]
+)) === 'available', 'Simulated gateway failure releases the linked seat and disables payment');
+
+$taxHold = $holds->acquire($paid, [$seatIds[11]], bin2hex(random_bytes(24)));
+$enableTaxes = static fn(): string => 'yes';
+add_filter('option_woocommerce_calc_taxes', $enableTaxes);
+try {
+    $reject(fn() => $checkout->prepare($paid, $taxHold['token'], $buyer), 'tax_configuration_unsupported', 'Tax-enabled paid order declines before collecting payment');
+} finally {
+    remove_filter('option_woocommerce_calc_taxes', $enableTaxes);
+}
+$assert((int) $wpdb->get_var($wpdb->prepare("SELECT order_id FROM {$p}holds WHERE id=%d", $taxHold['hold_id'])) === 0,
+    'Unsupported tax configuration creates no WooCommerce order');
 
 $paidHold = $holds->acquire($paid, [$seatIds[2], $seatIds[3]], bin2hex(random_bytes(24)));
 $paidOrder = $checkout->prepare($paid, $paidHold['token'], $buyer);
@@ -383,7 +465,8 @@ $state = ['center' => $center, 'other_center' => $otherCenter, 'hall' => $hall, 
     'free_session' => $free, 'race_session' => $raceSession, 'race_seat' => $seatIds[5],
     'race_capacity_session' => $raceCapacity, 'operator' => (int) $operator,
     'race_qr' => $view['tickets'][1]['qr_payload'], 'race_ticket' => (int) $view['tickets'][1]['id'],
-    'free_order' => $freeOrder['order_id'], 'ticket_count' => $beforeCount];
+    'free_order' => $freeOrder['order_id'], 'ticket_count' => $beforeCount,
+    'cancel_session' => $cancelSession, 'cancel_qr' => $cancelTicket['qr_payload']];
 update_option('pesm_integration_fixture', $state, false);
 echo wp_json_encode(['mode' => 'all', 'passed' => count($checks), 'seconds' => round(microtime(true) - $started, 3),
     'wordpress' => get_bloginfo('version'), 'woocommerce' => WC_VERSION, 'php' => PHP_VERSION,

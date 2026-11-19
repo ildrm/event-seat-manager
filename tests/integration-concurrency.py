@@ -53,6 +53,11 @@ with tempfile.TemporaryDirectory(prefix="esm-concurrency-") as temp:
             raise RuntimeError(mode + ": expected " + str(expected) + " winners, received " + str(results))
         summaries[mode] = {"processes": workers, "accepted": accepted, "rejected": workers - accepted, "errors": errors}
     verified = run("verify-races")
+    with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
+        cancel, scan = list(pool.map(run, ["worker-session-cancel", "worker-session-scan"]))
+    if not cancel["ok"] or scan != {"ok": False, "error": "event_cancelled"}:
+        raise RuntimeError("Scan did not observe the concurrent locked session cancellation: " + str([cancel, scan]))
+    summaries["session-cancel-vs-scan"] = {"cancelled": True, "scan_error": scan["error"]}
     run("prepare-upgrade-race")
     with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as pool:
         upgrades = list(pool.map(run, ["worker-upgrade"] * workers))

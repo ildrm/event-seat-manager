@@ -3,7 +3,9 @@ declare(strict_types=1);
 namespace PESM\Domain\Allocation;
 
 use PESM\Domain\Checkout\CheckoutPolicy;
+use PESM\Domain\Checkout\CheckoutOrder;
 use PESM\Domain\Checkout\FinancialSnapshot;
+use PESM\Domain\Notification\NotificationQueue;
 
 /** Dedicated one-session Woo order boundary. No external calls under inventory locks. */
 final class CheckoutService
@@ -21,7 +23,10 @@ final class CheckoutService
             $initial=ReservationService::hold($sessionId,$holdToken,false);$quote=Database::decode($initial->quote_json);$sections=Pricing::sections($quote);Database::sections($sessionId,$sections);
             $hold=ReservationService::hold($sessionId,$holdToken,true);$now=Database::now();
             if($hold->quote_json!==$initial->quote_json){Policy::fail('hold_changed_retry');}
-            if((int)$hold->order_id>0&&in_array($hold->status,['payment_pending','sold'],true)){return ['existing'=>(int)$hold->order_id,'hold_id'=>(int)$hold->id];}
+            if((int)$hold->order_id>0&&in_array($hold->status,['payment_pending','sold'],true)){
+                if($hold->status==='payment_pending'&&$hold->expires_at<=$now){Policy::fail('hold_expired',410);}
+                return ['existing'=>(int)$hold->order_id,'hold_id'=>(int)$hold->id];
+            }
             if($hold->status!=='active'||$hold->expires_at<=$now){Policy::fail($hold->status==='checkout_creating'?'checkout_reconciliation_required':'hold_expired',409);}
             Database::sale($session,$now);
             if($quote['total_minor']>0&&function_exists('wc_tax_enabled')&&wc_tax_enabled()){Policy::fail('paid_tax_unsupported',409);}
@@ -52,11 +57,11 @@ final class CheckoutService
             return ['hold_id'=>(int)$hold->id,'quote'=>$quote,'lines'=>$lines,'attendees'=>$attendees];
         });
         if(isset($stage['existing'])){return self::response((int)$stage['existing'],(int)$stage['hold_id'],$holdToken);}
+        $order = null;
         try{
-            $quote=$stage['quote'];$product=self::product();$order=wc_create_order(['created_via'=>'pesm']);
-            if(is_wp_error($order)){throw new \RuntimeException('Order creation failed.');}
+            $quote=$stage['quote'];$product=self::product();
+            $order=CheckoutOrder::stage('allocated',$sessionId,(int)$stage['hold_id']);
             $order->set_address(['first_name'=>$first,'last_name'=>$last,'phone'=>$phone,'email'=>$email],'billing');$order->set_customer_id(get_current_user_id());$order->set_currency($quote['currency']);
-            $order->update_meta_data('_pesm_is_ticket_order','yes');$order->update_meta_data('_pesm_mode','allocated');$order->update_meta_data('_pesm_session_id',$sessionId);$order->update_meta_data('_pesm_allocation_hold_id',$stage['hold_id']);
             $order->update_meta_data('_pesm_total_minor',$quote['total_minor']);$order->update_meta_data('_pesm_currency',$quote['currency']);$order->update_meta_data('_pesm_price_decimals',$quote['price_decimals']);
             $order->update_meta_data('_pesm_allocation_attendees',$stage['attendees']);
             $snapshot=[];
@@ -68,21 +73,20 @@ final class CheckoutService
             }
             $financial=['total_minor'=>(int)$quote['total_minor'],'currency'=>$quote['currency'],'price_decimals'=>(int)$quote['price_decimals'],'pricing_revision'=>(int)$quote['pricing_revision'],'lines'=>$snapshot];
             $order->update_meta_data('_pesm_allocation_financial_v1',$financial);$order->calculate_totals(false);
-            FinancialSnapshot::validate($order,$financial['total_minor'],$financial['currency'],$financial['price_decimals'],$financial['total_minor']===0);
-            $order->set_status('pending');$order->save();$orderId=(int)$order->get_id();$guest=self::guest((int)$stage['hold_id'],$holdToken);
+            $orderId=CheckoutOrder::remember('allocated',(int)$stage['hold_id'],$order);$guest=self::guest((int)$stage['hold_id'],$holdToken);
             Database::transaction(function()use($sessionId,$stage,$orderId,$guest,$financial):void{
-                global $wpdb;$p=$wpdb->prefix.'pesm_';Database::session($sessionId);Database::sections($sessionId,Pricing::sections($stage['quote']));
+                global $wpdb;$p=$wpdb->prefix.'pesm_';$session=Database::session($sessionId);Database::sections($sessionId,Pricing::sections($stage['quote']));
                 $hold=$wpdb->get_row($wpdb->prepare("SELECT * FROM {$p}allocation_holds WHERE id=%d FOR UPDATE",(int)$stage['hold_id']));$now=Database::now();
-                if(!$hold||$hold->status!=='checkout_creating'||$hold->expires_at<=$now){Policy::fail('checkout_reconciliation_required',503);}
+                if($session->status!=='published'||$session->event_status!=='published'||!$hold||
+                    (int)$hold->order_id!==$orderId||$hold->status!=='checkout_creating'||$hold->expires_at<=$now){Policy::fail('checkout_reconciliation_required',503);}
                 Database::insert('allocation_orders',['hold_id'=>(int)$hold->id,'order_id'=>$orderId,'guest_token_hash'=>hash('sha256',$guest),'financial_json'=>Database::json($financial),'status'=>'pending','created_at'=>$now]);
-                Database::checked($wpdb->update($p.'allocation_holds',['order_id'=>$orderId,'status'=>'payment_pending'],['id'=>(int)$hold->id]));
+                if($wpdb->update($p.'allocation_holds',['status'=>'payment_pending'],['id'=>(int)$hold->id,'status'=>'checkout_creating','order_id'=>$orderId])!==1){Policy::fail('write_failed',503);}
             });
-            if($financial['total_minor']===0){
-                $result=self::confirmOrder($orderId,true);if(!in_array($result,['issued','already_issued'],true)){Policy::fail('checkout_reconciliation_required',503);}
-                $order->update_status('completed','Free allocated admission issued.',true);
-            }
             return self::response($orderId,(int)$stage['hold_id'],$holdToken);
-        }catch(\Throwable $e){throw new \PESM\Domain\Booking\HoldException('checkout_reconciliation_required',Messages::text('checkout_reconciliation_required'),503);}
+        }catch(\Throwable $e){
+            CheckoutOrder::onFailure($order,'allocated',(int)$stage['hold_id']);
+            throw new \PESM\Domain\Booking\HoldException('checkout_reconciliation_required',Messages::text('checkout_reconciliation_required'),503);
+        }
     }
 
     public static function confirmOrder(int $orderId,bool $free=false): string
@@ -210,7 +214,18 @@ final class CheckoutService
     private static function response(int $orderId,int $holdId,string $token): array
     {
         $order=wc_get_order($orderId);if(!$order||(int)$order->get_meta('_pesm_allocation_hold_id')!==$holdId){Policy::fail('checkout_reconciliation_required',503);}
-        return ['order_id'=>$orderId,'hold_id'=>$holdId,'guest_access_token'=>self::guest($holdId,$token),'payment_required'=>(float)$order->get_total()>0,'payment_url'=>(float)$order->get_total()>0?$order->get_checkout_payment_url():null,'order_status'=>(string)$order->get_status()];
+        if ((float) $order->get_total() === 0.0 && in_array($order->get_status(), [CheckoutOrder::DRAFT, 'pending'], true)) {
+            if (!in_array(self::confirmOrder($orderId,true), ['issued','already_issued'], true)) {
+                Policy::fail('checkout_reconciliation_required',503);
+            }
+            CheckoutOrder::updateStatus($order, 'completed', 'Free allocated admission issued.', true);
+            NotificationQueue::onTicketsIssued($orderId);
+        } else {
+            CheckoutOrder::publish($order);
+        }
+        $payable = $order->needs_payment();
+        return ['order_id'=>$orderId,'hold_id'=>$holdId,'guest_access_token'=>self::guest($holdId,$token),
+            'payment_required'=>$payable,'payment_url'=>$payable?$order->get_checkout_payment_url():null,'order_status'=>(string)$order->get_status()];
     }
     private static function product(): object
     {

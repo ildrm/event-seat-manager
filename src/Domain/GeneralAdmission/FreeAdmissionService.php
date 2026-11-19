@@ -6,7 +6,9 @@ namespace PESM\Domain\GeneralAdmission;
 
 use PESM\Domain\Booking\HoldException;
 use PESM\Domain\Booking\CapacityPolicy;
+use PESM\Domain\Checkout\CheckoutOrder;
 use PESM\Domain\Checkout\CheckoutPolicy;
+use PESM\Domain\Event\LifecycleService;
 use PESM\Domain\Ticket\TicketToken;
 use PESM\Support\Audit;
 use Throwable;
@@ -63,14 +65,10 @@ final class FreeAdmissionService
                 return $this->existing((int) $hold->order_id, (int) $hold->id, $token);
             }
             if ($hold->status === 'payment_pending' && (int) $hold->order_id > 0) {
-                if ($wpdb->query('COMMIT') === false) { throw new HoldException('write_failed', \PESM\Support\I18n::text('ثبت تراکنش ناموفق بود.'), 503); }
-                // A pending paid order must never be converted to a free ticket.
-                if ((int) $session->unit_price_minor === 0) {
-                    $result = $this->confirmFree((int) $hold->order_id);
-                    if (!in_array($result, ['issued', 'already_issued'], true)) {
-                        throw new HoldException('reconciliation_required', \PESM\Support\I18n::text('این سفارش به بررسی نیاز دارد.'), 503);
-                    }
+                if ($hold->expires_at <= $now) {
+                    throw new HoldException('hold_expired', \PESM\Support\I18n::text('رزرو موقت منقضی شده است.'), 410);
                 }
+                if ($wpdb->query('COMMIT') === false) { throw new HoldException('write_failed', \PESM\Support\I18n::text('ثبت تراکنش ناموفق بود.'), 503); }
                 return $this->existing((int) $hold->order_id, (int) $hold->id, $token);
             }
             if ($hold->status === 'checkout_creating') {
@@ -136,17 +134,13 @@ final class FreeAdmissionService
             throw new HoldException('write_failed', \PESM\Support\I18n::text('ثبت سفارش ظرفیت آزاد ناموفق بود.'), 503);
         }
 
+        $order = null;
         try {
             $product = $this->product();
-            $order = wc_create_order(['created_via' => 'pesm']);
-            if (is_wp_error($order)) { throw new \RuntimeException('Order creation failed.'); }
+            $order = CheckoutOrder::stage('general', $sessionId, (int) $hold->id);
             $order->set_address(['first_name' => $first, 'last_name' => $last, 'phone' => $phone, 'email' => $email], 'billing');
             $order->set_customer_id(get_current_user_id());
             $order->set_currency(get_woocommerce_currency());
-            $order->update_meta_data('_pesm_is_ticket_order', 'yes');
-            $order->update_meta_data('_pesm_mode', 'general');
-            $order->update_meta_data('_pesm_session_id', $sessionId);
-            $order->update_meta_data('_pesm_capacity_hold_id', (int) $hold->id);
             $order->update_meta_data('_pesm_attendees_v1', $attendeeSnapshot);
             $order->update_meta_data('_pesm_unit_price_minor', (int) $session->unit_price_minor);
             $order->update_meta_data('_pesm_total_minor', (int) $session->unit_price_minor * (int) $hold->quantity);
@@ -156,7 +150,6 @@ final class FreeAdmissionService
             $item->set_product($product);
             $item->set_quantity((int) $hold->quantity);
             $totalMinor = (int) $session->unit_price_minor * (int) $hold->quantity;
-            $unit = CheckoutPolicy::amount((int) $session->unit_price_minor, wc_get_price_decimals());
             $total = CheckoutPolicy::amount($totalMinor, wc_get_price_decimals());
             $item->set_subtotal($total); $item->set_total($total);
             $item->add_meta_data('_pesm_unit_price_minor', (int) $session->unit_price_minor, true);
@@ -168,46 +161,39 @@ final class FreeAdmissionService
             ), true);
             $order->add_item($item);
             $order->calculate_totals(false);
-            $actualMinor = (int) round((float) $order->get_total() * (10 ** wc_get_price_decimals()));
-            if ($actualMinor !== $totalMinor) {
-                throw new \RuntimeException('WooCommerce amount differs from immutable server price snapshot.');
-            }
-            $order->set_status('pending');
-            $order->save();
-            $orderId = (int) $order->get_id();
+            $orderId = CheckoutOrder::remember('general', (int) $hold->id, $order);
             $guest = $this->guestToken((int) $hold->id, $token);
             if ($wpdb->query('START TRANSACTION') === false) { throw new \RuntimeException('DB not available.'); }
             try {
-                $wpdb->get_var($wpdb->prepare("SELECT id FROM {$p}sessions WHERE id=%d FOR UPDATE", $sessionId));
+                $lifecycle = LifecycleService::lockSession((int) $session->event_id, $sessionId);
                 $wpdb->get_var($wpdb->prepare("SELECT session_id FROM {$p}session_capacity WHERE session_id=%d FOR UPDATE", $sessionId));
                 $locked = $wpdb->get_row($wpdb->prepare(
                     "SELECT * FROM {$p}capacity_holds WHERE id=%d AND session_id=%d FOR UPDATE", (int) $hold->id, $sessionId
                 ));
                 $now2 = (string) $wpdb->get_var('SELECT UTC_TIMESTAMP()');
-                if (!$locked || $locked->status !== 'checkout_creating' || $locked->expires_at <= $now2) {
+                if (!$lifecycle || $lifecycle->status !== 'published' || $lifecycle->event_status !== 'published' ||
+                    !$locked || (int) $locked->order_id !== $orderId || $locked->status !== 'checkout_creating' ||
+                    $now2 === '' || $locked->expires_at <= $now2) {
                     throw new \RuntimeException('Checkout creation expired.');
                 }
                 if ($wpdb->insert($p . 'capacity_order_links', [
                     'hold_id' => (int) $hold->id, 'order_id' => $orderId,
                     'guest_token_hash' => hash('sha256', $guest), 'status' => 'pending', 'created_at' => $now2,
                 ]) !== 1 || $wpdb->update($p . 'capacity_holds', [
-                    'status' => 'payment_pending', 'order_id' => $orderId,
-                ], ['id' => (int) $hold->id, 'status' => 'checkout_creating']) !== 1) {
+                    'status' => 'payment_pending',
+                ], ['id' => (int) $hold->id, 'status' => 'checkout_creating', 'order_id'=>$orderId]) !== 1) {
                     throw new \RuntimeException('Could not link order.');
                 }
                 if ($wpdb->query('COMMIT') === false) { throw new \RuntimeException('Link commit failed.'); }
             } catch (Throwable $e) { $wpdb->query('ROLLBACK'); throw $e; }
             if ((int) $session->unit_price_minor === 0) {
-                $result = $this->confirmFree($orderId);
-                if (!in_array($result, ['issued', 'already_issued'], true)) {
-                    throw new \RuntimeException('Fulfillment requires reconciliation.');
-                }
-                $order->update_status('completed', \PESM\Support\I18n::text('بلیت رایگان ظرفیت آزاد صادر شد.'), true);
-                \PESM\Domain\Notification\NotificationQueue::onTicketsIssued($orderId);
+                $this->finishFree($order);
+            } else {
+                CheckoutOrder::publish($order);
             }
             return $this->response($order, $guest, (int) $hold->id);
         } catch (Throwable $e) {
-            // Keep pending inventory for supervisor reconciliation, never silently resell.
+            CheckoutOrder::onFailure($order, 'general', (int) $hold->id);
             throw new HoldException('checkout_reconciliation_required', \PESM\Support\I18n::text('صدور سفارش نیازمند بررسی است؛ رزرو به‌طور خودکار آزاد نمی‌شود.'), 503);
         }
     }
@@ -392,9 +378,10 @@ final class FreeAdmissionService
         if (!$order || $order->get_meta('_pesm_capacity_hold_id') != $holdId) {
             throw new HoldException('reconciliation_required', \PESM\Support\I18n::text('سفارش قبلی نیازمند بررسی است.'), 503);
         }
-        // Never force a paid pending order to completed on replay.
-        if ($order->get_status() === 'pending' && (float) $order->get_total() === 0.0) {
-            $order->update_status('completed', \PESM\Support\I18n::text('بلیت‌های موجود این سفارش رایگان بازیابی شدند.'), true);
+        if ((float) $order->get_total() === 0.0 && in_array($order->get_status(), [CheckoutOrder::DRAFT, 'pending'], true)) {
+            $this->finishFree($order);
+        } else {
+            CheckoutOrder::publish($order);
         }
         return $this->response($order, $this->guestToken($holdId, $token), $holdId);
     }
@@ -402,11 +389,21 @@ final class FreeAdmissionService
     /** @return array<string,mixed> */
     private function response(object $order, string $guest, int $holdId): array
     {
-        $paid = (float) $order->get_total() > 0;
+        $payable = $order->needs_payment();
         return ['order_id'=>(int) $order->get_id(), 'hold_id'=>$holdId,
-            'order_status'=>(string) $order->get_status(), 'payment_required'=>$paid,
-            'payment_url'=>$paid ? $order->get_checkout_payment_url() : null,
+            'order_status'=>(string) $order->get_status(), 'payment_required'=>$payable,
+            'payment_url'=>$payable ? $order->get_checkout_payment_url() : null,
             'guest_access_token'=>$guest,
-            'message'=>$paid ? \PESM\Support\I18n::text('سفارش ثبت شد؛ پس از تأیید پرداخت، بلیت صادر می‌شود.') : \PESM\Support\I18n::text('سفارش رایگان ظرفیت آزاد ثبت شد و بلیت‌ها صادر شدند.')];
+            'message'=>(float) $order->get_total() > 0 ? \PESM\Support\I18n::text('سفارش ثبت شد؛ پس از تأیید پرداخت، بلیت صادر می‌شود.') : \PESM\Support\I18n::text('سفارش رایگان ظرفیت آزاد ثبت شد و بلیت‌ها صادر شدند.')];
+    }
+
+    private function finishFree(object $order): void
+    {
+        $orderId = (int) $order->get_id();
+        if (!in_array($this->confirmFree($orderId), ['issued', 'already_issued'], true)) {
+            throw new \RuntimeException('Fulfillment requires reconciliation.');
+        }
+        CheckoutOrder::updateStatus($order, 'completed', \PESM\Support\I18n::text('بلیت رایگان ظرفیت آزاد صادر شد.'), true);
+        \PESM\Domain\Notification\NotificationQueue::onTicketsIssued($orderId);
     }
 }
