@@ -9,6 +9,7 @@ use DateTimeZone;
 use PESM\Domain\Hall\HallService;
 use PESM\Domain\Hall\SeatAdministration;
 use PESM\Domain\Hall\LayoutVersionService;
+use PESM\Domain\Hall\LayoutHistory;
 use PESM\Domain\Hall\DraftSaveService;
 use PESM\Domain\Hall\DraftConflictException;
 use PESM\Domain\Hall\LayoutPrintRenderer;
@@ -188,10 +189,10 @@ final class Pages
             echo (\PESM\Support\I18n::text('</select></label> <label>فایل JSON <input type="file" name="layout_file" accept=".json,application/json" required></label> '));
             submit_button((\PESM\Support\I18n::text('واردکردن نسخه پیش‌نویس')), 'secondary', 'submit', false);
             echo '</form>';
-            foreach (array_slice($halls, 0, 40) as $hall) {
-                $versions = $wpdb->get_results($wpdb->prepare(
-                    "SELECT id,version_no,status,seat_count,revision,format FROM {$p}layout_versions WHERE hall_id=%d ORDER BY version_no DESC LIMIT 20", (int) $hall->id
-                ));
+            $visibleHalls = array_slice($halls, 0, 40);
+            $history = LayoutHistory::forHalls(array_column($visibleHalls, 'id'));
+            foreach ($visibleHalls as $hall) {
+                $versions = $history[$hall->id] ?? [];
                 echo '<h3>' . esc_html($hall->name) . '</h3>';
                 echo (\PESM\Support\I18n::text('<table class="widefat striped"><thead><tr><th>نسخه</th><th>صندلی</th><th>وضعیت</th><th>عملیات</th></tr></thead><tbody>'));
                 foreach ($versions as $version) {
