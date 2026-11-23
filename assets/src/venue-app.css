@@ -6,3 +6,11 @@
 @media print{.pesm-venue>.pesm-v-heading,.pesm-v-workspace,.pesm-v-designer,.pesm-v-session-settings,.pesm-v-ticket-form,.pesm-v-status,.pesm-v-gate-form,.pesm-v-basket>.pesm-v-toolbar,.pesm-v-checkout,.pesm-v-basket-items,.pesm-v-countdown,.pesm-v-total,.pesm-venue button,.pesm-v-access-key{display:none!important}.pesm-venue,.pesm-v-basket,.pesm-v-receipt{margin:0;padding:0;border:0;background:#fff}.pesm-v-ticket-group{display:block;border:0}.pesm-v-ticket{display:inline-block;margin:8px;vertical-align:top}.pesm-v-ticket canvas{print-color-adjust:exact}}
 
 .pesm-v-legend{display:flex;gap:16px;flex-wrap:wrap;list-style:none;padding:0;margin:12px 0;font-size:12px;color:var(--v-muted)}.pesm-v-legend li{display:flex;align-items:center;gap:7px}.pesm-v-legend li>span{display:inline-block;inline-size:16px;block-size:16px;border:1px solid #7b8a9f;border-radius:4px}.pesm-v-legend-available{background:#bce2d8}.pesm-v-legend-selected{background:#2563eb}.pesm-v-legend-unavailable{background:repeating-linear-gradient(135deg,#c8cfdb,#c8cfdb 3px,#e2e7ef 3px,#e2e7ef 6px)}.pesm-v-legend-group{background:#e8e0d3;border-radius:50%!important}
+
+.pesm-venue .pesm-v-layout-builder > summary,
+.pesm-venue .pesm-v-template-gallery > summary,
+.pesm-venue .pesm-v-capacity-tools > summary,
+.pesm-venue .pesm-v-saved-tools > summary { align-content: center; }
+.pesm-venue .pesm-v-layout-builder { margin-block: 12px; }
+.pesm-venue .pesm-v-layout-builder > .pesm-v-form-grid { margin-block-start: 8px; }
+.pesm-venue .pesm-v-layout-builder > .pesm-v-button { margin-block-end: 8px; }

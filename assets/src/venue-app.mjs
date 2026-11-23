@@ -34,7 +34,8 @@ export class VenueApp {
     this.root.replaceChildren();
     this.heading = el('div', {class: 'pesm-v-heading'}, el('div', {}, el('p', {class: 'pesm-v-eyebrow', text: this.t('EVENT SEAT MANAGER', 'مدیریت جایگاه رویداد')}), el('h2', {text: this.admin ? this.t('Venue designer', 'طراحی سالن و جایگاه') : config.context === 'gate' ? this.t('Admission desk', 'کنترل ورود') : config.context === 'tickets' ? this.t('Your tickets', 'بلیت‌های شما') : this.t('Choose your places', 'جایگاه خود را انتخاب کنید')})));
     this.status = el('p', {class: 'pesm-v-status', role: 'status', 'aria-live': 'polite'});
-    this.root.append(this.heading, this.status);
+    if (!this.admin) this.root.append(this.heading);
+    this.root.append(this.status);
     if (config.context === 'tickets') { this.mountTickets(); return; }
     if (config.context === 'gate') { this.mountGate(); return; }
     if (this.admin) this.mountDesigner();
@@ -59,7 +60,7 @@ export class VenueApp {
   }
   mountBrowser() {
     const t = this.t;
-    this.workspace = el('section', {class: 'pesm-v-workspace', 'aria-label': t('Venue map and accessible place list', 'نقشه سالن و فهرست دسترس‌پذیر جایگاه‌ها')});
+    this.workspace = el('section', {class: 'pesm-v-workspace', hidden:this.admin&&!this.layoutId, 'aria-label': t('Venue map and accessible place list', 'نقشه سالن و فهرست دسترس‌پذیر جایگاه‌ها')});
     this.sectionSelect = el('select', {'aria-label': t('Section', 'بخش'), onchange: () => this.openSection(this.sectionSelect.value)});
     this.sectionSelect.append(option('', t('Venue overview', 'نمای کلی سالن')));
     this.tileSelect = el('select', {'aria-label': t('Detail area', 'ناحیه جزئیات'), hidden: true, onchange: () => this.openTile(this.tileSelect.value)});
@@ -105,6 +106,7 @@ export class VenueApp {
     const result = await this.api.request(this.overviewPath());
     if(!current())return false;
     this.overview = result.layout || result; this.layoutId = Number(this.overview.layout_id || this.layoutId);
+    if(this.admin)this.workspace.hidden=false;
     if(!this.admin)this.selection.maxAdmissions=Math.min(200,Number(this.overview.purchase_limit)||200);
     this.settings = result.settings || result.config || this.overview.settings || this.overview.config || {};
     this.revision = Number(this.overview.revision || 0); this.cache.clear(); this.scopeVersion++;this.tile=null;this.tileCode='';this.sectionCode='';this.tileSelect.hidden=true;
@@ -116,7 +118,7 @@ export class VenueApp {
     this.renderer.setOverview((this.overview.sections || []).map(section=>({...section,label:this.sectionTitle(section)})), this.overview.objects || []);
     if(this.preview)this.preview.update(this.previewData());
     this.capacityLabel && (this.capacityLabel.textContent = `${Number(this.overview.capacity || this.overview.seat_count || 0).toLocaleString(this.fa?'fa':'en')} ${this.t('places', 'جایگاه')}`);
-    if (this.admin) { this.saveState.textContent = this.t('Saved', 'ذخیره شد'); this.loadPricingForm(); this.publishButton.disabled = this.overview.status === 'published'; this.rememberLayoutVersion(); }
+    if (this.admin) { this.saveState.textContent = this.t('Saved', 'ذخیره شد'); this.loadPricingForm(); this.rememberLayoutVersion(); this.renderSelection(); }
     await this.loadList(); if (!this.admin) { await this.resumeHold(); await this.refreshAvailability(); }
     if(!current())return false;
     this.message(this.t('Choose a section or browse the place list.', 'یک بخش را انتخاب کنید یا از فهرست جایگاه‌ها استفاده کنید.'));
@@ -304,8 +306,6 @@ export class VenueApp {
   mountDesigner() {
     const t = this.t;
     this.designer = el('section', {class:'pesm-v-designer'});
-    const steps = [t('Venue','سالن'),t('Configuration','چیدمان'),t('Capacity','ظرفیت'),t('Review & edit','بازبینی و ویرایش'),t('Publish','انتشار')];
-    this.designer.append(el('ol',{class:'pesm-v-steps'},steps.map((step,i)=>el('li',{},el('span',{text:String(i+1)}),step))));
     this.hallSelect=el('select',{name:'hall_id',required:true,onchange:()=>this.changeHall()});
     this.hallSelect.append(option('',t('Choose a hall','سالن را انتخاب کنید')),...(this.config.halls||[]).map(h=>option(h.id,h.name)));
     if(this.config.hallId&&!this.hallSelect.querySelector(`option[value="${Number(this.config.hallId)}"]`))this.hallSelect.append(option(this.config.hallId,this.config.hallName||`${t('Hall','سالن')} ${this.config.hallId}`));
@@ -316,9 +316,10 @@ export class VenueApp {
     this.venueFilter=el('select',{'aria-label':t('Venue type','نوع سالن'),onchange:()=>this.renderPresets()},option('',t('All venue types','همه نوع سالن')));
     this.presetSearch=el('input',{type:'search',placeholder:t('Search configurations','جست‌وجوی چیدمان'),oninput:()=>this.renderPresets(),'aria-label':t('Search configurations','جست‌وجوی چیدمان')});
     this.presetCards=el('div',{class:'pesm-v-presets'});
+    this.presetSelect=el('select',{name:'preset_id',onchange:()=>this.choosePreset(this.presetSelect.value)},option('',t('Choose a template','الگو را انتخاب کنید')));
     this.presetDetails=el('div',{class:'pesm-v-preset-options'});
     this.workflow=el('select',{name:'workflow',onchange:()=>this.renderPresetFields()},option('exact',t('Exact seat count','تعداد دقیق جایگاه')),option('advanced',t('Advanced arrangement','چیدمان پیشرفته')));
-    this.capacityInput=number('capacity',900,1,150000);
+    this.capacityInput=number('capacity','',1,150000);
     this.generateButton=button(t('Generate editable draft','ساخت پیش‌نویس قابل ویرایش'),()=>this.generate(),true);
     this.capacityLabel=el('span',{class:'pesm-v-capacity',text:t('No layout loaded','چیدمانی بارگذاری نشده است')});
     this.saveState=el('span',{class:'pesm-v-save-state',role:'status',text:t('Choose a configuration','یک چیدمان انتخاب کنید')});
@@ -334,15 +335,35 @@ export class VenueApp {
       button(t('Print current section','چاپ بخش فعلی'),()=>this.download(`admin/layouts/${this.layoutId}/print${this.sectionCode?`?section=${encodeURIComponent(this.sectionCode)}`:''}`,`layout-${this.layoutId}.html`,true)));
     this.progress=el('progress',{max:100,value:0,hidden:true,'aria-label':t('Layout job progress','پیشرفت پردازش چیدمان')});
     this.jobLabel=el('span',{class:'pesm-v-help'});
-    this.designer.append(el('div',{class:'pesm-v-form-grid'},field(t('Venue hall','سالن'),this.hallSelect),field(t('Saved layout version','نسخه ذخیره‌شده چیدمان'),this.layoutVersionSelect)),refreshVersions,el('div',{class:'pesm-v-form-grid'},field(t('Venue type','نوع سالن'),this.venueFilter),field(t('Search','جست‌وجو'),this.presetSearch)),
-      this.presetCards,el('div',{class:'pesm-v-form-grid'},field(t('Capacity workflow','روش تعیین ظرفیت'),this.workflow),field(t('Requested places','تعداد جایگاه موردنظر'),this.capacityInput)),this.presetDetails,
-      el('div',{class:'pesm-v-toolbar'},this.generateButton,this.capacityLabel,this.saveState,this.publishButton,reloadDraft,this.retrySaveButton),this.progress,this.jobLabel,this.retryJobButton,this.resumeJobButton,fileTools);
+    this.presetGallery=el('details',{class:'pesm-v-template-gallery'},
+      el('summary',{text:t('Browse template previews','دیدن پیش‌نمایش الگوها')}),
+      el('div',{class:'pesm-v-form-grid'},field(t('Venue type','نوع سالن'),this.venueFilter),field(t('Search','جست‌وجو'),this.presetSearch)),
+      this.presetCards);
+    const capacityTools=el('details',{class:'pesm-v-capacity-tools'},
+      el('summary',{text:t('Rows, sections and layout settings','ردیف، بخش و تنظیمات چیدمان')}),
+      field(t('Capacity workflow','روش تعیین ظرفیت'),this.workflow),this.presetDetails);
+    this.builder=el('details',{class:'pesm-v-layout-builder',open:!this.layoutId},
+      el('summary',{text:t('Create a layout from a template','ساخت چیدمان از الگو')}),
+      el('div',{class:'pesm-v-form-grid'},field(t('Template','الگو'),this.presetSelect),
+        field(t('Number of places','تعداد جایگاه'),this.capacityInput)),
+      this.presetGallery,capacityTools,this.generateButton);
+    const savedTools=el('details',{class:'pesm-v-saved-tools'},el('summary',{text:t('Reload or recover a draft','بارگذاری مجدد یا بازیابی پیش‌نویس')}),refreshVersions,reloadDraft);
+    this.presetGallery.addEventListener('toggle',()=>{if(this.presetGallery.open&&this.presets)this.renderPresets();});
+    this.designer.append(el('div',{class:'pesm-v-form-grid'},field(t('Venue hall','سالن'),this.hallSelect),field(t('Saved layout version','نسخه ذخیره‌شده چیدمان'),this.layoutVersionSelect)),
+      el('div',{class:'pesm-v-toolbar'},this.capacityLabel,this.saveState,this.publishButton,this.retrySaveButton),
+      this.builder,this.progress,this.jobLabel,this.retryJobButton,this.resumeJobButton,fileTools,savedTools);
+    this.generateButton.disabled=true;
     this.root.append(this.designer);
     this.api.request('presets').then(result=>{
       this.presets=Array.isArray(result)?result:result.presets||result.items||[];
       const names={cinema:t('Cinema','سینما'),theater:t('Theater','تئاتر'),theatre:t('Theater','تئاتر'),conference:t('Conference','کنفرانس'),restaurant:t('Restaurant','رستوران'),fashion:t('Fashion show','نمایش مد'),fashion_show:t('Fashion show','نمایش مد'),sports:t('Sports hall','سالن ورزشی'),sports_hall:t('Sports hall','سالن ورزشی'),stadium:t('Stadium','استادیوم')};
-      for(const category of new Set(this.presets.map(p=>p.category)))this.venueFilter.append(option(category,names[category]||category));
-      this.renderPresets();
+      for(const category of new Set(this.presets.map(p=>p.category))){
+        const name=names[category]||category;
+        this.venueFilter.append(option(category,name));
+        const options=this.presets.filter(p=>p.category===category).map(p=>option(p.id,this.fa?(p.label_fa||p.label):p.label));
+        this.presetSelect.append(el('optgroup',{label:name},options));
+      }
+      if(this.presetGallery.open)this.renderPresets();
     }).catch(error=>this.message(error.message,true));
   }
   mountBooking(){
@@ -368,7 +389,20 @@ export class VenueApp {
   }
   renderSelection(){
     if(this.preview)this.preview.update(this.previewData());
-    if(this.admin){if(this.hallSelect)this.hallSelect.disabled=this.layoutSwitchBlocked();if(this.layoutVersionSelect)this.layoutVersionSelect.disabled=this.layoutSwitchBlocked()||!(this.layoutVersions?.get(Number(this.config.hallId))||[]).length;if(this.undoButton){this.undoButton.disabled=this.selection.busy||!this.undo.length;this.redoButton.disabled=this.selection.busy||!this.redo.length;}return;}
+    if(this.admin){
+      if(this.publishButton)this.publishButton.disabled=!this.overview||this.overview.status==='published'||this.selection.busy;
+      if(this.generateButton)this.generateButton.disabled=!this.preset||this.selection.busy;
+      if(this.hallSelect)this.hallSelect.disabled=this.layoutSwitchBlocked();
+      if(this.layoutVersionSelect){
+        const versions=this.layoutVersions?.get(Number(this.config.hallId))||[];
+        this.layoutVersionSelect.disabled=this.layoutSwitchBlocked()||!versions.length;
+      }
+      if(this.undoButton){
+        this.undoButton.disabled=this.selection.busy||!this.undo.length;
+        this.redoButton.disabled=this.selection.busy||!this.redo.length;
+      }
+      return;
+    }
     if(!this.basket)return;
     this.basketItems.replaceChildren();
     for(const unit of this.selection.selected.values()){
@@ -512,6 +546,17 @@ export class VenueApp {
     this.root.append(el('div',{class:'pesm-v-toolbar'},start,button(t('Stop camera','توقف دوربین'),cleanup),button(t('Look up ticket number','بررسی شماره بلیت'),()=>this.perform(async()=>{const number=ticketNumberForLookup(credential.value);if(!number)throw new Error(t('Enter the printed ticket number for lookup.','برای بررسی، شماره چاپ‌شده بلیت را وارد کنید.'));const data=await this.api.request(`gate/lookup?ticket_number=${encodeURIComponent(number)}`);pending=null;result.textContent=`${data.ticket_number||''} · ${this.statusLabel(data.status||'')} · ${t('Remaining','باقی‌مانده')}: ${data.remaining??data.capacity??''}`;}))),video,this.gateForm,result);
     window.addEventListener('pagehide',cleanup,{signal:this.abort.signal});
   }
+  choosePreset(id, fromGallery=false) {
+    this.preset=(this.presets||[]).find(p=>p.id===id);
+    this.presetSelect.value=this.preset?.id||'';
+    this.renderSelection();
+    this.renderPresetFields();
+    for(const card of this.presetCards.children)card.setAttribute('aria-pressed',String(card.dataset.preset===id));
+    if(fromGallery){
+      this.presetGallery.open=false;
+      (this.capacityInput.disabled ? this.presetSelect : this.capacityInput).focus();
+    }
+  }
   renderPresets() {
     const search=this.presetSearch.value.toLocaleLowerCase(),category=this.venueFilter.value;
     const presets=(this.presets||[]).filter(p=>(!category||p.category===category)&&`${p.label} ${p.label_fa} ${p.category}`.toLocaleLowerCase().includes(search));
@@ -520,7 +565,7 @@ export class VenueApp {
     for(const preset of presets){
       const canvas=el('canvas',{width:220,height:120,'aria-hidden':'true'});canvas.dataset.preset=preset.id;
       const name=this.fa?(preset.label_fa||preset.label):preset.label;
-      const card=button('',()=>{this.preset=preset;this.renderPresetFields();for(const c of this.presetCards.children)c.setAttribute('aria-pressed',String(c.dataset.preset===preset.id));});
+      const card=button('',()=>this.choosePreset(preset.id,true));
       card.className='pesm-v-preset';card.dataset.preset=preset.id;card.setAttribute('aria-pressed',String(this.preset?.id===preset.id));
       card.append(canvas,el('strong',{text:name}),el('small',{text:this.t('Adjustable capacity','ظرفیت قابل تنظیم')}));this.presetCards.append(card);this.thumbnailObserver.observe(canvas);
     }
@@ -564,13 +609,16 @@ export class VenueApp {
       if(this.parameterValues.has(name)){if(input.type==='checkbox')input.checked=Boolean(this.parameterValues.get(name));else input.value=this.parameterValues.get(name);}
       const remember=()=>{this.touchedParameters.add(name);this.parameterValues.set(name,input.type==='checkbox'?input.checked:input.value);};input.addEventListener('input',remember);input.addEventListener('change',remember);
       this.parameterInputs.set(name,input);grid.append(field(this.t(...label),input));}
-    const title=el('h3',{text:this.fa?(this.preset.label_fa||this.preset.label):this.preset.label});
-    this.presetDetails.append(title,grid,el('p',{class:'pesm-v-help',text:this.t('Partial final rows and groups keep the exact requested capacity. Invalid fixed-size combinations are reported before publication.','ردیف و گروه پایانی می‌توانند کوچک‌تر باشند تا ظرفیت دقیق حفظ شود. ترکیب ناسازگار پیش از انتشار اعلام می‌شود.')}),el('p',{class:'pesm-v-help',text:this.t('In exact capacity mode, unchanged section, tier and block defaults adapt to fit. Edited values are enforced.','در روش ظرفیت دقیق، تعداد پیش‌فرض بخش، طبقه و بلوک در صورت ویرایش‌نشدن با ظرفیت سازگار می‌شود. مقدار ویرایش‌شده دقیقاً اعمال می‌شود.')}));
+    this.presetDetails.append(grid,el('p',{class:'pesm-v-help',text:this.t('Partial final rows and groups keep the exact requested capacity. Invalid fixed-size combinations are reported before publication.','ردیف و گروه پایانی می‌توانند کوچک‌تر باشند تا ظرفیت دقیق حفظ شود. ترکیب ناسازگار پیش از انتشار اعلام می‌شود.')}),el('p',{class:'pesm-v-help',text:this.t('In exact capacity mode, unchanged section, tier and block defaults adapt to fit. Edited values are enforced.','در روش ظرفیت دقیق، تعداد پیش‌فرض بخش، طبقه و بلوک در صورت ویرایش‌نشدن با ظرفیت سازگار می‌شود. مقدار ویرایش‌شده دقیقاً اعمال می‌شود.')}));
   }
   async generate(){
     if(!this.preset){this.message(this.t('Choose a configuration first.','ابتدا یک چیدمان انتخاب کنید.'),true);return;}
     if(!this.hallSelect.value){this.hallSelect.reportValidity();return;}
-    const values={};for(const[name,input]of this.parameterInputs||[]){if(!input.reportValidity())return;values[name]=input.type==='checkbox'?input.checked:input.tagName==='SELECT'?input.value:Number(input.value);}
+    const values={};
+    for(const[name,input]of this.parameterInputs||[]){
+      if(!input.validity.valid){ input.closest('details').open=true; input.reportValidity(); return; }
+      values[name]=input.type==='checkbox'?input.checked:input.tagName==='SELECT'?input.value:Number(input.value);
+    }
     const parameters=generationParameters(this.workflow.value,this.capacityInput.value,values,this.touchedParameters);
     if(this.workflow.value==='exact'&&!this.capacityInput.reportValidity())return;
     if(parameters.workflow==='exact'&&parameters.fixed_group_size&&parameters.capacity%parameters.group_size){const size=parameters.group_size,lower=Math.max(size,Math.floor(parameters.capacity/size)*size),upper=Math.max(lower+size,Math.ceil(parameters.capacity/size)*size);this.message(`${this.t('Fixed group size cannot fit this capacity. Nearby valid capacities','ظرفیت با اندازه ثابت گروه سازگار نیست. ظرفیت‌های معتبر نزدیک')}: ${lower}, ${upper}.`,true);return;}
@@ -584,7 +632,10 @@ export class VenueApp {
       if(['failed','error','cancelled'].includes(status)){this.failedJob=id;this.retryJobButton.hidden=false;throw new Error(job.error||job.last_error||this.t('Layout processing failed.','پردازش چیدمان انجام نشد.'));}
       if(['completed','complete','ready','done','published'].includes(status)){
         this.layoutId=Number(job.layout_id||job.result?.layout_id||this.layoutId);this.progress.value=100;this.jobLabel.textContent=this.t('Layout ready.','چیدمان آماده است.');this.resumeJobButton.hidden=true;this.currentJob=null;
-        if(['generate','import'].includes(job.kind))this.clearSessionSelection();
+        if(['generate','import'].includes(job.kind)){
+          this.clearSessionSelection();
+          if(this.builder)this.builder.open=false;
+        }
         if(this.layoutId)await this.loadOverview();return job;
       }
       await new Promise(resolve=>setTimeout(resolve,1000));if(!this.active)return;
@@ -662,7 +713,8 @@ export class VenueApp {
     this.root.append(this.sessionSettings);
     if(this.config.canManageSessions===false){this.ticketMode.closest('.pesm-v-form-grid').hidden=true;for(const action of this.sessionSettings.querySelectorAll('.pesm-v-toolbar button'))action.hidden=true;}
     if(this.config.canManagePricing===false)this.pricingFields.hidden=true;
-    this.mountSessionCreation();if(this.config.canManageRefunds)this.mountAdministration();this.setSessionSettingsPending(Boolean(this.sessionId));if(this.sessionId)this.loadSessionSettings();
+    if(this.config.setupFlow){this.sessionPublishButton.hidden=true;}else{this.mountSessionCreation();}
+    if(this.config.canManageRefunds)this.mountAdministration();this.setSessionSettingsPending(Boolean(this.sessionId));if(this.sessionId)this.loadSessionSettings();
   }
   setSessionSettingsPending(pending){
     this.sessionConfigPending=Boolean(pending);const disabled=this.sessionConfigPending||!this.sessionId||this.sessionConfigId!==this.sessionId;

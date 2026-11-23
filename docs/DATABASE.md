@@ -1,6 +1,6 @@
 # Database — event-seat-manager 2.0.0
 
-The product version is **2.0.0**; the independent database schema version is **19**. Do not reset `pesm_schema_version` to the product version. Tables use `{$wpdb->prefix}pesm_`, preserving existing data after the plugin rename.
+The product version is **2.0.0**; the independent database schema version is **20**. Do not reset `pesm_schema_version` to the product version. Tables use `{$wpdb->prefix}pesm_`, preserving existing data after the plugin rename.
 
 `Migrator::run()` applies `dbDelta()` definitions, then verifies table existence, InnoDB engines, required unique indexes and critical columns. It records `pesm_schema_error` on failure and advances the schema version only after verification. Bootstrap stops booking/ticket route registration when the schema is incomplete. Migration rollback requires restoring a backup; uninstall retains data.
 
@@ -8,6 +8,7 @@ The product version is **2.0.0**; the independent database schema version is **1
 |---|---|
 | `centers`, `center_users` | organizational scope and user assignment |
 | `halls`, `layout_versions`, `seats`, `layout_objects` | versioned hall geometry and independent decorative/structural objects |
+| `event_setups` | center-scoped setup progress, edit revision, session/job references and booking-page receipt |
 | `events`, `sessions` | event details, publication, sales windows, mode, price and seating rules |
 | `session_seats`, `holds`, `hold_items`, `hold_mutations` | numbered inventory, leases, selected seats and mutation idempotency |
 | `session_capacity`, `capacity_holds` | general admission counters and leases |
@@ -49,4 +50,4 @@ Back up before activation or upgrade. Deactivate the old plugin file before acti
 
 Fresh installation and selected schema-retention checks are documented in [integration results](INTEGRATION-RESULTS.md). Those checks do not prove every historical database revision or interrupted migration path. Full upgrade fixtures, financial disaster recovery and configurable PII retention/erasure need further acceptance.
 
-Current schema-19 evidence and deployment limits are recorded in [venue acceptance](VENUE-ACCEPTANCE.md). The migration now expects 55 plugin tables, all InnoDB. New allocated-session creation remains gated independently from existing reservations and ticket access.
+Current schema-19 evidence and deployment limits are recorded in [venue acceptance](VENUE-ACCEPTANCE.md). Schema 20 adds the setup table and expects 56 plugin tables, all InnoDB. New allocated-session creation remains gated independently from existing reservations and ticket access.

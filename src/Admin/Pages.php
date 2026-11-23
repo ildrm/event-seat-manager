@@ -25,6 +25,7 @@ use PESM\Domain\Event\LifecycleService;
 use PESM\Domain\Event\EventChangeService;
 use PESM\Domain\Event\LifecyclePolicy;
 use PESM\Domain\Event\EventEditor;
+use PESM\Domain\Event\SetupService;
 use PESM\Security\Capabilities;
 use Throwable;
 
@@ -88,6 +89,12 @@ final class Pages
         \PESM\Support\Ui::enqueue();
         wp_enqueue_style('pesm-admin', PESM_URL . 'assets/css/admin.css', ['pesm-ui'], \PESM\Support\Ui::assetVersion('assets/css/admin.css'));
         wp_enqueue_script('pesm-admin', PESM_URL . 'assets/js/admin.js', ['pesm-i18n'], \PESM\Support\Ui::assetVersion('assets/js/admin.js'), true);
+        wp_enqueue_script('pesm-admin-records', PESM_URL . 'assets/js/admin-records.js', ['pesm-admin'], \PESM\Support\Ui::assetVersion('assets/js/admin-records.js'), true);
+        if (current_user_can('pesm_manage_events') && isset($_GET['pesm_event'])) {
+            if (current_user_can('upload_files')) { wp_enqueue_media(); }
+            wp_enqueue_script('pesm-event-setup', PESM_URL . 'assets/js/event-setup.js', [],
+                \PESM\Support\Ui::assetVersion('assets/js/event-setup.js'), true);
+        }
         if (current_user_can('pesm_view_reports')) {
             wp_enqueue_script('pesm-seat-status-admin', PESM_URL . 'assets/js/seat-status-admin.js', ['pesm-i18n'], \PESM\Support\Ui::assetVersion('assets/js/seat-status-admin.js'), true);
             wp_localize_script('pesm-seat-status-admin', 'pesmSeatStatusConfig', [
@@ -148,6 +155,8 @@ final class Pages
             $placeholders = implode(',', array_fill(0, count($eventIds), '%d'));
             $sessions = $wpdb->get_results($wpdb->prepare("SELECT * FROM {$p}sessions WHERE event_id IN ($placeholders) ORDER BY id DESC LIMIT 30", ...$eventIds));
         }
+        $eventId = isset($_GET['pesm_event']) && is_string($_GET['pesm_event']) ? absint(wp_unslash($_GET['pesm_event'])) : 0;
+        $selectedEvent = array_column($events, null, 'id')[$eventId] ?? null;
         $url = esc_url(admin_url('admin-post.php'));
         $cards = array_fill_keys(['events', 'halls', 'tickets', 'reports', 'settings'], []);
         ob_start();
@@ -163,33 +172,37 @@ final class Pages
         }
         self::collectCard($cards, 'settings');
         ob_start();
-        if ($centers) {
-            if (current_user_can('pesm_manage_halls')) {
-            echo (\PESM\Support\I18n::text('<h2>ساخت سالن و نقشه صندلی</h2>'));
+        $hallsById = array_column($halls, null, 'id');
+        $selectedHallId = isset($_GET['pesm_hall']) && is_string($_GET['pesm_hall']) ? absint(wp_unslash($_GET['pesm_hall'])) : 0;
+        $selectedHallId = isset($hallsById[$selectedHallId]) ? $selectedHallId : 0;
+        self::hallList($halls, $centers, $selectedHallId);
+        if (!$selectedHallId && $centers && current_user_can('pesm_manage_halls')) {
+            echo '<details class="pesm-task-disclosure"' . (!$halls ? ' open' : '') . '><summary>' . self::t('new_hall') . '</summary>';
             self::formStart($url, 'pesm_create_hall');
-            echo (\PESM\Support\I18n::text('<label>مرکز ')); self::centerSelect($centers); echo '</label> ';
-            echo (\PESM\Support\I18n::text('<label>نام سالن <input name="name" type="text" maxlength="190" required></label> '));
-            echo (\PESM\Support\I18n::text('<label>ردیف <input name="rows" type="number" min="1" max="100" value="15" required></label> '));
-            echo (\PESM\Support\I18n::text('<label>صندلی هر ردیف <input name="columns" type="number" min="1" max="100" value="60" required></label> '));
-            submit_button((\PESM\Support\I18n::text('ایجاد سالن (نمونه ۹۰۰ صندلی)')), 'secondary', 'submit', false);
-            echo '</form>';
-            echo (\PESM\Support\I18n::text('<p>نمونه دیگر: ۱۸ ردیف و ۵۰ صندلی. هر دو نمونه دقیقاً ۹۰۰ صندلی دارند.</p>'));
+            if (count($centers) === 1) {
+                echo '<input type="hidden" name="center_id" value="' . esc_attr((string) $centers[0]->id) . '">';
+            } else {
+                echo '<label>' . self::t('center'); self::centerSelect($centers); echo '</label>';
             }
+            echo '<label>' . self::t('hall_name') . '<input name="name" type="text" maxlength="190" required></label>';
+            echo '<label>' . self::t('row_count') . '<input name="rows" type="number" min="1" max="100" required></label>';
+            echo '<label>' . self::t('column_count') . '<input name="columns" type="number" min="1" max="100" required></label>';
+            echo '<output class="pesm-grid-count" data-grid-count="' . self::t('seat_count') . '" aria-live="polite"></output>';
+            submit_button(SetupText::text('build'), 'primary', 'submit', false);
+            echo '</form></details>';
         }
         self::collectCard($cards, 'halls');
         ob_start();
-        if ($halls && current_user_can('pesm_edit_layouts')) {
-            $selectedHall = isset($_GET['pesm_hall']) && is_string($_GET['pesm_hall'])
-                ? (int) wp_unslash($_GET['pesm_hall']) : 0;
-            $hallsById = array_column($halls, null, 'id');
-            $selectedHall = isset($hallsById[$selectedHall]) ? $selectedHall : 0;
+        if ($selectedHallId && current_user_can('pesm_edit_layouts')) {
+            $selectedHall = $selectedHallId;
+            $setupContext = isset($_GET['pesm_setup']) ? EventSetup::backLink((int) ($hallsById[$selectedHall]->center_id ?? 0)) : 0;
+            $setupLayout = $setupContext && isset($_GET['pesm_layout']) && is_string($_GET['pesm_layout'])
+                ? absint(wp_unslash($_GET['pesm_layout'])) : 0;
+            echo '<details class="pesm-task-disclosure"><summary>' . self::t('layout_tools') . '</summary>';
             echo (\PESM\Support\I18n::text('<h2>ساخت نسخه پیش‌نویس از الگوی پارامتریک</h2>'));
             self::formStart($url, 'pesm_layout_preset');
-            echo (\PESM\Support\I18n::text('<label>سالن <select name="hall_id">'));
-            foreach ($halls as $hall) {
-                echo '<option value="' . esc_attr((string) $hall->id) . '"' . selected((int) $hall->id, $selectedHall, false) . '>' . esc_html((string) $hall->name) . '</option>';
-            }
-            echo (\PESM\Support\I18n::text('</select></label> <label>الگو <select name="preset">'));
+            echo '<input type="hidden" name="hall_id" value="' . esc_attr((string) $selectedHall) . '">';
+            echo (\PESM\Support\I18n::text('<label>الگو <select name="preset">'));
             foreach (LayoutPresets::PRESETS as $slug => $title) {
                 echo '<option value="' . esc_attr($slug) . '">' . esc_html(\PESM\Support\I18n::text($title)) . '</option>';
             }
@@ -202,30 +215,24 @@ final class Pages
             echo '<form method="post" enctype="multipart/form-data" action="' . $url . '" style="padding:12px 0">';
             echo '<input type="hidden" name="action" value="pesm_layout_import">';
             wp_nonce_field('pesm_layout_import');
-            echo (\PESM\Support\I18n::text('<label>سالن <select name="hall_id">'));
-            foreach ($halls as $hall) {
-                echo '<option value="' . esc_attr((string) $hall->id) . '"' . selected((int) $hall->id, $selectedHall, false) . '>' . esc_html($hall->name . ' (#' . $hall->id . ')') . '</option>';
-            }
-            echo (\PESM\Support\I18n::text('</select></label> <label>فایل JSON <input type="file" name="layout_file" accept=".json,application/json" required></label> '));
+            echo '<input type="hidden" name="hall_id" value="' . esc_attr((string) $selectedHall) . '">';
+            if ($setupContext) { echo '<input type="hidden" name="pesm_setup" value="' . esc_attr((string) $setupContext) . '">'; }
+            echo (\PESM\Support\I18n::text('<label>فایل JSON <input type="file" name="layout_file" accept=".json,application/json" required></label> '));
             submit_button((\PESM\Support\I18n::text('واردکردن نسخه پیش‌نویس')), 'secondary', 'submit', false);
-            echo '</form>';
-            echo '<form method="get" action="' . esc_url(admin_url('admin.php') . '#pesm-halls') . '">';
-            echo '<input type="hidden" name="page" value="pesm-dashboard">';
-            echo '<label>' . esc_html(\PESM\Support\I18n::text('تاریخچهٔ چیدمان سالن')) . ' <select name="pesm_hall">';
-            echo '<option value="0">' . esc_html(\PESM\Support\I18n::text('سالن‌های اخیر')) . '</option>';
-            foreach ($halls as $hall) {
-                echo '<option value="' . esc_attr((string) $hall->id) . '"' . selected((int) $hall->id, $selectedHall, false) . '>'
-                    . esc_html($hall->name . ' (#' . $hall->id . ')') . '</option>';
-            }
-            echo '</select></label> ';
-            submit_button(\PESM\Support\I18n::text('نمایش نسخه‌ها'), 'secondary', 'submit', false);
-            echo '</form>';
-            $visibleHalls = $selectedHall ? [$hallsById[$selectedHall]] : array_slice($halls, 0, 40);
+            echo '</form></details>';
+            $visibleHalls = $selectedHall ? [$hallsById[$selectedHall]] : [];
             $hallIds = array_column($visibleHalls, 'id');
             $legacyHistory = LayoutHistory::forHalls($hallIds, LayoutDocument::FORMAT);
             $venueHistory = LayoutHistory::forHalls($hallIds, \PESM\Domain\Venue\Document::FORMAT);
             foreach ($visibleHalls as $hall) {
                 $versions = array_merge($legacyHistory[$hall->id] ?? [], $venueHistory[$hall->id] ?? []);
+                if ($setupLayout && !in_array($setupLayout, array_map('intval', array_column($versions, 'id')), true)) {
+                    $version = $wpdb->get_row($wpdb->prepare(
+                        "SELECT id,version_no,status,seat_count,revision,format FROM {$p}layout_versions WHERE id=%d AND hall_id=%d AND format=%s",
+                        $setupLayout, $hall->id, LayoutDocument::FORMAT
+                    ));
+                    if ($version) { $versions[] = $version; }
+                }
                 usort($versions, static fn(object $a, object $b): int => (int) $b->version_no <=> (int) $a->version_no);
                 echo '<h3>' . esc_html($hall->name) . '</h3>';
                 echo (\PESM\Support\I18n::text('<table class="widefat striped"><thead><tr><th>نسخه</th><th>صندلی</th><th>وضعیت</th><th>عملیات</th></tr></thead><tbody>'));
@@ -242,7 +249,8 @@ final class Pages
                         continue;
                     }
                     echo '<a href="' . esc_url($exportUrl) . (\PESM\Support\I18n::text('">خروجی JSON</a>'));
-                    echo ' <button type="button" class="button pesm-edit-layout" data-url="' . esc_url($exportUrl) . '" data-hall="' . esc_attr((string) $hall->id) . '" data-layout="' . esc_attr((string) $version->id) . '" data-revision="' . esc_attr((string) $version->revision) . (\PESM\Support\I18n::text('">ویرایش دیداری</button>'));
+                    echo ' <button type="button" class="button pesm-edit-layout"'
+                        . ($setupLayout === (int) $version->id ? ' data-pesm-auto-open' : '') . ' data-url="' . esc_url($exportUrl) . '" data-hall="' . esc_attr((string) $hall->id) . '" data-layout="' . esc_attr((string) $version->id) . '" data-revision="' . esc_attr((string) $version->revision) . (\PESM\Support\I18n::text('">ویرایش دیداری</button>'));
                     foreach (['A4', 'A3'] as $paper) {
                         $printUrl = wp_nonce_url(add_query_arg([
                             'action' => 'pesm_layout_print', 'hall_id' => (int) $hall->id,
@@ -256,6 +264,9 @@ final class Pages
                         echo '<input type="hidden" name="hall_id" value="' . esc_attr((string) $hall->id) . '">';
                         echo '<input type="hidden" name="layout_id" value="' . esc_attr((string) $version->id) . '">';
                         wp_nonce_field('pesm_layout_publish');
+                        if (isset($_GET['pesm_setup']) && is_string($_GET['pesm_setup'])) {
+                            echo '<input type="hidden" name="pesm_setup" value="' . esc_attr((string) absint(wp_unslash($_GET['pesm_setup']))) . '">';
+                        }
                         submit_button((\PESM\Support\I18n::text('انتشار برای جلسات آینده')), 'secondary', 'submit', false);
                         echo '</form>';
                     }
@@ -270,12 +281,17 @@ final class Pages
         if ($halls && current_user_can('pesm_edit_layouts')) {
             echo ('<section class="pesm-layout-editor" ' . 'dir="' . \PESM\Support\I18n::direction() . '"' . \PESM\Support\I18n::text(' hidden aria-label="ویرایشگر چیدمان صندلی">'));
             echo (\PESM\Support\I18n::text('<h2>ویرایشگر دیداری نقشه — ذخیره خودکار پیش‌نویس</h2>'));
-            echo (\PESM\Support\I18n::text('<p>انتخاب چند صندلی: Ctrl یا Shift + کلیک. برای جابه‌جایی، صندلی انتخابی را بکشید. تغییرات به‌صورت خودکار در پیش‌نویس جداگانه ذخیره می‌شوند؛ انتشار از جدول نسخه‌ها انجام می‌شود. در صورت تعارض فایل JSON را برای حفظ کار دریافت کنید.</p>'));
             echo '<div class="pesm-toolbar">';
             foreach (['pesm-undo'=>(\PESM\Support\I18n::text('بازگشت')),'pesm-redo'=>(\PESM\Support\I18n::text('انجام مجدد')),'pesm-zoom-in'=>(\PESM\Support\I18n::text('بزرگ‌نمایی')),'pesm-zoom-out'=>(\PESM\Support\I18n::text('کوچک‌نمایی')),
-                'pesm-reset-view'=>(\PESM\Support\I18n::text('نمای کامل')),'pesm-save'=>(\PESM\Support\I18n::text('ذخیره اکنون')),'pesm-add'=>(\PESM\Support\I18n::text('افزودن صندلی')),'pesm-copy'=>(\PESM\Support\I18n::text('کپی انتخابی')),'pesm-delete'=>(\PESM\Support\I18n::text('حذف انتخابی')),'pesm-download'=>(\PESM\Support\I18n::text('دریافت JSON ویرایش‌شده'))] as $class=>$label) {
+                'pesm-reset-view'=>(\PESM\Support\I18n::text('نمای کامل')),'pesm-save'=>(\PESM\Support\I18n::text('ذخیره اکنون'))] as $class=>$label) {
                 echo '<button type="button" class="button ' . esc_attr($class) . '">' . esc_html($label) . '</button>';
             }
+            echo '</div><p>' . esc_html(\PESM\Support\I18n::text('صندلی انتخابی: ')) . '<strong class="pesm-selected-total">0</strong></p>';
+            echo (\PESM\Support\I18n::text('<svg role="group" aria-label="نقشه قابل ویرایش؛ انتخاب و جابه‌جایی صندلی‌ها" tabindex="0"></svg>'));
+            echo '<p class="pesm-editor-status" role="status" aria-live="polite"></p>';
+            echo '<a class="button button-primary pesm-review-draft" hidden>'
+                . esc_html(\PESM\Support\I18n::text('بازبینی و انتشار پیش‌نویس')) . '</a>';
+            echo '<details class="pesm-task-disclosure"><summary>' . self::t('object_tools') . '</summary>';
             echo (\PESM\Support\I18n::text('<div class="pesm-object-tools"><label>شیء غیرصندلی <select class="pesm-object-type">'));
             foreach (['stage'=>(\PESM\Support\I18n::text('سن/استیج')),'round_table'=>(\PESM\Support\I18n::text('میز گرد')),'rect_table'=>(\PESM\Support\I18n::text('میز مستطیلی')),'aisle'=>(\PESM\Support\I18n::text('راهرو')),
                 'door'=>(\PESM\Support\I18n::text('در')),'emergency_exit'=>(\PESM\Support\I18n::text('خروج اضطراری')),'label'=>(\PESM\Support\I18n::text('برچسب/متن')),
@@ -288,23 +304,26 @@ final class Pages
             echo (\PESM\Support\I18n::text('<button type="button" class="button pesm-object-add">افزودن شیء</button> '));
             echo (\PESM\Support\I18n::text('<button type="button" class="button pesm-object-apply">ویرایش شیء انتخابی</button> '));
             echo (\PESM\Support\I18n::text('<button type="button" class="button pesm-object-remove">حذف شیء انتخابی</button>'));
-            echo '<span class="pesm-object-count" aria-live="polite"></span></div>';
+            echo '<span class="pesm-object-count" aria-live="polite"></span></div></details>';
+            echo '<details class="pesm-task-disclosure"><summary>' . self::t('seat_tools') . '</summary><div class="pesm-toolbar">';
+            foreach (['pesm-add'=>'افزودن صندلی','pesm-copy'=>'کپی انتخابی','pesm-delete'=>'حذف انتخابی'] as $class=>$label) {
+                echo '<button type="button" class="button ' . esc_attr($class) . '">' . esc_html(\PESM\Support\I18n::text($label)) . '</button>';
+            }
             echo '</div><div class="pesm-row-tools">';
             echo (\PESM\Support\I18n::text('<label>نام ردیف جدید <input name="new_row_name" type="text" maxlength="20" pattern="[A-Za-z0-9_-]{1,20}" placeholder="AA" autocomplete="off" dir="ltr"></label>'));
             echo (\PESM\Support\I18n::text('<label>تعداد صندلی ردیف <input name="new_row_count" type="number" min="1" max="100" value="10"></label>'));
             echo (\PESM\Support\I18n::text('<button type="button" class="button pesm-add-row">افزودن ردیف صندلی</button>'));
             echo (\PESM\Support\I18n::text('<p>ردیف تازه در پیش‌نویس چیدمان ذخیره می‌شود؛ نقشه جلسه‌های قبلی تغییر نمی‌کند.</p>'));
-            echo (\PESM\Support\I18n::text('</div><p>صندلی انتخابی: <strong class="pesm-selected-total">0</strong></p>'));
-            echo (\PESM\Support\I18n::text('<svg role="group" aria-label="نقشه قابل ویرایش؛ انتخاب و جابه‌جایی صندلی‌ها" tabindex="0"></svg>'));
-            echo '<div class="pesm-fields">';
+            echo '</div></details><details class="pesm-task-disclosure pesm-seat-properties" hidden><summary>'
+                . self::t('seat_attributes') . '</summary><div class="pesm-fields">';
             foreach (['code'=>(\PESM\Support\I18n::text('کد صندلی')),'row_label'=>(\PESM\Support\I18n::text('ردیف')),'number'=>(\PESM\Support\I18n::text('شماره')),'zone'=>(\PESM\Support\I18n::text('زون')),'x'=>(\PESM\Support\I18n::text('مختصات X')),'y'=>(\PESM\Support\I18n::text('مختصات Y'))] as $name=>$label) {
                 $type = in_array($name, ['number','x','y'], true) ? 'number' : 'text';
                 echo '<label>' . esc_html($label) . '<input type="' . $type . '" name="' . esc_attr($name) . '"></label>';
             }
             echo (\PESM\Support\I18n::text('<button type="button" class="button pesm-apply">اعمال ویژگی‌ها</button></div>'));
-            echo '<p class="pesm-editor-status" role="status" aria-live="polite"></p>';
-            echo '<a class="button pesm-review-draft" hidden>'
-                . esc_html(\PESM\Support\I18n::text('بازبینی و انتشار پیش‌نویس')) . '</a></section>';
+            echo '</details><details class="pesm-task-disclosure"><summary>' . self::t('editor_help') . '</summary>';
+            echo (\PESM\Support\I18n::text('<p>انتخاب چند صندلی: Ctrl یا Shift + کلیک. برای جابه‌جایی، صندلی انتخابی را بکشید. تغییرات به‌صورت خودکار در پیش‌نویس جداگانه ذخیره می‌شوند؛ انتشار از جدول نسخه‌ها انجام می‌شود. در صورت تعارض فایل JSON را برای حفظ کار دریافت کنید.</p>'));
+            echo '<button type="button" class="button pesm-download">' . esc_html(\PESM\Support\I18n::text('دریافت JSON ویرایش‌شده')) . '</button></details></section>';
         }
         self::collectCard($cards, 'halls');
         ob_start();
@@ -321,18 +340,37 @@ final class Pages
         }
         self::collectCard($cards, 'tickets');
         ob_start();
-        if ($centers && current_user_can('pesm_manage_events')) {
+        if (!$selectedEvent && current_user_can('pesm_manage_events')) {
+            SetupView::link(SetupText::text('new'), EventSetup::url(), 'pesm-button pesm-button-primary');
+        }
+        if (!$selectedEvent && (int) get_option('pesm_schema_version', 0) >= 20 && SetupService::allowed($userId)) {
+            $drafts = SetupService::drafts($userId);
+            if ($drafts) {
+                echo '<h2>' . esc_html(SetupText::text('drafts')) . '</h2><ul>';
+                foreach ($drafts as $draft) {
+                    echo '<li>' . esc_html($draft->data['details']['title']) . ' ';
+                    SetupView::link(SetupText::text('continue_draft'), EventSetup::url(['setup'=>(int) $draft->id]));
+                    echo '</li>';
+                }
+                echo '</ul>';
+            }
+        }
+        self::collectCard($cards, 'events');
+        ob_start();
+        if (!$selectedEvent && $centers && current_user_can('pesm_manage_events')) {
+            echo '<details class="pesm-task-disclosure pesm-legacy-form"><summary>' . esc_html(SetupText::text('legacy_event')) . '</summary>';
             echo (\PESM\Support\I18n::text('<h2>ایجاد رویداد</h2>'));
             self::formStart($url, 'pesm_create_event');
             echo (\PESM\Support\I18n::text('<label>مرکز ')); self::centerSelect($centers); echo '</label> ';
             echo (\PESM\Support\I18n::text('<label>عنوان رویداد <input type="text" name="title" maxlength="190" required></label> '));
             self::eventDetailsFields();
             submit_button((\PESM\Support\I18n::text('ایجاد رویداد پیش‌نویس')), 'secondary', 'submit', false);
-            echo '</form>';
+            echo '</form></details>';
         }
         self::collectCard($cards, 'events');
         ob_start();
-        if ($events && current_user_can('pesm_manage_sessions')) {
+        if (!$selectedEvent && $events && current_user_can('pesm_manage_sessions')) {
+            echo '<details class="pesm-task-disclosure pesm-legacy-form"><summary>' . esc_html(SetupText::text('legacy_session')) . '</summary>';
             echo (\PESM\Support\I18n::text('<h2>ایجاد جلسه</h2>'));
             self::formStart($url, 'pesm_create_session');
             echo (\PESM\Support\I18n::text('<label>رویداد <select name="event_id">'));
@@ -345,7 +383,7 @@ final class Pages
             }
             echo (\PESM\Support\I18n::text('</select></label><p><label>نوع فروش <select name="mode"><option value="seated">صندلی شماره‌دار</option><option value="general">ظرفیت آزاد (بدون صندلی)</option></select></label> '));
             echo (\PESM\Support\I18n::text('<label>ظرفیت فروش آزاد <input type="number" name="capacity" min="0" max="100000" value="0"></label> '));
-            echo (\PESM\Support\I18n::text('<small>برای فروش آزاد، ظرفیت ۱ تا ۱۰۰٬۰۰۰ و برای فروش شماره‌دار مقدار صفر تعیین کنید. فروش آزاد فعلاً فقط رزرو آزمایشی دارد.</small></p>'));
+            echo '</p>';
             echo (\PESM\Support\I18n::text('<p>تاریخ‌ها بر اساس ساعت تهران وارد شوند.</p>'));
             echo (\PESM\Support\I18n::text('<p><label>قیمت هر صندلی در کوچک‌ترین واحد پول ووکامرس <input name="unit_price_minor" type="number" min="0" max="1000000000" value="0" required></label>'));
             echo (\PESM\Support\I18n::text('<span> قیمت 0: رویداد رایگان؛ قیمت مثلاً 150000: مبلغ بر حسب واحد جزء ارز فروشگاه</span></p>'));
@@ -353,12 +391,12 @@ final class Pages
                 echo '<label style="margin-left:15px">' . esc_html($label) . ' <input type="datetime-local" name="' . esc_attr($field) . '" required></label> ';
             }
             submit_button((\PESM\Support\I18n::text('ایجاد جلسه و موجودی')), 'secondary', 'submit', false);
-            echo '</form>';
+            echo '</form></details>';
         }
         self::collectCard($cards, 'events');
         ob_start();
         if ($sessions && current_user_can('pesm_edit_layouts')) {
-            echo (\PESM\Support\I18n::text('<h2>مسدودکردن یا آزادسازی صندلی جلسه</h2>'));
+            echo '<details class="pesm-task-disclosure"><summary>' . self::t('block_seats') . '</summary>';
             echo (\PESM\Support\I18n::text('<p>فقط صندلی‌های آزاد یا رزرو موقت منقضی را می‌توان مسدود کرد. عملیات روی صندلی فروخته‌شده یا رزرو موقت فعال مجاز نیست.</p>'));
             self::formStart($url, 'pesm_seat_block');
             echo (\PESM\Support\I18n::text('<label>جلسه <select name="session_id">'));
@@ -369,7 +407,7 @@ final class Pages
             echo (\PESM\Support\I18n::text('<label>کد صندلی <input name="seat_code" type="text" placeholder="A-12" pattern="[A-Za-z]{1,2}-[1-9][0-9]{0,2}" required></label> '));
             echo (\PESM\Support\I18n::text('<select name="blocked"><option value="1">مسدودکردن</option><option value="0">آزادسازی صندلی مسدود</option></select> '));
             submit_button((\PESM\Support\I18n::text('اعمال تغییر')), 'secondary', 'submit', false);
-            echo '</form>';
+            echo '</form></details>';
         }
         self::collectCard($cards, 'halls');
         ob_start();
@@ -460,13 +498,11 @@ final class Pages
         }
         self::collectCard($cards, 'settings');
         ob_start();
-        echo (\PESM\Support\I18n::text('<h2>رویدادها و مدیریت انتشار</h2><table class="widefat striped"><thead><tr><th>شناسه</th><th>عنوان</th><th>مرکز</th><th>وضعیت</th><th>تغییر وضعیت</th></tr></thead><tbody>'));
-        foreach ($events as $event) {
-            echo '<tr><td>' . esc_html((string) $event->id) . '</td><td>' . esc_html($event->title) . '</td><td>' . esc_html((string) $event->center_id) . '</td><td>' . esc_html(\PESM\Support\I18n::status($event->status)) . '</td><td>';
-            if (current_user_can('pesm_manage_events')) { self::statusButtons($url, 'event', (int) $event->id, (string) $event->status); }
-            echo '</td></tr>';
+        if ($selectedEvent) {
+            self::eventManagement($url, $selectedEvent, $hallsById);
+        } else {
+            self::eventList($events, $centers);
         }
-        echo '</tbody></table>';
         self::collectCard($cards, 'events');
         ob_start();
         // Finance reviewers see only changes for the centers assigned to the current user.
@@ -487,65 +523,6 @@ final class Pages
             echo '</tbody></table>';
         }
         self::collectCard($cards, 'tickets');
-        ob_start();
-        if (current_user_can('pesm_manage_events')) {
-            foreach ($events as $event) {
-                if ($event->status === 'cancelled') { continue; }
-                echo (\PESM\Support\I18n::text('<details><summary>ویرایش مشخصات رویداد ')) . esc_html($event->title) . '</summary>';
-                self::formStart($url, 'pesm_edit_event');
-                echo '<input type="hidden" name="event_id" value="' . esc_attr((string) $event->id) . '">';
-                echo (\PESM\Support\I18n::text('<label>عنوان <input name="title" type="text" maxlength="190" value="')) . esc_attr($event->title) . '" required></label>';
-                self::eventDetailsFields($event);
-                submit_button((\PESM\Support\I18n::text('ذخیره تغییرات')), 'secondary', 'submit', false);
-                echo '</form></details>';
-            }
-        }
-        self::collectCard($cards, 'events');
-        ob_start();
-        echo (\PESM\Support\I18n::text('<h2>سالن‌ها</h2><table class="widefat striped"><thead><tr><th>شناسه</th><th>نام</th><th>مرکز</th><th>نسخه نقشه</th></tr></thead><tbody>'));
-        foreach ($halls as $hall) {
-            echo '<tr><td>' . esc_html((string) $hall->id) . '</td><td>' . esc_html($hall->name) . '</td><td>' . esc_html((string) $hall->center_id) . '</td><td>' . esc_html((string) $hall->current_layout_id) . '</td></tr>';
-        }
-        echo '</tbody></table>';
-        self::collectCard($cards, 'halls');
-        ob_start();
-        echo (\PESM\Support\I18n::text('<h2>جلسات</h2><table class="widefat striped"><thead><tr><th>شناسه</th><th>رویداد</th><th>سالن</th><th>وضعیت</th><th>انتشار</th><th>قیمت صندلی (واحد جزء)</th><th>کد استفاده در صفحه سایت</th></tr></thead><tbody>'));
-        foreach ($sessions as $session) {
-            echo '<tr><td>' . esc_html((string) $session->id) . '</td><td>' . esc_html((string) $session->event_id) . '</td><td>' . esc_html((string) $session->hall_id) . '</td><td>' . esc_html(\PESM\Support\I18n::status($session->status)) . '</td><td>';
-            if (current_user_can('pesm_manage_sessions')) { self::statusButtons($url, 'session', (int) $session->id, (string) $session->status); }
-            echo '</td><td>' . esc_html((string) $session->unit_price_minor) . '</td><td><code>' . esc_html('[pesm_seat_map session="' . $session->id . '"]') . '</code></td></tr>';
-        }
-        echo '</tbody></table>';
-        self::collectCard($cards, 'events');
-        ob_start();
-        if ($sessions && current_user_can('pesm_manage_sessions')) {
-            echo (\PESM\Support\I18n::text('<h3>تغییر زمان جلسه (بدون لغو بلیت)</h3><p>زمان را به UTC وارد کنید. تغییر تاریخ پس از ثبت ورود یا با وجود رزرو موقت فعال مجاز نیست. سفارش‌های متأثر برای رسیدگی به اطلاع‌رسانی و امور مالی ثبت می‌شوند؛ بازپرداخت یا ارسال اعلان خودکار انجام نمی‌شود.</p>'));
-            self::formStart($url, 'pesm_postpone_session');
-            echo (\PESM\Support\I18n::text('<label>جلسه <select name="session_id">'));
-            foreach ($sessions as $session) { if ($session->status !== 'cancelled') {
-                echo '<option value="' . esc_attr((string)$session->id) . '">' . esc_html((string)$session->id) . '</option>';
-            }}
-            echo (\PESM\Support\I18n::text('</select></label> <label>زمان جدید UTC <input type="datetime-local" name="new_starts_at" required></label> '));
-            echo (\PESM\Support\I18n::text('<label>علت تغییر <input type="text" name="reason" minlength="10" maxlength="500" required></label> '));
-            echo '<input type="hidden" name="request_key" value="' . esc_attr(wp_generate_uuid4()) . '">';
-            submit_button((\PESM\Support\I18n::text('ثبت تغییر تاریخ و تشکیل پرونده‌های پیگیری')), 'secondary', 'submit', false);
-            echo '</form>';
-        }
-        self::collectCard($cards, 'events');
-        ob_start();
-        if ($sessions && current_user_can('pesm_manage_sessions')) {
-            echo (\PESM\Support\I18n::text('<h3>قوانین انتخاب صندلی (فقط قبل از اولین نگهداری موقت)</h3>'));
-            foreach ($sessions as $session) {
-                self::formStart($url, 'pesm_seating_rules');
-                echo (\PESM\Support\I18n::text('<label>جلسه ')) . esc_html((string) $session->id) . '</label> ';
-                echo '<input type="hidden" name="session_id" value="' . esc_attr((string) $session->id) . '">';
-                echo '<label><input type="checkbox" name="require_adjacent" value="1" ' . checked((int) ($session->require_adjacent ?? 0), 1, false) . (\PESM\Support\I18n::text('> الزام صندلی‌های مجاور</label> '));
-                echo '<label><input type="checkbox" name="avoid_single_gap" value="1" ' . checked((int) ($session->avoid_single_gap ?? 0), 1, false) . (\PESM\Support\I18n::text('> جلوگیری از ایجاد صندلی خالیِ تک</label> '));
-                submit_button((\PESM\Support\I18n::text('ذخیره قوانین جلسه')), 'secondary', 'submit', false);
-                echo '</form>';
-            }
-        }
-        self::collectCard($cards, 'events');
         ob_start();
         if ($sessions && current_user_can('pesm_view_reports')) {
             $eventCenters=[];
@@ -633,6 +610,157 @@ final class Pages
         }
         self::collectCard($cards, 'tickets');
         self::renderWorkspace($cards, $centers, $halls, $events, $sessions);
+    }
+
+    private static function t(string $key): string
+    {
+        return esc_html(SetupText::text($key));
+    }
+
+    private static function eventUrl(int $id = 0, int $page = 1): string
+    {
+        $args = ['page'=>'pesm-dashboard'];
+        if ($id) { $args['pesm_event'] = $id; }
+        if ($page > 1) { $args['pesm_session_page'] = $page; }
+        return add_query_arg($args, admin_url('admin.php')) . '#pesm-events';
+    }
+
+    private static function eventList(array $events, array $centers): void
+    {
+        if (!$events) {
+            echo '<p>' . esc_html(\PESM\Support\I18n::text('هنوز رویدادی برای نمایش وجود ندارد.')) . '</p>';
+            return;
+        }
+        $names = array_column($centers, 'name', 'id');
+        echo '<h2>' . self::t('event_list') . '</h2>';
+        self::recordFilter('find_event');
+        echo '<ul class="pesm-record-list">';
+        foreach ($events as $event) {
+            echo '<li data-record><div><strong>' . esc_html($event->title) . '</strong>';
+            echo '<span>' . esc_html((string) ($names[(int) $event->center_id] ?? '')) . '</span></div>';
+            self::recordStatus($event->status);
+            SetupView::link(SetupText::text('manage_event'), self::eventUrl((int) $event->id), 'button');
+            echo '</li>';
+        }
+        echo '</ul><p data-record-empty hidden>' . self::t('no_matches') . '</p>';
+    }
+
+    private static function hallList(array $halls, array $centers, int $selected): void
+    {
+        if ($selected) {
+            SetupView::link(SetupText::text('back_halls'), self::layoutUrl());
+            return;
+        }
+        echo '<h2>' . self::t('hall_list') . '</h2>';
+        if (!$halls) {
+            echo '<p>' . self::t('no_halls') . '</p>';
+            return;
+        }
+        $names = array_column($centers, 'name', 'id');
+        self::recordFilter('find_hall');
+        echo '<ul class="pesm-record-list">';
+        foreach ($halls as $hall) {
+            echo '<li data-record><div><strong>' . esc_html($hall->name) . '</strong><span>'
+                . esc_html((string) ($names[(int) $hall->center_id] ?? '')) . '</span></div>';
+            if (current_user_can('pesm_edit_layouts')) {
+                SetupView::link(SetupText::text('manage_layouts'), self::layoutUrl((int) $hall->id), 'button');
+            }
+            echo '</li>';
+        }
+        echo '</ul><p data-record-empty hidden>' . self::t('no_matches') . '</p>';
+    }
+
+    private static function recordFilter(string $label): void
+    {
+        echo '<label class="pesm-record-filter" hidden>' . self::t($label) . '<input type="search" data-record-filter></label>';
+    }
+
+    private static function recordStatus(string $status): void
+    {
+        echo '<span class="pesm-admin-status pesm-status-' . esc_attr($status) . '">'
+            . esc_html(\PESM\Support\I18n::status($status)) . '</span>';
+    }
+
+    private static function eventManagement(string $url, object $event, array $halls): void
+    {
+        $id = (int) $event->id;
+        SetupView::link(SetupText::text('overview'), self::eventUrl());
+        echo '<header class="pesm-record-heading"><h2>' . esc_html($event->title) . '</h2>';
+        self::recordStatus($event->status);
+        if (current_user_can('pesm_manage_sessions') && $event->status !== 'cancelled') {
+            SetupView::link(SetupText::text('add_to_event'), EventSetup::url(['event'=>$id]), 'pesm-button pesm-button-primary');
+        }
+        echo '</header>';
+        if (current_user_can('pesm_manage_events') && $event->status !== 'cancelled') {
+            echo '<details class="pesm-task-disclosure"><summary>' . self::t('edit_event') . '</summary>';
+            self::formStart($url, 'pesm_edit_event');
+            echo '<input type="hidden" name="event_id" value="' . esc_attr((string) $id) . '">';
+            echo '<label>' . self::t('title') . '<input name="title" type="text" maxlength="190" value="'
+                . esc_attr($event->title) . '" required></label>';
+            self::eventDetailsFields($event);
+            submit_button(\PESM\Support\I18n::text('ذخیره تغییرات'), 'primary', 'submit', false);
+            echo '</form></details><details class="pesm-task-disclosure"><summary>' . self::t('event_status') . '</summary>';
+            self::statusButtons($url, 'event', $id, $event->status);
+            echo '</details>';
+        }
+
+        global $wpdb;
+        $page = isset($_GET['pesm_session_page']) && is_string($_GET['pesm_session_page'])
+            ? max(1, min(100000, absint(wp_unslash($_GET['pesm_session_page'])))) : 1;
+        $sessions = $wpdb->get_results($wpdb->prepare(
+            "SELECT * FROM {$wpdb->prefix}pesm_sessions WHERE event_id=%d ORDER BY starts_at,id LIMIT 31 OFFSET %d",
+            $id, ($page - 1) * 30
+        )) ?: [];
+        echo '<h3>' . self::t('session_list') . '</h3>';
+        if (!$sessions) { echo '<p>' . self::t('no_sessions') . '</p>'; }
+        foreach (array_slice($sessions, 0, 30) as $session) { self::sessionManagement($url, $session, $halls); }
+        if ($page > 1) { SetupView::link(SetupText::text('back'), self::eventUrl($id, $page - 1), 'button'); }
+        if (count($sessions) > 30) { SetupView::link(SetupText::text('next_page'), self::eventUrl($id, $page + 1), 'button'); }
+    }
+
+    private static function sessionManagement(string $url, object $session, array $halls): void
+    {
+        $id = (int) $session->id;
+        $mode = $session->mode ?? 'seated';
+        $date = empty($session->starts_at) ? '#' . $id : \PESM\Support\I18n::formatDate($session->starts_at);
+        $hall = (string) ($halls[(int) $session->hall_id]->name ?? SetupText::text('no_hall'));
+        echo '<details class="pesm-session-panel"><summary><strong>' . esc_html($date) . '</strong><span>'
+            . esc_html($hall . ' · ' . SetupText::text($mode)) . '</span>';
+        self::recordStatus($session->status);
+        echo '</summary><div class="pesm-session-tools"><p><code>' . esc_html('[pesm_seat_map session="' . $id . '"]') . '</code></p>';
+        if (function_exists('wc_price')) {
+            $price = (int) $session->unit_price_minor / (10 ** wc_get_price_decimals());
+            echo '<p>' . self::t('pricing') . ' ' . ($price > 0 ? wp_kses_post(wc_price($price)) : self::t('free')) . '</p>';
+        }
+        if (current_user_can('pesm_manage_sessions') && $session->status !== 'cancelled') {
+            self::statusButtons($url, 'session', $id, $session->status);
+            self::postponeForm($url, $id);
+            if ($mode === 'seated') {
+                echo '<details class="pesm-task-disclosure"><summary>' . self::t('rules') . '</summary><p>' . self::t('rules_note') . '</p>';
+                self::formStart($url, 'pesm_seating_rules');
+                echo '<input type="hidden" name="session_id" value="' . esc_attr((string) $id) . '">';
+                foreach (['require_adjacent'=>'adjacent','avoid_single_gap'=>'gap'] as $key=>$label) {
+                    echo '<label><input type="checkbox" name="' . esc_attr($key) . '" value="1"'
+                        . checked((int) ($session->$key ?? 0), 1, false) . '>' . self::t($label) . '</label>';
+                }
+                submit_button(\PESM\Support\I18n::text('ذخیره قوانین جلسه'), 'secondary', 'submit', false);
+                echo '</form></details>';
+            }
+        }
+        echo '</div></details>';
+    }
+
+    private static function postponeForm(string $url, int $id): void
+    {
+        echo '<details class="pesm-task-disclosure"><summary>' . self::t('reschedule') . '</summary><p>' . self::t('reschedule_note') . '</p>';
+        self::formStart($url, 'pesm_postpone_session');
+        echo '<input type="hidden" name="session_id" value="' . esc_attr((string) $id)
+            . '"><input type="hidden" name="time_basis" value="tehran"><label>' . self::t('new_start')
+            . '<input type="datetime-local" name="new_starts_at" required></label>';
+        echo '<label>' . esc_html(\PESM\Support\I18n::text('علت تغییر')) . '<input type="text" name="reason" minlength="10" maxlength="500" required></label>';
+        echo '<input type="hidden" name="request_key" value="' . esc_attr(wp_generate_uuid4()) . '">';
+        submit_button(SetupText::text('reschedule'), 'secondary', 'submit', false);
+        echo '</form></details>';
     }
 
     /** Collect existing permitted content without changing its form or service contracts. */
@@ -730,7 +858,9 @@ final class Pages
             echo '<p>' . esc_html(\PESM\Support\I18n::text('رویدادها و جلسه‌های شما در دسترس‌اند. انتشار و بازه فروش را پیش از معرفی به مخاطبان بررسی کنید.')) . '</p>';
             $next = 'events';
         }
-        if (isset($views[$next])) {
+        if (current_user_can('pesm_manage_events')) {
+            SetupView::link(SetupText::text('new'), EventSetup::url(), 'pesm-button pesm-button-primary');
+        } elseif (isset($views[$next])) {
             echo '<a class="pesm-button pesm-button-primary" data-pesm-nav="' . esc_attr($next) . '" href="#pesm-' . esc_attr($next) . '">'
                 . esc_html($views[$next]['title']) . \PESM\Support\Ui::icon('arrow') . '</a>';
         }
@@ -866,7 +996,8 @@ final class Pages
         $labels = ['published' => (\PESM\Support\I18n::text('انتشار/ادامه')), 'paused' => (\PESM\Support\I18n::text('توقف')), 'cancelled' => (\PESM\Support\I18n::text('لغو'))];
         $targets = LifecyclePolicy::allowedTargets($current);
         foreach ($targets as $status) {
-            $label = $labels[$status];
+            $label = $status === 'published' ? SetupText::text($current === 'paused' ? 'resume_sales' : 'publish_item') : $labels[$status];
+            if ($status === 'cancelled') { echo '<details class="pesm-task-disclosure"><summary>' . esc_html($label) . '</summary>'; }
             self::formStart($url, 'pesm_change_status');
             echo '<input type="hidden" name="entity" value="' . esc_attr($entity) . '">';
             echo '<input type="hidden" name="entity_id" value="' . esc_attr((string) $id) . '">';
@@ -876,6 +1007,7 @@ final class Pages
                 echo '<input type="hidden" name="request_key" value="' . esc_attr(wp_generate_uuid4()) . '">';
             }
             echo '<button class="button button-secondary pesm-action-' . esc_attr($status) . '" type="submit">' . esc_html($label) . '</button></form>';
+            if ($status === 'cancelled') { echo '</details>'; }
         }
     }
 
@@ -895,8 +1027,7 @@ final class Pages
             }
             echo '</label></p>';
         }
-        echo (\PESM\Support\I18n::text('<p><label>شناسه تصویر پوستر در رسانه وردپرس <input name="poster_attachment_id" type="number" min="0" value="'))
-            . esc_attr((string) ($existing->poster_attachment_id ?? 0)) . '"></label></p>';
+        SetupView::poster((int) ($existing->poster_attachment_id ?? 0));
     }
 
     /** @return array<string,mixed> */
@@ -963,9 +1094,12 @@ final class Pages
         self::checked('pesm_postpone_session', 'pesm_manage_sessions');
         $sessionId = isset($_POST['session_id']) ? absint(wp_unslash($_POST['session_id'])) : 0;
         $raw = self::textInput('new_starts_at');
-        // datetime-local carries no timezone; the form explicitly specifies UTC.
         if (!preg_match('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/D', $raw)) { self::redirect('invalid'); }
-        $newUtc = str_replace('T', ' ', $raw) . ':00';
+        try {
+            $newUtc = ($_POST['time_basis'] ?? '') === 'tehran'
+                ? \PESM\Domain\Event\SetupInput::time($raw)->format('Y-m-d H:i:s')
+                : str_replace('T', ' ', $raw) . ':00';
+        } catch (\InvalidArgumentException) { self::redirect('invalid'); }
         try {
             (new EventChangeService())->postponeSession($sessionId, $newUtc,
                 self::textInput('reason'), self::textInput('request_key'), get_current_user_id());
@@ -1128,6 +1262,12 @@ final class Pages
         echo '<form class="pesm-admin-form' . $class . '" method="post" action="' . $actionUrl . '">';
         echo '<input type="hidden" name="action" value="' . esc_attr($action) . '">';
         wp_nonce_field($action);
+        $setup = isset($_GET['pesm_setup']) && is_string($_GET['pesm_setup']) ? absint(wp_unslash($_GET['pesm_setup'])) : 0;
+        if ($setup) { echo '<input type="hidden" name="pesm_setup" value="' . esc_attr((string) $setup) . '">'; }
+        if (isset($_GET['pesm_event']) && is_string($_GET['pesm_event'])
+            && in_array($action, ['pesm_edit_event','pesm_change_status','pesm_postpone_session','pesm_seating_rules'], true)) {
+            echo '<input type="hidden" name="pesm_event" value="' . esc_attr((string) absint(wp_unslash($_GET['pesm_event']))) . '">';
+        }
     }
 
     /** @param array<int,object> $centers */
@@ -1382,13 +1522,21 @@ final class Pages
     private static function redirect(string $state, int $hallId = 0): never
     {
         if ($hallId > 0) {
-            wp_safe_redirect(self::layoutUrl($hallId, ['pesm_notice' => $state]));
+            $args = ['pesm_notice'=>$state];
+            if (isset($_POST['pesm_setup']) && is_string($_POST['pesm_setup'])) {
+                $args['pesm_setup'] = absint(wp_unslash($_POST['pesm_setup']));
+            }
+            wp_safe_redirect(self::layoutUrl($hallId, $args));
             exit;
         }
         $view = isset($_POST['pesm_view']) && is_string($_POST['pesm_view'])
             ? sanitize_key(wp_unslash($_POST['pesm_view'])) : 'overview';
         if (!in_array($view, ['overview', 'events', 'halls', 'tickets', 'reports', 'settings'], true)) { $view = 'overview'; }
-        wp_safe_redirect(add_query_arg('pesm_notice', $state, admin_url('admin.php?page=pesm-dashboard')) . '#pesm-' . $view);
+        $args = ['pesm_notice'=>$state];
+        if ($view === 'events' && isset($_POST['pesm_event']) && is_string($_POST['pesm_event'])) {
+            $args['pesm_event'] = absint(wp_unslash($_POST['pesm_event']));
+        }
+        wp_safe_redirect(add_query_arg($args, admin_url('admin.php?page=pesm-dashboard')) . '#pesm-' . $view);
         exit;
     }
 }

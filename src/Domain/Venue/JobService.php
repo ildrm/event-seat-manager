@@ -33,7 +33,7 @@ final class JobService
         }
     }
 
-    public static function create(int $centerId,int $hallId,string $kind,array $payload,int $actorId): array
+    public static function create(int $centerId,int $hallId,string $kind,array $payload,int $actorId,bool $schedule=true): array
     {
         if (!in_array($kind,['generate','import','publish','provision'],true) || $centerId<1 || $hallId<1 || $actorId<1) { throw new InvalidArgumentException('Invalid venue job.'); }
         $cap=$kind==='provision'?'pesm_manage_sessions':'pesm_edit_layouts';
@@ -68,7 +68,7 @@ final class JobService
         if ($wpdb->insert($p.'venue_jobs',['center_id'=>$centerId,'hall_id'=>$hallId,'layout_id'=>$layoutId,
             'session_id'=>$sessionId,'actor_id'=>$actorId,'kind'=>$kind,'status'=>'pending','payload'=>self::encode($payload),
             'cursor_json'=>'{}','result_json'=>'{}','lease_token'=>'','created_at'=>$now,'updated_at'=>$now])!==1) { throw new RuntimeException('Unable to queue venue job.'); }
-        $id=(int)$wpdb->insert_id; self::schedule($id); return self::status($id);
+        $id=(int)$wpdb->insert_id; if ($schedule) { self::schedule($id); } return self::status($id);
     }
 
     /** Private shared storage: no local-file dependency, executable upload or public URL. */
@@ -108,12 +108,20 @@ final class JobService
             'result'=>self::json($job->result_json),'error'=>$job->error_message,'updated_at'=>$job->updated_at];
     }
 
-    public static function retry(int $id): array
+    public static function retry(int $id, int $actor = 0): array
     {
         global $wpdb; $p=$wpdb->prefix.'pesm_';
-        $job=$wpdb->get_row($wpdb->prepare("SELECT status FROM {$p}venue_jobs WHERE id=%d",$id));
+        $job=$wpdb->get_row($wpdb->prepare("SELECT status,kind,center_id FROM {$p}venue_jobs WHERE id=%d",$id));
         if (!$job||$job->status!=='failed') { throw new RuntimeException('Only a failed venue job can be retried.'); }
-        if ($wpdb->update($p.'venue_jobs',['status'=>'pending','lease_token'=>'','lease_until'=>null,'error_message'=>''],['id'=>$id,'status'=>'failed'])!==1) { throw new RuntimeException('Job retry conflicted with another request.'); }
+        $values = ['status'=>'pending','lease_token'=>'','lease_until'=>null,'error_message'=>''];
+        if ($actor > 0) {
+            $cap = $job->kind === 'provision' ? 'pesm_manage_sessions' : 'pesm_edit_layouts';
+            if (!user_can($actor, $cap) || !Capabilities::centerAllowed((int) $job->center_id, $actor)) {
+                throw new RuntimeException('Job is outside your permissions.');
+            }
+            $values['actor_id'] = $actor;
+        }
+        if ($wpdb->update($p.'venue_jobs',$values,['id'=>$id,'status'=>'failed'])!==1) { throw new RuntimeException('Job retry conflicted with another request.'); }
         self::schedule($id); return self::status($id);
     }
 
@@ -123,7 +131,7 @@ final class JobService
         try {
             self::begin();
             $job=$wpdb->get_row($wpdb->prepare("SELECT *,UTC_TIMESTAMP() AS db_now FROM {$p}venue_jobs WHERE id=%d FOR UPDATE",$id));
-            if (!$job || in_array($job->status,['complete','failed'],true) || ($job->status==='running'&&$job->lease_until>$job->db_now)) { self::commit(); return; }
+            if (!$job || in_array($job->status,['complete','failed','cancelled'],true) || ($job->status==='running'&&$job->lease_until>$job->db_now)) { self::commit(); return; }
             self::write($wpdb->query($wpdb->prepare("UPDATE {$p}venue_jobs SET status='running',lease_token=%s,lease_until=DATE_ADD(UTC_TIMESTAMP(),INTERVAL 180 SECOND),attempts=attempts+1,updated_at=UTC_TIMESTAMP() WHERE id=%d",$token,$id)));
             self::commit(); $claimed=true;
             $cap=$job->kind==='provision'?'pesm_manage_sessions':'pesm_edit_layouts';

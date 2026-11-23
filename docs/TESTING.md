@@ -20,6 +20,10 @@ The integration suite creates test centers, 900-seat hall data, sessions, orders
 
 For a local HTTP environment, `compose.staging.yaml` mounts the plugin under the new slug. The example container stack is separate from the host-based integration environment and must be validated in its own runtime. Use test credentials only.
 
+## Event setup acceptance
+
+On a disposable installation with WooCommerce, run `PESM_SETUP_INTEGRATION=1 wp --user=<test-admin> eval-file tests/integration-event-setup.php`. It verifies exact grid inventory, layout version selection, stale drafts, atomic publication, WordPress page retry, center scope and allocated-session provisioning. To check an upgrade, run the same file against the schema 19 package with `PESM_SETUP_PHASE=baseline`, then activate the current package and run verification against the same database.
+
 ## Localization and browser checks
 
 Run the catalog generation/validation tool in `tools/`, then the locale tests included by `tests/run.py`. Verify both languages in a real browser with an English site and a Persian site or administrator profile. Test 900-seat focus, arrow navigation, zoom, expiry, connection errors, ticket retrieval, camera/manual admission and mobile viewport behavior. Browser evidence belongs in [frontend review](REVIEW-FRONTEND.md).

@@ -4,9 +4,9 @@ namespace PESM\Domain\Allocation;
 
 final class SessionService
 {
-    public static function configure(int $sessionId,array $settings): array
+    public static function configure(int $sessionId,array $settings,bool $withinTransaction=false): array
     {
-        return Database::transaction(function()use($sessionId,$settings):array{
+        $configure = function()use($sessionId,$settings):array{
             global $wpdb;$p=$wpdb->prefix.'pesm_';
             // Serialize policy changes with quotes, preserving every existing hold snapshot.
             $eventId=(int)$wpdb->get_var($wpdb->prepare("SELECT event_id FROM {$p}sessions WHERE id=%d",$sessionId));
@@ -34,7 +34,8 @@ final class SessionService
             }
             Database::checked($wpdb->query($wpdb->prepare("INSERT IGNORE INTO {$p}allocation_sections (session_id,section_code,revision) SELECT %d,section_code,0 FROM {$p}venue_sections WHERE layout_id=%d",$sessionId,(int)$session->layout_id)));
             return self::settings($sessionId);
-        });
+        };
+        return $withinTransaction ? $configure() : Database::transaction($configure);
     }
 
     public static function settings(int $sessionId): array

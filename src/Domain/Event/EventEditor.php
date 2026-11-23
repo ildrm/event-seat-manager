@@ -11,7 +11,7 @@ use Throwable;
 final class EventEditor
 {
     /** Caller enforces capability and center scope before invocation. */
-    public static function update(int $id, string $title, array $details, int $actorId): void
+    public static function update(int $id, string $title, array $details, int $actorId, bool $withinTransaction = false): void
     {
         global $wpdb;
         if ($id < 1 || trim($title) === '') {
@@ -19,7 +19,7 @@ final class EventEditor
         }
         $details = EventDetails::normalize($details);
         $p = $wpdb->prefix . 'pesm_';
-        if ($wpdb->query('START TRANSACTION') === false) {
+        if (!$withinTransaction && $wpdb->query('START TRANSACTION') === false) {
             throw new RuntimeException(\PESM\Support\I18n::text('شروع تراکنش انجام نشد.'));
         }
         try {
@@ -32,11 +32,11 @@ final class EventEditor
                 throw new RuntimeException(\PESM\Support\I18n::text('ذخیره مشخصات رویداد ناموفق بود.'));
             }
             Audit::record('event_updated', 'event', $id, $actorId);
-            if ($wpdb->query('COMMIT') === false) {
+            if (!$withinTransaction && $wpdb->query('COMMIT') === false) {
                 throw new RuntimeException(\PESM\Support\I18n::text('ثبت تغییرات رویداد ممکن نشد.'));
             }
         } catch (Throwable $e) {
-            $wpdb->query('ROLLBACK');
+            if (!$withinTransaction) { $wpdb->query('ROLLBACK'); }
             throw $e;
         }
     }

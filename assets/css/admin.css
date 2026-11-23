@@ -184,3 +184,26 @@
 
 /* Preserve readable data columns on small screens; scroll only the table region. */
 @media(max-width:640px){.pesm-admin .pesm-table-scroll table{min-inline-size:620px}.pesm-admin .pesm-admin-card td .button{white-space:nowrap}}
+
+.pesm-admin .pesm-record-heading { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-block: 8px 16px; }
+.pesm-admin .pesm-record-heading h2 { margin: 0; overflow-wrap: anywhere; }
+.pesm-admin .pesm-record-list { list-style: none; margin: 10px 0 0; padding: 0; }
+.pesm-admin .pesm-record-list > li { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 10px 0; border-block-end: 1px solid var(--pesm-border); }
+.pesm-admin .pesm-record-list > li:last-child { border-block-end: 0; }
+.pesm-admin .pesm-record-list > li > div { flex: 1 1 12ch; min-inline-size: 0; overflow-wrap: anywhere; }
+.pesm-admin .pesm-record-list > li > div > span { display: block; color: var(--pesm-muted); font-size: .9em; }
+.pesm-admin .pesm-record-filter { display: grid; gap: 4px; max-inline-size: 24rem; }
+.pesm-admin .pesm-record-filter input { min-block-size: 44px; border-radius: 8px; }
+.pesm-admin :is(.pesm-task-disclosure, .pesm-session-panel) { border-block-start: 1px solid var(--pesm-border); margin-block: 0; }
+.pesm-admin :is(.pesm-task-disclosure, .pesm-session-panel) > summary { min-block-size: 44px; align-content: center; padding-block: 8px; cursor: pointer; font-weight: 650; }
+.pesm-admin .pesm-session-panel > summary > span { margin-inline-start: 8px; }
+.pesm-admin .pesm-session-panel > summary > span:not(.pesm-admin-status) { font-weight: 400; color: var(--pesm-muted); }
+.pesm-admin .pesm-session-tools { padding-inline-start: 16px; border-inline-start: 2px solid var(--pesm-border); }
+.pesm-admin .pesm-grid-count { align-self: center; font-weight: 650; }
+.pesm-admin .pesm-grid-count:empty { display: none; }
+.pesm-admin .pesm-layout-editor > svg { margin-block-end: 8px; }
+.pesm-admin .pesm-layout-editor > .pesm-toolbar { margin-block: 12px; }
+.pesm-admin .pesm-admin-form > [data-poster] { grid-column: 1 / -1; }
+.pesm-admin [data-poster] img { max-inline-size: min(200px, 100%); block-size: auto; border-radius: 8px; }
+.pesm-admin [data-poster] label { display: grid; gap: 5px; }
+.pesm-admin [data-poster] button { margin-block-start: 8px; }

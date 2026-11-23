@@ -22,7 +22,7 @@ if (getenv('PESM_RUN_INTEGRATION') !== '1' || wp_get_environment_type() !== 'loc
     !defined('WP_CLI') || !WP_CLI) { throw new RuntimeException('Requires explicitly enabled disposable local WP-CLI integration.'); }
 $phase = getenv('PESM_RACE_PHASE');
 if (!in_array($phase, ['seed', 'worker', 'verify'], true)) { throw new RuntimeException('Set PESM_RACE_PHASE=seed, worker or verify.'); }
-if ((int) get_option('pesm_schema_version', 0) !== 19 || !function_exists('wc_get_order')) { throw new RuntimeException('Activate schema19 Event Seat Manager and WooCommerce.'); }
+if ((int) get_option('pesm_schema_version', 0) !== \PESM\Database\Migrator::VERSION || !function_exists('wc_get_order')) { throw new RuntimeException('Activate Event Seat Manager and WooCommerce.'); }
 if ($phase !== 'worker' && !current_user_can('manage_options')) { throw new RuntimeException('Run seed/verify as an administrator using --user.'); }
 if (!defined('PESM_VENUE_ACCEPTANCE_TEST')) { define('PESM_VENUE_ACCEPTANCE_TEST', true); }
 add_filter('pre_wp_mail', static fn() => true, 99);

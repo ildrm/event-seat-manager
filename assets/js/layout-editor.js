@@ -59,7 +59,10 @@
       pendingRequestKey = null; pendingPayload = null;
       dirty = JSON.stringify(documentData) !== json;
       if (!dirty && saved.review_url) {
-        reviewDraft.href = saved.review_url;
+        const url = new URL(saved.review_url, window.location.href);
+        const setup = new URLSearchParams(window.location.search).get('pesm_setup');
+        if (setup) url.searchParams.set('pesm_setup', setup);
+        reviewDraft.href = url.href;
         reviewDraft.hidden = false;
       }
       message(dirty ? window.PESM_I18N.text("نسخه قبلی ذخیره شد؛ تغییرات جدید در صف ذخیره قرار گرفت.") :
@@ -159,6 +162,12 @@
     }
     svg.replaceChildren(frag);
     panel.querySelector('.pesm-selected-total').textContent = String(selected.size);
+    panel.querySelector('.pesm-seat-properties').hidden = selected.size === 0;
+    panel.querySelector('.pesm-copy').disabled = selected.size === 0;
+    panel.querySelector('.pesm-delete').disabled = selected.size === 0;
+    panel.querySelector('.pesm-object-apply').disabled = !selectedObject;
+    panel.querySelector('.pesm-object-remove').disabled = !selectedObject;
+    input('new_row_name').placeholder = suggestRow(seats);
     const one = seats.find(s => selected.has(s.code));
     if (one) {
       for (const key of ['code','row_label','number','zone','x','y']) input(key).value = String(one[key]);
@@ -193,6 +202,8 @@
     }
   }
   editButtons.forEach(button => button.addEventListener('click', () => open(button)));
+  const linkedEditor = editButtons.find(button => button.hasAttribute('data-pesm-auto-open'));
+  if (linkedEditor) open(linkedEditor);
   function mutate(fn) { if (!documentData) return; remember(); fn(); draw(); queueSave(); }
   panel.querySelector('.pesm-undo').addEventListener('click', () => {
     if (!history.length || !documentData) return;
@@ -280,9 +291,21 @@
     if (!documentData||!selectedObject) return message(window.PESM_I18N.text("ابتدا شیء موردنظر را انتخاب کنید."));
     mutate(()=>{documentData.objects=documentData.objects.filter(o=>o.id!==selectedObject);selectedObject=null;});
   });
+  function suggestRow(seats) {
+    const labels = new Set(seats.map(seat => seat.row_label.toUpperCase()));
+    let index = 0;
+    let label;
+    do {
+      label = '';
+      for (let n = ++index; n > 0; n = Math.floor((n - 1) / 26)) {
+        label = String.fromCharCode(65 + (n - 1) % 26) + label;
+      }
+    } while (labels.has(label));
+    return label;
+  }
   panel.querySelector('.pesm-add-row').addEventListener('click', () => {
     if (!documentData) return;
-    const name = input('new_row_name').value.trim().toUpperCase();
+    const name = input('new_row_name').value.trim().toUpperCase() || suggestRow(documentData.seats);
     const count = Number(input('new_row_count').value);
     if (!/^[A-Z0-9_-]{1,20}$/.test(name) || !Number.isInteger(count) || count < 1 || count > 100 ||
         count+documentData.seats.length>10000) return message(window.PESM_I18N.text("نام ردیف یا تعداد صندلی نامعتبر است."));

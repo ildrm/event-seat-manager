@@ -38,6 +38,7 @@ function wp_enqueue_script(mixed ...$args): void {}
 function submit_button(string $text, string $type, string $name, bool $wrap): void { echo '<button type="submit" class="button">' . esc_html($text) . '</button>'; }
 function checked(mixed $value, mixed $expected, bool $echo): string { return $value === $expected ? 'checked' : ''; }
 function selected(mixed $value, mixed $expected, bool $echo): string { return $value === $expected ? ' selected="selected"' : ''; }
+function absint(mixed $value): int { return abs((int) $value); }
 function sanitize_key(string $value): string { return preg_replace('/[^a-z0-9_-]/', '', $value); }
 function wp_unslash(string $value): string { return $value; }
 
@@ -85,10 +86,24 @@ foreach ($xpath->query('//*[@data-pesm-panel]') as $panel) {
         verify($xpath->query('.//input[@name="_wpnonce"]', $form)->length === 1, 'Existing nonce fields must remain inside their forms');
     }
 }
-foreach (['pesm_create_center', 'pesm_create_hall', 'pesm_layout_preset', 'pesm_layout_import', 'pesm_change_attendee',
+verify($xpath->query('//input[@name="action" and @value="pesm_edit_event"]')->length === 0, 'Event list should not render edit forms for every event');
+verify($xpath->query('//input[@name="action" and @value="pesm_layout_preset"]')->length === 0, 'Venue list should not render layout selectors');
+$_GET = ['pesm_event'=>'4', 'pesm_hall'=>'2'];
+ob_start();
+\PESM\Admin\Pages::render();
+$details = (string) ob_get_clean();
+$_GET = [];
+$detailDoc = new DOMDocument();
+$detailDoc->loadHTML('<?xml encoding="UTF-8">' . $details);
+$detailXpath = new DOMXPath($detailDoc);
+foreach (['pesm_layout_preset','pesm_layout_import','pesm_edit_event','pesm_postpone_session','pesm_seating_rules'] as $action) {
+    verify($detailXpath->query('//input[@name="action" and @value="' . $action . '"]')->length === 1, 'Scoped form is missing or duplicated: ' . $action);
+}
+verify($detailXpath->query('//input[@name="time_basis" and @value="tehran"]')->length === 1, 'Rescheduling uses Tehran time');
+foreach (['pesm_create_center', 'pesm_create_hall', 'pesm_change_attendee',
     'pesm_create_event', 'pesm_create_session', 'pesm_seat_block', 'pesm_transfer_ticket_seat', 'pesm_create_ticket_bundle',
-    'pesm_cancel_free_ticket', 'pesm_refund_request', 'pesm_refund_reconcile', 'pesm_assign_center', 'pesm_edit_event',
-    'pesm_postpone_session', 'pesm_seating_rules', 'pesm_export_capacity', 'pesm_save_notification_settings'] as $action) {
+    'pesm_cancel_free_ticket', 'pesm_refund_request', 'pesm_refund_reconcile', 'pesm_assign_center',
+    'pesm_export_capacity', 'pesm_save_notification_settings'] as $action) {
     verify($xpath->query('//input[@name="action" and @value="' . $action . '"]')->length > 0, 'Existing action disappeared: ' . $action);
 }
 // This integration contract catches startup failures when a required editor button is absent.

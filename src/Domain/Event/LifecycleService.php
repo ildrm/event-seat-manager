@@ -29,14 +29,14 @@ final class LifecycleService
         return $session;
     }
 
-    public static function change(string $entity, int $id, string $target, int $actorUserId): void
+    public static function change(string $entity, int $id, string $target, int $actorUserId, bool $withinTransaction = false): void
     {
         global $wpdb;
         if (!in_array($entity, ['event', 'session'], true) || $id < 1 || !in_array($target, ['published', 'paused', 'cancelled'], true)) {
             throw new RuntimeException(\PESM\Support\I18n::text('عملیات تغییر وضعیت نامعتبر است.'));
         }
         $table = $wpdb->prefix . 'pesm_' . ($entity === 'event' ? 'events' : 'sessions');
-        if ($wpdb->query('START TRANSACTION') === false) {
+        if (!$withinTransaction && $wpdb->query('START TRANSACTION') === false) {
             throw new RuntimeException(\PESM\Support\I18n::text('امکان شروع تراکنش وجود ندارد.'));
         }
         try {
@@ -65,11 +65,11 @@ final class LifecycleService
                 throw new RuntimeException(\PESM\Support\I18n::text('وضعیت به‌روز نشد.'));
             }
             Audit::record($entity . '_' . $target, $entity, $id, $actorUserId);
-            if ($wpdb->query('COMMIT') === false) {
+            if (!$withinTransaction && $wpdb->query('COMMIT') === false) {
                 throw new RuntimeException(\PESM\Support\I18n::text('ثبت تغییر وضعیت ناموفق بود.'));
             }
         } catch (Throwable $e) {
-            $wpdb->query('ROLLBACK');
+            if (!$withinTransaction) { $wpdb->query('ROLLBACK'); }
             throw $e;
         }
     }

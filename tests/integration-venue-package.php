@@ -173,7 +173,7 @@ if ($phase === 'before') {
 } else {
     $baseline = get_option($baselineOption, null);
     $assert(is_array($baseline) && ($baseline['schema'] ?? 0) === 18, 'schema18 baseline is available in the same site');
-    $assert($report['schema'] === 19 && \PESM\Database\Migrator::VERSION === 19, 'installed package migrated schema18 to schema19');
+    $assert($report['schema'] === \PESM\Database\Migrator::VERSION, 'installed package migrated schema18 to the current schema');
     $assert(!get_option('pesm_schema_error'), 'migration reports no schema error');
     $assert($report['plugin']['migrator_sha256'] !== $baseline['plugin']['migrator_sha256'], 'installed migrator differs from the schema18 source');
     $assert(realpath((new ReflectionClass(\PESM\Domain\Allocation\SessionService::class))->getFileName()) ===

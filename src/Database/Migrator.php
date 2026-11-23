@@ -8,7 +8,7 @@ use RuntimeException;
 
 final class Migrator
 {
-    public const VERSION = 19;
+    public const VERSION = 20;
 
     public static function run(): void
     {
@@ -145,6 +145,22 @@ final class Migrator
                 PRIMARY KEY  (id),
                 KEY event_id (event_id),
                 KEY layout_id (layout_id)
+            ) ENGINE=InnoDB $charset;",
+            "CREATE TABLE {$p}event_setups (
+                id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+                center_id bigint(20) unsigned NOT NULL,
+                event_id bigint(20) unsigned NOT NULL DEFAULT 0,
+                actor_id bigint(20) unsigned NOT NULL,
+                request_key char(36) NOT NULL,
+                revision int(11) unsigned NOT NULL DEFAULT 1,
+                step tinyint(3) unsigned NOT NULL DEFAULT 2,
+                finished tinyint(1) unsigned NOT NULL DEFAULT 0,
+                page_pending tinyint(1) unsigned NOT NULL DEFAULT 0,
+                payload longtext NOT NULL,
+                updated_at datetime NOT NULL,
+                PRIMARY KEY  (id),
+                UNIQUE KEY setup_request (actor_id,request_key),
+                KEY center_updated (center_id,updated_at)
             ) ENGINE=InnoDB $charset;",
             "CREATE TABLE {$p}session_capacity (
                 session_id bigint(20) unsigned NOT NULL,
@@ -543,6 +559,7 @@ final class Migrator
         }
         $names = ['centers', 'center_users', 'halls', 'layout_versions', 'seats', 'layout_objects', 'events', 'sessions', 'session_seats', 'session_capacity', 'capacity_holds', 'capacity_order_links', 'capacity_tickets', 'capacity_checkins', 'holds', 'hold_mutations', 'hold_items', 'phone_locks', 'order_links', 'tickets', 'ticket_attendee_changes', 'ticket_seat_transfers', 'ticket_owners', 'ticket_ownership_transfers', 'ticket_bundles', 'ticket_bundle_items', 'checkins', 'guest_recovery_requests', 'guest_access_tokens', 'notification_jobs', 'rate_limits', 'audit_logs', 'event_changes', 'event_change_cases', 'refund_cases', 'discount_rules', 'discount_claims'];
         $names[] = 'layout_save_receipts';
+        $names[] = 'event_setups';
         foreach ($extensions as $schema) { array_push($names, ...$schema::tables()); }
         foreach ($names as $name) {
             $table = $p . $name;
@@ -593,6 +610,7 @@ final class Migrator
             'discount_claims' => 'hold_id',
         ];
         $required['layout_save_receipts'] = 'PRIMARY';
+        $required['event_setups'] = 'setup_request';
         foreach ($extensions as $schema) { $required = array_merge($required, $schema::uniqueIndexes()); }
         foreach ($required as $suffix => $index) {
             $table = $p . $suffix;
@@ -625,7 +643,7 @@ final class Migrator
                 return;
             }
         }
-        foreach (['sessions' => ['unit_price_minor', 'require_adjacent', 'avoid_single_gap', 'mode'], 'holds' => ['order_id', 'phone_hash', 'renewal_count'], 'capacity_holds' => ['order_id', 'phone_hash']] as $suffix => $columns) {
+        foreach (['event_setups' => ['revision', 'finished', 'page_pending', 'payload'], 'sessions' => ['unit_price_minor', 'require_adjacent', 'avoid_single_gap', 'mode'], 'holds' => ['order_id', 'phone_hash', 'renewal_count'], 'capacity_holds' => ['order_id', 'phone_hash']] as $suffix => $columns) {
             foreach ($columns as $column) {
                 $present = $wpdb->get_var($wpdb->prepare(
                     'SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = %s AND COLUMN_NAME = %s LIMIT 1',

@@ -133,6 +133,7 @@ add_action('plugins_loaded', static function (): void {
     add_action('admin_post_pesm_attendance_xlsx', [\PESM\Domain\Reporting\AttendanceReport::class, 'downloadXlsx']);
     if (is_admin()) {
         \PESM\Admin\Pages::register();
+        \PESM\Admin\EventSetup::register();
         \PESM\Admin\VenueDesigner::register();
     }
 });

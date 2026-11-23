@@ -60,6 +60,7 @@ final class VenueDesigner
             $hallId, Document::FORMAT, $layoutId
         ), ARRAY_A) ?: []) : [];
         echo '<div class="wrap"><h1>' . esc_html(self::title()) . '</h1>';
+        $setupId = $hall ? EventSetup::backLink((int) $hall['center_id']) : 0;
         echo '<p><a class="button" href="' . esc_url(Pages::layoutUrl($hallId)) . '">'
             . esc_html(I18n::text('چیدمان صندلی و صحنه')) . '</a></p>';
         if (current_user_can('manage_options')) {
@@ -75,6 +76,7 @@ final class VenueDesigner
         }
         echo VenueUi::render('admin', [
             'halls' => $halls, 'events' => $events, 'sessions' => $sessions, 'versions' => $versions,
+            'setupFlow' => $setupId > 0,
             'hallId' => $hallId, 'centerId' => (int) ($hall['center_id'] ?? 0), 'layoutId' => $layoutId,
             'sessionId' => isset($_GET['session_id']) ? absint($_GET['session_id']) : 0,
             'canManageRefunds' => current_user_can('pesm_manage_refunds'),

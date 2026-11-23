@@ -8,13 +8,13 @@ use RuntimeException;
 
 final class HallService
 {
-    public static function createCenter(string $name): int
+    public static function createCenter(string $name, bool $withinTransaction = false): int
     {
         global $wpdb;
         if (trim($name) === '') {
             throw new RuntimeException(\PESM\Support\I18n::text('نام مرکز لازم است.'));
         }
-        self::begin();
+        if (!$withinTransaction) { self::begin(); }
         try {
             if ($wpdb->insert($wpdb->prefix . 'pesm_centers', [
                 'name' => $name, 'created_at' => gmdate('Y-m-d H:i:s'),
@@ -23,23 +23,23 @@ final class HallService
             }
             $id = (int) $wpdb->insert_id;
             \PESM\Support\Audit::record('center_created', 'center', $id);
-            self::commit();
+            if (!$withinTransaction) { self::commit(); }
             return $id;
         } catch (\Throwable $e) {
-            $wpdb->query('ROLLBACK');
+            if (!$withinTransaction) { $wpdb->query('ROLLBACK'); }
             throw $e;
         }
     }
 
-    public static function createHall(int $centerId, string $name, int $rows, int $columns): int
+    public static function createHall(int $centerId, string $name, int $rows, int $columns, bool $withinTransaction = false, bool $empty = false): int
     {
         global $wpdb;
         if ($centerId < 1 || $name === '') {
             throw new RuntimeException(\PESM\Support\I18n::text('مرکز یا نام سالن معتبر نیست.'));
         }
-        $seats = GridGenerator::generate($rows, $columns);
+        $seats = $empty ? [] : GridGenerator::generate($rows, $columns);
         $p = $wpdb->prefix . 'pesm_';
-        self::begin();
+        if (!$withinTransaction) { self::begin(); }
         try {
             if (!$wpdb->get_var($wpdb->prepare("SELECT id FROM {$p}centers WHERE id=%d", $centerId))) {
                 throw new RuntimeException(\PESM\Support\I18n::text('مرکز وجود ندارد.'));
@@ -50,6 +50,11 @@ final class HallService
                 throw new RuntimeException(\PESM\Support\I18n::text('امکان ایجاد سالن نیست.'));
             }
             $hallId = (int) $wpdb->insert_id;
+            if ($empty) {
+                \PESM\Support\Audit::record('hall_created', 'hall', $hallId);
+                if (!$withinTransaction) { self::commit(); }
+                return $hallId;
+            }
             if (!$wpdb->insert($p . 'layout_versions', [
                 'hall_id' => $hallId, 'version_no' => 1, 'status' => 'published',
                 'seat_count' => count($seats), 'created_at' => gmdate('Y-m-d H:i:s'),
@@ -73,22 +78,22 @@ final class HallService
                 throw new RuntimeException(\PESM\Support\I18n::text('اتصال نسخه نقشه به سالن انجام نشد.'));
             }
             \PESM\Support\Audit::record('hall_created', 'hall', $hallId);
-            self::commit();
+            if (!$withinTransaction) { self::commit(); }
             return $hallId;
         } catch (\Throwable $e) {
-            $wpdb->query('ROLLBACK');
+            if (!$withinTransaction) { $wpdb->query('ROLLBACK'); }
             throw $e;
         }
     }
 
-    public static function createEvent(int $centerId, string $title, array $details = []): int
+    public static function createEvent(int $centerId, string $title, array $details = [], bool $withinTransaction = false): int
     {
         global $wpdb;
         if ($centerId < 1 || trim($title) === '') {
             throw new RuntimeException(\PESM\Support\I18n::text('شناسه مرکز و عنوان رویداد لازم است.'));
         }
         $p = $wpdb->prefix . 'pesm_';
-        self::begin();
+        if (!$withinTransaction) { self::begin(); }
         try {
             if (!$wpdb->get_var($wpdb->prepare("SELECT id FROM {$p}centers WHERE id=%d", $centerId))) {
                 throw new RuntimeException(\PESM\Support\I18n::text('مرکز انتخاب‌شده وجود ندارد.'));
@@ -102,15 +107,15 @@ final class HallService
             }
             $id = (int) $wpdb->insert_id;
             \PESM\Support\Audit::record('event_created', 'event', $id);
-            self::commit();
+            if (!$withinTransaction) { self::commit(); }
             return $id;
         } catch (\Throwable $e) {
-            $wpdb->query('ROLLBACK');
+            if (!$withinTransaction) { $wpdb->query('ROLLBACK'); }
             throw $e;
         }
     }
 
-    public static function createSession(int $eventId, int $hallId, string $startUtc, string $saleStartUtc, string $saleEndUtc, int $unitPriceMinor = 0, string $mode = 'seated', int $capacity = 0): int
+    public static function createSession(int $eventId, int $hallId, string $startUtc, string $saleStartUtc, string $saleEndUtc, int $unitPriceMinor = 0, string $mode = 'seated', int $capacity = 0, ?int $layoutVersion = null, bool $withinTransaction = false, array $seatingRules = []): int
     {
         global $wpdb;
         $p = $wpdb->prefix . 'pesm_';
@@ -121,7 +126,7 @@ final class HallService
         }
         if ($mode === 'general') { \PESM\Domain\Booking\CapacityPolicy::capacity($capacity); }
         if ($mode === 'seated' && $capacity !== 0) { throw new RuntimeException(\PESM\Support\I18n::text('برای جلسه شماره‌دار، ظرفیت از نقشه محاسبه می‌شود.')); }
-        self::begin();
+        if (!$withinTransaction) { self::begin(); }
         try {
             $event = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$p}events WHERE id = %d FOR UPDATE", $eventId));
             $hall = $hallId > 0 ? $wpdb->get_row($wpdb->prepare("SELECT * FROM {$p}halls WHERE id = %d", $hallId)) : null;
@@ -132,7 +137,12 @@ final class HallService
             $layoutId = (int) ($hall->current_layout_id ?? 0);
             if ($mode !== 'general') {
                 $format = $mode === 'seated' ? LayoutDocument::FORMAT : \PESM\Domain\Venue\Document::FORMAT;
-                $layoutId = LayoutHistory::publishedId($hallId, $layoutId, $format);
+                $layoutId = $layoutVersion === null
+                    ? LayoutHistory::publishedId($hallId, $layoutId, $format)
+                    : (int) $wpdb->get_var($wpdb->prepare(
+                        "SELECT id FROM {$p}layout_versions WHERE id=%d AND hall_id=%d AND format=%s AND status='published'",
+                        $layoutVersion, $hallId, $format
+                    ));
                 if (!$layoutId) {
                     throw new RuntimeException(\PESM\Support\I18n::text('مرکز رویداد و سالن یکسان نیست یا نقشه‌ای وجود ندارد.'));
                 }
@@ -140,12 +150,17 @@ final class HallService
             if ($saleEndUtc <= $saleStartUtc || $startUtc <= $saleEndUtc || $startUtc <= gmdate('Y-m-d H:i:s')) {
                 throw new RuntimeException(\PESM\Support\I18n::text('بازه فروش و تاریخ اجرا نامعتبر است.'));
             }
-            if (!$wpdb->insert($p . 'sessions', [
+            $sessionFields = [
                 'event_id' => $eventId, 'hall_id' => $hallId, 'layout_id' => $layoutId,
                 'starts_at' => $startUtc, 'sale_starts_at' => $saleStartUtc, 'sale_ends_at' => $saleEndUtc,
                 'status' => 'draft', 'unit_price_minor' => $unitPriceMinor, 'mode' => $mode,
                 'created_at' => gmdate('Y-m-d H:i:s'),
-            ])) {
+            ];
+            if ($mode === 'seated' && $seatingRules) {
+                $sessionFields['require_adjacent'] = (int) !empty($seatingRules['adjacent']);
+                $sessionFields['avoid_single_gap'] = (int) !empty($seatingRules['gap']);
+            }
+            if (!$wpdb->insert($p . 'sessions', $sessionFields)) {
                 throw new RuntimeException(\PESM\Support\I18n::text('ثبت جلسه انجام نشد.'));
             }
             $sessionId = (int) $wpdb->insert_id;
@@ -167,14 +182,14 @@ final class HallService
             }
             }
             \PESM\Support\Audit::record('session_created', 'session', $sessionId);
-            self::commit();
-            if ($mode === 'allocated') {
+            if (!$withinTransaction) { self::commit(); }
+            if ($mode === 'allocated' && !$withinTransaction) {
                 \PESM\Domain\Allocation\SessionService::configure($sessionId, []);
                 \PESM\Domain\Venue\JobService::create((int) $event->center_id, $hallId, 'provision', ['session_id' => $sessionId], get_current_user_id());
             }
             return $sessionId;
         } catch (\Throwable $e) {
-            $wpdb->query('ROLLBACK');
+            if (!$withinTransaction) { $wpdb->query('ROLLBACK'); }
             throw $e;
         }
     }

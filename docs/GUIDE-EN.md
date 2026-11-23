@@ -2,7 +2,11 @@
 
 Install the ZIP through WordPress Plugins. PHP 8.1+ and InnoDB are required. WooCommerce must be active for orders and tickets. Read [release status](RELEASE-STATUS.md) and [compatibility evidence](COMPATIBILITY.md) before enabling live sales.
 
-If upgrading from the old plugin name, deactivate that copy first and activate `event-seat-manager/event-seat-manager.php`. Keep existing `pesm_` tables and options. The additive schema upgrade advances to 19. Pending orders created before financial snapshots were introduced require manual review; existing issued tickets remain intact. Network activation is unavailable; activate on each site individually.
+If upgrading from the old plugin name, deactivate that copy first and activate `event-seat-manager/event-seat-manager.php`. Keep existing `pesm_` tables and options. The additive schema upgrade advances to 20. Pending orders created before financial snapshots were introduced require manual review; existing issued tickets remain intact. Network activation is unavailable; activate on each site individually.
+
+## Set up an event
+
+Open **Events and Seats → New event**. Add a title, choose a published venue layout or preview a newly generated grid, and enter the dates and prices for the sessions. Review the selected sessions and publish them together. Users with WordPress page permissions can create the booking page in the same flow. Incomplete sessions remain accessible through **Resume draft**. Use **Add a session** to extend an existing event.
 
 ## Administrator workflow
 
