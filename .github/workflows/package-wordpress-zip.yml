@@ -1,0 +1,33 @@
+name: Package WordPress ZIP
+on:
+  push:
+    branches:
+      - build/wordpress-zip-20261123
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, zip, openssl
+      - name: Install build dependencies
+        run: npm ci
+      - name: Validate and package runtime files
+        run: python3 tools/build-release.py
+      - name: Upload installable ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: event-seat-manager-2.0.0-installable
+          path: dist/event-seat-manager-2.0.0.zip
+          if-no-files-found: error
