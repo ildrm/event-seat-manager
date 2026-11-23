@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace PESM\Admin;
 
-use PESM\Security\Capabilities;
+use PESM\Domain\Hall\LayoutDocument;
+use PESM\Domain\Hall\LayoutHistory;
+use PESM\Domain\Venue\Document;
 use PESM\Support\I18n;
 use PESM\Support\VenueUi;
 
@@ -30,18 +32,36 @@ final class VenueDesigner
         $p = $wpdb->prefix . 'pesm_';
         $all = current_user_can('pesm_manage_centers');
         $scope = $all ? '1=1' : $wpdb->prepare("EXISTS (SELECT 1 FROM {$p}center_users cu WHERE cu.center_id=h.center_id AND cu.user_id=%d)", get_current_user_id());
-        $halls = $wpdb->get_results("SELECT h.id,h.name,h.center_id,h.current_layout_id,v.layout_id AS venue_layout_id FROM {$p}halls h LEFT JOIN {$p}venue_layouts v ON v.layout_id=h.current_layout_id WHERE {$scope} ORDER BY h.id DESC LIMIT 200", ARRAY_A) ?: [];
+        $requestedHall = isset($_GET['hall_id']) && is_string($_GET['hall_id']) ? absint($_GET['hall_id']) : 0;
+        $halls = $wpdb->get_results($wpdb->prepare(
+            "SELECT h.id,h.name,h.center_id,h.current_layout_id,v.layout_id AS venue_layout_id
+             FROM {$p}halls h LEFT JOIN {$p}venue_layouts v ON v.layout_id=h.current_layout_id
+             WHERE {$scope} ORDER BY (h.id=%d) DESC,h.id DESC LIMIT 200", $requestedHall
+        ), ARRAY_A) ?: [];
         $eventScope = $all ? '1=1' : $wpdb->prepare("EXISTS (SELECT 1 FROM {$p}center_users cu WHERE cu.center_id=e.center_id AND cu.user_id=%d)", get_current_user_id());
         $events = $wpdb->get_results("SELECT e.id,e.title,e.center_id,e.status FROM {$p}events e WHERE {$eventScope} ORDER BY e.id DESC LIMIT 200", ARRAY_A) ?: [];
         $sessions = $wpdb->get_results("SELECT s.id,s.event_id,s.hall_id,s.layout_id,s.status,s.starts_at,e.title FROM {$p}sessions s JOIN {$p}events e ON e.id=s.event_id WHERE s.mode='allocated' AND {$eventScope} ORDER BY s.id DESC LIMIT 200", ARRAY_A) ?: [];
-        $hallId = isset($_GET['hall_id']) ? absint($_GET['hall_id']) : (int) ($halls[0]['id'] ?? 0);
+        $hallId = $requestedHall ?: (int) ($halls[0]['id'] ?? 0);
         $hall = null;
         foreach ($halls as $candidate) { if ((int) $candidate['id'] === $hallId) { $hall = $candidate; break; } }
         if ($hallId > 0 && !$hall) { wp_die('Hall not accessible.', '', ['response' => 403]); }
-        $layoutId = isset($_GET['layout_id']) ? absint($_GET['layout_id']) : (int) ($hall['venue_layout_id'] ?? 0);
-        if ($layoutId > 0 && (int) $wpdb->get_var($wpdb->prepare("SELECT hall_id FROM {$p}layout_versions WHERE id=%d", $layoutId)) !== $hallId) { wp_die('Layout not accessible.', '', ['response' => 403]); }
-        $versions = $hallId > 0 ? ($wpdb->get_results($wpdb->prepare("SELECT id,version_no,status,seat_count FROM {$p}layout_versions WHERE hall_id=%d AND format='pesm.layout.v2' ORDER BY id DESC LIMIT 30", $hallId), ARRAY_A) ?: []) : [];
+        $layoutId = isset($_GET['layout_id']) && is_string($_GET['layout_id']) ? absint($_GET['layout_id']) : 0;
+        if ($layoutId > 0) {
+            $format = $wpdb->get_var($wpdb->prepare("SELECT format FROM {$p}layout_versions WHERE id=%d AND hall_id=%d", $layoutId, $hallId));
+            if ($format === LayoutDocument::FORMAT) { $layoutId = 0; }
+            elseif ($format !== Document::FORMAT) { wp_die('Layout not accessible.', '', ['response' => 403]); }
+        }
+        if ($hallId > 0 && !$layoutId) {
+            $layoutId = LayoutHistory::publishedId($hallId, (int) $hall['current_layout_id'], Document::FORMAT);
+        }
+        $versions = $hallId > 0 ? ($wpdb->get_results($wpdb->prepare(
+            "SELECT id,version_no,status,seat_count FROM {$p}layout_versions
+             WHERE hall_id=%d AND format=%s ORDER BY (id=%d) DESC,version_no DESC LIMIT 30",
+            $hallId, Document::FORMAT, $layoutId
+        ), ARRAY_A) ?: []) : [];
         echo '<div class="wrap"><h1>' . esc_html(self::title()) . '</h1>';
+        echo '<p><a class="button" href="' . esc_url(Pages::layoutUrl($hallId)) . '">'
+            . esc_html(I18n::text('چیدمان صندلی و صحنه')) . '</a></p>';
         if (current_user_can('manage_options')) {
             echo '<details><summary>' . esc_html(I18n::isPersian() ? 'سقف خرید هر شماره موبایل' : 'Purchase limit per phone number') . '</summary><form method="post" action="' . esc_url(admin_url('admin-post.php')) . '"><input type="hidden" name="action" value="pesm_venue_limits">';
             wp_nonce_field('pesm_venue_limits');

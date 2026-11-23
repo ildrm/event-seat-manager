@@ -106,7 +106,8 @@ $pluginInfo = static function (): array {
     $plugins = realpath(WP_PLUGIN_DIR);
     return ['version' => defined('PESM_VERSION') ? PESM_VERSION : '', 'main_sha256' => hash_file('sha256', PESM_FILE),
         'migrator_sha256' => hash_file('sha256', dirname(PESM_FILE) . '/src/Database/Migrator.php'),
-        'installed_copy' => $root !== false && $plugins !== false && str_starts_with($root . '/', $plugins . '/')];
+        'installed_copy' => $root !== false && $plugins !== false &&
+            str_starts_with(wp_normalize_path($root) . '/', wp_normalize_path($plugins) . '/')];
 };
 $report = ['phase' => $phase, 'passed' => false, 'schema' => (int) get_option('pesm_schema_version', 0),
     'plugin' => $pluginInfo(), 'woocommerce_version' => defined('WC_VERSION') ? WC_VERSION : '',
@@ -123,6 +124,12 @@ if ($phase === 'before') {
     $actor = get_current_user_id();
     $center = \PESM\Domain\Hall\HallService::createCenter('Package schema18 ' . bin2hex(random_bytes(5)));
     $hall = \PESM\Domain\Hall\HallService::createHall($center, 'Package historical v1 hall', 2, 2);
+    $legacyLayouts = new \PESM\Domain\Hall\LayoutVersionService();
+    $initial = (int) $wpdb->get_var($wpdb->prepare("SELECT current_layout_id FROM {$prefix}halls WHERE id=%d", $hall));
+    $geometry = \PESM\Domain\Hall\LayoutDocument::parseFull($legacyLayouts->export($hall, $initial, $actor));
+    $geometry['objects'][] = ['id'=>'main-stage', 'type'=>'stage', 'x'=>80, 'y'=>-150, 'width'=>190, 'height'=>80, 'label'=>'Main stage'];
+    $legacyLayout = $legacyLayouts->importDraft($hall, $actor, \PESM\Domain\Hall\LayoutDocument::encodeFull($geometry['seats'], $geometry['objects']));
+    $legacyLayouts->publish($hall, $legacyLayout, $actor);
     $event = \PESM\Domain\Hall\HallService::createEvent($center, 'Package historical event');
     \PESM\Domain\Event\LifecycleService::change('event', $event, 'published', $actor);
     $sessions = []; $orders = [];
@@ -155,7 +162,8 @@ if ($phase === 'before') {
     }
     ksort($orderIds, SORT_NUMERIC); $orderSnapshots = [];
     foreach (array_keys($orderIds) as $id) { $orderSnapshots[$id] = $snapshotOrder($id); }
-    $fixture = ['center_id' => $center, 'hall_id' => $hall, 'event_id' => $event, 'session_ids' => $sessions, 'order_ids' => $orders];
+    $fixture = ['center_id' => $center, 'hall_id' => $hall, 'layout_id' => $legacyLayout,
+        'event_id' => $event, 'session_ids' => $sessions, 'order_ids' => $orders];
     $baseline = ['schema' => 18, 'plugin' => $report['plugin'], 'tables' => $tables, 'orders' => $orderSnapshots, 'fixture' => $fixture];
     $assert(update_option($baselineOption, $baseline, false), 'canonical baseline persists in this disposable site');
     $report['fixture'] = $fixture;
@@ -201,6 +209,25 @@ if ($phase === 'before') {
     // operational creation gate or records a false load-acceptance report.
     if (!defined('PESM_VENUE_ACCEPTANCE_TEST')) { define('PESM_VENUE_ACCEPTANCE_TEST', true); }
     $actor = get_current_user_id();
+    $historicalHall = (int) $baseline['fixture']['hall_id'];
+    $historicalLayout = (int) $baseline['fixture']['layout_id'];
+    $legacyService = new \PESM\Domain\Hall\LayoutVersionService();
+    $geometry = \PESM\Domain\Hall\LayoutDocument::parseFull($legacyService->export($historicalHall, $historicalLayout, $actor));
+    $assert($geometry['objects'][0]['label'] === 'Main stage' && count($geometry['seats']) === 4, 'legacy export preserves the published stage and seats');
+    $geometry['objects'][0]['label'] = 'Resized stage';
+    $geometry['objects'][0]['width'] = 240;
+    $geometry['seats'][0]['x'] += 20;
+    $edited = \PESM\Domain\Hall\LayoutDocument::encodeFull($geometry['seats'], $geometry['objects']);
+    $saved = (new \PESM\Domain\Hall\DraftSaveService())->save($historicalHall, $historicalLayout, $actor, 0, bin2hex(random_bytes(24)), $edited);
+    $assert($saved['created'] && $saved['layout_id'] !== $historicalLayout, 'editing published seats and stage creates an independent v1 draft');
+    $savedGeometry = $legacyService->export($historicalHall, $saved['layout_id'], $actor);
+    $assert(\PESM\Domain\Hall\LayoutDocument::parseFull($savedGeometry) === $geometry, 'draft round-trips seat and stage edits');
+    $assert(str_contains(\PESM\Domain\Hall\LayoutPrintRenderer::render($savedGeometry, 'Historical hall', 'A4'), 'Resized stage'), 'print displays the saved stage');
+    $legacyService->publish($historicalHall, $saved['layout_id'], $actor);
+    foreach ($baseline['fixture']['session_ids'] as $historicalSession) {
+        $assert((int) $wpdb->get_var($wpdb->prepare("SELECT layout_id FROM {$prefix}sessions WHERE id=%d", $historicalSession)) === $historicalLayout,
+            'republishing a legacy layout leaves historical sessions pinned');
+    }
     $runJob = static function (int $id): array {
         for ($batch = 0; $batch < 100; $batch++) {
             \PESM\Domain\Venue\JobService::run($id);
@@ -213,8 +240,14 @@ if ($phase === 'before') {
     $acceptanceBefore = get_option('pesm_venue_acceptance', null);
     $center = \PESM\Domain\Hall\HallService::createCenter('Package v2 smoke ' . bin2hex(random_bytes(5)));
     $hall = \PESM\Domain\Hall\HallService::createHall($center, 'Package v2 smoke hall', 1, 1);
+    $legacyLayout = (int) $wpdb->get_var($wpdb->prepare("SELECT current_layout_id FROM {$prefix}halls WHERE id=%d", $hall));
     $defaultFormat = $wpdb->get_var($wpdb->prepare("SELECT l.format FROM {$prefix}halls h JOIN {$prefix}layout_versions l ON l.id=h.current_layout_id WHERE h.id=%d", $hall));
     $assert($defaultFormat === 'pesm.layout.v1', 'new legacy hall insert uses the v1 database default');
+    $legacyJson = $legacyService->export($hall, $legacyLayout, $actor);
+    $olderDraft = $legacyService->importDraft($hall, $actor, $legacyJson);
+    $newerDraft = $legacyService->importDraft($hall, $actor, $legacyJson);
+    $legacyService->publish($hall, $newerDraft, $actor);
+    $legacyService->publish($hall, $olderDraft, $actor);
     $generation = \PESM\Domain\Venue\JobService::create($center, $hall, 'generate',
         ['preset_id' => 'restaurant_round_banquet', 'parameters' => ['capacity' => 8, 'group_size' => 4]], $actor);
     $generated = $runJob((int) $generation['id']); $layoutId = (int) $generated['layout_id'];
@@ -224,8 +257,17 @@ if ($phase === 'before') {
         'installed package generates and publishes exact eight-place v2 geometry');
     $event = \PESM\Domain\Hall\HallService::createEvent($center, 'Package v2 smoke event');
     \PESM\Domain\Event\LifecycleService::change('event', $event, 'published', $actor);
+    $seated = \PESM\Domain\Hall\HallService::createSession($event, $hall, gmdate('Y-m-d H:i:s', time() + 3600),
+        gmdate('Y-m-d H:i:s', time() - 3600), gmdate('Y-m-d H:i:s', time() + 1800), 0, 'seated');
+    $assert((int) $wpdb->get_var($wpdb->prepare("SELECT layout_id FROM {$prefix}sessions WHERE id=%d", $seated)) === $olderDraft
+        && (int) $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$prefix}session_seats WHERE session_id=%d", $seated)) === 1,
+        'seated sessions use the last published v1 layout after v2 publication, even out of version order');
+    $legacyDraft = $legacyService->importDraft($hall, $actor, $legacyJson);
+    $legacyService->publish($hall, $legacyDraft, $actor);
     $session = \PESM\Domain\Hall\HallService::createSession($event, $hall, gmdate('Y-m-d H:i:s', time() + 3600),
         gmdate('Y-m-d H:i:s', time() - 3600), gmdate('Y-m-d H:i:s', time() + 1800), 0, 'allocated');
+    $assert((int) $wpdb->get_var($wpdb->prepare("SELECT layout_id FROM {$prefix}sessions WHERE id=%d", $session)) === $layoutId,
+        'allocated sessions keep using published v2 geometry after v1 publication on the same hall');
     \PESM\Domain\Allocation\SessionService::configure($session, ['ticket_mode' => 'group', 'group_entry_policy' => 'together']);
     $provision = (int) $wpdb->get_var($wpdb->prepare("SELECT id FROM {$prefix}venue_jobs WHERE session_id=%d AND kind='provision' ORDER BY id DESC LIMIT 1", $session));
     $runJob($provision); \PESM\Domain\Event\LifecycleService::change('session', $session, 'published', $actor);

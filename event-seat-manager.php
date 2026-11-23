@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: event-seat-manager
+ * Plugin Name: Event Seat Manager
  * Description: Bilingual event, hall, seat reservation, WooCommerce ticketing and online admission management.
  * Version: 2.0.0
  * Author: Shahin Ilderemi

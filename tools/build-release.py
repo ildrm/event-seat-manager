@@ -4,6 +4,7 @@ import hashlib
 import json
 from pathlib import Path
 import subprocess
+import sys
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -14,26 +15,26 @@ BLOCKS = ('events', 'event', 'seat-map', 'my-tickets', 'gate-scanner')
 
 def validate():
     subprocess.run(['node', str(ROOT / 'tools/build-assets.mjs'), '--check'], check=True, cwd=ROOT)
-    subprocess.run(['python3', str(ROOT / 'tools/build-languages.py'), '--check'], check=True, cwd=ROOT)
-    bootstrap = (ROOT / f'{SLUG}.php').read_text()
-    assert f'Plugin Name: {SLUG}\n' in bootstrap
+    subprocess.run([sys.executable, str(ROOT / 'tools/build-languages.py'), '--check'], check=True, cwd=ROOT)
+    bootstrap = (ROOT / f'{SLUG}.php').read_text(encoding='utf-8')
+    assert any(f'Plugin Name: {name}\n' in bootstrap for name in ('Event Seat Manager', SLUG))
     assert f'Version: {VERSION}\n' in bootstrap
     assert f"define('PESM_VERSION', '{VERSION}')" in bootstrap
     assert f'Text Domain: {SLUG}\n' in bootstrap
-    assert f'Stable tag: {VERSION}\n' in (ROOT / 'readme.txt').read_text()
+    assert f'Stable tag: {VERSION}\n' in (ROOT / 'readme.txt').read_text(encoding='utf-8')
     assert (ROOT / 'CHANGELOG.md').read_bytes() == b'', 'Release history must be empty'
     assert not (ROOT / 'persian-event-seat-manager.php').exists()
     for slug in BLOCKS:
         path = ROOT / 'blocks' / slug / 'block.json'
-        block = json.loads(path.read_text())
+        block = json.loads(path.read_text(encoding='utf-8'))
         assert block['name'] == f'pesm/{slug}', path
         assert block['version'] == VERSION, path
         assert block['textdomain'] == SLUG, path
     assert (ROOT / 'assets/js/blocks-editor.js').is_file(), 'Missing block editor script'
     for path in (ROOT / 'languages').glob('*.json'):
-        json.loads(path.read_text())
+        json.loads(path.read_text(encoding='utf-8'))
     for path in [*ROOT.glob('*.php'), *(ROOT / 'src').rglob('*.php'), *(ROOT / 'assets/js').glob('*.js')]:
-        assert 'persian-event-seat-manager' not in path.read_text(), path
+        assert 'persian-event-seat-manager' not in path.read_text(encoding='utf-8'), path
 
 
 def main():

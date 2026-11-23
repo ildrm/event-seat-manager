@@ -270,7 +270,7 @@
   "نسخه قبلی ذخیره شد؛ تغییرات جدید در صف ذخیره قرار گرفت.": "The previous version was saved. New changes are queued.",
   "پیش‌نویس شماره ": "Draft # ",
   "، بازبینی ": ", revision ",
-  " با موفقیت ذخیره شد. برای انتشار، صفحه مدیریت را بازخوانی کنید.": " saved successfully. Reload the admin page to publish.",
+  " با موفقیت ذخیره شد.": " saved successfully.",
   "ارتباط ذخیره قطع شد.": "The save connection was interrupted.",
   " برای جلوگیری از فقدان داده، فایل JSON را نیز دریافت کنید.": " Download the JSON file as a backup to prevent data loss.",
   "شیء ": "Object ",

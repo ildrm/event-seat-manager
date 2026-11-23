@@ -1,5 +1,5 @@
 === event-seat-manager ===
-Contributors: pesm-team
+Contributors: ildrm
 Tags: events, seating, tickets, persian, rtl
 Requires PHP: 8.1
 License: GPLv2 or later

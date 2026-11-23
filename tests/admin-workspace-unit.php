@@ -37,6 +37,7 @@ function wp_json_encode(mixed $value): string { return json_encode($value, JSON_
 function wp_enqueue_script(mixed ...$args): void {}
 function submit_button(string $text, string $type, string $name, bool $wrap): void { echo '<button type="submit" class="button">' . esc_html($text) . '</button>'; }
 function checked(mixed $value, mixed $expected, bool $echo): string { return $value === $expected ? 'checked' : ''; }
+function selected(mixed $value, mixed $expected, bool $echo): string { return $value === $expected ? ' selected="selected"' : ''; }
 function sanitize_key(string $value): string { return preg_replace('/[^a-z0-9_-]/', '', $value); }
 function wp_unslash(string $value): string { return $value; }
 
@@ -78,7 +79,7 @@ verify($xpath->query('//*[@data-pesm-panel and @hidden]')->length === 0, 'Server
 verify(str_contains($html, 'User &lt;em&gt;title&lt;/em&gt;') && !str_contains($html, 'User <em>title</em>'), 'Stored titles must remain escaped');
 verify($xpath->query('//*[@id="pesm-workspace-content" and @tabindex="-1"]')->length === 1, 'Skip link target must accept focus');
 foreach ($xpath->query('//*[@data-pesm-panel]') as $panel) {
-    foreach ($xpath->query('.//form', $panel) as $form) {
+    foreach ($xpath->query('.//form[@method="post"]', $panel) as $form) {
         $fields = $xpath->query('.//input[@name="pesm_view"]', $form);
         verify($fields->length === 1 && $fields->item(0)->getAttribute('value') === $panel->getAttribute('data-pesm-panel'), 'Each form must return to its actual area');
         verify($xpath->query('.//input[@name="_wpnonce"]', $form)->length === 1, 'Existing nonce fields must remain inside their forms');

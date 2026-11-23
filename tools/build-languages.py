@@ -19,20 +19,25 @@ SPAN = re.compile(r'''[^<>"']*[\u0600-\u06ff][^<>"']*''')
 
 def source_messages() -> dict[str, list[str]]:
     paths = sorted((ROOT / "src").rglob("*.php"))
-    process = subprocess.run(["php", str(ROOT / "tools/extract-i18n.php"), *map(str, paths)],
-                             check=True, capture_output=True, text=True)
+    process = subprocess.run(
+        ["php", "-d", "display_errors=stderr", str(ROOT / "tools/extract-i18n.php"), *map(str, paths)],
+        check=True, capture_output=True, encoding="utf-8",
+    )
     messages: dict[str, list[str]] = {}
     for literal, locations in json.loads(process.stdout).items():
         for key in SPAN.findall(literal) if "<" in literal else [literal]:
             if re.search(r"[آ-ی]", key) and not re.fullmatch(r"[٠-٩۰-۹]+", key):
-                messages.setdefault(key, []).extend(str(Path(p.rsplit(":", 1)[0]).relative_to(ROOT)) + ":" + p.rsplit(":", 1)[1] for p in locations)
+                for location in locations:
+                    source_path, line = location.rsplit(":", 1)
+                    reference = Path(source_path).relative_to(ROOT).as_posix()
+                    messages.setdefault(key, []).append(f"{reference}:{line}")
     for path in sorted((ROOT / "assets/js").glob("*.js")):
-        source = path.read_text()
+        source = path.read_text(encoding="utf-8")
         # Client wrappers deliberately use JSON double-quoted static source literals.
         for match in re.finditer(r'PESM_I18N\.text\(("(?:\\.|[^"\\])*")\)', source):
             value = json.loads(match[1])
             if re.search(r"[آ-ی]", value):
-                messages.setdefault(value, []).append(str(path.relative_to(ROOT)))
+                messages.setdefault(value, []).append(path.relative_to(ROOT).as_posix())
         if path.name == "i18n.js":
             statuses = re.search(r"const statuses = \{([^}]+)\}", source)
             if statuses:
@@ -99,8 +104,8 @@ def main() -> None:
     args = parser.parse_args()
     english: dict[str, str] = {}
     for filename in ["backend-en.json", "client-en.json", "admin-en.json", "ui-en.json", "venue-en.json"]:
-        english.update(json.loads((LANG / filename).read_text()))
-    persian_bootstrap = json.loads((LANG / "bootstrap-fa.json").read_text())
+        english.update(json.loads((LANG / filename).read_text(encoding="utf-8")))
+    persian_bootstrap = json.loads((LANG / "bootstrap-fa.json").read_text(encoding="utf-8"))
     references = source_messages()
     missing = sorted(set(references) - set(english))
     if missing:

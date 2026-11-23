@@ -64,6 +64,22 @@ final class Pages
     public static function menu(): void
     {
         add_menu_page((\PESM\Support\I18n::text('مدیریت رویداد و صندلی')), (\PESM\Support\I18n::text('رویداد و صندلی')), 'pesm_access_dashboard', 'pesm-dashboard', [self::class, 'render'], 'dashicons-tickets-alt', 26);
+        $title = \PESM\Support\I18n::text('سالن‌ها و چیدمان');
+        $hook = add_submenu_page('pesm-dashboard', $title, $title, 'pesm_edit_layouts', 'pesm-hall-layouts', [self::class, 'render']);
+        if ($hook) {
+            add_action('load-' . $hook, static function (): void {
+                wp_safe_redirect(self::layoutUrl());
+                exit;
+            });
+        }
+    }
+
+    public static function layoutUrl(int $hallId = 0, array $args = []): string
+    {
+        if ($hallId > 0) {
+            $args['pesm_hall'] = $hallId;
+        }
+        return add_query_arg(['page' => 'pesm-dashboard'] + $args, admin_url('admin.php')) . '#pesm-halls';
     }
 
     public static function enqueueAssets(string $hook): void
@@ -163,11 +179,15 @@ final class Pages
         self::collectCard($cards, 'halls');
         ob_start();
         if ($halls && current_user_can('pesm_edit_layouts')) {
+            $selectedHall = isset($_GET['pesm_hall']) && is_string($_GET['pesm_hall'])
+                ? (int) wp_unslash($_GET['pesm_hall']) : 0;
+            $hallsById = array_column($halls, null, 'id');
+            $selectedHall = isset($hallsById[$selectedHall]) ? $selectedHall : 0;
             echo (\PESM\Support\I18n::text('<h2>ساخت نسخه پیش‌نویس از الگوی پارامتریک</h2>'));
             self::formStart($url, 'pesm_layout_preset');
             echo (\PESM\Support\I18n::text('<label>سالن <select name="hall_id">'));
             foreach ($halls as $hall) {
-                echo '<option value="' . esc_attr((string) $hall->id) . '">' . esc_html((string) $hall->name) . '</option>';
+                echo '<option value="' . esc_attr((string) $hall->id) . '"' . selected((int) $hall->id, $selectedHall, false) . '>' . esc_html((string) $hall->name) . '</option>';
             }
             echo (\PESM\Support\I18n::text('</select></label> <label>الگو <select name="preset">'));
             foreach (LayoutPresets::PRESETS as $slug => $title) {
@@ -184,15 +204,29 @@ final class Pages
             wp_nonce_field('pesm_layout_import');
             echo (\PESM\Support\I18n::text('<label>سالن <select name="hall_id">'));
             foreach ($halls as $hall) {
-                echo '<option value="' . esc_attr((string) $hall->id) . '">' . esc_html($hall->name . ' (#' . $hall->id . ')') . '</option>';
+                echo '<option value="' . esc_attr((string) $hall->id) . '"' . selected((int) $hall->id, $selectedHall, false) . '>' . esc_html($hall->name . ' (#' . $hall->id . ')') . '</option>';
             }
             echo (\PESM\Support\I18n::text('</select></label> <label>فایل JSON <input type="file" name="layout_file" accept=".json,application/json" required></label> '));
             submit_button((\PESM\Support\I18n::text('واردکردن نسخه پیش‌نویس')), 'secondary', 'submit', false);
             echo '</form>';
-            $visibleHalls = array_slice($halls, 0, 40);
-            $history = LayoutHistory::forHalls(array_column($visibleHalls, 'id'));
+            echo '<form method="get" action="' . esc_url(admin_url('admin.php') . '#pesm-halls') . '">';
+            echo '<input type="hidden" name="page" value="pesm-dashboard">';
+            echo '<label>' . esc_html(\PESM\Support\I18n::text('تاریخچهٔ چیدمان سالن')) . ' <select name="pesm_hall">';
+            echo '<option value="0">' . esc_html(\PESM\Support\I18n::text('سالن‌های اخیر')) . '</option>';
+            foreach ($halls as $hall) {
+                echo '<option value="' . esc_attr((string) $hall->id) . '"' . selected((int) $hall->id, $selectedHall, false) . '>'
+                    . esc_html($hall->name . ' (#' . $hall->id . ')') . '</option>';
+            }
+            echo '</select></label> ';
+            submit_button(\PESM\Support\I18n::text('نمایش نسخه‌ها'), 'secondary', 'submit', false);
+            echo '</form>';
+            $visibleHalls = $selectedHall ? [$hallsById[$selectedHall]] : array_slice($halls, 0, 40);
+            $hallIds = array_column($visibleHalls, 'id');
+            $legacyHistory = LayoutHistory::forHalls($hallIds, LayoutDocument::FORMAT);
+            $venueHistory = LayoutHistory::forHalls($hallIds, \PESM\Domain\Venue\Document::FORMAT);
             foreach ($visibleHalls as $hall) {
-                $versions = $history[$hall->id] ?? [];
+                $versions = array_merge($legacyHistory[$hall->id] ?? [], $venueHistory[$hall->id] ?? []);
+                usort($versions, static fn(object $a, object $b): int => (int) $b->version_no <=> (int) $a->version_no);
                 echo '<h3>' . esc_html($hall->name) . '</h3>';
                 echo (\PESM\Support\I18n::text('<table class="widefat striped"><thead><tr><th>نسخه</th><th>صندلی</th><th>وضعیت</th><th>عملیات</th></tr></thead><tbody>'));
                 foreach ($versions as $version) {
@@ -202,7 +236,7 @@ final class Pages
                     ], admin_url('admin-post.php')), 'pesm_layout_export_' . $hall->id . '_' . $version->id);
                     echo '<tr><td>' . esc_html((string) $version->version_no) . '</td><td>' . esc_html((string) $version->seat_count)
                         . '</td><td>' . esc_html(\PESM\Support\I18n::status((string) $version->status)) . '</td><td>';
-                    if (($version->format ?? LayoutDocument::FORMAT) === 'pesm.layout.v2') {
+                    if ($version->format === \PESM\Domain\Venue\Document::FORMAT) {
                         $designer = add_query_arg(['page'=>'pesm-venue-designer','hall_id'=>(int)$hall->id,'layout_id'=>(int)$version->id], admin_url('admin.php'));
                         echo '<a href="' . esc_url($designer) . '">' . esc_html(\PESM\Support\I18n::isPersian() ? 'طراح سالن' : 'Venue designer') . '</a></td></tr>';
                         continue;
@@ -268,7 +302,9 @@ final class Pages
                 echo '<label>' . esc_html($label) . '<input type="' . $type . '" name="' . esc_attr($name) . '"></label>';
             }
             echo (\PESM\Support\I18n::text('<button type="button" class="button pesm-apply">اعمال ویژگی‌ها</button></div>'));
-            echo '<p class="pesm-editor-status" role="status" aria-live="polite"></p></section>';
+            echo '<p class="pesm-editor-status" role="status" aria-live="polite"></p>';
+            echo '<a class="button pesm-review-draft" hidden>'
+                . esc_html(\PESM\Support\I18n::text('بازبینی و انتشار پیش‌نویس')) . '</a></section>';
         }
         self::collectCard($cards, 'halls');
         ob_start();
@@ -614,7 +650,7 @@ final class Pages
             return '<div class="pesm-table-scroll" tabindex="0">' . $table . '</div>';
         }, $html) ?? $html;
         $returnField = '<input type="hidden" name="pesm_view" value="' . esc_attr($view) . '">';
-        $html = preg_replace('~(<form\b[^>]*>)~', '$1' . $returnField, $html) ?? $html;
+        $html = preg_replace('~(<form\b[^>]*\bmethod="post"[^>]*>)~i', '$1' . $returnField, $html) ?? $html;
         if (str_starts_with(ltrim($html), '<section class="pesm-layout-editor"')) {
             // Keep the hidden editor as the card itself, so no blank card is shown before opening it.
             $cards[$view][] = str_replace('class="pesm-layout-editor"', 'class="pesm-layout-editor pesm-admin-card"', $html);
@@ -1146,7 +1182,7 @@ final class Pages
         $center = self::centerId();
         $rows = isset($_POST['rows']) ? absint(wp_unslash($_POST['rows'])) : 0;
         $cols = isset($_POST['columns']) ? absint(wp_unslash($_POST['columns'])) : 0;
-        try { HallService::createHall($center, self::textInput('name'), $rows, $cols); self::redirect('created'); }
+        try { self::redirect('created', HallService::createHall($center, self::textInput('name'), $rows, $cols)); }
         catch (Throwable $e) { self::redirect('error'); }
     }
 
@@ -1160,8 +1196,8 @@ final class Pages
         try {
             $seats = LayoutPresets::generate($preset, $rows, $columns);
             (new LayoutVersionService())->importDraft($hallId, get_current_user_id(), LayoutDocument::encode($seats));
-            self::redirect('created');
-        } catch (Throwable $e) { self::redirect('error'); }
+            self::redirect('created', $hallId);
+        } catch (Throwable $e) { self::redirect('error', $hallId); }
     }
 
     public static function changeAttendee(): void
@@ -1188,15 +1224,16 @@ final class Pages
             wp_send_json_error(['message' => (\PESM\Support\I18n::text('فایل نقشه از حد مجاز بزرگ‌تر است.'))], 413);
         }
         try {
+            $hallId = isset($_POST['hall_id']) ? absint($_POST['hall_id']) : 0;
             $result = (new DraftSaveService())->save(
-                isset($_POST['hall_id']) ? absint($_POST['hall_id']) : 0,
+                $hallId,
                 isset($_POST['layout_id']) ? absint($_POST['layout_id']) : 0,
                 get_current_user_id(),
                 isset($_POST['revision']) ? absint($_POST['revision']) : 0,
                 isset($_POST['request_key']) && is_string($_POST['request_key']) ? sanitize_text_field(wp_unslash($_POST['request_key'])) : '',
                 $json
             );
-            wp_send_json_success($result);
+            wp_send_json_success($result + ['review_url' => self::layoutUrl($hallId)]);
         } catch (DraftConflictException $error) {
             wp_send_json_error(['message' => $error->getMessage(), 'conflict' => true], 409);
         } catch (\InvalidArgumentException $error) {
@@ -1241,14 +1278,14 @@ final class Pages
             !is_string($file['tmp_name'] ?? null) ||
             !is_uploaded_file($file['tmp_name']) || (int) ($file['size'] ?? 0) < 1 ||
             (int) ($file['size'] ?? 0) > LayoutDocument::MAX_BYTES) {
-            self::redirect('invalid');
+            self::redirect('invalid', $hallId);
         }
         try {
             $body = file_get_contents($file['tmp_name'], false, null, 0, LayoutDocument::MAX_BYTES + 1);
             if (!is_string($body)) { throw new \RuntimeException((\PESM\Support\I18n::text('ورودی فایل قابل خواندن نیست.'))); }
             (new LayoutVersionService())->importDraft($hallId, get_current_user_id(), $body);
-            self::redirect('created');
-        } catch (Throwable $e) { self::redirect('error'); }
+            self::redirect('created', $hallId);
+        } catch (Throwable $e) { self::redirect('error', $hallId); }
     }
 
     public static function publishLayout(): void
@@ -1258,8 +1295,8 @@ final class Pages
         $layoutId = isset($_POST['layout_id']) ? absint(wp_unslash($_POST['layout_id'])) : 0;
         try {
             (new LayoutVersionService())->publish($hallId, $layoutId, get_current_user_id());
-            self::redirect('created');
-        } catch (Throwable $e) { self::redirect('error'); }
+            self::redirect('created', $hallId);
+        } catch (Throwable $e) { self::redirect('error', $hallId); }
     }
 
     public static function exportLayout(): void
@@ -1342,8 +1379,12 @@ final class Pages
         return $date->setTimezone(new DateTimeZone('UTC'))->format('Y-m-d H:i:s');
     }
 
-    private static function redirect(string $state): never
+    private static function redirect(string $state, int $hallId = 0): never
     {
+        if ($hallId > 0) {
+            wp_safe_redirect(self::layoutUrl($hallId, ['pesm_notice' => $state]));
+            exit;
+        }
         $view = isset($_POST['pesm_view']) && is_string($_POST['pesm_view'])
             ? sanitize_key(wp_unslash($_POST['pesm_view'])) : 'overview';
         if (!in_array($view, ['overview', 'events', 'halls', 'tickets', 'reports', 'settings'], true)) { $view = 'overview'; }

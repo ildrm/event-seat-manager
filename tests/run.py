@@ -18,7 +18,7 @@ def main():
     args = parser.parse_args()
     checks = []
     started = time.monotonic()
-    commands = [('catalog', ROOT / 'tools/build-languages.py', ['python3', 'tools/build-languages.py', '--check'])]
+    commands = [('catalog', ROOT / 'tools/build-languages.py', [sys.executable, 'tools/build-languages.py', '--check'])]
     commands.extend(('test', path, ['php', str(path)])
                 for path in sorted((ROOT / 'tests').glob('*.php'))
                 if path.name not in EXCLUDED and not path.name.startswith('integration-'))
@@ -34,7 +34,7 @@ def main():
     for category, path, command in commands:
         label = str(path.relative_to(ROOT))
         try:
-            result = subprocess.run(command, cwd=ROOT, capture_output=True, text=True, timeout=90)
+            result = subprocess.run(command, cwd=ROOT, capture_output=True, encoding='utf-8', errors='replace', timeout=90)
             ok = result.returncode == 0
             output = result.stdout + result.stderr
         except (OSError, subprocess.TimeoutExpired) as error:

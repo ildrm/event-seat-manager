@@ -6,11 +6,13 @@
   const svg = panel.querySelector('svg');
   const NS = 'http://www.w3.org/2000/svg';
   const status = panel.querySelector('.pesm-editor-status');
+  const reviewDraft = panel.querySelector('.pesm-review-draft');
+  const editButtons = Array.from(document.querySelectorAll('.pesm-edit-layout'));
   const input = name => panel.querySelector(`[name="${name}"]`);
   let documentData = null;
   let history = [], redo = [], selected = new Set(), selectedObject = null, dragging = null, marquee = null, panning = null;
   let viewport = { x: 0, y: 0, w: 1000, h: 750 };
-  let currentHall = 0, currentLayout = 0, revision = 0;
+  let currentHall = 0, currentLayout = 0, revision = 0, openRequest = 0;
   let dirty = false, saving = false, conflicted = false, saveTimer = null, pendingRequestKey = null, pendingPayload = null;
   const configuration = typeof pesmEditorConfig === 'object' ? pesmEditorConfig : null;
   function randomKey() {
@@ -20,6 +22,7 @@
   }
   function queueSave() {
     dirty = true;
+    reviewDraft.hidden = true;
     if (saveTimer) clearTimeout(saveTimer);
     if (!conflicted) saveTimer = setTimeout(saveDraft, 1500);
     message(window.PESM_I18N.text("تغییرات ذخیره‌نشده؛ در انتظار ذخیره خودکار…"));
@@ -50,10 +53,17 @@
       if (!Number.isInteger(saved.layout_id) || !Number.isInteger(saved.revision)) throw new Error(window.PESM_I18N.text("پاسخ ذخیره معتبر نیست."));
       currentLayout = saved.layout_id;
       revision = saved.revision;
+      for (const button of editButtons) {
+        if (Number(button.dataset.layout) === currentLayout) button.dataset.revision = String(revision);
+      }
       pendingRequestKey = null; pendingPayload = null;
       dirty = JSON.stringify(documentData) !== json;
+      if (!dirty && saved.review_url) {
+        reviewDraft.href = saved.review_url;
+        reviewDraft.hidden = false;
+      }
       message(dirty ? window.PESM_I18N.text("نسخه قبلی ذخیره شد؛ تغییرات جدید در صف ذخیره قرار گرفت.") :
-        (window.PESM_I18N.text("پیش‌نویس شماره ") + String(currentLayout) + window.PESM_I18N.text("، بازبینی ") + String(revision) + window.PESM_I18N.text(" با موفقیت ذخیره شد. برای انتشار، صفحه مدیریت را بازخوانی کنید.")));
+        (window.PESM_I18N.text("پیش‌نویس شماره ") + String(currentLayout) + window.PESM_I18N.text("، بازبینی ") + String(revision) + window.PESM_I18N.text(" با موفقیت ذخیره شد.")));
     } catch (error) {
       dirty = true;
       message((error?.message || window.PESM_I18N.text("ارتباط ذخیره قطع شد.")) + window.PESM_I18N.text(" برای جلوگیری از فقدان داده، فایل JSON را نیز دریافت کنید."));
@@ -157,11 +167,15 @@
   }
   async function open(button) {
     if (dirty || saving) return message(window.PESM_I18N.text("ابتدا تغییرات فعلی را ذخیره کنید یا JSON را دریافت و سپس صفحه را بازخوانی کنید."));
+    const request = ++openRequest;
+    panel.hidden = false;
+    panel.scrollIntoView({behavior:'smooth', block:'nearest'});
     message(window.PESM_I18N.text("در حال دریافت داده‌های نقشه…"));
     try {
       const response = await fetch(button.dataset.url, {credentials:'same-origin',cache:'no-store'});
       if (!response.ok) throw new Error(window.PESM_I18N.text("دریافت مجاز نبود یا نسخه پیدا نشد."));
       const raw = await response.text();
+      if (request !== openRequest || dirty || saving) return;
       if (raw.length > 2097152) throw new Error(window.PESM_I18N.text("حجم فایل بیش از حد مجاز است."));
       const data = JSON.parse(raw);
       if (data.format !== 'pesm.layout.v1' || !Array.isArray(data.seats) || !data.seats.length || data.seats.length > 10000)
@@ -172,12 +186,13 @@
       revision = Number(button.dataset.revision || 0);
       dirty = false; saving = false; conflicted = false; pendingRequestKey = null; pendingPayload = null;
       selected = new Set(); selectedObject = null; history = []; redo = [];
-      panel.hidden = false;
+      reviewDraft.hidden = true;
       autoView(); draw();
-      panel.scrollIntoView({behavior:'smooth', block:'nearest'});
-    } catch (error) { message(error.message || window.PESM_I18N.text("خطا در دریافت نقشه.")); panel.hidden = false; }
+    } catch (error) {
+      if (request === openRequest && !dirty && !saving) message(error.message || window.PESM_I18N.text("خطا در دریافت نقشه."));
+    }
   }
-  document.querySelectorAll('.pesm-edit-layout').forEach(button => button.addEventListener('click', () => open(button)));
+  editButtons.forEach(button => button.addEventListener('click', () => open(button)));
   function mutate(fn) { if (!documentData) return; remember(); fn(); draw(); queueSave(); }
   panel.querySelector('.pesm-undo').addEventListener('click', () => {
     if (!history.length || !documentData) return;
@@ -206,7 +221,7 @@
     };
     // Align client validation with the server-side LayoutDocument contract.
     if (!update.zone || /[\x00-\x1f\x7f]/.test(update.zone) ||
-        new TextEncoder().encode(update.zone).length > 180 ||
+        [...update.zone].length > 60 ||
         (codes.length === 1 && (!/^[A-Z0-9][A-Z0-9._-]{0,59}$/.test(update.code) ||
         !/^[A-Za-z0-9_-]{1,20}$/.test(update.row_label) ||
         !Number.isInteger(update.number) || update.number < 1 || update.number > 10000 ||
