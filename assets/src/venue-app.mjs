@@ -448,13 +448,39 @@ export class VenueApp {
       }catch(error){this.hold=null;this.holdSignature=null;this.ownSeatIds.clear();this.renderSelection();this.message(error.message,true);throw error;}
       return;
     }
-    let stored;try{stored=JSON.parse(sessionStorage.getItem(`pesm-v2-hold-${this.sessionId}`)||'null');}catch(_){return;}
-    const token=this.hold?.hold_token||stored?.token;if(!token)return;
-    try{const data=await this.api.request(`sessions/${this.sessionId}/holds`,{token});const hold=data.hold||data;
-      if(!['active','held'].includes(hold.status||'active'))throw new Error(this.t('Reservation is no longer active.','این رزرو دیگر فعال نیست.'));
-      if(!this.selection.selected.size)for(const unit of stored?.units||[])this.selection.selected.set(unitKey(unit),unit);
-      hold.hold_token=token;this.acceptHold(hold,this.holdSignature||this.selection.signature());
-    }catch(error){this.hold=null;this.holdSignature=null;this.ownSeatIds.clear();try{sessionStorage.removeItem(`pesm-v2-hold-${this.sessionId}`);}catch(_){}this.message(error.message,true);this.renderSelection();}
+    const storageKey = `pesm-v2-hold-${this.sessionId}`;
+    let stored;
+    try { stored = JSON.parse(sessionStorage.getItem(storageKey) || 'null'); } catch (_) {}
+    const token = this.hold?.hold_token || stored?.token;
+    if (!token) return;
+    let hold;
+    try {
+      const data = await this.api.request(`sessions/${this.sessionId}/holds`, {token});
+      hold = data.hold || data;
+    } catch (error) {
+      if (!['permission_denied','invalid_token','invalid_session','hold_expired'].includes(error.data?.code)) {
+        this.revalidationRequired = true;
+        this.renderSelection();
+        throw error;
+      }
+    }
+    if (!hold || !['active','held'].includes(hold.status)) {
+      this.hold = null;
+      this.holdSignature = null;
+      this.ownSeatIds.clear();
+      try { sessionStorage.removeItem(storageKey); } catch (_) {}
+      this.renderSelection();
+      return;
+    }
+    if (!this.selection.selected.size) {
+      for (const line of hold.quote.lines) {
+        const unit = {type:line.unit_type, id:line.unit_id, code:String(line.unit_id), group_code:line.group_code,
+          section_code:line.section_code, category_code:line.category_code, capacity:line.admissions};
+        this.selection.selected.set(unitKey(unit), unit);
+      }
+    }
+    hold.hold_token = token;
+    this.acceptHold(hold, this.holdSignature || this.selection.signature());
   }
   buildAttendeeForm(defaults={}){
     const current={ticket_modes:{},attendees:{}};
@@ -480,7 +506,7 @@ export class VenueApp {
     const data=new FormData(this.checkoutForm),buyer={};for(const key of ['first_name','last_name','phone','email'])buyer[key]=String(data.get(key)||'');
     buyer.ticket_modes={};for(const input of this.ticketModeFields.querySelectorAll('[data-group-code]'))buyer.ticket_modes[input.dataset.groupCode]=input.value;
     buyer.attendees={};for(const input of this.attendeeFields.querySelectorAll('[data-seat-id]'))if(input.value.trim()){buyer.attendees[input.dataset.seatId]||={};buyer.attendees[input.dataset.seatId][input.dataset.part]=input.value.trim();}
-    if(!Object.keys(buyer.attendees).length)delete buyer.attendees;return buyer;
+    return buyer;
   }
   async attachCart(){if(!this.hold||this.holdSignature!==this.selection.signature())return;await this.perform(async()=>{const buyer=this.buyerFields();const data=await this.api.request('cart/attach',{method:'POST',token:this.hold.hold_token,body:{session_id:this.sessionId,attendees:buyer.attendees,ticket_modes:buyer.ticket_modes}});location.assign(safeLink(data.cart_url));});}
   async releaseHold(){if(!this.hold)return;await this.perform(async()=>{await this.api.request(`sessions/${this.sessionId}/holds`,{method:'DELETE',token:this.hold.hold_token,body:{request_key:requestKey()}});this.hold=null;this.holdSignature=null;this.ownSeatIds.clear();this.selection.selected.clear();this.selection.quote=null;try{sessionStorage.removeItem(`pesm-v2-hold-${this.sessionId}`);}catch(_){}await this.refreshAvailability();},this.t('Reservation released.','رزرو آزاد شد.'));}
@@ -540,7 +566,14 @@ export class VenueApp {
     this.gateForm.append(field(t('Ticket QR or ticket number','کد QR یا شماره بلیت'),credential),el('div',{class:'pesm-v-form-grid'},field(t('Guests entering now','تعداد افراد ورودی'),quantity,t('Confirm this quantity before scanning a shared group ticket.','برای بلیت گروهی، تعداد ورودی را پیش از ثبت تأیید کنید.')),field(t('Gate label','نام گیت'),gate)),submit);
     let pending=null,stream=null,scanning=false,frame=null;
     const cleanup=()=>{scanning=false;if(frame)cancelAnimationFrame(frame);stream?.getTracks().forEach(track=>track.stop());stream=null;video.srcObject=null;video.hidden=true;};
-    const scan=async()=>{const value=credential.value.trim(),count=Number(quantity.value);if(!value||!this.gateForm.reportValidity()||this.selection.busy)return;const signature=`${value}:${count}`;if(pending&&pending.signature!==signature){this.message(t('Retry the same pending scan, or look up its current entry count before changing the request.','همان اسکن معلق را دوباره ارسال کنید؛ پیش از تغییر درخواست، تعداد ورود فعلی را بررسی کنید.'),true);return;}if(!pending)pending={signature,key:requestKey()};await this.perform(async()=>{const path=/^(A-[PG]-|P-)/i.test(value)?'gate/manual-check-in':'gate/check-in';const data=await this.api.request(path,{method:'POST',body:{credential:value,qr_payload:value,ticket_number:value,quantity:count,gate:gate.value,request_key:pending.key}});result.textContent=`${t('Admission recorded','ورود ثبت شد')} · ${data.ticket_number||''} · ${t('Remaining','باقی‌مانده')}: ${data.remaining??0}`;result.classList.remove('is-error');pending=null;credential.value='';cleanup();},t('Admission confirmed.','ورود تأیید شد.'));};
+    const scan=async()=>{const value=credential.value.trim(),count=Number(quantity.value);if(!value||!this.gateForm.reportValidity()||this.selection.busy)return;const signature=JSON.stringify([value,count,gate.value]);if(pending&&pending.signature!==signature){this.message(t('Retry the same pending scan, or look up its current entry count before changing the request.','همان اسکن معلق را دوباره ارسال کنید؛ پیش از تغییر درخواست، تعداد ورود فعلی را بررسی کنید.'),true);return;}if(!pending)pending={signature,key:requestKey()};await this.perform(async()=>{const path=/^(A-[PG]-|P-)/i.test(value)?'gate/manual-check-in':'gate/check-in';let data;
+      try {
+        data = await this.api.request(path, {method:'POST', body:{credential:value, qr_payload:value,
+          ticket_number:value.toUpperCase(), quantity:count, gate:gate.value, request_key:pending.key}});
+      } catch (error) {
+        if ([400,403,404,409,410,422,429].includes(error.status) && error.data?.code !== 'venue_request_failed') pending = null;
+        throw error;
+      }result.textContent=`${t('Admission recorded','ورود ثبت شد')} · ${data.ticket_number||''} · ${t('Remaining','باقی‌مانده')}: ${data.remaining??0}`;result.classList.remove('is-error');pending=null;credential.value='';cleanup();},t('Admission confirmed.','ورود تأیید شد.'));};
     this.gateForm.addEventListener('submit',event=>{event.preventDefault();scan();});
     const start=button(t('Start camera','شروع دوربین'),async()=>{if(scanning)return;if(!navigator.mediaDevices?.getUserMedia||!window.BarcodeDetector){this.message(t('Camera scanning is unavailable. Enter the code or ticket number.','اسکن دوربین در دسترس نیست. کد یا شماره بلیت را وارد کنید.'),true);return;}try{const detector=new BarcodeDetector({formats:['qr_code']});stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'},audio:false});video.srcObject=stream;video.hidden=false;await video.play();scanning=true;const detect=async()=>{if(!scanning)return;try{const codes=await detector.detect(video);if(codes.length){credential.value=codes[0].rawValue;cleanup();credential.focus();this.message(t('QR read. Confirm the arrival count, then record admission.','کد خوانده شد. تعداد افراد را تأیید و ورود را ثبت کنید.'));return;}}catch(_){}frame=requestAnimationFrame(detect);};detect();}catch(_){cleanup();this.message(t('Camera access failed.','دسترسی به دوربین ممکن نشد.'),true);}});
     this.root.append(el('div',{class:'pesm-v-toolbar'},start,button(t('Stop camera','توقف دوربین'),cleanup),button(t('Look up ticket number','بررسی شماره بلیت'),()=>this.perform(async()=>{const number=ticketNumberForLookup(credential.value);if(!number)throw new Error(t('Enter the printed ticket number for lookup.','برای بررسی، شماره چاپ‌شده بلیت را وارد کنید.'));const data=await this.api.request(`gate/lookup?ticket_number=${encodeURIComponent(number)}`);pending=null;result.textContent=`${data.ticket_number||''} · ${this.statusLabel(data.status||'')} · ${t('Remaining','باقی‌مانده')}: ${data.remaining??data.capacity??''}`;}))),video,this.gateForm,result);

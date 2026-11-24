@@ -2,8 +2,8 @@
   "format": 1,
   "files": {
     "venue-app.js": {
-      "bytes": 148553,
-      "sha256": "505365ac1772a77c7286557b1fa1bf05d291e1c284efab49e55e8acedc32434a"
+      "bytes": 148751,
+      "sha256": "51bc1533e767d064118f54a265998f19907879c582ca145f64419f5a410ce46e"
     },
     "venue-app.css": {
       "bytes": 10782,
@@ -22,7 +22,7 @@
       "sha256": "b9b0a9064703d4e445e106ff23e65b0b00a82a6ab0a7214099439bbc6e4292c6"
     }
   },
-  "source_sha256": "e3558b4378f7bb78fd7611efa722d7eb52b9dd8c0bb23ad67750bc441d5960f7",
+  "source_sha256": "12b4e373aa17687700651b4e2e870dcb9f9ecba0af9863be1c20bc22777e2484",
   "sources": [
     "assets/src/venue-app.mjs",
     "assets/src/venue-core.mjs",

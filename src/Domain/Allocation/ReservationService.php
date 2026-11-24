@@ -64,7 +64,11 @@ final class ReservationService
                 if($action!=='release'&&($hold->status!=='active'||$hold->expires_at<=$now||
                     ($replay['expires_at_utc']??'')!==self::iso($hold->expires_at)||
                     !hash_equals(hash('sha256',$hold->quote_json),hash('sha256',Database::json($replay['quote']??[]))))){Policy::fail('idempotency_conflict');}
-                return $action==='release'?$replay:$replay+['hold_token'=>$token,'token'=>$token];
+                if ($action !== 'release') {
+                    $replay['server_time_utc'] = self::iso($now);
+                    $replay['hold_token'] = $replay['token'] = $token;
+                }
+                return $replay;
             }
             if($hold->quote_json!==$initial->quote_json){Policy::fail('hold_changed_retry');}
             if($action==='release'&&in_array($hold->status,['released','expired'],true)){return ['released'=>false];}

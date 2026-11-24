@@ -83,13 +83,6 @@ add_action('plugins_loaded', static function (): void {
             update_option('pesm_capabilities_version', 3, false);
         }
     }, 1);
-    add_action('pesm_hourly_maintenance', [\PESM\Security\RateLimiter::class, 'cleanup']);
-    add_action('pesm_hourly_maintenance', [\PESM\Domain\Guest\GuestAccessService::class, 'cleanup']);
-    add_action('pesm_hourly_maintenance', [\PESM\Domain\Booking\HoldMaintenance::class, 'cleanup']);
-    add_action('pesm_hourly_maintenance', [\PESM\Domain\Booking\CapacityMaintenance::class, 'cleanup']);
-    add_action('pesm_hourly_maintenance', [\PESM\Domain\Allocation\ReservationService::class, 'cleanup']);
-    add_action('pesm_hourly_maintenance', [\PESM\Domain\Notification\NotificationQueue::class, 'cleanup']);
-    add_action('pesm_process_notifications', [\PESM\Domain\Notification\NotificationQueue::class, 'process']);
     if ((int) get_option('pesm_schema_version', 0) < \PESM\Database\Migrator::VERSION) {
         \PESM\Database\Migrator::run();
     }
@@ -102,6 +95,13 @@ add_action('plugins_loaded', static function (): void {
         });
         return;
     }
+    add_action('pesm_hourly_maintenance', [\PESM\Security\RateLimiter::class, 'cleanup']);
+    add_action('pesm_hourly_maintenance', [\PESM\Domain\Guest\GuestAccessService::class, 'cleanup']);
+    add_action('pesm_hourly_maintenance', [\PESM\Domain\Booking\HoldMaintenance::class, 'cleanup']);
+    add_action('pesm_hourly_maintenance', [\PESM\Domain\Booking\CapacityMaintenance::class, 'cleanup']);
+    add_action('pesm_hourly_maintenance', [\PESM\Domain\Allocation\ReservationService::class, 'cleanup']);
+    add_action('pesm_hourly_maintenance', [\PESM\Domain\Notification\NotificationQueue::class, 'cleanup']);
+    add_action('pesm_process_notifications', [\PESM\Domain\Notification\NotificationQueue::class, 'process']);
     add_action('init', static function (): void {
         add_filter('cron_schedules', static function (array $schedules): array {
             $schedules['pesm_five_minutes'] = ['interval'=>300,'display'=>__('Event Seat Manager: 5 minutes', 'event-seat-manager')];

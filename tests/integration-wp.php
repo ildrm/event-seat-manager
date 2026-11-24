@@ -36,7 +36,8 @@ add_filter('pre_wp_mail', static fn(): bool => true);
 add_filter('pre_http_request', static fn(): WP_Error => new WP_Error('integration_network_disabled', 'No remote requests during integration tests.'), 99);
 global $wpdb;
 $p = $wpdb->prefix . 'pesm_';
-$expectedTableCount = 38 + count(\PESM\Database\VenueSchema::tables()) + count(\PESM\Database\AllocationSchema::tables());
+// Schema 20 adds event_setups to the 38 existing core tables.
+$expectedTableCount = 39 + count(\PESM\Database\VenueSchema::tables()) + count(\PESM\Database\AllocationSchema::tables());
 $_SERVER['REMOTE_ADDR'] = '127.0.0.' . random_int(2, 250);
 $mode = $args[0] ?? 'all';
 $state = get_option('pesm_integration_fixture', []);
@@ -221,9 +222,9 @@ if ($mode === 'representative-storage') {
 
 if ($mode === 'verify-races') {
     $seatHolds = (int) $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$p}holds WHERE session_id=%d AND status='active'", $state['race_session']));
-    $assert($seatHolds === 1, 'Twenty seat contenders yield one active hold');
+    $assert($seatHolds === 1, 'Concurrent seat requests yield one active hold');
     $capacity = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$p}session_capacity WHERE session_id=%d", $state['race_capacity_session']));
-    $assert((int) $capacity->held_units === 3, 'Twenty capacity contenders allocate exactly three units');
+    $assert((int) $capacity->held_units === 3, 'Concurrent capacity requests allocate exactly three units');
     $assert((int) $capacity->held_units + (int) $capacity->pending_units + (int) $capacity->sold_units <= (int) $capacity->total_capacity, 'Concurrent general admission never oversells');
     $assert((int) $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$p}checkins WHERE ticket_id=%d", $state['race_ticket'])) === 1, 'Concurrent scanners commit one check-in');
     echo wp_json_encode(['mode' => $mode, 'passed' => count($checks), 'checks' => $checks], JSON_PRETTY_PRINT) . "\n";

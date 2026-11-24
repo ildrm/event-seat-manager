@@ -82,6 +82,7 @@ namespace {
     $loaded();
     check($migration_runs === 1, 'An outdated schema must attempt upgrade');
     check(!isset($actions['rest_api_init']), 'Failed migration must not register mutation routes');
+    check(empty($actions['pesm_hourly_maintenance']) && empty($actions['pesm_process_notifications']), 'Already queued cron work must not mutate an incomplete schema');
     check(!isset($actions['init'][2]), 'Failed migration must not schedule maintenance');
     throws(static fn () => $activate(false), 'Failed activation must stop rather than report success');
     throws(static fn () => $activate(true), 'Network activation must stop explicitly');

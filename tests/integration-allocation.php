@@ -85,7 +85,11 @@ if($lineStatus==='refund_review'){$confirmed=GroupAdministration::confirmRefund(
 $third=$groups[2];$fourth=$groups[3];$fifth=$groups[4];
 $frozen=ReservationService::acquire($session,[['type'=>'group','id'=>$third->group_code]],$key());$oldPrice=$frozen['quote']['total_minor'];$changed=$settings;$changed['pricing']['groups'][$third->group_code]=222;
 SessionService::configure($session,$changed);$ok(ReservationService::view($session,$frozen['hold_token'])['quote']['total_minor']===$oldPrice,'published pricing update preserves held immutable quote');
-$repriced=ReservationService::mutate($session,$frozen['hold_token'],'replace',[['type'=>'group','id'=>$third->group_code]],$key());$ok($repriced['quote']['total_minor']===222,'replacement reprices entire desired selection');ReservationService::mutate($session,$frozen['hold_token'],'release',[],$key());
+$replaceKey=$key();
+$repriced=ReservationService::mutate($session,$frozen['hold_token'],'replace',[['type'=>'group','id'=>$third->group_code]],$replaceKey);
+$replaceReplay=ReservationService::mutate($session,$frozen['hold_token'],'replace',[['type'=>'group','id'=>$third->group_code]],$replaceKey);
+$ok($replaceReplay['idempotent_replay'] && $replaceReplay['expires_at_utc']===$repriced['expires_at_utc'],'lost replacement response replays without extending the hold');
+$ok($repriced['quote']['total_minor']===222,'replacement reprices entire desired selection');ReservationService::mutate($session,$frozen['hold_token'],'release',[],$key());
 $firstThird=(int)$wpdb->get_var($wpdb->prepare("SELECT seat_id FROM {$p}venue_places WHERE layout_id=%d AND group_code=%s ORDER BY seat_id LIMIT 1",$layout,$third->group_code));
 SessionService::block($session,$firstThird,true,1);$reject(fn()=>ReservationService::acquire($session,[['type'=>'group','id'=>$third->group_code]],$key()),'seat_unavailable');SessionService::block($session,$firstThird,false,1);
 $reject(fn()=>(new \PESM\Domain\Booking\HoldService())->acquire($session,[$firstThird],$key()),'layout_requires_v2');
@@ -141,6 +145,13 @@ $ok(!is_wp_error($lineRefund),'partial order refund records one whole purchased 
 $confirmed=GroupAdministration::confirmRefund($firstLine,(int)$lineRefund->get_id(),$key(),1);$ok($confirmed['status']==='refunded','explicit whole-line refund verifies Woo line ownership and amount');
 $otherStatus=(string)$wpdb->get_var($wpdb->prepare("SELECT status FROM {$p}allocation_lines WHERE id=%d",$otherLine));$ok($otherStatus==='issued','refunding one whole group preserves the other purchased group');
 GroupAdministration::cancel($otherLine,$key(),1);$reject(fn()=>GroupAdministration::confirmRefund($otherLine,(int)$lineRefund->get_id(),$key(),1),'refund_line_mismatch');GroupAdministration::denyRefund($otherLine,$key(),1);
+
+// Woo may deliver another cancellation callback while a paid line is under review.
+$partialWc->update_status('cancelled');
+$reviewAgain=CheckoutService::revokeOrder($partialOrder['order_id']);
+$ok(!empty($reviewAgain['review_required']), 'repeated cancellation retains the unrefunded paid line in review');
+$remainingSeats=(int)$wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$p}session_seats WHERE session_id=%d AND hold_id=%d AND status='sold'", $partialSession, $partialHold['hold_id']));
+$ok($remainingSeats===8, 'already refunded places are released and unrefunded places stay sold');
 
 $fixture=['center_id'=>$center,'hall_id'=>$hall,'layout_id'=>$layout,'event_id'=>$event,'session_id'=>$session,'free_session_id'=>$freeSession,'order_id'=>$order['order_id'],'group_code'=>$group->group_code,'member_ids'=>$members,'checks'=>count($checks)];
 update_option('pesm_allocation_integration_fixture',$fixture,false);

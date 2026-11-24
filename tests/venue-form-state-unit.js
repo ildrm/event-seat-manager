@@ -37,6 +37,12 @@ class FormNode {
   await app.mutateHold('renew');check('renew');
   await app.resumeHold();check('Refresh');
   await app.resumeHold();check('BFCache hold revalidation');
+  app.api.request=async()=>{throw new Error('Network interrupted');};
+  await assert.rejects(app.resumeHold(), /Network interrupted/);
+  assert.equal(JSON.parse(storage.get('pesm-v2-hold-77')).token,'private','a transient error preserves the only copy of the hold credential');
+  assert.equal(app.revalidationRequired,true,'booking is paused until a retry confirms the hold');
+  app.api.request=async()=>hold();
+  await app.resumeHold();check('network retry');
   app.config={context:'cart',cartKey:'private-cart'};
   app.api.request=async()=>({session_id:77,hold:hold(),ticket_modes:{T1:'individual'},attendees:{1:{first_name:'Old',last_name:'Cart'},2:{first_name:'Should stay',last_name:'Cleared'}}});
   await app.resumeHold();check('cart Refresh');assert.equal(input(2,'last_name').value,'','stale cart defaults do not refill cleared names');

@@ -1527,7 +1527,7 @@ msgstr "بلیت رایگان ظرفیت آزاد صادر شد."
 msgid "بلیت رایگان لغو شد و صندلی، بدون عملیات مالی، آزاد شد."
 msgstr "بلیت رایگان لغو شد و صندلی، بدون عملیات مالی، آزاد شد."
 
-#: src/Domain/Allocation/CheckoutService.php:233 src/Domain/Checkout/CheckoutService.php:342 src/Domain/GeneralAdmission/FreeAdmissionService.php:360 src/Integrations/CartSeatManager.php:507
+#: src/Domain/Allocation/CheckoutService.php:238 src/Domain/Checkout/CheckoutService.php:342 src/Domain/GeneralAdmission/FreeAdmissionService.php:360 src/Integrations/CartSeatManager.php:507
 msgid "بلیت رویداد (محصول فنی)"
 msgstr "بلیت رویداد (محصول فنی)"
 

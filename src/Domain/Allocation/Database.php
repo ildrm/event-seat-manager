@@ -88,7 +88,7 @@ final class Database
         global $wpdb;$p=$wpdb->prefix.'pesm_';
         $row=$wpdb->get_row($wpdb->prepare("SELECT payload_hash,result_json FROM {$p}allocation_requests WHERE request_hash=%s FOR UPDATE",$request));
         if(!$row){return null;}if(!hash_equals((string)$row->payload_hash,$payload)){Policy::fail('idempotency_conflict');}
-        return self::decode((string)$row->result_json)+['idempotent_replay'=>true];
+        return ['idempotent_replay'=>true] + self::decode((string)$row->result_json);
     }
     public static function receipt(string $request,string $payload,array $result,string $now): void
     {

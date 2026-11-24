@@ -113,6 +113,7 @@ final class CheckoutService
             $lines=$wpdb->get_results($wpdb->prepare("SELECT * FROM {$p}allocation_lines WHERE hold_id=%d ORDER BY line_no FOR UPDATE",$holdId));$attendees=$order->get_meta('_pesm_allocation_attendees');
             if(!is_array($attendees)){Policy::fail('invalid_attendee_snapshot');}
             $expected=[];foreach($financial['lines']as$f){$expected[(int)$f['line_id']]=$f;}
+            if (!$expected || count($lines) !== count($expected)) { Policy::fail('price_mismatch'); }
             foreach($lines as$line){
                 $f=$expected[(int)$line->id]??null;
                 if(!$f||(int)$f['total_minor']!==(int)$line->total_minor||(int)$f['admissions']!==(int)$line->admission_count||$f['ticket_mode']!==$line->ticket_mode||$f['entry_policy']!==$line->entry_policy){Policy::fail('price_mismatch');}
@@ -184,11 +185,15 @@ final class CheckoutService
             foreach($lines as$line){
                 if(in_array($line->status,['cancelled','refunded'],true)){continue;}
                 $slots=$wpdb->get_results($wpdb->prepare("SELECT id,status FROM {$p}allocation_tickets WHERE line_id=%d ORDER BY seat_id FOR UPDATE",(int)$line->id));$used=false;foreach($slots as$slot){if($slot->status==='checked_in'){$used=true;}}
-                $canRelease=!$used&&($hold->status!=='sold'||!$paid||$fullyRefunded);
+                // Issued tickets survive cancellation as revoked rows. They remain proof
+                // of a completed purchase when a later callback revisits a review.
+                if ($wpdb->last_error) { Policy::fail('db_unavailable',503); }
+                $canRelease = !$used && ((!$slots && $hold->status !== 'sold' && $line->status === 'held') || !$paid || $fullyRefunded);
                 if($canRelease){
                     $ids=Database::decode($line->seat_ids_json);ReservationService::inventory($sessionId,$ids);ReservationService::free($sessionId,$holdId,$ids,$now,['held','payment_pending','sold']);
                 }else{$review=true;}
                 $status=$canRelease?($fullyRefunded?'refunded':'cancelled'):'review_required';
+                if ($status === $line->status) { continue; }
                 Database::checked($wpdb->update($p.'allocation_lines',['status'=>$status,'qr_version'=>(int)$line->qr_version+1],['id'=>(int)$line->id]));
                 Database::checked($wpdb->query($wpdb->prepare("UPDATE {$p}allocation_tickets SET status='revoked',qr_version=qr_version+1 WHERE line_id=%d AND status='active'",(int)$line->id)));
             }
